@@ -1,4 +1,4 @@
-﻿namespace Zoolandia.Server.Data.Models;
+﻿namespace Zoolandia.Infrastructure.Data.Models;
 
 public class Profile
 {

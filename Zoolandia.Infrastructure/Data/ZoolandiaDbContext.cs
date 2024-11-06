@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Zoolandia.Server.Data.Models;
+using Zoolandia.Infrastructure.Identity;
 
-namespace Zoolandia.Server.Data;
+namespace Zoolandia.Infrastructure.Data;
 
 public class ZoolandiaDbContext : IdentityDbContext
 {

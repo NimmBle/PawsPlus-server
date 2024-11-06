@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Zoolandia.Server.Controllers;
+namespace Zoolandia.Web;
 
 [ApiController]
 [Route("[controller]")]

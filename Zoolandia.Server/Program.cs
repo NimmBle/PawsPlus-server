@@ -1,18 +1,11 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Zoolandia.Server.Data;
-using Zoolandia.Server.Infrastructure.Extentions;
+using Zoolandia.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddDatabase(builder.Configuration)
-    .AddIdentity()
+    .AddInfrastructure(builder.Configuration)
     .AddEndpointsApiExplorer()
-    .AddSwagger()
     .AddControllers();
 
 

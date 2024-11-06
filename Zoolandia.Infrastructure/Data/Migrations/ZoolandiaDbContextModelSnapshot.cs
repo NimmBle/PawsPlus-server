@@ -3,8 +3,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Zoolandia.Infrastructure.Data;
 using Zoolandia.Server.Data;
 
 #nullable disable
@@ -12,11 +12,9 @@ using Zoolandia.Server.Data;
 namespace Zoolandia.Server.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    [Migration("20241102110502_user-and-profile")]
-    partial class userandprofile
+    partial class ZoolandiaDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

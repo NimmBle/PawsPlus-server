@@ -1,14 +1,24 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Zoolandia.Server.Data;
-using Zoolandia.Server.Data.Models;
+using Zoolandia.Infrastructure.Data;
+using Zoolandia.Infrastructure.Identity;
 
-namespace Zoolandia.Server.Infrastructure.Extentions;
+namespace Zoolandia.Infrastructure;
 
-public static class ServiceCollectionExtentions
+public static class InfrastructureConfiguration
 {
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
+        => services
+            .AddDatabase(configuration)
+            .AddIdentity()
+            .AddSwagger();
+    
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -29,6 +39,8 @@ public static class ServiceCollectionExtentions
 
         return services;
     }
+    
+        
     public static IServiceCollection AddSwagger(this IServiceCollection services)
         => services
             .AddApiVersioning(opt =>

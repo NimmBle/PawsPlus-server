@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Zoolandia.Infrastructure.Data.Models;
 
-namespace Zoolandia.Server.Data.Models;
+namespace Zoolandia.Infrastructure.Identity;
 
 public class User : IdentityUser
 {

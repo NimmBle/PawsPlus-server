@@ -77,14 +77,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Zoolandia.Application\Zoolandia.Application.csproj" />
+      <ProjectReference Include="..\Zoolandia.Domain\Zoolandia.Domain.csproj" />
+      <ProjectReference Include="..\Zoolandia.Infrastructure\Zoolandia.Infrastructure.csproj" />
+      <ProjectReference Include="..\Zoolandia.Web\Zoolandia.Web.csproj" />
     </ItemGroup>
 
 </Project>
