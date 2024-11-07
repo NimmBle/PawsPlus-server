@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Zoolandia.Applicaiton.Identity;
-using Zoolandia.Applicaiton.Identity.Commands;
+using Zoolandia.Applicaiton.Identity.Commands.CreateUser;
+using Zoolandia.Applicaiton.Identity.Commands.LoginUser;
 using Zoolandia.Application.Common;
 
 namespace Zoolandia.Infrastructure.Identity;
@@ -25,10 +26,14 @@ internal class IdentityService(UserManager<User> userManager) : IIdentity
         var errors = identityResult.Errors.Select(e => e.Description);
         
         // confirmation email
-        // change to Result<TData>
 
         return identityResult.Succeeded
             ? Result<User>.SuccessWith(user)
             : Result<User>.Failure(errors);
+    }
+
+    public async Task<Result> Login(LoginUserCommand userInput)
+    {
+        return default!;
     }
 }
