@@ -35,4 +35,11 @@ public class Result<TData> : Result
     private Result(bool succeeded, TData data, List<string> error)
         : base(succeeded, error)
         => this.data = data;
+    
+    public static Result<TData> SuccessWith(TData data)
+        => new(true, data, new List<string>());
+
+    public static Result<TData> Failure(IEnumerable<string> errors)
+        => new(false, default!, errors.ToList());
+
 }

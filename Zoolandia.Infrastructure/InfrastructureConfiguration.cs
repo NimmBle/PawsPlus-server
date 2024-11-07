@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Zoolandia.Applicaiton.Identity;
 using Zoolandia.Infrastructure.Data;
 using Zoolandia.Infrastructure.Identity;
 
@@ -36,7 +37,9 @@ public static class InfrastructureConfiguration
                 opt.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<ZoolandiaDbContext>();
-
+            
+        services.AddTransient<IIdentity, IdentityService>();
+        
         return services;
     }
     

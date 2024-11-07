@@ -5,8 +5,9 @@ namespace Zoolandia.Applicaiton.Identity.Commands;
 
 public class CreateUserCommand : UserInputModel, IRequest<Result>
 {
-    public string UserName { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
 
+    public string LastName { get; set; } = default!;
     public class CreateUserCommandHandler(IIdentity identity) : IRequestHandler<CreateUserCommand, Result>
     {
         public async Task<Result> Handle(

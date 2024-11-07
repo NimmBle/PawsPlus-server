@@ -5,7 +5,7 @@ using Zoolandia.Application.Common;
 
 namespace Zoolandia.Infrastructure.Identity;
 
-internal class IdentityServices(UserManager<User> userManager) : IIdentity
+internal class IdentityService(UserManager<User> userManager) : IIdentity
 {
     public async Task<Result> Register(CreateUserCommand userInput)
     {
@@ -28,7 +28,7 @@ internal class IdentityServices(UserManager<User> userManager) : IIdentity
         // change to Result<TData>
 
         return identityResult.Succeeded
-            ? Result.Success
-            : Result.Failure(errors);
+            ? Result<User>.SuccessWith(user)
+            : Result<User>.Failure(errors);
     }
 }

@@ -1,9 +1,11 @@
+using Zoolandia.Applicaiton;
 using Zoolandia.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
+    .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddEndpointsApiExplorer()
     .AddControllers();
