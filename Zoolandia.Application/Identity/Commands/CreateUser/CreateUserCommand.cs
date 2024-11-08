@@ -8,6 +8,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
     public string FirstName { get; set; } = default!;
 
     public string LastName { get; set; } = default!;
+    
     public class CreateUserCommandHandler(IIdentity identity) : IRequestHandler<CreateUserCommand, Result>
     {
         public async Task<Result> Handle(
@@ -15,8 +16,10 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
             CancellationToken cancellationToken)
         {
             var result = await identity.Register(request);
-            
-            // change (add validation)
+
+            if (!result.Succeeded)
+                return Result.Failure(result.Errors);
+
             return result;
         }
     }

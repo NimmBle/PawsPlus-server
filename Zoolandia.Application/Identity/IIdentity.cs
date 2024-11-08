@@ -8,5 +8,5 @@ public interface IIdentity
 {
     Task<Result> Register(CreateUserCommand userInput);
 
-    Task<Result> Login(LoginUserCommand userInput);
+    Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput);
 }

@@ -30,16 +30,22 @@ public class Result
 
 public class Result<TData> : Result
 {
-    private readonly TData data;
+    private readonly TData _data;
 
     private Result(bool succeeded, TData data, List<string> error)
         : base(succeeded, error)
-        => this.data = data;
+        => this._data = data;
     
     public static Result<TData> SuccessWith(TData data)
         => new(true, data, new List<string>());
 
     public static Result<TData> Failure(IEnumerable<string> errors)
         => new(false, default!, errors.ToList());
+    
+    public static implicit operator Result<TData>(string error)
+        => Failure(new List<string>() { error });
+
+    public static implicit operator Result<TData>(TData data)
+        => SuccessWith(data);
 
 }

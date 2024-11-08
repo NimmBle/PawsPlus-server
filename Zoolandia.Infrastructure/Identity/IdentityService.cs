@@ -6,8 +6,12 @@ using Zoolandia.Application.Common;
 
 namespace Zoolandia.Infrastructure.Identity;
 
-internal class IdentityService(UserManager<User> userManager) : IIdentity
+internal class IdentityService(
+        UserManager<User> userManager,
+        IJwtTokenGenerator jwtTokenGenerator)
+    : IIdentity
 {
+    private const string InvalidErrorMessage = "Invalid Credentials";
     public async Task<Result> Register(CreateUserCommand userInput)
     {
         var user = new User()
@@ -32,8 +36,18 @@ internal class IdentityService(UserManager<User> userManager) : IIdentity
             : Result<User>.Failure(errors);
     }
 
-    public async Task<Result> Login(LoginUserCommand userInput)
+    public async Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput)
     {
-        return default!;
+        var user = await userManager.FindByEmailAsync(userInput.Email);
+        if (user == null)
+            return InvalidErrorMessage;
+
+        var passwordValid = await userManager.CheckPasswordAsync(user, userInput.Password);
+        if (!passwordValid)
+            return InvalidErrorMessage;
+
+        var token = jwtTokenGenerator.GenerateToken(user.Id, userInput.Email);
+
+        return new LoginSuccessModel(token);
     }
 }

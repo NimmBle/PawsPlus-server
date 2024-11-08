@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Zoolandia.Applicaiton.Identity;
+using Zoolandia.Application.Common;
 using Zoolandia.Infrastructure.Data;
 using Zoolandia.Infrastructure.Identity;
 
@@ -17,17 +22,21 @@ public static class InfrastructureConfiguration
         IConfiguration configuration)
         => services
             .AddDatabase(configuration)
-            .AddIdentity()
+            .AddIdentity(configuration)
             .AddSwagger();
-    
+
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
         IConfiguration configuration)
         => services
             .AddDbContext<ZoolandiaDbContext>(opt => opt
-                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
-    public static IServiceCollection AddIdentity(this IServiceCollection services)
+                .UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    sqlServer => sqlServer
+                        .MigrationsAssembly(typeof(ZoolandiaDbContext).Assembly.FullName)));
+    public static IServiceCollection AddIdentity(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddIdentity<User, IdentityRole>(opt =>
             {
@@ -37,8 +46,34 @@ public static class InfrastructureConfiguration
                 opt.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<ZoolandiaDbContext>();
-            
+
+        var secret = configuration
+            .GetSection(nameof(ApplicationSettings))
+            .GetValue<string>(nameof(Secret));
+        
+        var key = Encoding.ASCII.GetBytes(secret);
+        
+        services
+            .AddAuthentication(authentication =>
+            {
+                authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(bearer =>
+            {
+                bearer.RequireHttpsMetadata = false;
+                bearer.SaveToken = true;
+                bearer.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+        
         services.AddTransient<IIdentity, IdentityService>();
+        services.AddTransient<IJwtTokenGenerator, JwtTokenGeneratorService>();
         
         return services;
     }

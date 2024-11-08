@@ -11,7 +11,9 @@ public class LoginUserCommand : UserInputModel, IRequest<Result>
         {
             var result = await identity.Login(request);
 
-            // change (add validation)
+            if (!result.Succeeded)
+                return Result.Failure(result.Errors);
+            ;
             return result;
         }
     }
