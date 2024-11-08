@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Zoolandia.Applicaiton.Identity;
-using Zoolandia.Applicaiton.Identity.Commands.CreateUser;
-using Zoolandia.Applicaiton.Identity.Commands.LoginUser;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Identity;
+using Zoolandia.Application.Identity.Commands.CreateUser;
+using Zoolandia.Application.Identity.Commands.LoginUser;
 
 namespace Zoolandia.Infrastructure.Identity;
 
@@ -48,6 +48,6 @@ internal class IdentityService(
 
         var token = jwtTokenGenerator.GenerateToken(user.Id, userInput.Email);
 
-        return new LoginSuccessModel(token);
+        return new LoginSuccessModel(user.Id, token);
     }
 }

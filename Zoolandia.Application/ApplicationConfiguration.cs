@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Zoolandia.Applicaiton;
+namespace Zoolandia.Application;
 
 public static class ApplicationConfiguration
 {

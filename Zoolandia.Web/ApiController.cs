@@ -12,10 +12,13 @@ public class ApiController : ControllerBase
 {
     private IMediator? mediator;
     protected IMediator Mediator
-        => this.mediator ??= this.HttpContext
+        => mediator ??= HttpContext
             .RequestServices
             .GetService<IMediator>();
 
     protected Task<ActionResult> Send(IRequest<Result> request)
+        => Mediator.Send(request).ToActionResult();
+
+    protected Task<ActionResult<TResult>> Send<TResult>(IRequest<Result<TResult>> request)
         => Mediator.Send(request).ToActionResult();
 }

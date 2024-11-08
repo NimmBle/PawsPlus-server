@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
 
-namespace Zoolandia.Applicaiton.Identity.Commands.CreateUser;
+namespace Zoolandia.Application.Identity.Commands.CreateUser;
 
 public class CreateUserCommand : UserInputModel, IRequest<Result>
 {
@@ -18,7 +18,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
             var result = await identity.Register(request);
 
             if (!result.Succeeded)
-                return Result.Failure(result.Errors);
+                return Result.Failure(result.Errors); // remove Result.Failure after implementing IUser
 
             return result;
         }

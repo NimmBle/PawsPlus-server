@@ -1,8 +1,8 @@
-﻿using Zoolandia.Applicaiton.Identity.Commands.CreateUser;
-using Zoolandia.Applicaiton.Identity.Commands.LoginUser;
-using Zoolandia.Application.Common;
+﻿using Zoolandia.Application.Common;
+using Zoolandia.Application.Identity.Commands.CreateUser;
+using Zoolandia.Application.Identity.Commands.LoginUser;
 
-namespace Zoolandia.Applicaiton.Identity;
+namespace Zoolandia.Application.Identity;
 
 public interface IIdentity
 {

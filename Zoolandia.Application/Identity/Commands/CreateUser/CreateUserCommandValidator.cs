@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Zoolandia.Applicaiton.Identity.Commands.CreateUser;
+namespace Zoolandia.Application.Identity.Commands.CreateUser;
 
 public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {

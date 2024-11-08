@@ -14,4 +14,14 @@ public static class ResultExtention
 
         return new OkResult();
     }
+
+    public static async Task<ActionResult<TData>> ToActionResult<TData>(this Task<Result<TData>> resultTask)
+    {
+        var result = await resultTask;
+
+        if (!result.Succeeded)
+            return new BadRequestObjectResult(result.Errors);
+
+        return result.Data;
+    }
 }

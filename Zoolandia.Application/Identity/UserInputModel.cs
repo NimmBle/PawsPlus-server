@@ -1,4 +1,4 @@
-﻿namespace Zoolandia.Applicaiton.Identity;
+﻿namespace Zoolandia.Application.Identity;
 
 public class UserInputModel
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Zoolandia.Applicaiton.Identity.Commands.CreateUser;
-using Zoolandia.Applicaiton.Identity.Commands.LoginUser;
+using Zoolandia.Application.Identity.Commands;
+using Zoolandia.Application.Identity.Commands.CreateUser;
+using Zoolandia.Application.Identity.Commands.LoginUser;
 
 namespace Zoolandia.Web.Features;
 
@@ -14,6 +15,6 @@ public class IdentityController : ApiController
 
     [HttpPost]
     [Route(nameof(Login))]
-    public async Task<ActionResult> Login(LoginUserCommand command)
+    public async Task<ActionResult<LoginOutputModel>> Login(LoginUserCommand command)
         => await this.Send(command);
 }

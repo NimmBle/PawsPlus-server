@@ -35,6 +35,12 @@ public class Result<TData> : Result
     private Result(bool succeeded, TData data, List<string> error)
         : base(succeeded, error)
         => this._data = data;
+
+    public TData Data
+        => this.Succeeded
+            ? this._data
+            : throw new InvalidOperationException(
+                $"{nameof(this.Data)} is unavailable with a failed result. Use {this.Errors} instead. ");
     
     public static Result<TData> SuccessWith(TData data)
         => new(true, data, new List<string>());
@@ -44,6 +50,9 @@ public class Result<TData> : Result
     
     public static implicit operator Result<TData>(string error)
         => Failure(new List<string>() { error });
+
+    public static implicit operator Result<TData>(List<string> errors)
+        => Failure(errors);
 
     public static implicit operator Result<TData>(TData data)
         => SuccessWith(data);

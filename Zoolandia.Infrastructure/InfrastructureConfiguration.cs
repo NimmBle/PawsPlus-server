@@ -8,8 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Zoolandia.Applicaiton.Identity;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Identity;
 using Zoolandia.Infrastructure.Data;
 using Zoolandia.Infrastructure.Identity;
 

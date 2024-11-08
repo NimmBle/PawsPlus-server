@@ -1,4 +1,4 @@
-using Zoolandia.Applicaiton;
+using Zoolandia.Application;
 using Zoolandia.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +22,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors(opt => opt
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
 app.UseRouting();
 app.UseSwagger();
 app.UseSwaggerUI(opt => opt

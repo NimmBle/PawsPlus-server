@@ -1,10 +1,13 @@
-﻿namespace Zoolandia.Applicaiton.Identity.Commands.LoginUser;
+﻿namespace Zoolandia.Application.Identity.Commands.LoginUser;
 
 public class LoginSuccessModel
 {
-    public LoginSuccessModel(string token)
+    public LoginSuccessModel(string userId, string token)
     {
-        this.Token = token;
+        Id = userId;
+        Token = token;
     }
+    
+    public string Id { get; set; }
     public string Token { get; set; }
 }
