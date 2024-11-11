@@ -75,7 +75,6 @@ public static class InfrastructureConfiguration
         
         services.AddTransient<IIdentity, IdentityService>();
         services.AddTransient<IJwtTokenGenerator, JwtTokenGeneratorService>();
-        services.AddScoped<IRoleService, RoleService>();
         
         return services;
     }
