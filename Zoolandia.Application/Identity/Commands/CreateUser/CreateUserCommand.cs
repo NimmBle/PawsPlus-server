@@ -9,6 +9,8 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
     public string LastName { get; set; } = default!;
 
+    public string PhoneNumber { get; set; } = default!;
+
     public string Role { get; set; } = default!;
     
     public class CreateUserCommandHandler(IIdentity identity) : IRequestHandler<CreateUserCommand, Result>

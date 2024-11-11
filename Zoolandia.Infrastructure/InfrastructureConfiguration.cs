@@ -91,4 +91,5 @@ public static class InfrastructureConfiguration
             })
             .AddSwaggerGen(opt => opt
                 .SwaggerDoc("v1", new OpenApiInfo { Title = "Zoolandia API", Version = "v1" }));
+    
 }

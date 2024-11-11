@@ -21,7 +21,8 @@ internal class IdentityService(
             Profile = new()
             {
                 FirstName = userInput.FirstName,
-                LastName = userInput.LastName
+                LastName = userInput.LastName,
+                PhoneNumber = userInput.PhoneNumber
             }
         };
 

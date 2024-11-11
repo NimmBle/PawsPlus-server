@@ -10,4 +10,5 @@ public interface IIdentity
 
     Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput);
     
+
 }
