@@ -45,7 +45,8 @@ public static class InfrastructureConfiguration
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;
             })
-            .AddEntityFrameworkStores<ZoolandiaDbContext>();
+            .AddEntityFrameworkStores<ZoolandiaDbContext>()
+            .AddRoles<IdentityRole>();
 
         var secret = configuration
             .GetSection(nameof(ApplicationSettings))

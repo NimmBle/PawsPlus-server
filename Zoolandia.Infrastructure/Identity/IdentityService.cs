@@ -26,8 +26,13 @@ internal class IdentityService(
         };
 
         var identityResult = await userManager.CreateAsync(user, userInput.Password);
-
         var errors = identityResult.Errors.Select(e => e.Description);
+
+        var rolesResult = await userManager.AddToRoleAsync(user, userInput.Role);
+        var roleErrors = rolesResult.Errors.Select(e => e.Description);
+
+        if (!rolesResult.Succeeded)
+            return Result<User>.Failure(roleErrors);
         
         // confirmation email
 
@@ -50,4 +55,5 @@ internal class IdentityService(
 
         return new LoginSuccessModel(user.Id, token);
     }
+    
 }

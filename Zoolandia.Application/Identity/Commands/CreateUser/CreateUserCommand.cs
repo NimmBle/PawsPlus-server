@@ -8,6 +8,8 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
     public string FirstName { get; set; } = default!;
 
     public string LastName { get; set; } = default!;
+
+    public string Role { get; set; } = default!;
     
     public class CreateUserCommandHandler(IIdentity identity) : IRequestHandler<CreateUserCommand, Result>
     {
