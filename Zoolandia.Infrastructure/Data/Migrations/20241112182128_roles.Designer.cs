@@ -12,8 +12,8 @@ using Zoolandia.Infrastructure.Data;
 namespace Zoolandia.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    [Migration("20241111191932_added roles")]
-    partial class addedroles
+    [Migration("20241112182128_roles")]
+    partial class roles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,24 +54,24 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "93b03a5b-a8a2-4b60-b45d-001ba14fb272",
-                            ConcurrencyStamp = "93b03a5b-a8a2-4b60-b45d-001ba14fb272",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "2b0ba5be-58ef-42f2-81e9-f4d33ce0cf0d",
-                            ConcurrencyStamp = "2b0ba5be-58ef-42f2-81e9-f4d33ce0cf0d",
+                            Id = "6360401a-91de-4e52-858d-263b0999f0a0",
+                            ConcurrencyStamp = "6360401a-91de-4e52-858d-263b0999f0a0",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "bef80b50-fec5-4b8d-bf9d-0c8a01d098d6",
-                            ConcurrencyStamp = "bef80b50-fec5-4b8d-bf9d-0c8a01d098d6",
+                            Id = "29781d47-7738-4588-9d69-98a9fc466477",
+                            ConcurrencyStamp = "29781d47-7738-4588-9d69-98a9fc466477",
                             Name = "Sitter",
                             NormalizedName = "SITTER"
+                        },
+                        new
+                        {
+                            Id = "09247778-70aa-4668-93c3-7d7e8e01b238",
+                            ConcurrencyStamp = "09247778-70aa-4668-93c3-7d7e8e01b238",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
                         });
                 });
 
@@ -238,8 +238,8 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "cd8d3521-b974-49e3-aa19-3ee62626aa8c",
-                            RoleId = "bef80b50-fec5-4b8d-bf9d-0c8a01d098d6"
+                            UserId = "0ce87a78-7146-4702-be5a-5944e4592d50",
+                            RoleId = "09247778-70aa-4668-93c3-7d7e8e01b238"
                         });
                 });
 
@@ -271,17 +271,17 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cd8d3521-b974-49e3-aa19-3ee62626aa8c",
+                            Id = "0ce87a78-7146-4702-be5a-5944e4592d50",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5818ccc8-5063-4d5b-8717-3b4f162bdf0d",
+                            ConcurrencyStamp = "130054d8-b926-4639-a65d-3425a6c5af5b",
                             Email = "hristopanev20@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "HRISTOPANEV20@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC9OTxyhJU/eZfbsZs4Jq3tJB6qppop8TfhcCmcYR6v4s49AaZWqqOpdCv1e6q482Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBqkXGxRaEEeqb5f+sgzwxkwAz3oQsF3u2gKZxiA07clBiRXva702USiFfxqTsmoLA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f111ac8-311a-4348-977c-8a082f3f7068",
+                            SecurityStamp = "1bf6766c-2193-44ed-b500-62b76d2369d1",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

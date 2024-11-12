@@ -17,7 +17,7 @@ public class ZoolandiaDbContext : IdentityDbContext
         builder.Entity<User>()
             .OwnsOne(u => u.Profile);
         
-        string[] roleNames = { "Administrator", "Owner", "Sitter" };
+        string[] roleNames = { "Owner", "Sitter", "Administrator" };
         string roleId = default!;
         foreach (var role in roleNames)
         {
@@ -34,11 +34,12 @@ public class ZoolandiaDbContext : IdentityDbContext
         
 
         var adminId = Guid.NewGuid().ToString();
+        var adminEmail = "hristopanev20@gmail.com"; // Has to be changed when official email is created
         var admin = new User
         {
             Id = adminId,
-            Email = "hristopanev20@gmail.com", // Has to be changed when official email is created
-            NormalizedEmail = "HRISTOPANEV20@GMAIL.COM",
+            Email = adminEmail,
+            NormalizedEmail = adminEmail.ToUpper().Normalize(),
             EmailConfirmed = true,
             UserName = "admin",
             NormalizedUserName = "ADMIN"

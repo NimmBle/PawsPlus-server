@@ -29,17 +29,17 @@ internal class IdentityService(
         var identityResult = await userManager.CreateAsync(user, userInput.Password);
         var errors = identityResult.Errors.Select(e => e.Description);
 
+        if (!identityResult.Succeeded)
+            return Result<User>.Failure(errors);
+        
         var rolesResult = await userManager.AddToRoleAsync(user, userInput.Role);
         var roleErrors = rolesResult.Errors.Select(e => e.Description);
 
-        if (!rolesResult.Succeeded)
-            return Result<User>.Failure(roleErrors);
-        
-        // confirmation email
+        // confirm email
 
-        return identityResult.Succeeded
+        return rolesResult.Succeeded
             ? Result<User>.SuccessWith(user)
-            : Result<User>.Failure(errors);
+            : Result<User>.Failure(roleErrors);
     }
 
     public async Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput)
