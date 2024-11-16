@@ -3,6 +3,7 @@ using Zoolandia.Application.Common;
 using Zoolandia.Application.Identity;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
+using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Infrastructure.Identity;
 

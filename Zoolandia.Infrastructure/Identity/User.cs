@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Zoolandia.Infrastructure.Data.Models;
+using Zoolandia.Application.Identity;
+using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Infrastructure.Identity;
 

@@ -1,8 +1,7 @@
-﻿namespace Zoolandia.Infrastructure.Data.Models;
+﻿namespace Zoolandia.Domain.Models;
 
 public class Profile
 {
-    
     public string FirstName { get; set; }
     
     public string LastName { get; set; }

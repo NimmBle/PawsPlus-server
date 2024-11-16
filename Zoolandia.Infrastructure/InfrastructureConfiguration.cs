@@ -9,8 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Files;
 using Zoolandia.Application.Identity;
 using Zoolandia.Infrastructure.Data;
+using Zoolandia.Infrastructure.Files;
 using Zoolandia.Infrastructure.Identity;
 
 namespace Zoolandia.Infrastructure;
@@ -23,7 +25,8 @@ public static class InfrastructureConfiguration
         => services
             .AddDatabase(configuration)
             .AddIdentity(configuration)
-            .AddSwagger();
+            .AddSwagger()
+            .AddFiles();
 
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
@@ -90,5 +93,7 @@ public static class InfrastructureConfiguration
             })
             .AddSwaggerGen(opt => opt
                 .SwaggerDoc("v1", new OpenApiInfo { Title = "Zoolandia API", Version = "v1" }));
-    
+
+    public static IServiceCollection AddFiles(this IServiceCollection services)
+        => services.AddTransient<IFile, FileService>();
 }
