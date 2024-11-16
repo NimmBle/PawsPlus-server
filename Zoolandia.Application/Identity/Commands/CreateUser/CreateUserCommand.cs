@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
+using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Application.Identity.Commands.CreateUser;
 
@@ -23,6 +24,17 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
             if (!result.Succeeded)
                 return Result.Failure(result.Errors); // remove Result.Failure after implementing IUser
+
+            var user = result.Data;
+            
+            Profile profile = new()
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber
+            };
+            
+            user.CreateProfile(profile);
 
             return result;
         }

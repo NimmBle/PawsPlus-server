@@ -1,6 +1,8 @@
-﻿namespace Zoolandia.Domain.Models;
+﻿using Zoolandia.Domain.Common;
 
-public class Profile
+namespace Zoolandia.Domain.Models;
+
+public class Profile : Entity<string>, IAggregateRoot
 {
     public string FirstName { get; set; }
     
@@ -8,7 +10,11 @@ public class Profile
     
     public string PhoneNumber { get; set; }
     
-    public string PhotoUrl { get; set; }
+    public string? PhotoUrl { get; set; }
     
-    public string Description { get; set; }
+    public string? Description { get; set; }
+    
+    public Pet? Pet { get; set; }
+    
+    public JobPost? JobPost { get; set; }
 }

@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Files;
 using Zoolandia.Application.Identity;
-using Zoolandia.Infrastructure.Data;
+using Zoolandia.Infrastructure.Common.Persistence;
 using Zoolandia.Infrastructure.Files;
 using Zoolandia.Infrastructure.Identity;
 

@@ -4,5 +4,5 @@ namespace Zoolandia.Application.Identity;
 
 public interface IUser
 {
-    void BecomeOwner(Owner owner);
+    void CreateProfile(Profile profile);
 }

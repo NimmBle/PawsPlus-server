@@ -13,25 +13,19 @@ internal class IdentityService(
     : IIdentity
 {
     private const string InvalidErrorMessage = "Invalid Credentials";
-    public async Task<Result> Register(CreateUserCommand userInput)
+    public async Task<Result<IUser>> Register(CreateUserCommand userInput)
     {
         var user = new User()
         {
             UserName = userInput.Email,
             Email = userInput.Email,
-            Profile = new()
-            {
-                FirstName = userInput.FirstName,
-                LastName = userInput.LastName,
-                PhoneNumber = userInput.PhoneNumber
-            }
         };
 
         var identityResult = await userManager.CreateAsync(user, userInput.Password);
         var errors = identityResult.Errors.Select(e => e.Description);
 
         if (!identityResult.Succeeded)
-            return Result<User>.Failure(errors);
+            return Result<IUser>.Failure(errors);
         
         var rolesResult = await userManager.AddToRoleAsync(user, userInput.Role);
         var roleErrors = rolesResult.Errors.Select(e => e.Description);
@@ -39,8 +33,8 @@ internal class IdentityService(
         // confirm email
 
         return rolesResult.Succeeded
-            ? Result<User>.SuccessWith(user)
-            : Result<User>.Failure(roleErrors);
+            ? Result<IUser>.SuccessWith(user)
+            : Result<IUser>.Failure(roleErrors);
     }
 
     public async Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput)

@@ -6,7 +6,7 @@ namespace Zoolandia.Application.Identity;
 
 public interface IIdentity
 {
-    Task<Result> Register(CreateUserCommand userInput);
+    Task<Result<IUser>> Register(CreateUserCommand userInput);
 
     Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput);
     

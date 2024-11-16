@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Zoolandia.Application;
 using Zoolandia.Infrastructure;
+using Zoolandia.Infrastructure.Common.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    DataSeed.SeedData(services).Wait();
+}
 app.UseHttpsRedirection();
 app.UseCors(opt => opt
     .AllowAnyOrigin()
