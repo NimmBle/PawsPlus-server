@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Files;
 using Zoolandia.Application.Identity;
+using Zoolandia.Domain.Common;
 using Zoolandia.Infrastructure.Common.Persistence;
 using Zoolandia.Infrastructure.Files;
 using Zoolandia.Infrastructure.Identity;
@@ -26,6 +27,7 @@ public static class InfrastructureConfiguration
             .AddDatabase(configuration)
             .AddIdentity(configuration)
             .AddSwagger()
+            .AddRepositories()
             .AddFiles();
 
     public static IServiceCollection AddDatabase(
@@ -94,6 +96,15 @@ public static class InfrastructureConfiguration
             .AddSwaggerGen(opt => opt
                 .SwaggerDoc("v1", new OpenApiInfo { Title = "Zoolandia API", Version = "v1" }));
 
+    public static IServiceCollection AddRepositories(this IServiceCollection services) 
+        => services
+            .Scan(scan => scan
+                .FromCallingAssembly()
+                .AddClasses(classes => classes
+                    .AssignableTo(typeof(IDomainRepository<>)))
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
+    
     public static IServiceCollection AddFiles(this IServiceCollection services)
         => services.AddTransient<IFile, FileService>();
 }

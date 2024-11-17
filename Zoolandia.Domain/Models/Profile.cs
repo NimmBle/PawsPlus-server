@@ -9,8 +9,8 @@ public class Profile : Entity<string>, IAggregateRoot
     public string LastName { get; set; }
     
     public string PhoneNumber { get; set; }
-    
-    public string? PhotoUrl { get; set; }
+
+    public string? PhotoUrl { get; set; } = "";
     
     public string? Description { get; set; }
     

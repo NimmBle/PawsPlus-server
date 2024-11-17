@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Zoolandia.Infrastructure.Common.Persistence;
 
@@ -11,9 +12,11 @@ using Zoolandia.Infrastructure.Common.Persistence;
 namespace Zoolandia.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    partial class ZoolandiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117125015_profile filed nullable")]
+    partial class profilefilednullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,10 +195,10 @@ namespace Zoolandia.Infrastructure.Data.Migrations
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -211,7 +214,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

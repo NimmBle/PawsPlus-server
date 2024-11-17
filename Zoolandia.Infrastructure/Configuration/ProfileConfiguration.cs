@@ -10,6 +10,10 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
     {
         builder
             .HasKey(p => p.Id);
+        
+        builder
+            .Property(p => p.Id)
+            .ValueGeneratedOnAdd();
 
         builder
             .Property(p => p.FirstName)
@@ -22,6 +26,14 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
         builder
             .Property(p => p.PhoneNumber)
             .IsRequired();
+
+        builder
+            .Property(p => p.PhotoUrl)
+            .IsRequired(false);
+        
+        builder
+            .Property(p => p.Description)
+            .IsRequired(false);
 
         builder
             .HasOne(p => p.Pet)

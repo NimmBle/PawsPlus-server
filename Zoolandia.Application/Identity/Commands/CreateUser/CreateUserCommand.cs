@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
 using Zoolandia.Domain.Models;
+using Zoolandia.Domain.Repositories;
 
 namespace Zoolandia.Application.Identity.Commands.CreateUser;
 
@@ -14,7 +15,10 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
     public string Role { get; set; } = default!;
     
-    public class CreateUserCommandHandler(IIdentity identity) : IRequestHandler<CreateUserCommand, Result>
+    public class CreateUserCommandHandler(
+            IIdentity identity,
+            IProfileDomainRepository profileRepository) 
+        : IRequestHandler<CreateUserCommand, Result>
     {
         public async Task<Result> Handle(
             CreateUserCommand request,
@@ -35,6 +39,8 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
             };
             
             user.CreateProfile(profile);
+
+            await profileRepository.Save(profile, cancellationToken);
 
             return result;
         }
