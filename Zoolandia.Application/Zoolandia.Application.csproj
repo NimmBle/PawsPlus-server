@@ -16,4 +16,8 @@
       <ProjectReference Include="..\Zoolandia.Domain\Zoolandia.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Profile\Commands\" />
+    </ItemGroup>
+
 </Project>

@@ -12,7 +12,9 @@ internal class IdentityService(
         IJwtTokenGenerator jwtTokenGenerator)
     : IIdentity
 {
+    
     private const string InvalidErrorMessage = "Invalid Credentials";
+    
     public async Task<Result<IUser>> Register(CreateUserCommand userInput)
     {
         var user = new User()

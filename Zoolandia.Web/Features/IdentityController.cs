@@ -17,4 +17,5 @@ public class IdentityController : ApiController
     [Route(nameof(Login))]
     public async Task<ActionResult<LoginOutputModel>> Login(LoginUserCommand command)
         => await this.Send(command);
+    
 }
