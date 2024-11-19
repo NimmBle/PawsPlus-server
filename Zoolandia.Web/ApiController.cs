@@ -10,6 +10,9 @@ namespace Zoolandia.Web;
 [Route("[controller]")]
 public class ApiController : ControllerBase
 {
+    public const string Id = "{Id}";
+    public const string Separator = "/";
+    
     private IMediator? mediator;
     protected IMediator Mediator
         => mediator ??= HttpContext
