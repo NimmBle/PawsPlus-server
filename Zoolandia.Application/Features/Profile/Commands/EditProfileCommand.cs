@@ -1,9 +1,12 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
+using Zoolandia.Domain.Repositories;
 
 namespace Zoolandia.Application.Features.Profile.Commands;
 
-public class EditProfileCommand : EntityCommand<string>, IRequest<Result>
+public class EditProfileCommand 
+    : EntityCommand<string>,
+        IRequest<Result>
 {
     
     public string FirstName { get; set; }
@@ -17,13 +20,28 @@ public class EditProfileCommand : EntityCommand<string>, IRequest<Result>
     public string Description { get; set; }
     
     
-    public class EditUserCommandHandler : IRequestHandler<EditProfileCommand, Result>
+    public class EditUserCommandHandler(IProfileDomainRepository profileRepository)
+        : IRequestHandler<EditProfileCommand, Result>
     {
-        public Task<Result> Handle(
+        public async Task<Result> Handle(
             EditProfileCommand request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var profile = await profileRepository.FindById(request.Id);
+
+            if (profile == null)
+                return false;
+
+            profile.FirstName = request.FirstName;
+            profile.LastName = request.LastName;
+            profile.Description = request.Description;
+            profile.PhotoUrl = request.PhoneNumber;
+            profile.PhoneNumber = request.PhoneNumber;
+            
+            
+            await profileRepository.Update(profile);
+
+            return true;
         }
     }
 }

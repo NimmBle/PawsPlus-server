@@ -8,7 +8,7 @@ namespace Zoolandia.Web.Features;
 public class ProfilesController : ApiController
 {
     [HttpPut]
-    [Route(nameof(Edit) + Separator + Id)]
+    [Route(Id)]
     public async Task<ActionResult> Edit(EditProfileCommand command)
         => await this.Send(command);
 }
