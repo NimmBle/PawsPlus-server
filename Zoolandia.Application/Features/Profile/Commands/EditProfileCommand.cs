@@ -32,11 +32,12 @@ public class EditProfileCommand
             if (profile == null)
                 return false;
 
-            profile.FirstName = request.FirstName;
-            profile.LastName = request.LastName;
-            profile.Description = request.Description;
-            profile.PhotoUrl = request.PhoneNumber;
-            profile.PhoneNumber = request.PhoneNumber;
+            profile
+                .UpdateFirstName(request.FirstName)
+                .UpdateLastName(request.LastName)
+                .UpdatePhotoUrl(request.PhotoUrl)
+                .UpdatePhoneNumber(request.PhoneNumber)
+                .UpdateDescription(request.Description);
             
             
             await profileRepository.Update(profile);

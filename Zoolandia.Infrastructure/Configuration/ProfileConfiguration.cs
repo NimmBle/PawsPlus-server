@@ -36,6 +36,10 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
             .IsRequired(false);
 
         builder
+            .Property(p => p.Address)
+            .IsRequired(false);
+
+        builder
             .HasOne(p => p.Pet)
             .WithOne(p => p.Profile);
 
