@@ -10,16 +10,15 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public string PhoneNumber { get; set; }
 
-    public string? PhotoUrl { get; set; } = "";
+    public string? PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
 
     public string? Description { get; set; }
 
-    public string? Address { get; set; }
+    // public string? Address { get; set; }
 
     public Pet? Pet { get; set; }
     
     public JobPost? JobPost { get; set; }
-
 
     public Profile UpdateFirstName(string firstName)
     {

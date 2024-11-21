@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Zoolandia.Application;
 using Zoolandia.Infrastructure;
 using Zoolandia.Infrastructure.Common.Persistence;
+using Zoolandia.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
+    .AddWebComponents()
     .AddEndpointsApiExplorer()
     .AddControllers();
 

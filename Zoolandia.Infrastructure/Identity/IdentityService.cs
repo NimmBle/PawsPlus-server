@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Common.Contracts;
 using Zoolandia.Application.Identity;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;

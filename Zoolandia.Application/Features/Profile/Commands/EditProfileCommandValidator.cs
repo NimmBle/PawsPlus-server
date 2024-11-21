@@ -21,6 +21,6 @@ public class EditProfileCommandValidator : AbstractValidator<EditProfileCommand>
         RuleFor(p => p.Description)
             .MaximumLength(MaxDescriptionLength);
         
-        
+        // finish it all the way
     }
 }

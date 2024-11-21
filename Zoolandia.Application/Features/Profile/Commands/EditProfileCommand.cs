@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Common.Contracts;
 using Zoolandia.Domain.Repositories;
 
 namespace Zoolandia.Application.Features.Profile.Commands;
@@ -20,17 +21,22 @@ public class EditProfileCommand
     public string Description { get; set; }
     
     
-    public class EditUserCommandHandler(IProfileDomainRepository profileRepository)
+    public class EditUserCommandHandler(
+        ICurrentUser currentUser,
+        IProfileDomainRepository profileRepository)
         : IRequestHandler<EditProfileCommand, Result>
     {
         public async Task<Result> Handle(
             EditProfileCommand request,
             CancellationToken cancellationToken)
         {
-            var profile = await profileRepository.FindById(request.Id);
+            var profile = await profileRepository.FindByUser(currentUser.UserId);
 
             if (profile == null)
                 return false;
+            
+            if (request.Id != profile.Id)
+                return "You cannot edit this User";
 
             profile
                 .UpdateFirstName(request.FirstName)

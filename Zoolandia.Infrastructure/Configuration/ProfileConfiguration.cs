@@ -35,9 +35,9 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
             .Property(p => p.Description)
             .IsRequired(false);
 
-        builder
-            .Property(p => p.Address)
-            .IsRequired(false);
+        // builder
+        //     .Property(p => p.Address)
+        //     .IsRequired(false);
 
         builder
             .HasOne(p => p.Pet)
