@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using static Zoolandia.Domain.Models.ModelConstants.Common;
+using static Zoolandia.Domain.Models.ModelConstants;
 
 namespace Zoolandia.Application.Identity.Commands.CreateUser;
 
@@ -25,5 +26,8 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .MinimumLength(MinEmailLength)
             .MaximumLength(MaxEmailLength)
             .NotEmpty();
+
+        RuleFor(u => u.Role)
+            .IsInEnum();
     }
 }

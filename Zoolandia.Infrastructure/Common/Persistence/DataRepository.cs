@@ -10,6 +10,8 @@ public class DataRepository<TDbContext, TEntity>(TDbContext db)
 {
 
     protected TDbContext Data { get; } = db;
+
+    protected IQueryable<TEntity> All() => this.Data.Set<TEntity>();
     
     public async Task Save(
         TEntity entity,

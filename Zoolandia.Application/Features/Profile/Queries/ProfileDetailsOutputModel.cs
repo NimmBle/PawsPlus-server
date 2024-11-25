@@ -1,0 +1,24 @@
+﻿using Zoolandia.Application.Common.Mapping;
+
+namespace Zoolandia.Application.Features.Profile.Queries;
+
+public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
+{
+    public string Id { get; private set; }
+    
+    public string Email { get; set; }
+    
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
+
+    public string PhoneNumber { get; set; }
+    
+    public string Description { get; set; }
+
+    public string PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
+
+    public void Mapping(AutoMapper.Profile mapper)
+        => mapper
+            .CreateMap<Domain.Models.Profile, ProfileDetailsOutputModel>();
+}

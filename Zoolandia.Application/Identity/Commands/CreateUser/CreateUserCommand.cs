@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
-using Zoolandia.Domain.Models;
+using static Zoolandia.Domain.Models.ModelConstants;
 using Zoolandia.Domain.Repositories;
+using Profile = Zoolandia.Domain.Models.Profile;
 
 namespace Zoolandia.Application.Identity.Commands.CreateUser;
 
@@ -13,7 +14,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
     public string PhoneNumber { get; set; } = default!;
 
-    public string Role { get; set; } = default!;
+    public Role Role { get; set; } = default!;
     
     public class CreateUserCommandHandler(
             IIdentity identity,

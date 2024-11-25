@@ -10,7 +10,7 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public string PhoneNumber { get; set; }
 
-    public string? PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
+    public string PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
 
     public string? Description { get; set; }
 
