@@ -22,6 +22,8 @@ public class EditProfileCommand
     
     public string Description { get; set; }
     
+    public string Socials { get; set; } // not fully implemented
+    
     
     public class EditUserCommandHandler(
         ICurrentUser currentUser,
