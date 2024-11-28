@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Profile.Commands;
+using Zoolandia.Application.Features.Profile.Queries;
 
 namespace Zoolandia.Web.Features;
 
 [Authorize]
 public class ProfilesController : ApiController
 {
+    [HttpGet]
+    [Route(Id)]
+    public async Task<ActionResult<ProfileDetailsOutputModel>> Details(ProfileDetailsQuery query)
+        => await this.Send(query);
+    
     [HttpPut]
     [Route(Id)]
     public async Task<ActionResult> Edit(EditProfileCommand command)
