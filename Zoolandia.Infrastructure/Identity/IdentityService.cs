@@ -95,5 +95,14 @@ internal class IdentityService(
         
         return Result.Success;
     }
-    
+
+    public async Task<bool> EmailAlreadyExists(string email)
+    {
+        var userExists = await userManager.FindByEmailAsync(email);
+
+        if (userExists != null)
+            return true;
+
+        return false;
+    }
 }

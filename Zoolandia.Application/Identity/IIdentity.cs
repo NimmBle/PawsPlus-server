@@ -12,4 +12,6 @@ public interface IIdentity
     Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput);
 
     Task<Result> ChangeEmail(string userId, string newEmail);
+
+    Task<bool> EmailAlreadyExists(string email);
 }
