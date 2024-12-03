@@ -6,8 +6,9 @@ using Zoolandia.Domain.Repositories;
 
 namespace Zoolandia.Application.Features.Profile.Queries;
 
-public class ProfileDetailsQuery : EntityCommand<string>, IRequest<Result<ProfileDetailsOutputModel>>
+public class ProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>>
 {
+    public string Id { get; set; }
     
     public class ProfileDetailsQueryHandler(
         ICurrentUser currentUser,

@@ -10,7 +10,13 @@ public class ProfilesController : ApiController
 {
     [HttpGet]
     [Route(Id)]
-    public async Task<ActionResult<ProfileDetailsOutputModel>> Details(ProfileDetailsQuery query)
+    public async Task<ActionResult<ProfileDetailsOutputModel>> Details(
+        [FromRoute] ProfileDetailsQuery query)
+        => await this.Send(query);
+    
+    [HttpGet]
+    public async Task<ActionResult<ProfileDetailsOutputModel>> Myself(
+        [FromQuery] ProfileDetailsQuery query)
         => await this.Send(query);
     
     [HttpPut]
