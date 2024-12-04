@@ -21,7 +21,6 @@ public class
     {
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
-
         base.OnModelCreating(builder);
     }
 }
