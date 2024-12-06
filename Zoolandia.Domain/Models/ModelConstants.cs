@@ -2,13 +2,6 @@
 
 public static class ModelConstants
 {
-    
-    public enum Role
-    {
-        Owner = 1,
-        Sitter = 2,
-        Administrator = 3
-    }
 
     public class Common
     {

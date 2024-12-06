@@ -17,14 +17,6 @@ public class
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder
-            .Entity<Pet>()
-            .OwnsOne(p => p.Age);
-
-        builder
-            .Entity<Pet>()
-            .OwnsOne(p => p.Personality);
-        
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
         base.OnModelCreating(builder);

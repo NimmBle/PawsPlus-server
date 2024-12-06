@@ -2,10 +2,13 @@
 
 public record Age
 {
-    private int Years { get; init; }
+    public int Years { get; private init; }
     
-    private int Months { get; init; }
+    public int Months { get; private init; }
 
+    public Age() 
+    {}
+    
     private Age(int years, int months)
     {
         this.Years = years;

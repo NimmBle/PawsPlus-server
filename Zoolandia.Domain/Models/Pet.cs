@@ -15,12 +15,12 @@ public class Pet : Entity<string>, IAggregateRoot
     
     public Gender Gender { get; set; }
 
-    public Breed Breed { get; set; } // change type
+    public Breed Breed { get; set; }
     
     public string Weight { get; set; } // change type to Enum
 
     public Personality Personality { get; set; }
-    
+
     public HealthStatus HealthStatus { get; set; }
 
     public string ProfileId { get; set; }

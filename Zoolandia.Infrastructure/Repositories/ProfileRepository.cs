@@ -31,11 +31,11 @@ public class ProfileRepository(
             .Select(u => u.Profile!.Id)
             .FirstOrDefaultAsync();
 
-    public async Task<ProfileDetailsOutputModel> GetDetails(string userId, CancellationToken cancellationToken = default)
+    public async Task<ProfileDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<ProfileDetailsOutputModel>(this
                 .All()
-                .Where(u => u.Id == userId))
+                .Where(u => u.Id == profileId))
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<string> GetEmail(string userId, CancellationToken cancellationToken = default)

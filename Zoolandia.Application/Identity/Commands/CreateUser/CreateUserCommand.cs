@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
-using static Zoolandia.Domain.Models.ModelConstants;
+using Zoolandia.Domain.Enums;
 using Zoolandia.Domain.Repositories;
 using Profile = Zoolandia.Domain.Models.Profile;
 

@@ -5,29 +5,29 @@ namespace Zoolandia.Domain.Models;
 public record Personality
 {
     
-    private string Temperament { get; init; }
+    public string Temperament { get; private init; }
     
-    private string Trait { get; init; }
+    public string ActivityLevel { get; private init; }
     
-    private string ActivityLevel { get; init; }
+    public Training IsTrained { get; private init; }
     
-    private Fear HasFears { get; init; }
+    public Fear HasFears { get; private init; }
     
-    private string FearsDescription { get; init; }
+    public string FearsDescription { get; private init; }
 
     public Personality()
     {}
     
     public Personality(
         string temperament,
-        string trait,
         string activityLevel,
+        Training isTrained,
         string fearsDescription,
         Fear hasFears)
     {
         this.Temperament = temperament;
-        this.Trait = trait;
         this.ActivityLevel = activityLevel;
+        this.IsTrained = isTrained;
         this.FearsDescription = fearsDescription;
         this.HasFears = hasFears;
     }
@@ -35,11 +35,11 @@ public record Personality
     
     public static Personality Create(
         string temperament,
-        string trait,
         string activityLevel,
+        Training isTrained,
         string fearsDescription,
         Fear hasFears)
     {
-        return new Personality(temperament, trait, activityLevel, fearsDescription, hasFears);
+        return new Personality(temperament, activityLevel, isTrained, fearsDescription, hasFears);
     }
 }

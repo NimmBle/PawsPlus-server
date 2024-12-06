@@ -1,19 +1,23 @@
 ﻿namespace Zoolandia.Domain.ValueObjects;
 
+
 public record HealthStatus
 {
     
-    private bool IsVaccinated { get; init; }
+    public bool IsVaccinated { get; private init; }
     
-    private bool IsCastrated { get; init; }
+    public bool IsCastrated { get; private init; }
     
-    private bool TakesMedications { get; init; }
+    public bool TakesMedications { get; private init; }
     
-    private bool EatingSchedule { get; init; }
+    public bool EatingSchedule { get; private init; }
     
-    private string? OtherDiateryNeeds { get; init; }
+    public string? OtherDiateryNeeds { get; private init; }
     
-    private string? HealthProblems { get; init;  }
+    public string? HealthProblems { get; private init; }
+    
+    public HealthStatus()
+    {}
     
     private HealthStatus(
         bool isVaccinated,
