@@ -1,4 +1,6 @@
 ﻿using Zoolandia.Domain.Common;
+using Zoolandia.Domain.Enums;
+using Zoolandia.Domain.ValueObjects;
 
 namespace Zoolandia.Domain.Models;
 
@@ -9,15 +11,17 @@ public class Pet : Entity<string>, IAggregateRoot
 
     public string PhotoUrl { get; set; }
 
-    public string Age { get; set; }
+    public Age Age { get; set; }
     
-    public string Gender { get; set; }
+    public Gender Gender { get; set; }
 
-    public string Breed { get; set; } // change type
+    public Breed Breed { get; set; } // change type
     
     public string Weight { get; set; } // change type to Enum
+
+    public Personality Personality { get; set; }
     
-    public string Personality { get; set; }
+    public HealthStatus HealthStatus { get; set; }
 
     public string ProfileId { get; set; }
     

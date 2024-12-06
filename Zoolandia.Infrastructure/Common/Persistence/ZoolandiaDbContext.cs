@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Zoolandia.Domain.Models;
 using Zoolandia.Infrastructure.Identity;
@@ -19,6 +17,14 @@ public class
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder
+            .Entity<Pet>()
+            .OwnsOne(p => p.Age);
+
+        builder
+            .Entity<Pet>()
+            .OwnsOne(p => p.Personality);
+        
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
         base.OnModelCreating(builder);

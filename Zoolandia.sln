@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoolandia.Server", "Zoolandia.Server\Zoolandia.Server.csproj", "{347E61D3-8617-4FA4-BF7B-F127B068B78E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoolandia.Startup", "Zoolandia.Startup\Zoolandia.Startup.csproj", "{347E61D3-8617-4FA4-BF7B-F127B068B78E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoolandia.Domain", "Zoolandia.Domain\Zoolandia.Domain.csproj", "{A84CE5AD-A5EA-4848-9E1B-59CDB8C16458}"
 EndProject

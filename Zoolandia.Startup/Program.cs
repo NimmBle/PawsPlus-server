@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Zoolandia.Application;
 using Zoolandia.Infrastructure;
 using Zoolandia.Infrastructure.Common.Persistence;

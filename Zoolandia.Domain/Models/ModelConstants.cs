@@ -1,6 +1,6 @@
 ﻿namespace Zoolandia.Domain.Models;
 
-public class ModelConstants
+public static class ModelConstants
 {
     
     public enum Role

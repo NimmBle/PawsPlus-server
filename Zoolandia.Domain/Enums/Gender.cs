@@ -1,4 +1,4 @@
-﻿namespace Zoolandia.Domain.Models;
+﻿namespace Zoolandia.Domain.Enums;
 
 public enum Gender
 {
