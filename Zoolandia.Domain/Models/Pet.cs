@@ -17,7 +17,7 @@ public class Pet : Entity<string>, IAggregateRoot
 
     public Breed Breed { get; set; }
     
-    public string Weight { get; set; } // change type to Enum
+    public string? Weight { get; set; } // change type to Enum
 
     public Personality Personality { get; set; }
 

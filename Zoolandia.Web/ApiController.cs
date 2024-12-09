@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Zoolandia.Application.Common;
@@ -8,6 +9,7 @@ namespace Zoolandia.Web;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class ApiController : ControllerBase
 {
     public const string Id = "{Id}";

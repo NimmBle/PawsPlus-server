@@ -21,7 +21,7 @@ public static class ModelConstants
         public const int MaxDescriptionLength = 1024;
     }
     
-    public class Pet
+    public static class Pet
     {
         public const int MaxDescriptionLength = 1024;
     }

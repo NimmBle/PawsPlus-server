@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Identity.Commands;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
 
 namespace Zoolandia.Web.Features;
 
+[AllowAnonymous]
 public class IdentityController : ApiController
 {
 

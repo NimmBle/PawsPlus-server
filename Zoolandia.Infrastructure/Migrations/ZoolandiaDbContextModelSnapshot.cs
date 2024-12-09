@@ -197,7 +197,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Weight")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.ComplexProperty<Dictionary<string, object>>("Age", "Zoolandia.Domain.Models.Pet.Age#Age", b1 =>
@@ -205,33 +204,41 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                             b1.IsRequired();
 
                             b1.Property<int>("Months")
-                                .HasColumnType("int");
+                                .HasColumnType("int")
+                                .HasColumnName("MonthsOld");
 
                             b1.Property<int>("Years")
-                                .HasColumnType("int");
+                                .HasColumnType("int")
+                                .HasColumnName("YearsOld");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("HealthStatus", "Zoolandia.Domain.Models.Pet.HealthStatus#HealthStatus", b1 =>
                         {
                             b1.IsRequired();
 
-                            b1.Property<bool>("EatingSchedule")
-                                .HasColumnType("bit");
+                            b1.Property<bool?>("HasEatingSchedule")
+                                .HasColumnType("bit")
+                                .HasColumnName("HasEatingSchedule");
 
                             b1.Property<string>("HealthProblems")
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("HealthProblems");
 
-                            b1.Property<bool>("IsCastrated")
-                                .HasColumnType("bit");
+                            b1.Property<bool?>("IsCastrated")
+                                .HasColumnType("bit")
+                                .HasColumnName("IsCastrated");
 
-                            b1.Property<bool>("IsVaccinated")
-                                .HasColumnType("bit");
+                            b1.Property<bool?>("IsVaccinated")
+                                .HasColumnType("bit")
+                                .HasColumnName("IsVaccinated");
 
                             b1.Property<string>("OtherDiateryNeeds")
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("OtherDiateryNeeds");
 
-                            b1.Property<bool>("TakesMedications")
-                                .HasColumnType("bit");
+                            b1.Property<bool?>("TakesMedications")
+                                .HasColumnType("bit")
+                                .HasColumnName("TakesMedications");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Personality", "Zoolandia.Domain.Models.Pet.Personality#Personality", b1 =>
@@ -239,22 +246,24 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                             b1.IsRequired();
 
                             b1.Property<string>("ActivityLevel")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("ActivityLevel");
 
                             b1.Property<string>("FearsDescription")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("FearsDescription");
 
-                            b1.Property<int>("HasFears")
-                                .HasColumnType("int");
+                            b1.Property<int?>("HasFears")
+                                .HasColumnType("int")
+                                .HasColumnName("HasFears");
 
-                            b1.Property<int>("IsTrained")
-                                .HasColumnType("int");
+                            b1.Property<int?>("IsTrained")
+                                .HasColumnType("int")
+                                .HasColumnName("IsTrained");
 
                             b1.Property<string>("Temperament")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Temperament");
                         });
 
                     b.HasKey("Id");

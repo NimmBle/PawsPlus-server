@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Profile.Commands;
 using Zoolandia.Application.Features.Profile.Queries;
 
 namespace Zoolandia.Web.Features;
 
-[Authorize]
 public class ProfilesController : ApiController
 {
     [HttpGet]

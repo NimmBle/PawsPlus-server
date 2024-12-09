@@ -16,6 +16,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     a.Property(a => a.Years).HasColumnName("YearsOld");
                     a.Property(a => a.Months).HasColumnName("MonthsOld");
                 });
+            
         
         builder
             .ComplexProperty(p => p.Personality,
@@ -33,6 +34,11 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 hs =>
                 {
                     hs.Property(hs => hs.IsVaccinated).HasColumnName("IsVaccinated");
+                    hs.Property(hs => hs.IsCastrated).HasColumnName("IsCastrated");
+                    hs.Property(hs => hs.TakesMedications).HasColumnName("TakesMedications");
+                    hs.Property(hs => hs.HasEatingSchedule).HasColumnName("HasEatingSchedule");
+                    hs.Property(hs => hs.OtherDiateryNeeds).HasColumnName("OtherDiateryNeeds");
+                    hs.Property(hs => hs.HealthProblems).HasColumnName("HealthProblems");
                 });
     }
 }
