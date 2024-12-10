@@ -12,6 +12,7 @@ public class EditProfileCommand
 {
     
     public string Email { get; set; }
+    
     public string FirstName { get; set; }
     
     public string LastName { get; set; }
@@ -20,9 +21,7 @@ public class EditProfileCommand
     
     public string PhotoUrl { get; set; }
     
-    public string Description { get; set; }
-    
-    public string Socials { get; set; } // not fully implemented
+    public string? Description { get; set; }
     
     
     public class EditUserCommandHandler(

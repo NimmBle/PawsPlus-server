@@ -8,7 +8,6 @@ namespace Zoolandia.Web.Features;
 public class FilesController : ApiController
 {
     [HttpPost]
-    [Authorize]
     [Route(nameof(UploadImage))]
     public async Task<ActionResult<UploadImageOutputModel>> UploadImage(UploadImageCommand command)
         => await this.Send(command);

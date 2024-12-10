@@ -5,6 +5,7 @@ namespace Zoolandia.Application.Features.Profile.Queries;
 public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
 {   
     public string Id { get; set; }
+    
     public string Email { get; set; }
     
     public string FirstName { get; set; }
