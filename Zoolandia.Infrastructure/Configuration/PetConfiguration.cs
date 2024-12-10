@@ -9,7 +9,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
     public void Configure(EntityTypeBuilder<Pet> builder)
     {
         builder
-            .ComplexProperty(
+            .OwnsOne(
                 p => p.Age,
                 a =>
                 {
@@ -19,7 +19,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             
         
         builder
-            .ComplexProperty(p => p.Personality,
+            .OwnsOne(p => p.Personality,
                 p =>
                 {
                     p.Property(p => p.Temperament).HasColumnName("Temperament");
@@ -30,7 +30,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 });
         
         builder
-            .ComplexProperty(p => p.HealthStatus, 
+            .OwnsOne(p => p.HealthStatus, 
                 hs =>
                 {
                     hs.Property(hs => hs.IsVaccinated).HasColumnName("IsVaccinated");

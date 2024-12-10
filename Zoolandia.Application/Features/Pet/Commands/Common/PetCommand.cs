@@ -21,15 +21,15 @@ public abstract class PetCommand<TCommand> : EntityCommand<string>
 
     public string? Weight { get; set; }
 
-    public string? Temperament { get; private set; }
+    public string? Temperament { get; set; }
     
-    public string? ActivityLevel { get; private set; }
+    public string? ActivityLevel { get; set; }
     
     public Training? IsTrained { get; set; }
     
     public Fear? HasFears { get; set; }
     
-    public string? FearsDescription { get; private set; }
+    public string? FearsDescription { get; set; }
 
     public bool? IsVaccinated { get; set; }
     
@@ -43,5 +43,5 @@ public abstract class PetCommand<TCommand> : EntityCommand<string>
     
     public string? HealthProblems { get; set; }
 
-    public string ProfileId { get; set; }
+    public string? ProfileId { get; set; }
 }

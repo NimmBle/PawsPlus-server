@@ -4,28 +4,28 @@
 public record HealthStatus
 {
     
-    public bool? IsVaccinated { get; private init; }
+    public bool IsVaccinated { get; private set; }
     
-    public bool? IsCastrated { get; private init; }
+    public bool IsCastrated { get; private set; }
     
-    public bool? TakesMedications { get; private init; }
+    public bool TakesMedications { get; private set; }
     
-    public bool? HasEatingSchedule { get; private init; }
+    public bool HasEatingSchedule { get; private set; }
     
-    public string? OtherDiateryNeeds { get; private init; }
+    public string OtherDiateryNeeds { get; private set; }
     
-    public string? HealthProblems { get; private init; }
+    public string HealthProblems { get; private set; }
     
     public HealthStatus()
     {}
     
     private HealthStatus(
-        bool? isVaccinated,
-        bool? isCastrated,
-        bool? takesMedications,
-        bool? hasEatingSchedule,
-        string? otherDiateryNeeds,
-        string? healthProblems)
+        bool isVaccinated,
+        bool isCastrated,
+        bool takesMedications,
+        bool hasEatingSchedule,
+        string otherDiateryNeeds,
+        string healthProblems)
     {
         this.IsVaccinated = isVaccinated;
         this.IsCastrated = isCastrated;
@@ -36,12 +36,12 @@ public record HealthStatus
     }
 
     public static HealthStatus Create(
-        bool? isVaccinated,
-        bool? isCastrated,
-        bool? takesMedications,
-        bool? hasEatingSchedule,
-        string? otherDiateryNeeds,
-        string? healthProblems)
+        bool isVaccinated,
+        bool isCastrated,
+        bool takesMedications,
+        bool hasEatingSchedule,
+        string otherDiateryNeeds,
+        string healthProblems)
     {
         return new HealthStatus(isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDiateryNeeds, healthProblems);
     }

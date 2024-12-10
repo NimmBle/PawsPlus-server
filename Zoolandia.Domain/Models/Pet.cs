@@ -6,12 +6,25 @@ namespace Zoolandia.Domain.Models;
 
 public class Pet : Entity<string>, IAggregateRoot
 {
+    internal Pet(
+        string name,
+        string photoUrl,
+        Gender gender,
+        Breed breed 
+        )
+    {
+        this.Name = name;
+        this.PhotoUrl = photoUrl;
+        this.Gender = gender;
+        this.Breed = breed;
+    }
+    
 
     public string Name { get; set; }
 
     public string PhotoUrl { get; set; }
 
-    public Age Age { get; set; }
+    public Age? Age { get; set; }
     
     public Gender Gender { get; set; }
 
@@ -19,9 +32,9 @@ public class Pet : Entity<string>, IAggregateRoot
     
     public string? Weight { get; set; } // change type to Enum
 
-    public Personality Personality { get; set; }
+    public Personality? Personality { get; set; }
 
-    public HealthStatus HealthStatus { get; set; }
+    public HealthStatus? HealthStatus { get; set; }
 
     public string ProfileId { get; set; }
     

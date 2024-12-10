@@ -10,7 +10,8 @@ public class CreatePetCommand :  PetCommand<CreatePetCommand>, IRequest<Result>
     {
         public async Task<Result> Handle(CreatePetCommand request, CancellationToken cancellationToken)
         {
-            return "Bananasasss";
+            // var pet = Pet(request.Name, request.PhotoUrl, request.Gender, request.Breed);
+            return "Banana";
         }
     }
 }

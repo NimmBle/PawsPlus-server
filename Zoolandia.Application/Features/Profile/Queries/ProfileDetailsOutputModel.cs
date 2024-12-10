@@ -4,11 +4,12 @@ namespace Zoolandia.Application.Features.Profile.Queries;
 
 public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
 {   
+    public string Id { get; set; }
     public string Email { get; set; }
     
-    public string FirstName { get; private set; }
+    public string FirstName { get; set; }
 
-    public string LastName { get; private set; }
+    public string LastName { get; set; }
 
     public string PhoneNumber { get; set; }
     
