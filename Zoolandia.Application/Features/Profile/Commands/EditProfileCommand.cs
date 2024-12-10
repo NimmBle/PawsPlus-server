@@ -41,7 +41,7 @@ public class EditProfileCommand
             if (profile == null)
                 return false;
             
-            if (request.Id != currentUserId)
+            if (request.Id != profile.Id)
                 return "You cannot edit this User";
 
             if (emailExists)
