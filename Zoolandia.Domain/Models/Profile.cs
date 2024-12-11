@@ -1,4 +1,9 @@
 ﻿using Zoolandia.Domain.Common;
+using Zoolandia.Domain.Common.Models;
+using Zoolandia.Domain.Exceptions;
+
+using static Zoolandia.Domain.Models.ModelConstants.Common;
+using static Zoolandia.Domain.Models.ModelConstants.Profile;
 
 namespace Zoolandia.Domain.Models;
 
@@ -22,7 +27,7 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public Profile UpdateFirstName(string firstName)
     {
-        // ValidateFirstName(firstName);
+        ValidateFirstName(firstName);
         this.FirstName = firstName;
 
         return this;
@@ -30,7 +35,7 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public Profile UpdateLastName(string lastName)
     {
-        // ValidateLastName(lastName);
+        ValidateLastName(lastName);
         this.LastName = lastName;
 
         return this;
@@ -38,7 +43,7 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public Profile UpdatePhotoUrl(string photoUrl)
     {
-        // ValidatePhotoUrl(photoUrl);
+        ValidatePhotoUrl(photoUrl);
         this.PhotoUrl = photoUrl;
 
         return this;
@@ -59,4 +64,23 @@ public class Profile : Entity<string>, IAggregateRoot
 
         return this;
     }
+
+    public void ValidateFirstName(string firstName)
+        => Guard.ForStringLength<InvalidProfileException>(
+            firstName,
+            MinNameLength,
+            MaxNameLength,
+            nameof(FirstName));
+    
+    public void ValidateLastName(string lastName)
+        => Guard.ForStringLength<InvalidProfileException>(
+            lastName,
+            MinNameLength,
+            MaxNameLength,
+            nameof(LastName));
+
+    public void ValidatePhotoUrl(string photoUrl)
+        => Guard.ForValidUrl<InvalidProfileException>(
+            photoUrl,
+            nameof(PhotoUrl));
 }

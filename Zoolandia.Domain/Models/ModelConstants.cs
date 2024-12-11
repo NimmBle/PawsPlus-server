@@ -1,6 +1,6 @@
 ﻿namespace Zoolandia.Domain.Models;
 
-public static class ModelConstants
+public class ModelConstants
 {
 
     public class Common
@@ -21,7 +21,7 @@ public static class ModelConstants
         public const int MaxDescriptionLength = 1024;
     }
     
-    public static class Pet
+    public class Pet
     {
         public const int MaxDescriptionLength = 1024;
     }

@@ -13,6 +13,8 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddControllers();
 
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 var app = builder.Build();
 
