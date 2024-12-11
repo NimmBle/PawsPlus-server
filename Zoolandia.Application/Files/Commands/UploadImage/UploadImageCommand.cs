@@ -12,9 +12,9 @@ public class UploadImageCommand : IRequest<Result<UploadImageOutputModel>>
         : IRequestHandler<UploadImageCommand, Result<UploadImageOutputModel>>
     {
 
-        public Task<Result<UploadImageOutputModel>> Handle(
+        public async Task<Result<UploadImageOutputModel>> Handle(
             UploadImageCommand request,
             CancellationToken cancellationToken)
-            => file.UploadImage(request.Image);
+            => await file.UploadImage(request.Image);
     }
 }

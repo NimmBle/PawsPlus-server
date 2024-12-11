@@ -32,8 +32,6 @@ public class ProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>>
             
             var profileData = await profileQueryRepository.GetDetails(profileId);
 
-            profileData.Email = await profileQueryRepository.GetEmail(currentUser.UserId);
-
             return profileData;
         }
     }

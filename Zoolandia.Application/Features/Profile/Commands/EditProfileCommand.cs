@@ -11,8 +11,6 @@ public class EditProfileCommand
         IRequest<Result>
 {
     
-    public string Email { get; set; }
-    
     public string FirstName { get; set; }
     
     public string LastName { get; set; }
@@ -36,18 +34,12 @@ public class EditProfileCommand
         {
             var currentUserId = currentUser.UserId;
             var profile = await profileRepository.FindByUser(currentUserId);
-            var emailExists = await identity.EmailAlreadyExists(request.Email);
 
             if (profile == null)
                 return false;
             
             if (request.Id != profile.Id)
                 return "You cannot edit this User";
-
-            if (emailExists)
-                return "This email is taken! Try another";
-            
-            await identity.ChangeEmail(currentUserId, request.Email);
             
             profile
                 .UpdateFirstName(request.FirstName)
