@@ -24,7 +24,6 @@ public class EditProfileCommand
     
     public class EditUserCommandHandler(
         ICurrentUser currentUser,
-        IIdentity identity,
         IProfileDomainRepository profileRepository)
         : IRequestHandler<EditProfileCommand, Result>
     {

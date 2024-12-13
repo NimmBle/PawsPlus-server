@@ -12,7 +12,7 @@ public record HealthStatus
     
     public bool HasEatingSchedule { get; private set; }
     
-    public string OtherDiateryNeeds { get; private set; }
+    public string OtherDietaryNeeds { get; private set; }
     
     public string HealthProblems { get; private set; }
     
@@ -24,14 +24,14 @@ public record HealthStatus
         bool isCastrated,
         bool takesMedications,
         bool hasEatingSchedule,
-        string otherDiateryNeeds,
+        string otherDietaryNeeds,
         string healthProblems)
     {
         this.IsVaccinated = isVaccinated;
         this.IsCastrated = isCastrated;
         this.TakesMedications = takesMedications;
         this.HasEatingSchedule = hasEatingSchedule;
-        this.OtherDiateryNeeds = otherDiateryNeeds;
+        this.OtherDietaryNeeds = otherDietaryNeeds;
         this.HealthProblems = healthProblems;
     }
 
@@ -40,9 +40,9 @@ public record HealthStatus
         bool isCastrated,
         bool takesMedications,
         bool hasEatingSchedule,
-        string otherDiateryNeeds,
+        string otherDietaryNeeds,
         string healthProblems)
     {
-        return new HealthStatus(isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDiateryNeeds, healthProblems);
+        return new HealthStatus(isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);
     }
 }

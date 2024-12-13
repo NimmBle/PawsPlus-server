@@ -6,23 +6,46 @@ namespace Zoolandia.Domain.Models;
 
 public class Pet : Entity<string>, IAggregateRoot
 {
-    internal Pet(
+    public Pet(
+        string name,
+        string photoUrl,
+        Age age,
+        Gender gender,
+        Breed breed,
+        string? weight,
+        Personality? personality,
+        HealthStatus? healthStatus,
+        string profileId
+    )
+        : this(name, photoUrl, gender, breed, weight, profileId)
+    {
+        this.Age = age;
+        this.Personality = personality;
+        this.HealthStatus = healthStatus;
+    }
+
+    private Pet(
         string name,
         string photoUrl,
         Gender gender,
-        Breed breed 
-        )
+        Breed breed,
+        string? weight,
+        string profileId
+    )
     {
+        this.Id = Guid.NewGuid().ToString();
+        
         this.Name = name;
         this.PhotoUrl = photoUrl;
         this.Gender = gender;
         this.Breed = breed;
+        this.Weight = weight;
+        this.ProfileId = profileId;
     }
-    
 
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
-    public string PhotoUrl { get; set; }
+    public string PhotoUrl { get; set; } = default!;
 
     public Age? Age { get; set; }
     

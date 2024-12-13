@@ -37,7 +37,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     hs.Property(hs => hs.IsCastrated).HasColumnName("IsCastrated");
                     hs.Property(hs => hs.TakesMedications).HasColumnName("TakesMedications");
                     hs.Property(hs => hs.HasEatingSchedule).HasColumnName("HasEatingSchedule");
-                    hs.Property(hs => hs.OtherDiateryNeeds).HasColumnName("OtherDiateryNeeds");
+                    hs.Property(hs => hs.OtherDietaryNeeds).HasColumnName("OtherDietaryNeeds");
                     hs.Property(hs => hs.HealthProblems).HasColumnName("HealthProblems");
                 });
     }

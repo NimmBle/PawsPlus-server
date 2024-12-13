@@ -1,4 +1,4 @@
-﻿using static Zoolandia.Domain.Models.ModelConstants.Common;
+﻿using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Domain.Common.Models;
 
@@ -7,11 +7,12 @@ public static class Guard
     public static void ForValidUrl<TException>(string url, string name = "Value")
         where TException : BaseDomainException, new()
     {
-        if (url.Length >= MaxUrlLength &&
+        if (url.Length <= ModelConstants.Common.MaxUrlLength &&
             Uri.IsWellFormedUriString(url, UriKind.Absolute))
         {
             return;
         }
+        
         ThrowException<TException>($"{name} must be a valid URL");
             
     }

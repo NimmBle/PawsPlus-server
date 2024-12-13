@@ -1,4 +1,5 @@
 using Zoolandia.Application;
+using Zoolandia.Domain;
 using Zoolandia.Infrastructure;
 using Zoolandia.Infrastructure.Common.Persistence;
 using Zoolandia.Web;
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
+    .AddDomain()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddWebComponents()

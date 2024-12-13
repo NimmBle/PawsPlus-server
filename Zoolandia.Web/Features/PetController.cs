@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Zoolandia.Application.Features.Pet.Commands.CreatePet;
+using Zoolandia.Application.Features.Pet.Commands.Create;
+using Zoolandia.Application.Features.Pet.Commands.Delete;
 
 namespace Zoolandia.Web.Features;
 
@@ -7,7 +8,13 @@ public class PetController : ApiController
 {
 
     [HttpPost]
-    public async Task<ActionResult> Create(CreatePetCommand command)
+    public async Task<ActionResult<CreatePetOutputModel>> Create(CreatePetCommand command)
+        => await this.Send(command);
+
+    [HttpDelete]
+    [Route(Id)]
+    public async Task<ActionResult> Delete(
+        [FromRoute] DeletePetCommand command)
         => await this.Send(command);
 
 }
