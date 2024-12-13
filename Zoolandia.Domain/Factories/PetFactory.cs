@@ -8,6 +8,7 @@ public class PetFactory : IPetFactory
 {
     private string name = default!;
     private string photoUrl = default!;
+    private PetType petType = default!;
     private Age age = default!;
     private Gender gender;
     private Breed breed;
@@ -25,6 +26,12 @@ public class PetFactory : IPetFactory
     public IPetFactory WithPhotoUrl(string photoUrl)
     {
         this.photoUrl = photoUrl;
+        return this;
+    }
+
+    public IPetFactory WithType(PetType type)
+    {
+        this.petType = type;
         return this;
     }
 
@@ -77,13 +84,13 @@ public class PetFactory : IPetFactory
         string? otherDietaryNeeds,
         string? healthProblems)
     {
-        this.healthStatus = HealthStatus
-            .Create(isVaccinated,
-                 isCastrated,
-                 takesMedications,
-                 hasEatingSchedule,
-                 otherDietaryNeeds,
-                 healthProblems);
+        this.healthStatus = HealthStatus.Create(
+                isVaccinated,
+                isCastrated,
+                takesMedications,
+                hasEatingSchedule,
+                otherDietaryNeeds,
+                healthProblems);
 
         return this;
     }
@@ -98,6 +105,7 @@ public class PetFactory : IPetFactory
         => new Pet(
             this.name,
             this.photoUrl,
+            this.petType,
             this.age,
             this.gender,
             this.breed,

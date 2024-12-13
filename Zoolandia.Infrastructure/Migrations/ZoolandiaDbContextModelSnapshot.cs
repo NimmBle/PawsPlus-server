@@ -187,6 +187,9 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PetType")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -439,7 +442,8 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<bool>("HasEatingSchedule")
+                            b1.Property<bool?>("HasEatingSchedule")
+                                .IsRequired()
                                 .HasColumnType("bit")
                                 .HasColumnName("HasEatingSchedule");
 
@@ -448,11 +452,13 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("HealthProblems");
 
-                            b1.Property<bool>("IsCastrated")
+                            b1.Property<bool?>("IsCastrated")
+                                .IsRequired()
                                 .HasColumnType("bit")
                                 .HasColumnName("IsCastrated");
 
-                            b1.Property<bool>("IsVaccinated")
+                            b1.Property<bool?>("IsVaccinated")
+                                .IsRequired()
                                 .HasColumnType("bit")
                                 .HasColumnName("IsVaccinated");
 
@@ -461,7 +467,8 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("OtherDietaryNeeds");
 
-                            b1.Property<bool>("TakesMedications")
+                            b1.Property<bool?>("TakesMedications")
+                                .IsRequired()
                                 .HasColumnType("bit")
                                 .HasColumnName("TakesMedications");
 

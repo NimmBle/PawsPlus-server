@@ -30,6 +30,7 @@ public class CreatePetCommand
             var pet = petFactory
                 .WithName(request.Name)
                 .WithPhotoUrl(request.PhotoUrl)
+                .WithType(request.PetType)
                 .WithAge(request.Years, request.Months)
                 .WithGender(request.Gender)
                 .WithBreed(request.Breed)

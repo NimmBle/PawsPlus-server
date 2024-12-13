@@ -1,4 +1,5 @@
-﻿using Zoolandia.Domain.Common;
+﻿using Newtonsoft.Json;
+using Zoolandia.Domain.Common;
 using Zoolandia.Domain.Enums;
 using Zoolandia.Domain.ValueObjects;
 
@@ -9,6 +10,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public Pet(
         string name,
         string photoUrl,
+        PetType petType,
         Age age,
         Gender gender,
         Breed breed,
@@ -17,7 +19,7 @@ public class Pet : Entity<string>, IAggregateRoot
         HealthStatus? healthStatus,
         string profileId
     )
-        : this(name, photoUrl, gender, breed, weight, profileId)
+        : this(name, photoUrl, petType, gender, breed, weight, profileId)
     {
         this.Age = age;
         this.Personality = personality;
@@ -27,6 +29,7 @@ public class Pet : Entity<string>, IAggregateRoot
     private Pet(
         string name,
         string photoUrl,
+        PetType petType,
         Gender gender,
         Breed breed,
         string? weight,
@@ -34,9 +37,10 @@ public class Pet : Entity<string>, IAggregateRoot
     )
     {
         this.Id = Guid.NewGuid().ToString();
-        
+
         this.Name = name;
         this.PhotoUrl = photoUrl;
+        this.PetType = petType;
         this.Gender = gender;
         this.Breed = breed;
         this.Weight = weight;
@@ -47,10 +51,15 @@ public class Pet : Entity<string>, IAggregateRoot
 
     public string PhotoUrl { get; set; } = default!;
 
+    [JsonProperty(Required = Required.Always)]
+    public PetType PetType { get; set; }
+    
     public Age? Age { get; set; }
     
+    [JsonProperty(Required = Required.Always)]
     public Gender Gender { get; set; }
 
+    [JsonProperty(Required = Required.Always)]
     public Breed Breed { get; set; }
     
     public string? Weight { get; set; } // change type to Enum

@@ -11,6 +11,8 @@ public abstract class PetCommand<TCommand> : EntityCommand<string>
 
     public string PhotoUrl { get; set; } = default!;
 
+    public PetType PetType { get; set; } = default!;
+
     public int Years { get; set; }
     
     public int Months { get; set; }
