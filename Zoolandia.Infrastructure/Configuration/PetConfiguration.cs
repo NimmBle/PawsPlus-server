@@ -16,29 +16,29 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     a.Property(a => a.Years).HasColumnName("YearsOld");
                     a.Property(a => a.Months).HasColumnName("MonthsOld");
                 });
-            
-        
+
+
         builder
             .OwnsOne(p => p.Personality,
                 p =>
                 {
-                    p.Property(p => p.Temperament).HasColumnName("Temperament");
-                    p.Property(p => p.ActivityLevel).HasColumnName("ActivityLevel");
-                    p.Property(p => p.IsTrained).HasColumnName("IsTrained");
-                    p.Property(p => p.HasFears).HasColumnName("HasFears");
-                    p.Property(p => p.FearsDescription).HasColumnName("FearsDescription");
+                    p.Property(p => p.Temperament).HasColumnName("Temperament").IsRequired();
+                    p.Property(p => p.ActivityLevel).HasColumnName("ActivityLevel").IsRequired();
+                    p.Property(p => p.IsTrained).HasColumnName("IsTrained").IsRequired();
+                    p.Property(p => p.HasFears).HasColumnName("HasFears").IsRequired();
+                    p.Property(p => p.FearsDescription).HasColumnName("FearsDescription").IsRequired();
                 });
         
         builder
             .OwnsOne(p => p.HealthStatus, 
                 hs =>
                 {
-                    hs.Property(hs => hs.IsVaccinated).HasColumnName("IsVaccinated");
-                    hs.Property(hs => hs.IsCastrated).HasColumnName("IsCastrated");
-                    hs.Property(hs => hs.TakesMedications).HasColumnName("TakesMedications");
-                    hs.Property(hs => hs.HasEatingSchedule).HasColumnName("HasEatingSchedule");
-                    hs.Property(hs => hs.OtherDietaryNeeds).HasColumnName("OtherDietaryNeeds");
-                    hs.Property(hs => hs.HealthProblems).HasColumnName("HealthProblems");
+                    hs.Property(hs => hs.IsVaccinated).HasColumnName("IsVaccinated").IsRequired();
+                    hs.Property(hs => hs.IsCastrated).HasColumnName("IsCastrated").IsRequired();
+                    hs.Property(hs => hs.TakesMedications).HasColumnName("TakesMedications").IsRequired();
+                    hs.Property(hs => hs.HasEatingSchedule).HasColumnName("HasEatingSchedule").IsRequired();
+                    hs.Property(hs => hs.OtherDietaryNeeds).HasColumnName("OtherDietaryNeeds").IsRequired();
+                    hs.Property(hs => hs.HealthProblems).HasColumnName("HealthProblems").IsRequired();
                 });
     }
 }

@@ -19,11 +19,11 @@ public interface IPetFactory : IFactory<Pet>
     IPetFactory WithWeight(string weight);
 
     IPetFactory WithPersonality(
-        string temperament,
-        string activityLevel,
-        Training isTrained,
-        Fear hasFears,
-        string fearsDescription);
+        string? temperament,
+        string? activityLevel,
+        Training? isTrained,
+        Fear? hasFears,
+        string? fearsDescription);
 
     IPetFactory WithHealthStatus(
         bool? isVaccinated,

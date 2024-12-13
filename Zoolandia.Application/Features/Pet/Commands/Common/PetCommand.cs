@@ -25,11 +25,11 @@ public abstract class PetCommand<TCommand> : EntityCommand<string>
     
     public string? ActivityLevel { get; set; } = default;
     
-    public Training IsTrained { get; set; } = default;
+    public Training? IsTrained { get; set; } = default;
     
-    public Fear HasFears { get; set; } = default;
+    public Fear? HasFears { get; set; } = default;
     
-    public string FearsDescription { get; set; } = default;
+    public string? FearsDescription { get; set; } = default;
 
     public bool? IsVaccinated { get; set; } = default;
     
