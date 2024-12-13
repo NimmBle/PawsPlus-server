@@ -31,17 +31,17 @@ public abstract class PetCommand<TCommand> : EntityCommand<string>
     
     public string FearsDescription { get; set; } = default;
 
-    public bool IsVaccinated { get; set; } = default;
+    public bool? IsVaccinated { get; set; } = default;
     
-    public bool IsCastrated { get; set; } = default;
+    public bool? IsCastrated { get; set; } = default;
     
-    public bool TakesMedications { get; set; } = default;
+    public bool? TakesMedications { get; set; } = default;
     
-    public bool HasEatingSchedule { get; set; } = default;
+    public bool? HasEatingSchedule { get; set; } = default;
 
-    public string OtherDietaryNeeds { get; set; } = default;
+    public string? OtherDietaryNeeds { get; set; } = default;
     
-    public string HealthProblems { get; set; } = default;
+    public string? HealthProblems { get; set; } = default;
 
     public string ProfileId { get; set; } = default!;
 }

@@ -70,12 +70,12 @@ public class PetFactory : IPetFactory
     }
 
     public IPetFactory WithHealthStatus(
-        bool isVaccinated,
-        bool isCastrated,
-        bool takesMedications,
-        bool hasEatingSchedule,
-        string otherDietaryNeeds,
-        string healthProblems)
+        bool? isVaccinated,
+        bool? isCastrated,
+        bool? takesMedications,
+        bool? hasEatingSchedule,
+        string? otherDietaryNeeds,
+        string? healthProblems)
     {
         this.healthStatus = HealthStatus
             .Create(isVaccinated,
