@@ -25,6 +25,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
             CreateUserCommand request,
             CancellationToken cancellationToken)
         {
+            
             var result = await identity.Register(request);
 
             if (!result.Succeeded)

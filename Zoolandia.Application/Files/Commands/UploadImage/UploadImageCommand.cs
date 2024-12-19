@@ -6,7 +6,7 @@ namespace Zoolandia.Application.Files.Commands.UploadImage;
 
 public class UploadImageCommand : IRequest<Result<UploadImageOutputModel>>
 {
-    public IFormFile Image { get; set; } = default;
+    public IFormFile Image { get; set; }
     
     public class UploadImageCommandHandler(IFile file)
         : IRequestHandler<UploadImageCommand, Result<UploadImageOutputModel>>

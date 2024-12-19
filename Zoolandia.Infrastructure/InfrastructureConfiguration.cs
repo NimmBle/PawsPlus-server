@@ -45,12 +45,15 @@ public static class InfrastructureConfiguration
     {
         services.AddIdentity<User, IdentityRole>(opt =>
             {
+                opt.User.AllowedUserNameCharacters += " ";
+                
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireLowercase = false;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<ZoolandiaDbContext>()
+            .AddDefaultTokenProviders()
             .AddRoles<IdentityRole>();
 
         var secret = configuration

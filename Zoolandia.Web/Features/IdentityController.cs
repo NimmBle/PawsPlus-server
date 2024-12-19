@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Identity.Commands;
+using Zoolandia.Application.Identity.Commands.ConfirmEmail;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
 
@@ -19,5 +20,9 @@ public class IdentityController : ApiController
     [Route(nameof(Login))]
     public async Task<ActionResult<LoginOutputModel>> Login(LoginUserCommand command)
         => await this.Send(command);
-    
+
+    [HttpPut]
+    [Route(nameof(ConfirmEmail))]
+    public async Task<ActionResult> ConfirmEmail(ConfirmEmailCommand command)
+        => await this.Send(command);
 }

@@ -6,6 +6,17 @@ namespace Zoolandia.Infrastructure.Identity;
 
 public class User : IdentityUser, IUser
 {
+    internal User()
+    {
+    }
+
+    internal User(
+        string email,
+        string userName)
+        : base(userName)
+    {
+        this.Email = email;
+    }
     public Profile? Profile { get; private set; }
 
     public void CreateProfile(Profile profile)

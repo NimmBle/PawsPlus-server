@@ -2,9 +2,9 @@
 
 public record Age
 {
-    public int Years { get; private init; }
+    public int Years { get; private set; }
     
-    public int Months { get; private init; }
+    public int Months { get; private set; }
 
     public Age() 
     {}
