@@ -23,7 +23,7 @@ internal class IdentityService(
     {
         var user = new User()
         {
-            UserName = $"{userInput.FirstName} {userInput.LastName}",
+            UserName = userInput.Email,
             Email = userInput.Email,
         };
         
@@ -126,6 +126,7 @@ internal class IdentityService(
 
         return Result.Success;
     }
+    
 
     // public async Task SendConfirmationEmail(User user)
     // {

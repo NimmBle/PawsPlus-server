@@ -6,7 +6,6 @@ namespace Zoolandia.Application.Features.Pet.Commands.Delete;
 
 public class DeletePetCommand : EntityCommand<string>, IRequest<Result>
 {
-    
     class DeletePetCommandHandler(IPetDomainRepository petDomainRepository)
         : IRequestHandler<DeletePetCommand, Result>
     {

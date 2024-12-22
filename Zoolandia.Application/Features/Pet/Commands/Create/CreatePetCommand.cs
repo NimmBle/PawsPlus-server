@@ -22,11 +22,18 @@ public class CreatePetCommand
             CreatePetCommand request,
             CancellationToken cancellationToken)
         {
+            
             var profile = await profileRepository.FindByUser(currentUser.UserId);
 
+            if (profile.Id != request.ProfileId)
+                return "You cannot create a pet for this user";
+            
             if (profile == null)
-                return "There is no Profile with this Id";
+                return "There is no Profile with this id";
 
+            if (request.Years == 0 && request.Months == 0)
+                return "Please enter a valid age";
+            
             var pet = petFactory
                 .WithName(request.Name)
                 .WithPhotoUrl(request.PhotoUrl)

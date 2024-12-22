@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Zoolandia.Infrastructure.Identity;
 
@@ -11,10 +12,13 @@ public static class DataSeed
         using (var context = serviceProvider.GetRequiredService<ZoolandiaDbContext>())
         {
             // Seed roles if they don't exist
+            var adminUser = await context.Users.Where(u => u.Email.ToLower() == "hristopanev20@gmail.com").AnyAsync();
+            string roleId = default;
+            
             if (!context.Roles.Any())
             {
                 string[] roleNames = { "Owner", "Sitter", "Administrator" };
-                string roleId = default!;
+                
                 foreach (var role in roleNames)
                 {
                 
@@ -28,7 +32,10 @@ public static class DataSeed
                         });
                 }
                 
-                
+                await context.SaveChangesAsync();
+            }
+            else if (!adminUser)
+            {
                 var adminId = Guid.NewGuid().ToString();
                 var adminEmail = "hristopanev20@gmail.com"; // Has to be changed when official email is created
                 var admin = new User
@@ -46,12 +53,17 @@ public static class DataSeed
 
                 await context.Users.AddAsync(admin);
 
-                context.UserRoles.AddAsync(new IdentityUserRole<string>()
+                if (roleId == null)
+                {
+                    roleId = await context.Roles.Where(r => r.Name == "Administrator").Select(u => u.Id).FirstOrDefaultAsync();
+                }
+                
+                await context.UserRoles.AddAsync(new IdentityUserRole<string>()
                 {
                     RoleId = roleId,
                     UserId = adminId
                 });
-                    
+
                 await context.SaveChangesAsync();
             }
         }

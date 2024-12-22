@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using System.Text.RegularExpressions;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -20,14 +21,16 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
         if (image.Length == 0)
             return NoFileProvidedErrorMessage;
 
+        var imageName = Regex.Replace(image.FileName, @"\s+", "");
+        
         using var stream = new MemoryStream();
         await image.CopyToAsync(stream);
         stream.Position = 0; 
         
         var uploadParams = new ImageUploadParams
         {
-            File = new FileDescription(image.FileName, stream),
-            PublicId = image.FileName
+            File = new FileDescription(imageName, stream),
+            PublicId = imageName
         };
 
         var uploadResult = await cloudinary.UploadAsync(uploadParams);
@@ -48,14 +51,16 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
 
         foreach (var image in images)
         {
+            var imageName = Regex.Replace(image.FileName, @"\s+", "");
+            
             using var stream = new MemoryStream();
             await image.CopyToAsync(stream);
             stream.Position = 0; 
         
             var uploadParams = new ImageUploadParams
             {
-                File = new FileDescription(image.FileName, stream),
-                PublicId = image.FileName
+                File = new FileDescription(imageName, stream),
+                PublicId = imageName
             };
 
             var uploadResult = await cloudinary.UploadAsync(uploadParams);

@@ -5,7 +5,7 @@ using Zoolandia.Domain.ValueObjects;
 
 namespace Zoolandia.Application.Features.Pet.Commands.Common;
 
-public abstract class PetCommand<TCommand> : EntityCommand<string>
+public abstract class PetCommand<TCommand>
 {
     public string Name { get; set; } = default!;
 
@@ -21,7 +21,7 @@ public abstract class PetCommand<TCommand> : EntityCommand<string>
 
     public Breed Breed { get; set; }
 
-    public string Weight { get; set; } = default!;
+    public string? Weight { get; set; } = default;
 
     public string? Temperament { get; set; } = default;
     
