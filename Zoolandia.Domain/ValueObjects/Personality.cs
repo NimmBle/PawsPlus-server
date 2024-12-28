@@ -1,4 +1,4 @@
-﻿using Zoolandia.Domain.Enums;
+﻿using Zoolandia.Domain.Enums.Pet;
 
 namespace Zoolandia.Domain.Models;
 

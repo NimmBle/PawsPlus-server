@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Zoolandia.Domain.Common;
-using Zoolandia.Domain.Enums;
+using Zoolandia.Domain.Enums.Pet;
 using Zoolandia.Domain.ValueObjects;
 
 namespace Zoolandia.Domain.Models;

@@ -155,23 +155,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Zoolandia.Domain.Models.JobPost", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId")
-                        .IsUnique();
-
-                    b.ToTable("JobPosts");
-                });
-
             modelBuilder.Entity("Zoolandia.Domain.Models.Pet", b =>
                 {
                     b.Property<string>("Id")
@@ -209,6 +192,56 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.ToTable("Pets");
                 });
 
+            modelBuilder.Entity("Zoolandia.Domain.Models.Post", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Pets")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Weights")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Zoolandia.Domain.Models.PostService", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServiceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("PostServices");
+                });
+
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
                 {
                     b.Property<string>("Id")
@@ -236,6 +269,20 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("Zoolandia.Domain.Models.Service", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Zoolandia.Infrastructure.Identity.User", b =>
@@ -361,17 +408,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Zoolandia.Domain.Models.JobPost", b =>
-                {
-                    b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
-                        .WithOne("JobPost")
-                        .HasForeignKey("Zoolandia.Domain.Models.JobPost", "ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("Zoolandia.Domain.Models.Pet", b =>
                 {
                     b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
@@ -489,6 +525,32 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Zoolandia.Domain.Models.Post", b =>
+                {
+                    b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
+                        .WithOne("Post")
+                        .HasForeignKey("Zoolandia.Domain.Models.Post", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("Zoolandia.Domain.Models.PostService", b =>
+                {
+                    b.HasOne("Zoolandia.Domain.Models.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Zoolandia.Domain.Models.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Zoolandia.Infrastructure.Identity.User", b =>
                 {
                     b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
@@ -501,9 +563,9 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
                 {
-                    b.Navigation("JobPost");
-
                     b.Navigation("Pet");
+
+                    b.Navigation("Post");
                 });
 #pragma warning restore 612, 618
         }

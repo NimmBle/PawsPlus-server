@@ -23,7 +23,7 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public Pet? Pet { get; set; }
     
-    public JobPost? JobPost { get; set; }
+    public Post? Post { get; set; }
 
     public Profile UpdateFirstName(string firstName)
     {

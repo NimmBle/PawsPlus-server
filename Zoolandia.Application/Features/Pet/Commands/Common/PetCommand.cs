@@ -1,7 +1,4 @@
-﻿using Zoolandia.Application.Common;
-using Zoolandia.Domain.Enums;
-using Zoolandia.Domain.Models;
-using Zoolandia.Domain.ValueObjects;
+﻿using Zoolandia.Domain.Enums.Pet;
 
 namespace Zoolandia.Application.Features.Pet.Commands.Common;
 

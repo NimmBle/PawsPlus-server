@@ -1,4 +1,4 @@
-﻿namespace Zoolandia.Domain.Enums;
+﻿namespace Zoolandia.Domain.Enums.Pet;
 
 public enum Fear
 {

@@ -13,10 +13,20 @@ public class
 
     public DbSet<Pet> Pets { get; set; } = default!;
 
-    public DbSet<JobPost> JobPosts { get; set; } = default!;
+    public DbSet<Post> Posts { get; set; } = default!;
+    
+    public DbSet<Service> Services { get; set; } = default!;
+    
+    public DbSet<PostService> PostServices { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder
+            .Entity<Post>()
+            .HasMany(p => p.Services)
+            .WithMany(s => s.Posts)
+            .UsingEntity<PostService>();
+        
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
         base.OnModelCreating(builder);

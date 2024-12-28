@@ -4,7 +4,7 @@ using Zoolandia.Application.Features.Pet.Commands.Delete;
 
 namespace Zoolandia.Web.Features;
 
-public class PetController : ApiController
+public class PetsController : ApiController
 {
 
     [HttpPost]
