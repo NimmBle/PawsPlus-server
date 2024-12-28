@@ -26,6 +26,11 @@ public class
             .HasMany(p => p.Services)
             .WithMany(s => s.Posts)
             .UsingEntity<PostService>();
+
+        builder
+            .Entity<PostService>()
+            .Property(ps => ps.Id)
+            .ValueGeneratedOnAdd();
         
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
