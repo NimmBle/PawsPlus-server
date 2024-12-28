@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Zoolandia.Domain.Models;
 using Zoolandia.Infrastructure.Identity;
 
 namespace Zoolandia.Infrastructure.Common.Persistence;
@@ -64,6 +65,22 @@ public static class DataSeed
                     UserId = adminId
                 });
 
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Services.Any())
+            {
+                string[] services = { "DogWalking", "DailyCare", "PetSitting", "Training" };
+
+                foreach (var service in services)
+                {
+                    await context.Services.AddAsync(new Service()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = service
+                    });
+                }
+                
                 await context.SaveChangesAsync();
             }
         }
