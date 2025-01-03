@@ -2,5 +2,5 @@
 
 public interface IServiceQueryRepository
 {
-    Task<Domain.Models.Service> GetServiceByName(string serviceName);
+    Task<ServiceOutputModel> FindById(string serviceId);
 }
