@@ -2,12 +2,15 @@
 
 public class LoginSuccessModel
 {
-    public LoginSuccessModel(string userId, string token)
+    public LoginSuccessModel(string userId, string token, bool firstLogin = false)
     {
-        Id = userId;
-        Token = token;
+        this.Id = userId;
+        this.Token = token;
+        this.FirstLogin = firstLogin;
     }
     
     public string Id { get; set; }
     public string Token { get; set; }
+    
+    public bool FirstLogin { get; set; }
 }

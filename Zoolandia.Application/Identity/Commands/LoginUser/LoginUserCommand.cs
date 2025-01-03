@@ -1,11 +1,14 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
+using Zoolandia.Domain.Repositories;
 
 namespace Zoolandia.Application.Identity.Commands.LoginUser;
 
 public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel>>
 {
-    public class LoginUserCommandHandler(IIdentity identity) 
+    public class LoginUserCommandHandler(
+        IIdentity identity,
+        IProfileDomainRepository profileRepository) 
         : IRequestHandler<LoginUserCommand, 
             Result<LoginOutputModel>>
     {
@@ -14,13 +17,19 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             CancellationToken cancellationToken)
         {
             var result = await identity.Login(request);
-
             if (!result.Succeeded)
                 return result.Errors;
 
             var user = result.Data;
-
-            return new LoginOutputModel(user.Id, user.Token);
+            
+            var profile = await profileRepository.FindByUser(user.Id);
+            
+            LoginOutputModel loginOutputModel = new(user.Id, user.Token, profile.firstLogin);
+            
+            profile.firstLogin = false;
+            await profileRepository.Update(profile);
+            
+            return loginOutputModel;
         }
     }
 }

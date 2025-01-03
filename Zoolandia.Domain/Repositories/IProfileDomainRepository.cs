@@ -10,4 +10,5 @@ public interface IProfileDomainRepository : IDomainRepository<Profile>
     Task<Profile> FindByUser(string userId);
     
     Task<string> GetProfileId(string userId, CancellationToken cancellationToken = default);
+    
 }

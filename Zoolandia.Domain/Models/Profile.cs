@@ -19,6 +19,8 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public string? Description { get; set; }
 
+    public bool firstLogin { get; set; } = true;
+
     // public string? Address { get; set; }
 
     public Pet? Pet { get; set; }
