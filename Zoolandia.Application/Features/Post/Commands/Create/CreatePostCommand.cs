@@ -11,14 +11,13 @@ namespace Zoolandia.Application.Features.Post.Commands.Create;
 public class CreatePostCommand : IRequest<Result>
 {
     public ICollection<PetType> Pets { get; set; }
-    public ICollection<Weight> Weights { get; set; }
+    public ICollection<Weight>? Weights { get; set; }
     public ICollection<ServiceType> Services { get; set; }
     public string profileId { get; set; }
     
     public class CreatePostCommandHandler(
         IPostDomainRepository postRepository,
-        IServiceDomainRepository serviceDomainRepository,
-        IServiceQueryRepository serviceQueryRepository)
+        IServiceDomainRepository serviceRepository)
         : IRequestHandler<CreatePostCommand, Result>
     {
         public async Task<Result> Handle(
@@ -35,23 +34,11 @@ public class CreatePostCommand : IRequest<Result>
             };
             foreach (var serviceType in request.Services)
             {
-                var service = await serviceQueryRepository.GetServiceByName(serviceType.ToString());
+                var service = await serviceRepository.FindByName(serviceType.ToString());
                 post.Services.Add(service);
             }
             
             await postRepository.Save(post, cancellationToken);
-
-
-            // foreach (var serviceType in request.Services)
-            // {
-            //     var service = new Service
-            //     {
-            //         Id = Guid.NewGuid().ToString(),
-            //         Name = serviceType.ToString()
-            //     };
-            //     
-            //     await serviceRepository.Save(service, cancellationToken);
-            // }
 
             return true;
         }
