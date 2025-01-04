@@ -19,7 +19,6 @@ public class PostRepository(
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()
-                .Include(p => p.PostServices)
                 .Where(p => p.ProfileId == profileId))
             .FirstOrDefaultAsync();
 }

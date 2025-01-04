@@ -21,6 +21,7 @@ public class PostDetailsOutputModel : IMapFrom<Domain.Models.Post>
                 {
                     Id = ps.Id,
                     Name = ps.Service.Name,
-                    Price = ps.Price
+                    Price = ps.Price,
+                    AvailableDates = ps.AvailableDates
                 })));
 }
