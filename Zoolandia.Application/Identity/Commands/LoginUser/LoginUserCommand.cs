@@ -23,10 +23,14 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             var user = result.Data;
             
             var profile = await profileRepository.FindByUser(user.Id);
-            
-            LoginOutputModel loginOutputModel = new(user.Id, user.Token, profile.firstLogin);
-            
-            profile.firstLogin = false;
+
+            LoginOutputModel loginOutputModel = new(
+                user.Id,
+                user.Token,
+                profile.FirstLogin,
+                user.Roles);
+
+            profile.FirstLogin = false;
             await profileRepository.Update(profile);
             
             return loginOutputModel;

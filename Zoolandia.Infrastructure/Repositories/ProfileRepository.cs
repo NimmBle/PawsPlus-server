@@ -36,7 +36,7 @@ public class ProfileRepository(
             .Where(u => u.Id == userId)
             .Select(u => u.Profile!.Id)
             .FirstOrDefaultAsync();
-    
+
     public async Task<ProfileDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<ProfileDetailsOutputModel>(this

@@ -68,8 +68,10 @@ internal class IdentityService(
             return InvalidErrorMessage;
 
         var token = jwtTokenGenerator.GenerateToken(user.Id, userInput.Email);
+        
+        var roles = await userManager.GetRolesAsync(user);
 
-        return new LoginSuccessModel(user.Id, token);
+        return new LoginSuccessModel(user.Id, token, roles);
     }
 
     public async Task<Result> ChangeEmail(string userId, string newEmail)

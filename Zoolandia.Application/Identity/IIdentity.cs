@@ -1,5 +1,4 @@
 ﻿using Zoolandia.Application.Common;
-using Zoolandia.Application.Features.Profile.Commands;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
 
