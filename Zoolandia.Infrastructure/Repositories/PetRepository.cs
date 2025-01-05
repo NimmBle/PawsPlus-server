@@ -16,6 +16,7 @@ public class PetRepository
             .Where(p => p.Id == id)
             .FirstOrDefaultAsync();
 
+    // fix
     public async Task<bool> Delete(string id, CancellationToken cancellationToken = default)
     {
         var pet = await this.Find(id);

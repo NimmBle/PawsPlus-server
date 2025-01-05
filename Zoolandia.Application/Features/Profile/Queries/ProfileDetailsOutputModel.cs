@@ -16,6 +16,8 @@ public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
     public string Description { get; set; }
 
     public string PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
+    
+    public IList<string> Roles { get; set; } = new List<string>();
 
     public virtual void Mapping(AutoMapper.Profile mapper)
         => mapper

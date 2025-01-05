@@ -15,4 +15,6 @@ public interface IIdentity
     Task<bool> EmailAlreadyExists(string email);
 
     Task<Result> ConfirmEmail(string id, string token);
+    
+    Task<IList<string>> GetRoles(string userId);
 }

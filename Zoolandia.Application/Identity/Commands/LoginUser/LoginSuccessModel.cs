@@ -16,5 +16,5 @@ public class LoginSuccessModel
     
     public bool FirstLogin { get; set; }
     
-    public IList<string> Roles { get; set; }
+    public IList<string> Roles { get; set; } = new List<string>();
 }

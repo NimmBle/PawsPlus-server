@@ -1,13 +1,9 @@
 ﻿using System.Transactions;
-using System.Web;
 using Microsoft.AspNetCore.Identity;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Identity;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
-using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Infrastructure.Identity;
 
@@ -128,7 +124,16 @@ internal class IdentityService(
 
         return Result.Success;
     }
-    
+
+    public async Task<IList<string>> GetRoles(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        
+        var roles = await userManager.GetRolesAsync(user);
+
+        return roles;
+    }
+
 
     // public async Task SendConfirmationEmail(User user)
     // {

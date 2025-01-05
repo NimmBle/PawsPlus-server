@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Zoolandia.Application.Features.Profil;
+using Zoolandia.Application.Features.Profile;
 using Zoolandia.Application.Features.Profile.Queries;
 using Zoolandia.Domain.Repositories;
 using Zoolandia.Infrastructure.Common.Persistence;
@@ -43,6 +43,15 @@ public class ProfileRepository(
                 .All()
                 .Where(u => u.Id == profileId))
             .FirstOrDefaultAsync(cancellationToken);
+
+    public async Task<ProfileDetailsOutputModel> GetDetailsByUser(string userId, CancellationToken cancellationToken = default)
+        => await mapper
+            .ProjectTo<ProfileDetailsOutputModel>(this
+                .Data
+                .Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.Profile))
+            .FirstOrDefaultAsync();
 
     public async Task<string> GetEmail(string userId, CancellationToken cancellationToken = default)
         => await this

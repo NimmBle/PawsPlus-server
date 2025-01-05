@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Common.Contracts;
-using Zoolandia.Application.Features.Profil;
-using Zoolandia.Domain.Repositories;
+using Zoolandia.Application.Identity;
 
 namespace Zoolandia.Application.Features.Profile.Queries;
 
@@ -12,27 +11,24 @@ public class ProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>>
     
     public class ProfileDetailsQueryHandler(
         ICurrentUser currentUser,
-        IProfileDomainRepository profileDomainRepository,
+        IIdentity identity,
         IProfileQueryRepository profileQueryRepository)
         : IRequestHandler<ProfileDetailsQuery,
-        Result<ProfileDetailsOutputModel>>
+            Result<ProfileDetailsOutputModel>>
     {
         public async Task<Result<ProfileDetailsOutputModel>> Handle(
             ProfileDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            var profileId = await profileDomainRepository.GetProfileId(request.Id);
+            var currentUserId = currentUser.UserId;
 
-            if (profileId == null)
-            {
-                var currentUserId = currentUser.UserId;
-                
-                profileId = await profileDomainRepository.GetProfileId(currentUserId);
-            }
+            var profile = await profileQueryRepository.GetDetailsByUser(currentUserId);
             
-            var profileData = await profileQueryRepository.GetDetails(profileId);
+            var roles = await identity.GetRoles(currentUserId);
+            
+            profile.Roles = roles;
 
-            return profileData;
+            return profile;
         }
     }
 }
