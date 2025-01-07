@@ -21,11 +21,10 @@ public class ProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>>
             CancellationToken cancellationToken)
         {
             var currentUserId = currentUser.UserId;
-
             var profile = await profileQueryRepository.GetDetailsByUser(currentUserId);
-            
             var roles = await identity.GetRoles(currentUserId);
             
+            profile.Email = await profileQueryRepository.GetEmailByUser(currentUserId);
             profile.Roles = roles;
 
             return profile;

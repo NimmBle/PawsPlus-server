@@ -8,5 +8,5 @@ public interface IProfileQueryRepository
     
     Task<ProfileDetailsOutputModel> GetDetailsByUser(string userId, CancellationToken cancellationToken = default);
 
-    Task<string> GetEmail(string userId, CancellationToken cancellationToken = default);
+    Task<string> GetEmailByUser(string userId, CancellationToken cancellationToken = default);
 }

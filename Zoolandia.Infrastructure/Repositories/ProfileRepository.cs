@@ -53,7 +53,7 @@ public class ProfileRepository(
                 .Select(u => u.Profile))
             .FirstOrDefaultAsync();
 
-    public async Task<string> GetEmail(string userId, CancellationToken cancellationToken = default)
+    public async Task<string> GetEmailByUser(string userId, CancellationToken cancellationToken = default)
         => await this
             .Data
             .Users
