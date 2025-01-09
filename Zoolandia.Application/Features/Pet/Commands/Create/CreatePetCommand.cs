@@ -8,7 +8,7 @@ using Zoolandia.Domain.Repositories;
 namespace Zoolandia.Application.Features.Pet.Commands.Create;
 
 public class CreatePetCommand 
-    : PetCommand<CreatePetCommand>,
+    : CreatePetInputModel,
         IRequest<Result<CreatePetOutputModel>>
 {
     public class CreatePetCommandHandler(
@@ -31,30 +31,30 @@ public class CreatePetCommand
             if (profile == null)
                 return "There is no Profile with this id";
 
-            if (request.Years == 0 && request.Months == 0)
+            if (request.Age.Years == 0 && request.Age.Months == 0)
                 return "Please enter a valid age";
             
             var pet = petFactory
                 .WithName(request.Name)
                 .WithPhotoUrl(request.PhotoUrl)
                 .WithType(request.PetType)
-                .WithAge(request.Years, request.Months)
+                .WithAge(request.Age.Years, request.Age.Months)
                 .WithGender(request.Gender)
                 .WithBreed(request.Breed)
                 .WithWeight(request.Weight)
                 .WithPersonality(
-                    request.Temperament,
-                    request.ActivityLevel,
-                    request.IsTrained,
-                    request.HasFears,
-                    request.FearsDescription)
+                    request.Personality.Temperament,
+                    request.Personality.ActivityLevel,
+                    request.Personality.IsTrained,
+                    request.Personality.HasFears,
+                    request.Personality.FearsDescription)
                 .WithHealthStatus(
-                    request.IsVaccinated,
-                    request.IsCastrated,
-                    request.TakesMedications,
-                    request.HasEatingSchedule,
-                    request.OtherDietaryNeeds,
-                    request.HealthProblems)
+                    request.HealthStatus.IsVaccinated,
+                    request.HealthStatus.IsCastrated,
+                    request.HealthStatus.TakesMedications,
+                    request.HealthStatus.HasEatingSchedule,
+                    request.HealthStatus.OtherDietaryNeeds,
+                    request.HealthStatus.HealthProblems)
                 .WithProfileId(profile.Id)
                 .Build();
 

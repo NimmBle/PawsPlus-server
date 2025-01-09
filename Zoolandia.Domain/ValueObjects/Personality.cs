@@ -1,12 +1,12 @@
 ﻿using Zoolandia.Domain.Enums.Pet;
 
-namespace Zoolandia.Domain.Models;
+namespace Zoolandia.Domain.ValueObjects;
 
 public record Personality
 {
-    
+
     public string? Temperament { get; private set; }
-    
+
     public string? ActivityLevel { get; private set; }
     
     public Training? IsTrained { get; private set; }

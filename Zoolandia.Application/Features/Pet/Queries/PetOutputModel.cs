@@ -7,6 +7,8 @@ namespace Zoolandia.Application.Features.Pet.Queries;
 
 public class PetOutputModel : IMapFrom<Domain.Models.Pet>
 {
+    public string Id { get; set; }
+    
     public string Name { get; set; } = default!;
 
     public string PhotoUrl { get; set; } = default!;

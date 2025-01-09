@@ -8,7 +8,8 @@ public class GetProfilePetQuery : IRequest<Result<PetOutputModel>>
 {
     public string Id { get; set; }
     
-    public class GetProfilePetQueryHander(IPetQueryRepository petQueryRepository)
+    public class GetProfilePetQueryHander
+        (IPetQueryRepository petQueryRepository)
         : IRequestHandler<GetProfilePetQuery, Result<PetOutputModel>>
     {
         public async Task<Result<PetOutputModel>> Handle(GetProfilePetQuery request, CancellationToken cancellationToken)

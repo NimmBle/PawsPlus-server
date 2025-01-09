@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Zoolandia.Application.Common;
 using Zoolandia.Application.Features.Pet;
 using Zoolandia.Application.Features.Pet.Queries;
 using Zoolandia.Domain.Models;
@@ -38,22 +40,23 @@ public class PetRepository
 
     public async Task<PetOutputModel> FindPetByProfile(string profileId)
     { 
-        var pet = await this
-            .All()
-            .Where(p => p.ProfileId == profileId)
-            .Include(p => p.Age)
-            .Include(p => p.Personality)
-            .Include(p => p.HealthStatus)
-            .FirstOrDefaultAsync();
+        var pet = await FindPet(p => p.ProfileId == profileId);
         
         return mapper.Map<PetOutputModel>(pet);
     }
 
-
-    // => await mapper
-    //     .ProjectTo<PetOutputModel>(this
-    //         .All()
-    //         .AsNoTracking()
-    //         .Where(p => p.ProfileId == profileId))
-    //     .FirstOrDefaultAsync();
+    public async Task<Pet> FindPetById(string id)
+        => await this
+            .All()
+            .Where(p => p.Id == id)
+            .FirstOrDefaultAsync();
+    
+    private async Task<Pet?> FindPet(Expression<Func<Pet, bool>> predicate)
+        => await this
+            .All()
+            .Where(predicate)
+            .Include(p => p.Age)
+            .Include(p => p.Personality)
+            .Include(p => p.HealthStatus)
+            .FirstOrDefaultAsync();
 }
