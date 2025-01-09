@@ -13,7 +13,7 @@ public class ProfilesController : ApiController
         => await this.Send(query);
     
     [HttpGet]
-    [Route(Id + "/post")]
+    [Route(Id + "/pet")]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
         => await this.Send(query);
