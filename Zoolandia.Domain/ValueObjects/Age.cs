@@ -16,7 +16,8 @@ public record Age
     }
 
     public static Age Create(int years, int months)
-    {
-        return new Age(years, months);
-    }
+        => new (years, months);
+
+    public static Age Create(Age age)
+        => Create(age.Years, age.Months);
 }

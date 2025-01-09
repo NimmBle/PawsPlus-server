@@ -39,7 +39,13 @@ public record Personality
         Training? isTrained,
         Fear? hasFears,
         string? fearsDescription)
-    {
-        return new Personality(temperament, activityLevel, isTrained, hasFears, fearsDescription);
-    }
+        => new (temperament, activityLevel, isTrained, hasFears, fearsDescription);
+
+    public static Personality Create(Personality personality)
+        => Create(
+            personality.Temperament,
+            personality.ActivityLevel,
+            personality.IsTrained,
+            personality.HasFears,
+            personality.FearsDescription);
 }

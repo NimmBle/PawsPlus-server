@@ -1,6 +1,9 @@
-﻿namespace Zoolandia.Application.Features.Pet.Commands.Common;
+﻿using Zoolandia.Application.Common.Mapping;
+using Zoolandia.Domain.ValueObjects;
 
-public class HealthStatusInputModel
+namespace Zoolandia.Application.Features.Pet.Commands.Common;
+
+public class HealthStatusInputModel : IMapFrom<HealthStatus>
 {
     public bool? IsVaccinated { get; set; }
     
@@ -13,4 +16,7 @@ public class HealthStatusInputModel
     public string? OtherDietaryNeeds { get; set; }
     
     public string? HealthProblems { get; set; }
+    
+    public virtual void Mapping(AutoMapper.Profile profile)
+        => profile.CreateMap<HealthStatusInputModel, HealthStatus>();
 }

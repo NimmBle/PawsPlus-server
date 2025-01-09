@@ -41,8 +41,15 @@ public record HealthStatus
         bool? takesMedications,
         bool? hasEatingSchedule,
         string? otherDietaryNeeds,
-        string? healthProblems)
-    {
-        return new HealthStatus(isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);
-    }
+        string? healthProblems) 
+        => new (isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);
+    
+    public static HealthStatus Create(HealthStatus healthStatus)
+        => Create(
+            healthStatus.IsVaccinated,
+            healthStatus.IsCastrated,
+            healthStatus.TakesMedications,
+            healthStatus.HasEatingSchedule,
+            healthStatus.OtherDietaryNeeds,
+            healthStatus.HealthProblems); 
 }

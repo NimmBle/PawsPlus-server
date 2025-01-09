@@ -1,8 +1,10 @@
-﻿using Zoolandia.Domain.Enums.Pet;
+﻿using Zoolandia.Application.Common.Mapping;
+using Zoolandia.Domain.Enums.Pet;
+using Zoolandia.Domain.ValueObjects;
 
 namespace Zoolandia.Application.Features.Pet.Commands.Common;
 
-public class PersonalityInputModel
+public class PersonalityInputModel : IMapFrom<Personality>
 {
     public string? Temperament { get; set; }
 
@@ -13,4 +15,7 @@ public class PersonalityInputModel
     public Fear? HasFears { get; set; }
     
     public string? FearsDescription { get; set; }
+
+    public virtual void Mapping(AutoMapper.Profile profile)
+        => profile.CreateMap<PersonalityInputModel, Personality>();
 }

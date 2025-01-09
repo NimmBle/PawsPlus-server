@@ -21,9 +21,9 @@ public class Pet : Entity<string>, IAggregateRoot
     )
         : this(name, photoUrl, petType, gender, breed, weight, profileId)
     {
-        this.Age = age;
-        this.Personality = personality;
-        this.HealthStatus = healthStatus;
+        this.Age = Age.Create(age);
+        this.Personality = Personality.Create(personality);
+        this.HealthStatus = HealthStatus.Create(healthStatus);
     }
 
     private Pet(
@@ -71,4 +71,26 @@ public class Pet : Entity<string>, IAggregateRoot
     public string ProfileId { get; set; }
     
     public Profile Profile { get; set; } = null!;
+
+    public void Update(
+        string name,
+        string photoUrl,
+        PetType petType,
+        Age age,
+        Gender gender,
+        Breed breed,
+        string? weight,
+        Personality? personality,
+        HealthStatus? healthStatus)
+    {
+        this.Name = name;
+        this.PhotoUrl = photoUrl;
+        this.PetType = petType;
+        this.Age = Age.Create(age);
+        this.Gender = gender;
+        this.Breed = breed;
+        this.Weight = weight;
+        this.Personality = Personality.Create(personality);
+        this.HealthStatus = HealthStatus.Create(healthStatus);
+    }
 }
