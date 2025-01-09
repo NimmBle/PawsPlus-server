@@ -17,8 +17,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     a.Property(a => a.Years).HasColumnName("YearsOld");
                     a.Property(a => a.Months).HasColumnName("MonthsOld");
                 });
-
-
+        
         builder
             .OwnsOne(p => p.Personality,
                 p =>
