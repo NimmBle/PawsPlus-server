@@ -9,7 +9,8 @@ public class PostsController : ApiController
 {
     [HttpGet]
     [Route(Id)]
-    public async Task<ActionResult<PostDetailsOutputModel>> Get(PostDetailsQuery query)
+    public async Task<ActionResult<PostDetailsOutputModel>> Get(
+        [FromRoute] PostDetailsQuery query)
         => await this.Send(query);
     
     [HttpPost]

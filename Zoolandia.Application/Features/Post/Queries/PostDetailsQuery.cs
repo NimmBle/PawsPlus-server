@@ -6,7 +6,7 @@ namespace Zoolandia.Application.Features.Post.Queries;
 
 public class PostDetailsQuery : IRequest<Result<PostDetailsOutputModel>>
 {
-    public string? Id { get; set; }
+    public string Id { get; set; }
     
     public class PostDetailsQueryHandler(
         ICurrentUser currentUser,
