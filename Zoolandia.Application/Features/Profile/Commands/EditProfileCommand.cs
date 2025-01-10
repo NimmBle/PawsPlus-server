@@ -32,7 +32,7 @@ public class EditProfileCommand
             CancellationToken cancellationToken)
         {
             var currentUserId = currentUser.UserId;
-            var profile = await profileRepository.FindByUser(currentUserId);
+            var profile = await profileRepository.GetByUser(currentUserId);
 
             if (profile == null)
                 return false;

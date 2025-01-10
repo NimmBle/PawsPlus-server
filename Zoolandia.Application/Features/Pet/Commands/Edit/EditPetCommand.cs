@@ -20,7 +20,7 @@ public class EditPetCommand
     {
         public async Task<Result> Handle(EditPetCommand request, CancellationToken cancellationToken)
         {
-            var pet = await petQueryRepository.FindPetById(request.Id);
+            var pet = await petQueryRepository.GetPetById(request.Id);
 
             if (pet == null)
                 return false;

@@ -9,16 +9,14 @@ public class GetPostDetailsQuery : IRequest<Result<PostDetailsOutputModel>>
     public string Id { get; set; }
     
     public class PostDetailsQueryHandler(
-        ICurrentUser currentUser,
         IPostQueryRepository postQueryRepository)
-        : IRequestHandler<GetPostDetailsQuery,
-            Result<PostDetailsOutputModel>>
+        : IRequestHandler<GetPostDetailsQuery, Result<PostDetailsOutputModel>>
     {
         public async Task<Result<PostDetailsOutputModel>> Handle(
             GetPostDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            return await postQueryRepository.PostDetails(request.Id);
+            return await postQueryRepository.GetPostDetails(request.Id);
         }
     }
 }

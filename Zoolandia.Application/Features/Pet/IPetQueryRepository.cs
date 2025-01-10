@@ -5,7 +5,7 @@ namespace Zoolandia.Application.Features.Pet;
 
 public interface IPetQueryRepository
 {
-    Task<PetOutputModel> FindPetByProfile(string profileId);
+    Task<PetOutputModel> GetPetByProfile(string profileId);
 
-    Task<Domain.Models.Pet> FindPetById(string id);
+    Task<Domain.Models.Pet> GetPetById(string id);
 }

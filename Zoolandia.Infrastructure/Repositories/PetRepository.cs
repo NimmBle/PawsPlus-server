@@ -17,7 +17,7 @@ public class PetRepository
             IPetDomainRepository,
             IPetQueryRepository
 {
-    public async Task<Pet> Find(string id, CancellationToken cancellationToken = default)
+    public async Task<Pet> Get(string id, CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(p => p.Id == id)
@@ -26,7 +26,7 @@ public class PetRepository
     // fix
     public async Task<bool> Delete(string id, CancellationToken cancellationToken = default)
     {
-        var pet = await this.Find(id);
+        var pet = await this.Get(id);
 
         if (pet == null)
             return false;
@@ -38,20 +38,20 @@ public class PetRepository
         return true;
     }
 
-    public async Task<PetOutputModel> FindPetByProfile(string profileId)
+    public async Task<PetOutputModel> GetPetByProfile(string profileId)
     { 
-        var pet = await FindPet(p => p.ProfileId == profileId);
+        var pet = await GetPet(p => p.ProfileId == profileId);
         
         return mapper.Map<PetOutputModel>(pet);
     }
 
-    public async Task<Pet> FindPetById(string id)
+    public async Task<Pet> GetPetById(string id)
         => await this
             .All()
             .Where(p => p.Id == id)
             .FirstOrDefaultAsync();
     
-    private async Task<Pet?> FindPet(Expression<Func<Pet, bool>> predicate)
+    private async Task<Pet?> GetPet(Expression<Func<Pet, bool>> predicate)
         => await this
             .All()
             .Where(predicate)

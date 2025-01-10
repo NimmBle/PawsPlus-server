@@ -15,7 +15,14 @@ public class PostRepository(
         IPostDomainRepository,
         IPostQueryRepository
 {
-    public async Task<PostDetailsOutputModel> PostDetails(string profileId)
+    public async Task<PostDetailsOutputModel> GetPostDetails(string Id)
+        => await mapper
+            .ProjectTo<PostDetailsOutputModel>(this
+                .All()
+                .Where(p => p.Id == Id))
+            .FirstOrDefaultAsync();
+
+    public async Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId)
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()

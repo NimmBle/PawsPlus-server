@@ -12,7 +12,7 @@ public class ServiceRepository(
     : DataRepository<ZoolandiaDbContext, Service>(db),
         IServiceDomainRepository
 {
-    public async Task<Service> FindByName(string serviceName)
+    public async Task<Service> GetByName(string serviceName)
         => await db
             .Services
             .Where(s => s.Name == serviceName)

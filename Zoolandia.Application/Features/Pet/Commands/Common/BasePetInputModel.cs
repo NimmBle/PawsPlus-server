@@ -1,10 +1,8 @@
 ﻿using Zoolandia.Domain.Enums.Pet;
-using Zoolandia.Domain.Models;
-using Zoolandia.Domain.ValueObjects;
 
 namespace Zoolandia.Application.Features.Pet.Commands.Common;
 
-public abstract class PetCommand<TCommand>
+public abstract class BasePetInputModel<TCommand>
 {
     public string Name { get; set; } = default!;
 

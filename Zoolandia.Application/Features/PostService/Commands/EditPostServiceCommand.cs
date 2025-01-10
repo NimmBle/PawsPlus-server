@@ -18,7 +18,7 @@ public class EditPostServiceCommand : EntityCommand<string>, IRequest<Result>
             EditPostServiceCommand request,
             CancellationToken cancellationToken)
         {
-            var postService = await postServiceRepository.FindById(request.Id);
+            var postService = await postServiceRepository.GetById(request.Id);
             
             postService.Price = request.Price;
             postService.AvailableDates = request.AvailableDates;

@@ -22,7 +22,7 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
 
             var user = result.Data;
             
-            var profile = await profileRepository.FindByUser(user.Id);
+            var profile = await profileRepository.GetByUser(user.Id);
 
             LoginOutputModel loginOutputModel = new(
                 user.Id,

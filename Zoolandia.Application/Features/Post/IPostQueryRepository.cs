@@ -4,5 +4,7 @@ namespace Zoolandia.Application.Features.Post;
 
 public interface IPostQueryRepository
 { 
-    Task<PostDetailsOutputModel> PostDetails(string profileId);
+    Task<PostDetailsOutputModel> GetPostDetails(string profileId);
+
+    Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId);
 }

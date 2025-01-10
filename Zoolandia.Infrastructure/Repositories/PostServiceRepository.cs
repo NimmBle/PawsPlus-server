@@ -9,7 +9,7 @@ public class PostServiceRepository(ZoolandiaDbContext db)
     : DataRepository<ZoolandiaDbContext, PostService>(db),
         IPostServiceDomainRepository
 {
-    public async Task<PostService> FindById(string postServiceId)
+    public async Task<PostService> GetById(string postServiceId)
         => await db
             .PostServices
             .Where(ps => ps.Id == postServiceId)

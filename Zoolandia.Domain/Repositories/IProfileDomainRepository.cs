@@ -5,9 +5,9 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IProfileDomainRepository : IDomainRepository<Profile>
 {
-    Task<Profile> Find(string profileId);
+    Task<Profile> Get(string profileId);
     
-    Task<Profile> FindByUser(string userId);
+    Task<Profile> GetByUser(string userId);
     
     Task<string> GetProfileId(string userId, CancellationToken cancellationToken = default);
     

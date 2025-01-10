@@ -32,7 +32,7 @@ public class CreatePostCommand : IRequest<Result>
             
             foreach (var serviceType in request.Services)
             {
-                var service = await serviceRepository.FindByName(serviceType.ToString());
+                var service = await serviceRepository.GetByName(serviceType.ToString());
                 post.Services.Add(service);
             }
             

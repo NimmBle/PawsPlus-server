@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Pet.Queries;
+using Zoolandia.Application.Features.Post.Queries;
 using Zoolandia.Application.Features.Profile.Commands;
 using Zoolandia.Application.Features.Profile.Queries;
 
@@ -16,6 +17,12 @@ public class ProfilesController : ApiController
     [Route(Id + "/pet")]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
+        => await this.Send(query);
+    
+    [HttpGet]
+    [Route(Id + "/post")]
+    public async Task<ActionResult<PostDetailsOutputModel>> MyPost(
+        [FromRoute] GetProfilePostDetailsQuery query)
         => await this.Send(query);
         
     [HttpGet]

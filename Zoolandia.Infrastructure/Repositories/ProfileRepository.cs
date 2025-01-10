@@ -15,13 +15,13 @@ public class ProfileRepository(
         IProfileDomainRepository,
         IProfileQueryRepository
 {
-    public async Task<Profile> Find(string profileId)
+    public async Task<Profile> Get(string profileId)
         => await this
             .All()
             .Where(p => p.Id == profileId)
             .FirstOrDefaultAsync();
 
-    public async Task<Profile> FindByUser(string userId)
+    public async Task<Profile> GetByUser(string userId)
         => await this
             .Data
             .Users

@@ -2,7 +2,7 @@
 
 namespace Zoolandia.Application.Features.Pet.Commands.Edit;
 
-public class EditPetInputModel : PetCommand<EditPetCommand>
+public class EditPetInputModel : BasePetInputModel<EditPetCommand>
 {
     
 }

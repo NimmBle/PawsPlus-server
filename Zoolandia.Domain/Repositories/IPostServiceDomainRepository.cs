@@ -5,5 +5,5 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IPostServiceDomainRepository : IDomainRepository<PostService>
 {
-    Task<PostService> FindById(string postServiceId);
+    Task<PostService> GetById(string postServiceId);
 }

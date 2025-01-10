@@ -34,7 +34,7 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
         };
 
         var uploadResult = await cloudinary.UploadAsync(uploadParams);
-
+        
         var imageUrl = uploadResult.SecureUrl.ToString();
 
         return new UploadImageOutputModel(imageUrl);

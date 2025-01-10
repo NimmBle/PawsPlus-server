@@ -23,7 +23,7 @@ public class CreatePetCommand
             CancellationToken cancellationToken)
         {
             
-            var profile = await profileRepository.FindByUser(currentUser.UserId);
+            var profile = await profileRepository.GetByUser(currentUser.UserId);
 
             if (profile.Id != request.ProfileId)
                 return "You cannot create a pet for this user";

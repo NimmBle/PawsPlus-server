@@ -5,5 +5,5 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IServiceDomainRepository : IDomainRepository<Service>
 {
-    Task<Service> FindByName(string serviceName);
+    Task<Service> GetByName(string serviceName);
 }
