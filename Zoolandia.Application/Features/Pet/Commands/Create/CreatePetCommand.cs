@@ -23,16 +23,19 @@ public class CreatePetCommand
             CancellationToken cancellationToken)
         {
             
-            var profile = await profileRepository.GetByUser(currentUser.UserId);
-
-            if (profile.Id != request.ProfileId)
-                return "You cannot create a pet for this user";
-            
-            if (profile == null)
-                return "There is no Profile with this id";
-
             if (request.Age.Years == 0 && request.Age.Months == 0)
                 return "Please enter a valid age";
+            
+            var profile = await profileRepository.GetByUser(currentUser.UserId);
+
+            if (profile == null)
+                return "There is no Profile with this id";
+            
+            if (profile.Pet != null) 
+                return "Cannot create more than one pet";
+            
+            if (profile.Id != request.ProfileId)
+                return "You cannot create a pet for this user";
             
             var pet = petFactory
                 .WithName(request.Name)
