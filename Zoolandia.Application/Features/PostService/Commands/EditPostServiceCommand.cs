@@ -4,11 +4,8 @@ using Zoolandia.Domain.Repositories;
 
 namespace Zoolandia.Application.Features.PostService.Commands;
 
-public class EditPostServiceCommand : EntityCommand<string>, IRequest<Result>
+public class EditPostServiceCommand : PostServiceInputModel, IRequest<Result>
 {
-    public int Price { get; set; }
-        
-    public List<DateOnly>? AvailableDates { get; set; }
         
     public class EditPostServiceCommandHandler(
         IPostServiceDomainRepository postServiceRepository)

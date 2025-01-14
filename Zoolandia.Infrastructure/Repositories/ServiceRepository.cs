@@ -17,4 +17,11 @@ public class ServiceRepository(
             .Services
             .Where(s => s.Name == serviceName)
             .FirstOrDefaultAsync();
+
+    public async Task<string> GetIdOfService(string serviceName)
+        => await db
+            .Services
+            .Where(s => s.Name == serviceName)
+            .Select(s => s.Id)
+            .FirstOrDefaultAsync();
 }
