@@ -19,6 +19,8 @@ public class
     
     public DbSet<PostService> PostServices { get; set; } = default!;
 
+    public DbSet<Meeting> Meetings { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder
@@ -31,6 +33,12 @@ public class
             .Entity<PostService>()
             .Property(ps => ps.Id)
             .ValueGeneratedOnAdd();
+
+        builder
+            .Entity<Meeting>()
+            .HasOne(p => p.Profile)
+            .WithOne(p => p.Meeting)
+            .HasForeignKey<Meeting>("SitterId");
         
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         

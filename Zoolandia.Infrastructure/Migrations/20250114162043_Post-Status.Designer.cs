@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Zoolandia.Infrastructure.Common.Persistence;
 
@@ -11,9 +12,11 @@ using Zoolandia.Infrastructure.Common.Persistence;
 namespace Zoolandia.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    partial class ZoolandiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250114162043_Post-Status")]
+    partial class PostStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,29 +156,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Zoolandia.Domain.Models.Meeting", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MeetingUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SitterId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SitterId")
-                        .IsUnique();
-
-                    b.ToTable("Meetings");
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Pet", b =>
@@ -441,17 +421,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Zoolandia.Domain.Models.Meeting", b =>
-                {
-                    b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
-                        .WithOne("Meeting")
-                        .HasForeignKey("Zoolandia.Domain.Models.Meeting", "SitterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("Zoolandia.Domain.Models.Pet", b =>
                 {
                     b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
@@ -616,8 +585,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
                 {
-                    b.Navigation("Meeting");
-
                     b.Navigation("Pet");
 
                     b.Navigation("Post");

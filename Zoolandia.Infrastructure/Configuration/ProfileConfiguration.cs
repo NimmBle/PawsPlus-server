@@ -46,5 +46,9 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
         builder
             .HasOne(p => p.Post)
             .WithOne(p => p.Profile);
+
+        builder
+            .HasOne(p => p.Meeting)
+            .WithOne(p => p.Profile);
     }
 }

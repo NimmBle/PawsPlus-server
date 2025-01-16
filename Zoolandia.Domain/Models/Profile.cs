@@ -26,6 +26,8 @@ public class Profile : Entity<string>, IAggregateRoot
     public Pet? Pet { get; set; }
     
     public Post? Post { get; set; }
+    
+    public Meeting? Meeting { get; set; }
 
     public Profile UpdateFirstName(string firstName)
     {
