@@ -11,7 +11,7 @@ public class PetFactory : IPetFactory
     private PetType petType = default!;
     private Age age = default!;
     private Gender gender;
-    private Breed breed;
+    private string breed;
     private string? weight = default;
     private Personality? personality = default;
     private HealthStatus? healthStatus = default;
@@ -47,7 +47,7 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public IPetFactory WithBreed(Breed breed)
+    public IPetFactory WithBreed(string breed)
     {
         this.breed = breed;
         return this;
@@ -85,12 +85,12 @@ public class PetFactory : IPetFactory
         string? healthProblems)
     {
         this.healthStatus = HealthStatus.Create(
-                isVaccinated,
-                isCastrated,
-                takesMedications,
-                hasEatingSchedule,
-                otherDietaryNeeds,
-                healthProblems);
+            isVaccinated,
+            isCastrated,
+            takesMedications,
+            hasEatingSchedule,
+            otherDietaryNeeds,
+            healthProblems);
 
         return this;
     }

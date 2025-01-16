@@ -14,7 +14,7 @@ public abstract class BasePetInputModel<TCommand>
     
     public Gender Gender { get; set; }
 
-    public Breed Breed { get; set; }
+    public string Breed { get; set; }
 
     public string? Weight { get; set; }
 

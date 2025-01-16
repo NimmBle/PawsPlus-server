@@ -13,7 +13,7 @@ public class Pet : Entity<string>, IAggregateRoot
         PetType petType,
         Age age,
         Gender gender,
-        Breed breed,
+        string breed,
         string? weight,
         Personality? personality,
         HealthStatus? healthStatus,
@@ -31,7 +31,7 @@ public class Pet : Entity<string>, IAggregateRoot
         string photoUrl,
         PetType petType,
         Gender gender,
-        Breed breed,
+        string breed,
         string? weight,
         string profileId
     )
@@ -60,7 +60,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public Gender Gender { get; set; }
 
     [JsonProperty(Required = Required.Always)]
-    public Breed Breed { get; set; }
+    public string Breed { get; set; }
     
     public string? Weight { get; set; } // change type to Enum
 
@@ -78,7 +78,7 @@ public class Pet : Entity<string>, IAggregateRoot
         PetType petType,
         Age age,
         Gender gender,
-        Breed breed,
+        string breed,
         string? weight,
         Personality? personality,
         HealthStatus? healthStatus)
