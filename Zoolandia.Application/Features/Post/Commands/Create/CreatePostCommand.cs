@@ -27,7 +27,8 @@ public class CreatePostCommand : IRequest<Result>
                 Id = Guid.NewGuid().ToString(),
                 Pets = request.Pets,
                 Weights = request.Weights,
-                ProfileId = request.profileId
+                ProfileId = request.profileId,
+                Status = PostStatus.Unscheduled
             };
             
             foreach (var serviceType in request.Services)
