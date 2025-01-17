@@ -21,7 +21,16 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
                 return result.Errors;
 
             var user = result.Data;
-            
+
+            if (user.Roles.Contains("Administrator"))
+            {
+                return new LoginOutputModel(
+                    user.Id,
+                    user.Token,
+                    false,
+                    user.Roles);
+            }
+
             var profile = await profileRepository.GetByUser(user.Id);
 
             LoginOutputModel loginOutputModel = new(

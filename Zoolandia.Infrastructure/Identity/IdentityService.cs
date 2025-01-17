@@ -62,11 +62,13 @@ internal class IdentityService(
         var passwordValid = await userManager.CheckPasswordAsync(user, userInput.Password);
         if (!passwordValid)
             return InvalidErrorMessage;
+        
+        var userRoles = await userManager.GetRolesAsync(user);
 
-        var token = jwtTokenGenerator.GenerateToken(user.Id, userInput.Email);
+        var token = jwtTokenGenerator.GenerateToken(user.Id, userInput.Email, userRoles);
         
         var roles = await userManager.GetRolesAsync(user);
-
+        
         return new LoginSuccessModel(user.Id, token, roles);
     }
 

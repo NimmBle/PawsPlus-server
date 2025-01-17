@@ -37,6 +37,14 @@ public static class DataSeed
             }
             else if (!adminUser)
             {
+                var profile = new Profile()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = "admin",
+                    LastName = "admin",
+                    PhoneNumber = "123456789"
+                };
+                
                 var adminId = Guid.NewGuid().ToString();
                 var adminEmail = "hristopanev20@gmail.com"; // Has to be changed when official email is created
                 var admin = new User
@@ -46,7 +54,7 @@ public static class DataSeed
                     NormalizedEmail = adminEmail.ToUpper().Normalize(),
                     EmailConfirmed = true,
                     UserName = "admin",
-                    NormalizedUserName = "ADMIN"
+                    NormalizedUserName = "ADMIN",
                 };
                 
                 PasswordHasher<User> passwordHasher = new();
@@ -64,6 +72,8 @@ public static class DataSeed
                     RoleId = roleId,
                     UserId = adminId
                 });
+
+                
 
                 await context.SaveChangesAsync();
             }

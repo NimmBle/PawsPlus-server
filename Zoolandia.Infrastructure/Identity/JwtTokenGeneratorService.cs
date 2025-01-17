@@ -12,7 +12,7 @@ public class JwtTokenGeneratorService(IOptions<ApplicationSettings> applicationS
 {
     private readonly ApplicationSettings _applicationSettings = applicationSettings.Value;
     
-    public string GenerateToken(string userId, string userName)
+    public string GenerateToken(string userId, string userName, IList<string> roles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_applicationSettings.Secret);
@@ -29,6 +29,10 @@ public class JwtTokenGeneratorService(IOptions<ApplicationSettings> applicationS
                 new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
         };
+        foreach (var userRole in roles)
+        {
+            tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, userRole));
+        }
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var encryptedToken = tokenHandler.WriteToken(token);
 

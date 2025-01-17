@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Pet.Queries;
 using Zoolandia.Application.Features.Post.Queries;
 using Zoolandia.Application.Features.Profile.Commands;
@@ -14,13 +15,13 @@ public class ProfilesController : ApiController
         => await this.Send(query);
     
     [HttpGet]
-    [Route(Id + "/pet")]
+    [Route(Id + PathSeparator + nameof(MyPet))]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
         => await this.Send(query);
     
     [HttpGet]
-    [Route(Id + "/post")]
+    [Route(Id + PathSeparator + nameof(MyPost))]
     public async Task<ActionResult<PostDetailsOutputModel>> MyPost(
         [FromRoute] GetProfilePostDetailsQuery query)
         => await this.Send(query);
@@ -30,6 +31,12 @@ public class ProfilesController : ApiController
     public async Task<ActionResult<ProfileDetailsOutputModel>> Details(
         [FromRoute] ProfileDetailsQuery query)
         => await this.Send(query);
+
+    [HttpGet]
+    [Authorize(Roles = Administrator)]
+    [Route(nameof(MyPets))]
+    public async Task<string> MyPets()
+        => "banans";
     
     [HttpPut]
     [Route(Id)]
