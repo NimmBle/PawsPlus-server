@@ -37,14 +37,6 @@ public static class DataSeed
             }
             else if (!adminUser)
             {
-                var profile = new Profile()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    FirstName = "admin",
-                    LastName = "admin",
-                    PhoneNumber = "123456789"
-                };
-                
                 var adminId = Guid.NewGuid().ToString();
                 var adminEmail = "hristopanev20@gmail.com"; // Has to be changed when official email is created
                 var admin = new User
