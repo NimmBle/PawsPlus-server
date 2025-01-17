@@ -11,7 +11,7 @@ public class HealthStatusInputModel : IMapFrom<HealthStatus>
     
     public bool? TakesMedications { get; set; }
     
-    public bool? HasEatingSchedule { get; set; }
+    public string? HasEatingSchedule { get; set; }
     
     public string? OtherDietaryNeeds { get; set; }
     

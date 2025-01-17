@@ -10,7 +10,7 @@ public record HealthStatus
     
     public bool? TakesMedications { get; private set; }
     
-    public bool? HasEatingSchedule { get; private set; }
+    public string? HasEatingSchedule { get; private set; }
     
     public string? OtherDietaryNeeds { get; private set; }
     
@@ -23,7 +23,7 @@ public record HealthStatus
         bool? isVaccinated,
         bool? isCastrated,
         bool? takesMedications,
-        bool? hasEatingSchedule,
+        string? hasEatingSchedule,
         string? otherDietaryNeeds,
         string? healthProblems)
     {
@@ -39,7 +39,7 @@ public record HealthStatus
         bool? isVaccinated,
         bool? isCastrated,
         bool? takesMedications,
-        bool? hasEatingSchedule,
+        string? hasEatingSchedule,
         string? otherDietaryNeeds,
         string? healthProblems) 
         => new (isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);

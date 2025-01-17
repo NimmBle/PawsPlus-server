@@ -80,7 +80,7 @@ public class PetFactory : IPetFactory
         bool? isVaccinated,
         bool? isCastrated,
         bool? takesMedications,
-        bool? hasEatingSchedule,
+        string? hasEatingSchedule,
         string? otherDietaryNeeds,
         string? healthProblems)
     {

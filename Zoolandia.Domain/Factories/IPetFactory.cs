@@ -31,7 +31,7 @@ public interface IPetFactory : IFactory<Pet>
         bool? isVaccinated,
         bool? isCastrated,
         bool? takesMedications,
-        bool? hasEatingSchedule,
+        string? hasEatingSchedule,
         string? otherDietaryNeeds,
         string? healthProblems);
 
