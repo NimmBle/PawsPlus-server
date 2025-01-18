@@ -2,5 +2,5 @@
 
 public class EditServiceInputModel : ServiceInputModel
 {
-    
+    public string Id { get; set; }
 }

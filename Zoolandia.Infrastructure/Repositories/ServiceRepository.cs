@@ -12,8 +12,7 @@ public class ServiceRepository(
         IServiceDomainRepository
 {
     public async Task<Service> GetById(string id)
-        => await db
-            .Services
+        => await All()
             .Where(s => s.Id == id)
             .FirstOrDefaultAsync();
 
@@ -21,4 +20,8 @@ public class ServiceRepository(
         => await All()
             .Where(s => s.Name == serviceName)
             .FirstOrDefaultAsync();
+
+    public async Task<bool> AlreadyExists(string serviceName, string postId)
+        => await All()
+            .AnyAsync(s => s.Name == serviceName && s.PostId == postId);
 }

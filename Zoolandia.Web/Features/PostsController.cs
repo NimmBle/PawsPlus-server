@@ -17,14 +17,4 @@ public class PostsController : ApiController
     [HttpPost]
     public async Task<ActionResult> Create(CreatePostCommand command)
         => await this.Send(command);
-
-    [HttpPut]
-    [Route("{postId}/service/{serviceId}")]
-    public async Task<ActionResult> EditService(EditServiceCommand command)
-        => await this.Send(command);
-    
-    [HttpPost]
-    [Route("{Id}/service")]
-    public async Task<ActionResult<string>> CreateService(CreateServiceCommand command)
-        => await this.Send(command);
 }

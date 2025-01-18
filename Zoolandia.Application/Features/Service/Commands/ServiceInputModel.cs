@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using Zoolandia.Application.Common;
-
+﻿
 namespace Zoolandia.Application.Features.Service.Commands;
 
-public abstract class ServiceInputModel : EntityCommand<string>
+public abstract class ServiceInputModel
 {
     public int? Price { get; set; }
         
