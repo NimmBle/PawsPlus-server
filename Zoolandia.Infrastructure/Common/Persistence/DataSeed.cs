@@ -69,22 +69,7 @@ public static class DataSeed
 
                 await context.SaveChangesAsync();
             }
-
-            if (!context.Services.Any())
-            {
-                string[] services = { "DogWalking", "DailyCare", "PetSitting", "Training" };
-
-                foreach (var service in services)
-                {
-                    await context.Services.AddAsync(new Service()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Name = service
-                    });
-                }
-                
-                await context.SaveChangesAsync();
-            }
+            
         }
     }
 }

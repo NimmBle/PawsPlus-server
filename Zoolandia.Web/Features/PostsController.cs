@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Post.Commands.Create;
 using Zoolandia.Application.Features.Post.Queries;
-using Zoolandia.Application.Features.PostService.Commands;
+using Zoolandia.Application.Features.Service.Commands.Create;
+using Zoolandia.Application.Features.Service.Commands.Edit;
 
 namespace Zoolandia.Web.Features;
 
@@ -19,11 +20,11 @@ public class PostsController : ApiController
 
     [HttpPut]
     [Route("{postId}/service/{serviceId}")]
-    public async Task<ActionResult> EditService(EditPostServiceCommand command)
+    public async Task<ActionResult> EditService(EditServiceCommand command)
         => await this.Send(command);
     
     [HttpPost]
     [Route("{Id}/service")]
-    public async Task<ActionResult<string>> CreateService(CreatePostServiceCommand command)
+    public async Task<ActionResult<string>> CreateService(CreateServiceCommand command)
         => await this.Send(command);
 }

@@ -10,7 +10,7 @@ public abstract class BasePetInputModel<TCommand>
 
     public PetType PetType { get; set; }
 
-    public AgeInputModel? Age { get; set; }
+    public AgeInputModel? Age { get; set; } = new AgeInputModel();
     
     public Gender Gender { get; set; }
 
@@ -18,8 +18,8 @@ public abstract class BasePetInputModel<TCommand>
 
     public string? Weight { get; set; }
 
-    public PersonalityInputModel? Personality { get; set; }
+    public PersonalityInputModel? Personality { get; set; } = new PersonalityInputModel();
 
-    public HealthStatusInputModel? HealthStatus { get; set; }
+    public HealthStatusInputModel? HealthStatus { get; set; } = new HealthStatusInputModel();
     
 }

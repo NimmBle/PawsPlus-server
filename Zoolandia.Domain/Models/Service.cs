@@ -6,7 +6,11 @@ public class Service : Entity<string>, IAggregateRoot
 {
     
     public string Name { get; set; }
+
+    public int? Price { get; set; }
+
+    public List<DateOnly> AvailableDates { get; set; } = new List<DateOnly>();
     
-    public List<PostService> PostServices { get; } = [];
-    public List<Post> Posts { get; } = [];
+    public string PostId { get; set; }
+    public Post Post { get; set; }
 }

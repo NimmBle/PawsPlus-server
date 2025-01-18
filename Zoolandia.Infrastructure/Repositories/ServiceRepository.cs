@@ -7,21 +7,18 @@ using Zoolandia.Infrastructure.Common.Persistence;
 namespace Zoolandia.Infrastructure.Repositories;
 
 public class ServiceRepository(
-    ZoolandiaDbContext db,
-    IMapper mapper)
+    ZoolandiaDbContext db)
     : DataRepository<ZoolandiaDbContext, Service>(db),
         IServiceDomainRepository
 {
-    public async Task<Service> GetByName(string serviceName)
+    public async Task<Service> GetById(string id)
         => await db
             .Services
-            .Where(s => s.Name == serviceName)
+            .Where(s => s.Id == id)
             .FirstOrDefaultAsync();
 
-    public async Task<string> GetIdOfService(string serviceName)
-        => await db
-            .Services
+    public async Task<Service> GetByName(string serviceName)
+        => await All()
             .Where(s => s.Name == serviceName)
-            .Select(s => s.Id)
             .FirstOrDefaultAsync();
 }

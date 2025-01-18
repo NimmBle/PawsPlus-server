@@ -16,24 +16,11 @@ public class
     public DbSet<Post> Posts { get; set; } = default!;
     
     public DbSet<Service> Services { get; set; } = default!;
-    
-    public DbSet<PostService> PostServices { get; set; } = default!;
 
     public DbSet<Meeting> Meetings { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder
-            .Entity<Post>()
-            .HasMany(p => p.Services)
-            .WithMany(s => s.Posts)
-            .UsingEntity<PostService>();
-
-        builder
-            .Entity<PostService>()
-            .Property(ps => ps.Id)
-            .ValueGeneratedOnAdd();
-
         builder
             .Entity<Meeting>()
             .HasOne(p => p.Profile)

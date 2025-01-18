@@ -18,7 +18,7 @@ public class ProfilesController : ApiController
     [Route(Id + PathSeparator + nameof(MyPet))]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
-        => await this.Send(query);
+        => await this.Send(query);  
     
     [HttpGet]
     [Route(Id + PathSeparator + nameof(MyPost))]

@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Features.Service.Commands.Create;
 using Zoolandia.Domain.Enums;
 using Zoolandia.Domain.Enums.Pet;
 using Zoolandia.Domain.Repositories;
@@ -31,10 +33,14 @@ public class CreatePostCommand : IRequest<Result>
                 Status = PostStatus.Unscheduled
             };
             
-            foreach (var serviceType in request.Services)
+            foreach (var service in request.Services)
             {
-                var service = await serviceRepository.GetByName(serviceType.ToString());
-                post.Services.Add(service);
+                var serviceModel = new Domain.Models.Service
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = service.ToString()
+                };
+                post.Services.Add(serviceModel);
             }
             
             await postRepository.Save(post, cancellationToken);

@@ -5,5 +5,5 @@ public enum ServiceType
     DogWalking = 1,
     DailyCare = 2,
     PetSitting = 3,
-    Training = 4,
+    Training = 4,   
 }

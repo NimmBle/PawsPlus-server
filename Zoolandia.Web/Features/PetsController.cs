@@ -22,5 +22,4 @@ public class PetsController : ApiController
     public async Task<ActionResult> Delete(
         [FromRoute] DeletePetCommand command)
         => await this.Send(command);
-
 }

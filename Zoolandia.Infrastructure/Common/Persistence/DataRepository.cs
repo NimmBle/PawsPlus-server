@@ -22,7 +22,9 @@ public class DataRepository<TDbContext, TEntity>(TDbContext db)
         await Data.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task Update(
+        TEntity entity,
+        CancellationToken cancellationToken = default)
     {
         Data.Set<TEntity>().Update(entity);
 
