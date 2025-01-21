@@ -36,7 +36,7 @@ public class Profile : Entity<string>, IAggregateRoot
     
     public Post? Post { get; private set; }
     
-    public Meeting? Meeting { get; private set; }
+    // public Meeting? Meeting { get; private set; }
 
     public Profile UpdateFirstName(string firstName)
     {

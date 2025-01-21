@@ -5,5 +5,5 @@ public abstract class ServiceInputModel
 {
     public int Price { get; set; }
         
-    public HashSet<DateOnly>? AvailableDates { get; set; }
+    public List<DateOnly>? AvailableDates { get; set; }
 }

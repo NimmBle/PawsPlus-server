@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Zoolandia.Domain.Enums.Pet;
 using Zoolandia.Domain.Models;
 using Zoolandia.Infrastructure.Identity;
 
@@ -9,6 +12,7 @@ public class
     ZoolandiaDbContext(DbContextOptions<ZoolandiaDbContext> options)
         : IdentityDbContext<User>(options)
 {
+    
     public DbSet<Profile> Profiles { get; set; } = default!;
 
     public DbSet<Pet> Pets { get; set; } = default!;
@@ -17,15 +21,16 @@ public class
     
     public DbSet<Service> Services { get; set; } = default!;
 
-    public DbSet<Meeting> Meetings { get; set; } = default!;
+    // public DbSet<Meeting> Meetings { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder
-            .Entity<Meeting>()
-            .HasOne(p => p.Profile)
-            .WithOne(p => p.Meeting)
-            .HasForeignKey<Meeting>("SitterId");
+        
+        // builder
+        //     .Entity<Meeting>()
+        //     .HasOne(p => p.Profile)
+        //     .WithOne(p => p.Meeting)
+        //     .HasForeignKey<Meeting>("SitterId");
         
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         

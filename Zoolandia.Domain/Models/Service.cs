@@ -5,6 +5,10 @@ namespace Zoolandia.Domain.Models;
 
 public class Service : Entity<string>, IAggregateRoot
 {
+    private Service()
+    {
+    }
+    
     public Service(ServiceType serviceType)
     {
         this.Id = Guid.NewGuid().ToString();
@@ -13,7 +17,7 @@ public class Service : Entity<string>, IAggregateRoot
 
     public Service(ServiceType serviceType,
         int price,
-        HashSet<DateOnly> availableDates,
+        List<DateOnly>? availableDates,
         string postId)
         : this(serviceType)
     {
@@ -26,7 +30,7 @@ public class Service : Entity<string>, IAggregateRoot
 
     public int Price { get; private set; } = 0;
 
-    public HashSet<DateOnly>? AvailableDates { get; private set; } = new HashSet<DateOnly>();
+    public List<DateOnly>? AvailableDates { get; private set; } = new List<DateOnly>();
     
     public string PostId { get; private set; }
     public Post Post { get; private set; }
@@ -36,7 +40,7 @@ public class Service : Entity<string>, IAggregateRoot
         Price = newPrice;
     }
 
-    public void UpdateAvailableDates(HashSet<DateOnly> newAvailableDates)
+    public void UpdateAvailableDates(List<DateOnly> newAvailableDates)
     {
         AvailableDates = newAvailableDates;
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
 using Zoolandia.Domain.Common;
 using Zoolandia.Domain.Common.Models;
 using Zoolandia.Domain.Enums;
@@ -8,11 +9,16 @@ namespace Zoolandia.Domain.Models;
 
 public class Post : Entity<string>, IAggregateRoot
 {
-    private readonly HashSet<PetType> _types = new HashSet<PetType>();
-    private readonly HashSet<Weight> _weights = new HashSet<Weight>();
-    private readonly HashSet<Service> _services = new HashSet<Service>();
+    private readonly HashSet<PetType> _types = new();
+    private readonly HashSet<Weight>? _weights = new();
+    private readonly HashSet<Service> _services = new();
+
+    public Post()
+    {
+    }
     
-    public Post(HashSet<PetType> types,
+    public Post(
+        HashSet<PetType> types,
         HashSet<Weight> weights,
         string profileId)
     {
@@ -25,10 +31,12 @@ public class Post : Entity<string>, IAggregateRoot
     public StateType Status { get; private set; } = StateType.None;
     
     public string ProfileId { get; private set; }
-    public Profile Profile { get; private set; }
+    public Profile Profile { get; set; }
+
+    public ReadOnlyCollection<PetType> Types => _types.ToList().AsReadOnly();
+
+    public ReadOnlyCollection<Weight>? Weights => _weights.ToList().AsReadOnly();
     
-    public IReadOnlyCollection<PetType> Types => _types.ToList().AsReadOnly();
-    public IReadOnlyCollection<Weight> Weights => _weights.ToList().AsReadOnly();
     public IReadOnlyCollection<Service> Services => _services.ToList().AsReadOnly();
 
     public void AddServices(HashSet<ServiceType> services)

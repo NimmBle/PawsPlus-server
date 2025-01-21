@@ -155,29 +155,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Zoolandia.Domain.Models.Meeting", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MeetingUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SitterId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SitterId")
-                        .IsUnique();
-
-                    b.ToTable("Meetings", (string)null);
-                });
-
             modelBuilder.Entity("Zoolandia.Domain.Models.Pet", b =>
                 {
                     b.Property<string>("Id")
@@ -213,7 +190,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
-                    b.ToTable("Pets", (string)null);
+                    b.ToTable("Pets");
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Post", b =>
@@ -221,27 +198,25 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Pets")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProfileId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Weights")
+                    b.Property<string>("_types")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Pets");
+
+                    b.Property<string>("_weights")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Weights");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
@@ -273,7 +248,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles", (string)null);
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Service", b =>
@@ -292,14 +267,14 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Zoolandia.Infrastructure.Identity.User", b =>
@@ -425,17 +400,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Zoolandia.Domain.Models.Meeting", b =>
-                {
-                    b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
-                        .WithOne("Meeting")
-                        .HasForeignKey("Zoolandia.Domain.Models.Meeting", "SitterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("Zoolandia.Domain.Models.Pet", b =>
                 {
                     b.HasOne("Zoolandia.Domain.Models.Profile", "Profile")
@@ -444,7 +408,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Zoolandia.Domain.Models.Pet.Age#Zoolandia.Domain.ValueObjects.Age", "Age", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.ValueObjects.Age", "Age", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -459,13 +423,13 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets", (string)null);
+                            b1.ToTable("Pets");
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
                         });
 
-                    b.OwnsOne("Zoolandia.Domain.Models.Pet.HealthStatus#Zoolandia.Domain.ValueObjects.HealthStatus", "HealthStatus", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.ValueObjects.HealthStatus", "HealthStatus", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -502,13 +466,13 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets", (string)null);
+                            b1.ToTable("Pets");
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
                         });
 
-                    b.OwnsOne("Zoolandia.Domain.Models.Pet.Personality#Zoolandia.Domain.ValueObjects.Personality", "Personality", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.ValueObjects.Personality", "Personality", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -538,7 +502,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets", (string)null);
+                            b1.ToTable("Pets");
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
@@ -561,7 +525,26 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("Zoolandia.Domain.Models.StateType", "Status", b1 =>
+                        {
+                            b1.Property<string>("PostId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("int");
+
+                            b1.HasKey("PostId");
+
+                            b1.ToTable("Posts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PostId");
+                        });
+
                     b.Navigation("Profile");
+
+                    b.Navigation("Status")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Service", b =>
@@ -592,8 +575,6 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
                 {
-                    b.Navigation("Meeting");
-
                     b.Navigation("Pet");
 
                     b.Navigation("Post");
