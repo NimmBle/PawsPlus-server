@@ -40,5 +40,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     hs.Property(hs => hs.OtherDietaryNeeds).HasColumnName("OtherDietaryNeeds").IsRequired();
                     hs.Property(hs => hs.HealthProblems).HasColumnName("HealthProblems").IsRequired();
                 });
+        
     }
 }

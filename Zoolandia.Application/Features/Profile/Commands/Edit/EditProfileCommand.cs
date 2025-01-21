@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Common.Contracts;
-using Zoolandia.Application.Identity;
 using Zoolandia.Domain.Repositories;
 
-namespace Zoolandia.Application.Features.Profile.Commands;
+namespace Zoolandia.Application.Features.Profile.Commands.Edit;
 
 public class EditProfileCommand 
     : EntityCommand<string>,

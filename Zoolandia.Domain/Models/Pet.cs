@@ -47,30 +47,30 @@ public class Pet : Entity<string>, IAggregateRoot
         this.ProfileId = profileId;
     }
 
-    public string Name { get; set; } = default!;
+    public string Name { get; private set; } = default!;
 
-    public string PhotoUrl { get; set; } = default!;
-
-    [JsonProperty(Required = Required.Always)]
-    public PetType PetType { get; set; }
-    
-    public Age? Age { get; set; }
-    
-    [JsonProperty(Required = Required.Always)]
-    public Gender Gender { get; set; }
+    public string PhotoUrl { get; private set; } = default!;
 
     [JsonProperty(Required = Required.Always)]
-    public string Breed { get; set; }
+    public PetType PetType { get; private set; }
     
-    public string? Weight { get; set; } // change type to Enum
-
-    public Personality? Personality { get; set; }
-
-    public HealthStatus? HealthStatus { get; set; }
-
-    public string ProfileId { get; set; }
+    public Age? Age { get; private set; }
     
-    public Profile Profile { get; set; } = null!;
+    [JsonProperty(Required = Required.Always)]
+    public Gender Gender { get; private set; }
+
+    [JsonProperty(Required = Required.Always)]
+    public string Breed { get; private set; }
+    
+    public string? Weight { get; private set; } // change type to Enum
+
+    public Personality? Personality { get; private set; }
+
+    public HealthStatus? HealthStatus { get; private set; }
+
+    public string ProfileId { get; private set; }
+    
+    public Profile Profile { get; private set; } = null!;
 
     public void Update(
         string name,

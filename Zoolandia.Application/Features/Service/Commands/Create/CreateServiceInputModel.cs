@@ -1,4 +1,5 @@
 ﻿using Zoolandia.Domain.Enums;
+using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Application.Features.Service.Commands.Create;
 

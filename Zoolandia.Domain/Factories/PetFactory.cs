@@ -37,6 +37,8 @@ public class PetFactory : IPetFactory
 
     public IPetFactory WithAge(int years, int months)
     {
+        if (years <= 0 || months <= 0)
+            
         this.age = Age.Create(years, months);
         return this;
     }

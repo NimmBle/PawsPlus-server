@@ -2,7 +2,7 @@
 using static Zoolandia.Domain.Models.ModelConstants.Common;
 using static Zoolandia.Domain.Models.ModelConstants.Profile;
 
-namespace Zoolandia.Application.Features.Profile.Commands;
+namespace Zoolandia.Application.Features.Profile.Commands.Edit;
 
 public class EditProfileCommandValidator : AbstractValidator<EditProfileCommand>
 {

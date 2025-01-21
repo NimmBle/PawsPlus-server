@@ -14,9 +14,7 @@ public class GetProfilePetQuery : IRequest<Result<PetOutputModel>>
     {
         public async Task<Result<PetOutputModel>> Handle(GetProfilePetQuery request, CancellationToken cancellationToken)
         {
-            var petOutputModel = await petQueryRepository.GetPetByProfile(request.Id);
-            
-            return petOutputModel;
+            return await petQueryRepository.GetPetByProfile(request.Id);
         }
     }
 }

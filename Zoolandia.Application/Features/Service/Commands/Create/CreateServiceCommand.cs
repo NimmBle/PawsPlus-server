@@ -6,7 +6,7 @@ namespace Zoolandia.Application.Features.Service.Commands.Create;
 
 public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result<string>>
 {
-    public class CreatePostServiceCommandHandler(
+    public class CreateServiceCommandHandler(
         IServiceDomainRepository serviceRepository) 
         : IRequestHandler<CreateServiceCommand, Result<string>>
     {
@@ -18,16 +18,13 @@ public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result<str
             
             if (alreadyExists)
                 return Result<string>.Failure("Service already exists");
-            
-            var service = new Domain.Models.Service()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = request.ServiceType.ToString(),
-                Price = request.Price,
-                AvailableDates = request.AvailableDates,
-                PostId = request.PostId,
-            };
 
+            var service = new Domain.Models.Service(
+                request.ServiceType,
+                request.Price,
+                request.AvailableDates,
+                request.PostId); 
+            
             await serviceRepository.Save(service);
 
             return Result<string>.SuccessWith(service.Id);

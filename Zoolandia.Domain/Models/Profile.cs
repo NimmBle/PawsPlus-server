@@ -9,25 +9,34 @@ namespace Zoolandia.Domain.Models;
 
 public class Profile : Entity<string>, IAggregateRoot
 {
-    public string FirstName { get; set; }
+    public Profile(string firstName,
+        string lastName,
+        string phoneNumber)
+    {
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.PhoneNumber = phoneNumber;
+    }
 
-    public string LastName { get; set; }
+    public string FirstName { get; private set; }
 
-    public string PhoneNumber { get; set; }
+    public string LastName { get; private set; }
 
-    public string PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1736432338/vk3ewpd0s0xcaywgjd29.svg";
+    public string PhoneNumber { get; private set; }
 
-    public string? Description { get; set; }
+    public string PhotoUrl { get; private set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1736432338/vk3ewpd0s0xcaywgjd29.svg";
 
-    public bool FirstLogin { get; set; } = true;
+    public string? Description { get; private set; }
+
+    public bool FirstLogin { get; private set; } = true;
 
     // public string? Address { get; set; }
 
-    public Pet? Pet { get; set; }
+    public Pet? Pet { get; private set; }
     
-    public Post? Post { get; set; }
+    public Post? Post { get; private set; }
     
-    public Meeting? Meeting { get; set; }
+    public Meeting? Meeting { get; private set; }
 
     public Profile UpdateFirstName(string firstName)
     {
@@ -67,6 +76,11 @@ public class Profile : Entity<string>, IAggregateRoot
         this.PhoneNumber = phoneNumber;
 
         return this;
+    }
+
+    public void UpdateFirstLogin()
+    {
+        this.FirstLogin = false;
     }
 
     public void ValidateFirstName(string firstName)

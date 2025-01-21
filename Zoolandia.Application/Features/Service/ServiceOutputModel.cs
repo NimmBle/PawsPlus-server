@@ -12,7 +12,7 @@ public class ServiceOutputModel : IMapFrom<Domain.Models.Service>
     
     public int Price { get; set; }
     
-    public List<DateOnly> AvailableDates { get; set; }
+    public HashSet<DateOnly> AvailableDates { get; set; }
 
     public virtual void Mapping(AutoMapper.Profile profile)
         => profile.CreateMap<Domain.Models.Service, ServiceOutputModel>();

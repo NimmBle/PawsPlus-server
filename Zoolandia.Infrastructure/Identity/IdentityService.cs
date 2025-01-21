@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Identity;
+using Zoolandia.Application.Identity.Commands;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
 
@@ -53,7 +54,7 @@ internal class IdentityService(
         }
     }
 
-    public async Task<Result<LoginSuccessModel>> Login(LoginUserCommand userInput)
+    public async Task<Result<LoginOutputModel>> Login(LoginUserCommand userInput)
     {
         var user = await userManager.FindByEmailAsync(userInput.Email);
         if (user == null)
@@ -69,7 +70,7 @@ internal class IdentityService(
         
         var roles = await userManager.GetRolesAsync(user);
         
-        return new LoginSuccessModel(user.Id, token, roles);
+        return new LoginOutputModel(user.Id, token, roles);
     }
 
     public async Task<Result> ChangeEmail(string userId, string newEmail)

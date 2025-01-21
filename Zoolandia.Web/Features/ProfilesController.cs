@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Pet.Queries;
 using Zoolandia.Application.Features.Post.Queries;
-using Zoolandia.Application.Features.Profile.Commands;
+using Zoolandia.Application.Features.Profile.Commands.Edit;
 using Zoolandia.Application.Features.Profile.Queries;
 
 namespace Zoolandia.Web.Features;

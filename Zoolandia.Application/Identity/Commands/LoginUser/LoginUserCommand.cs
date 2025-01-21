@@ -23,26 +23,17 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             var user = result.Data;
 
             if (user.Roles.Contains("Administrator"))
-            {
-                return new LoginOutputModel(
-                    user.Id,
-                    user.Token,
-                    false,
-                    user.Roles);
-            }
+                return user;
 
             var profile = await profileRepository.GetByUser(user.Id);
 
-            LoginOutputModel loginOutputModel = new(
-                user.Id,
-                user.Token,
-                profile.FirstLogin,
-                user.Roles);
-
-            profile.FirstLogin = false;
+            profile.UpdateFirstLogin();
+            
+            user.FirstLogin = false;
+            
             await profileRepository.Update(profile);
             
-            return loginOutputModel;
+            return user;
         }
     }
 }

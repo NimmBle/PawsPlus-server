@@ -15,10 +15,10 @@ public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
             CancellationToken cancellationToken)
         {
             var service = await serviceRepository.GetById(request.Id);
-                
-            service.Price = request.Price;
-            service.AvailableDates = request.AvailableDates;
 
+            service.UpdatePrice(request.Price);
+            service.UpdateAvailableDates(request.AvailableDates);
+            
             await serviceRepository.Update(service);
 
             return true;

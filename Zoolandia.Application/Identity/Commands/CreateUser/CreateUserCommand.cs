@@ -32,13 +32,12 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
                 return Result.Failure(result.Errors); // remove Result.Failure after implementing IUser
 
             var user = result.Data;
-            
-            Profile profile = new()
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber
-            };
+
+            Profile profile = new(
+                request.FirstName,
+                request.LastName,
+                request.PhoneNumber
+                );
             
             user.CreateProfile(profile);
 
