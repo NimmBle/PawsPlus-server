@@ -1,4 +1,4 @@
-﻿using Zoolandia.Domain.Common.Models;
+using Zoolandia.Domain.Common.Models;
 
 namespace Zoolandia.Domain.Models;
 

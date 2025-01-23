@@ -9,34 +9,32 @@ namespace Zoolandia.Domain.Models;
 
 public class Post : Entity<string>, IAggregateRoot
 {
-    private readonly HashSet<PetType> _types = new();
-    private readonly HashSet<Weight>? _weights = new();
     private readonly HashSet<Service> _services = new();
 
     public Post()
     {
     }
-    
+
     public Post(
-        HashSet<PetType> types,
+        HashSet<PetType> petTypes,
         HashSet<Weight> weights,
         string profileId)
     {
         this.Id = Guid.NewGuid().ToString();
-        this._types = types;
-        this._weights = weights;
+        this.PetTypes = petTypes.ToList();
+        this.Weights = weights.ToList();
         this.ProfileId = profileId;
     }
 
     public StateType Status { get; private set; } = StateType.None;
-    
+
     public string ProfileId { get; private set; }
     public Profile Profile { get; set; }
 
-    public ReadOnlyCollection<PetType> Types => _types.ToList().AsReadOnly();
+    public IList<PetType> PetTypes { get; set; } = new List<PetType>();
 
-    public ReadOnlyCollection<Weight>? Weights => _weights.ToList().AsReadOnly();
-    
+    public IList<Weight>? Weights { get; set; } = new List<Weight>();
+
     public IReadOnlyCollection<Service> Services => _services.ToList().AsReadOnly();
 
     public void AddServices(HashSet<ServiceType> services)

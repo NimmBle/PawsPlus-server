@@ -1,7 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Zoolandia.Application.Features.Post;
 using Zoolandia.Application.Features.Post.Queries;
+using Zoolandia.Application.Features.Post.Queries.Search;
+using Zoolandia.Domain.Enums;
 using Zoolandia.Domain.Models;
 using Zoolandia.Domain.Repositories;
 using Zoolandia.Infrastructure.Common.Persistence;
@@ -15,17 +18,46 @@ public class PostRepository(
         IPostDomainRepository,
         IPostQueryRepository
 {
-    public async Task<PostDetailsOutputModel> GetPostDetails(string Id)
+    public async Task<PostDetailsOutputModel> GetPostDetails(string Id, CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()
                 .Where(p => p.Id == Id))
             .FirstOrDefaultAsync();
 
-    public async Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId)
+    public async Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId, CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()
                 .Where(p => p.ProfileId == profileId))
             .FirstOrDefaultAsync();
+
+    public async Task<ICollection<PostOutputModel>> SearchPosts(Expression<Func<Post, bool>> predicate,
+        ServiceType serviceType,
+        CancellationToken cancellationToken = default)
+        => await this
+            .All()
+            .Where(predicate)
+            .Select(p => new PostOutputModel
+            {
+                FirstName = p.Profile.FirstName,
+                LastName = p.Profile.LastName,
+                PhotoUrl = p.Profile.PhotoUrl,
+                Description = p.Profile.Description,
+                ServicePrice = p.Services
+                    .Where(s => s.Name == serviceType.ToString())
+                    .Select(s => s.Price)
+                    .FirstOrDefault()
+            })
+            .ToListAsync(cancellationToken);
+
+    // public async Task<ICollection<PostOutputModel>> SearchPosts(Expression<Func<Post, bool>> predicate,
+    //     ServiceType serviceType,
+    //     CancellationToken cancellationToken = default)
+    //     => await mapper
+    //         .ProjectTo<PostOutputModel>(this
+    //             .All()
+    //             .Where(predicate),
+    //             new Dictionary<string, object>{ { "ServiceName", serviceType.ToString() } })
+    //         .ToListAsync();
 }
