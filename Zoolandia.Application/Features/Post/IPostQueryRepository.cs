@@ -11,5 +11,9 @@ public interface IPostQueryRepository
 
     Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId, CancellationToken cancellationToken = default);
 
-    Task<ICollection<PostOutputModel>> SearchPosts(Expression<Func<Domain.Models.Post, bool>> predicate, ServiceType serviceType, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<PostOutputModel>> SearchPosts(Expression<Func<Domain.Models.Post, bool>> predicate,
+        ServiceType serviceType,
+        int skip,
+        int take,
+        CancellationToken cancellationToken = default);
 }

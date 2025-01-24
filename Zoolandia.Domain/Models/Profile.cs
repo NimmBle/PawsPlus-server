@@ -9,7 +9,7 @@ namespace Zoolandia.Domain.Models;
 
 public class Profile : Entity<string>, IAggregateRoot
 {
-    public Profile(string firstName,
+    public Profile(string firstName, 
         string lastName,
         string phoneNumber)
     {

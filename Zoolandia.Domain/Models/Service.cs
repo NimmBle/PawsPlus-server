@@ -9,7 +9,7 @@ public class Service : Entity<string>, IAggregateRoot
     {
     }
     
-    public Service(ServiceType serviceType)
+    internal Service(ServiceType serviceType)
     {
         this.Id = Guid.NewGuid().ToString();
         this.Name = serviceType.ToString();

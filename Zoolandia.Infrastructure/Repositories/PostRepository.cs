@@ -32,14 +32,17 @@ public class PostRepository(
                 .Where(p => p.ProfileId == profileId))
             .FirstOrDefaultAsync();
 
-    public async Task<ICollection<PostOutputModel>> SearchPosts(Expression<Func<Post, bool>> predicate,
+    public async Task<IReadOnlyCollection<PostOutputModel>> SearchPosts(Expression<Func<Post, bool>> predicate,
         ServiceType serviceType,
+        int skip,
+        int take,
         CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(predicate)
             .Select(p => new PostOutputModel
             {
+                Id = p.ProfileId,
                 FirstName = p.Profile.FirstName,
                 LastName = p.Profile.LastName,
                 PhotoUrl = p.Profile.PhotoUrl,
@@ -49,15 +52,8 @@ public class PostRepository(
                     .Select(s => s.Price)
                     .FirstOrDefault()
             })
+            .Skip(skip)
+            .Take(take)
+            .AsNoTracking()
             .ToListAsync(cancellationToken);
-
-    // public async Task<ICollection<PostOutputModel>> SearchPosts(Expression<Func<Post, bool>> predicate,
-    //     ServiceType serviceType,
-    //     CancellationToken cancellationToken = default)
-    //     => await mapper
-    //         .ProjectTo<PostOutputModel>(this
-    //             .All()
-    //             .Where(predicate),
-    //             new Dictionary<string, object>{ { "ServiceName", serviceType.ToString() } })
-    //         .ToListAsync();
 }

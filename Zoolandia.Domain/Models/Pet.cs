@@ -7,7 +7,7 @@ namespace Zoolandia.Domain.Models;
 
 public class Pet : Entity<string>, IAggregateRoot
 {
-    public Pet(
+    internal Pet(
         string name,
         string photoUrl,
         PetType petType,
@@ -26,7 +26,7 @@ public class Pet : Entity<string>, IAggregateRoot
         this.HealthStatus = HealthStatus.Create(healthStatus);
     }
 
-    private Pet(
+    internal Pet(
         string name,
         string photoUrl,
         PetType petType,
@@ -86,11 +86,19 @@ public class Pet : Entity<string>, IAggregateRoot
         this.Name = name;
         this.PhotoUrl = photoUrl;
         this.PetType = petType;
-        this.Age = Age.Create(age);
+        this.Age = UpdateAge(age);
         this.Gender = gender;
         this.Breed = breed;
         this.Weight = weight;
         this.Personality = Personality.Create(personality);
         this.HealthStatus = HealthStatus.Create(healthStatus);
+    }
+
+    private Age UpdateAge(Age age)
+    {
+        if (age.Years <= 0 && age.Months <= 0)
+            throw new ArgumentOutOfRangeException("Age must be greater than 0");
+        
+        return Age.Create(age);
     }
 }

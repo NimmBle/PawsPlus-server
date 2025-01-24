@@ -2,14 +2,14 @@
 
 public class SearchPostsOutputModel
 {
-    public SearchPostsOutputModel(ICollection<PostOutputModel> posts, int totalPages, int page = 1)
+    internal SearchPostsOutputModel(IReadOnlyCollection<PostOutputModel> posts, int totalPages, int page = 1)
     {
         Posts = posts;
         TotalPages = totalPages;
         Page = page;
     }
     
-    public ICollection<PostOutputModel> Posts { get; set; } = new List<PostOutputModel>();
+    public IReadOnlyCollection<PostOutputModel> Posts { get; set; }
     
     public int? Page { get; set; }
     

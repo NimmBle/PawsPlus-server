@@ -11,7 +11,7 @@ public class Post : Entity<string>, IAggregateRoot
 {
     private readonly HashSet<Service> _services = new();
 
-    public Post()
+    internal Post()
     {
     }
 

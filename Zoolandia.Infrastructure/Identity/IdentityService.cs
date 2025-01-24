@@ -1,5 +1,9 @@
-﻿using System.Transactions;
+﻿using System.Text;
+using System.Transactions;
+using System.Web;
 using Microsoft.AspNetCore.Identity;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Identity;
 using Zoolandia.Application.Identity.Commands;
@@ -37,7 +41,7 @@ internal class IdentityService(
                 var rolesResult = await userManager.AddToRoleAsync(user, Enum.GetName(userInput.Role));
                 var roleErrors = rolesResult.Errors.Select(e => e.Description);
                 
-                // await SendConfirmationEmail(user);
+                await SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
                 
                 scope.Complete();
                 
@@ -75,29 +79,30 @@ internal class IdentityService(
 
     public async Task<Result> ChangeEmail(string userId, string newEmail)
     {
+        if (await EmailAlreadyExists(newEmail))
+            return "Email already exists";
+        
         var user = await userManager.FindByIdAsync(userId);
         if (user == null)
             return false;
 
-        var normalizedEmail = newEmail.ToUpper().Normalize();
-
         user.Email = newEmail;
-        user.NormalizedEmail = normalizedEmail;
+        user.NormalizedEmail = newEmail.ToUpper().Normalize();
         user.EmailConfirmed = false;
         
-        user.UserName = newEmail;
-        user.NormalizedUserName = normalizedEmail;
+        user.UserName = newEmail; 
+        user.NormalizedUserName = newEmail.ToUpper().Normalize();
 
         var identityResult = await userManager.UpdateAsync(user);
 
         if (!identityResult.Succeeded)
             return Result.Failure(identityResult.Errors.Select(e => e.Description));
         
-        // send confirmation email
+        await SendConfirmationEmail(user);
         
         return Result.Success;
     }
-
+ 
     public async Task<bool> EmailAlreadyExists(string email)
     {
         var userExists = await userManager.FindByEmailAsync(email);
@@ -120,7 +125,8 @@ internal class IdentityService(
         if (isVerified)
             return "Email is already confirmed";
         
-        var result = await userManager.ConfirmEmailAsync(user, token);
+        var decodedToken = HttpUtility.UrlDecode(token);
+        var result = await userManager.ConfirmEmailAsync(user, decodedToken);
 
         if (!result.Succeeded)
             return "Email confirmation failed";
@@ -138,33 +144,38 @@ internal class IdentityService(
     }
 
 
-    // public async Task SendConfirmationEmail(User user)
-    // {
-    //     var apiKey = "REDACTED_SENDGRID_API_KEY";
-    //     // var apiKey = Environment.GetEnvironmentVariable("SendGrid-ApiKey");
-    //     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-    //     var confirmationLink =
-    //         $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
-    //     
-    //     var client = new SendGridClient(apiKey);
-    //     var from = new EmailAddress("pawspluswebapp@gmail.com", "PawsPlus");
-    //     var subject = "Потвърждаване на имейл адрес";
-    //     var to = new EmailAddress(user.Email, user.UserName);
-    //     var htmlContent = $@"
-    //     <html>
-    //     <body style='font-family: Oswald, sans-serif;'>
-    //       <p>Хей, {user.UserName}!</p>
-    //       <p>Нека направим този имейл адрес официален - само трябва да потвърдиш, че си ти.</p>
-    //       <p>
-    //         Не се колебай, последвай връзката: <br/> <a href='{confirmationLink}'>потвърди имейл</a>
-    //       </p>
-    //       <p>Благодарим предварително!</p>
-    //       <p>Поздрави, <br/> Екипът на Умелико</p>
-    //     </body>
-    //     </html>";
-    //     
-    //     var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
-    //     
-    //     await client.SendEmailAsync(message);
-    // }
+    public async Task SendConfirmationEmail(User user, string firstName = "", string lastName = "")
+    {
+        // var apiKey = "REDACTED_SENDGRID_API_KEY";
+        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var confirmationLink =
+            $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
+        
+        var client = new SendGridClient(apiKey);
+        var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+ - no-reply");
+        var subject = "Потвърждаване на имейл адрес";
+        var to = new EmailAddress(user.Email, user.UserName);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+          <p>Хей, { firstName } { lastName }!</p>
+          <p>Нека направим този имейл адрес официален - само трябва да потвърдиш, че си ти.</p>
+          <p>
+            Не се колебай, последвай връзката: <br/> <a href='{confirmationLink}'>потвърди имейл</a>
+          </p>
+          <p>Благодарим предварително!</p>
+          <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+        
+        var result = await client.SendEmailAsync(message);
+
+        if (result.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Email sent");
+        }
+    }
 }

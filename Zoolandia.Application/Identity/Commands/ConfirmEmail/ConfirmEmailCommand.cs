@@ -11,9 +11,7 @@ public class ConfirmEmailCommand : IRequest<Result>
     
     public class ConfirmEmailCommandHandler(IIdentity identity) : IRequestHandler<ConfirmEmailCommand, Result>
     {
-        public async Task<Result> Handle(
-            ConfirmEmailCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Result> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
             => await identity.ConfirmEmail(request.UserId, request.Token);
     }
 }

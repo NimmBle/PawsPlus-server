@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Identity.Commands;
+using Zoolandia.Application.Identity.Commands.ChangeEmail;
 using Zoolandia.Application.Identity.Commands.ConfirmEmail;
 using Zoolandia.Application.Identity.Commands.CreateUser;
 using Zoolandia.Application.Identity.Commands.LoginUser;
@@ -24,5 +25,11 @@ public class IdentityController : ApiController
     [HttpPut]
     [Route(nameof(ConfirmEmail))]
     public async Task<ActionResult> ConfirmEmail(ConfirmEmailCommand command)
+        => await this.Send(command);
+
+    [HttpPut]
+    [Authorize]
+    [Route(nameof(ChangeEmail))]
+    public async Task<ActionResult> ChangeEmail(ChangeEmailCommand command)
         => await this.Send(command);
 }

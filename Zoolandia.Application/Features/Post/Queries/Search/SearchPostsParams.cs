@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.VisualBasic.CompilerServices;
 using Zoolandia.Application.Common;
 using Zoolandia.Domain.Enums;
@@ -16,18 +17,23 @@ public class SearchPostsParams
     public string? StartDate { get; set; }
     
     public string? EndDate { get; set; }
+    
+    public int? MinPrice { get; set; }
+    
+    public int? MaxPrice { get; set; }
 
     public int PostsPerPage { get; set; } = 10;
     
     public int Page { get; set; } = 1;
     
-    public string? Location { get; set; }
+    
     
     
     public Expression<Func<Domain.Models.Post, bool>> ToPredicate()
     {
-        Expression<Func<Domain.Models.Post, bool>> predicate = x => true;
+        Expression<Func<Domain.Models.Post, bool>> predicate = x => true;   
 
+        // PetType
         if (!string.IsNullOrWhiteSpace(PetType.ToString()))
         {
             predicate = predicate.And(p => p.PetTypes
@@ -35,6 +41,7 @@ public class SearchPostsParams
                 .Contains(PetType));
         }
         
+        // ServiceType
         if (!string.IsNullOrWhiteSpace(ServiceType.ToString()))
         {
             predicate = predicate.And(p => p.Services
@@ -42,17 +49,33 @@ public class SearchPostsParams
                 .Any());
         }
 
+        // MIN AND MAX PRICE
+        if (MinPrice is not null && MinPrice < MaxPrice)
+        {
+            predicate = predicate.And(p => p.Services
+                .Where(s => s.Price >= MinPrice)
+                .Any());
+        }
+
+        if (MaxPrice is not null && MaxPrice > MinPrice)
+        {
+            predicate = predicate.And(p => p.Services
+                .Where(s => s.Price <= MaxPrice)
+                .Any());
+        }
+
+        // StardDate and EndDate
         if (StartDate is not null && EndDate is not null)
         {
-                predicate = predicate.And(p => p.Services
-                    .Select(s => s.AvailableDates)
-                    .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
-                    .Any());
-                
-                predicate = predicate.And(p => p.Services
-                    .Select(s => s.AvailableDates)
-                    .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
-                    .Any());
+            predicate = predicate.And(p => p.Services
+                .Select(s => s.AvailableDates)
+                .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
+                .Any());
+            
+            predicate = predicate.And(p => p.Services
+                .Select(s => s.AvailableDates)
+                .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
+                .Any());
         }
         else if (StartDate is not null && EndDate is null)
         {
