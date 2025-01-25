@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Zoolandia.Application.Common;
+using Zoolandia.Application.Features.Profile.Queries;
+using Zoolandia.Application.Features.Profile.Queries.Mine;
 using Zoolandia.Application.Identity;
 using Zoolandia.Application.Identity.Commands;
 using Zoolandia.Application.Identity.Commands.CreateUser;
@@ -19,7 +21,26 @@ internal class IdentityService(
 {
     
     private const string InvalidErrorMessage = "Invalid Credentials";
-    
+
+    public async Task<Result<MineProfileOutputModel>> GetUserProfile(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        var roles = await userManager.GetRolesAsync(user);
+        var profile = new MineProfileOutputModel()
+        {
+            Id = user.Profile.Id,
+            Email = user.Email,
+            FirstName = user.Profile.FirstName,
+            LastName = user.Profile.LastName,
+            Description = user.Profile.Description,
+            PhoneNumber = user.Profile.PhoneNumber,
+            PhotoUrl = user.Profile.PhotoUrl,
+            Roles = roles, 
+        };
+
+        return profile;
+    }
+
     public async Task<Result<IUser>> Register(CreateUserCommand userInput)
     {
         var user = new User()

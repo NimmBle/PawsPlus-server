@@ -40,6 +40,9 @@ public class PetRepository
 
     public async Task<PetOutputModel> GetPetByProfile(string profileId)
     { 
+        // return mapper
+        //     .Map<PetOutputModel>(await GetPet(p => p.ProfileId == profileId));
+        
         var pet = await GetPet(p => p.ProfileId == profileId);
         
         return mapper.Map<PetOutputModel>(pet);

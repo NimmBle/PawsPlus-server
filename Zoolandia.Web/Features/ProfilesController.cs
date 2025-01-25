@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Pet.Queries;
 using Zoolandia.Application.Features.Post.Queries;
 using Zoolandia.Application.Features.Profile.Commands.Edit;
-using Zoolandia.Application.Features.Profile.Queries;
+using Zoolandia.Application.Features.Profile.Queries.Mine;
+using Zoolandia.Application.Features.Profile.Queries.Search;
 
 namespace Zoolandia.Web.Features;
 
 public class ProfilesController : ApiController
 {
     [HttpGet]
-    public async Task<ActionResult<ProfileDetailsOutputModel>> Myself(
-        [FromQuery] ProfileDetailsQuery query)
+    [Route(nameof(Mine))]
+    public async Task<ActionResult<MineProfileOutputModel>> Mine(
+        [FromQuery] MineProfileQuery query)
         => await this.Send(query);
     
     [HttpGet]
@@ -29,7 +31,7 @@ public class ProfilesController : ApiController
     [HttpGet]
     [Route(Id)]
     public async Task<ActionResult<ProfileDetailsOutputModel>> Details(
-        [FromRoute] ProfileDetailsQuery query)
+        [FromRoute] GetProfileDetailsQuery query)
         => await this.Send(query);
 
     [HttpGet]

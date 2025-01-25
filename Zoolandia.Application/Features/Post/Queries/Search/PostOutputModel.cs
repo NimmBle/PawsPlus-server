@@ -2,9 +2,10 @@
 
 namespace Zoolandia.Application.Features.Post.Queries.Search;
 
-public class PostOutputModel : IMapFrom<Domain.Models.Post>
+public class PostOutputModel
 {
     public string Id { get; set; }
+    
     public string FirstName { get; set; }
     
     public string LastName { get; set; }

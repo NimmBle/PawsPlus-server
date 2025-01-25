@@ -27,8 +27,6 @@ public class SearchPostsParams
     public int Page { get; set; } = 1;
     
     
-    
-    
     public Expression<Func<Domain.Models.Post, bool>> ToPredicate()
     {
         Expression<Func<Domain.Models.Post, bool>> predicate = x => true;   
