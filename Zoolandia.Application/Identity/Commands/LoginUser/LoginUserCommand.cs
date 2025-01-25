@@ -27,9 +27,14 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
 
             var profile = await profileRepository.GetByUser(user.Id);
 
-            profile.UpdateFirstLogin();
+            user = new LoginOutputModel(
+                user.Id,
+                user.Token,
+                user.Roles,
+                profile.FirstLogin
+            );
             
-            user.FirstLogin = false;
+            profile.UpdateFirstLogin();
             
             await profileRepository.Update(profile);
             
