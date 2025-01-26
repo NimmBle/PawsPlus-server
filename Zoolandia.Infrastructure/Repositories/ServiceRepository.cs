@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Zoolandia.Application.Features.Service;
 using Zoolandia.Domain.Models;
 using Zoolandia.Domain.Repositories;
 using Zoolandia.Infrastructure.Common.Persistence;
@@ -7,9 +8,11 @@ using Zoolandia.Infrastructure.Common.Persistence;
 namespace Zoolandia.Infrastructure.Repositories;
 
 public class ServiceRepository(
-    ZoolandiaDbContext db)
+    ZoolandiaDbContext db,
+    IMapper mapper)
     : DataRepository<ZoolandiaDbContext, Service>(db),
-        IServiceDomainRepository
+        IServiceDomainRepository,
+        IServiceQueryRepository
 {
     public async Task<Service> GetById(string id, CancellationToken cancellationToken = default)
         => await All()
@@ -37,4 +40,7 @@ public class ServiceRepository(
     public async Task<bool> AlreadyExists(string serviceName, string postId, CancellationToken cancellationToken = default)
         => await All()
             .AnyAsync(s => s.Name == serviceName && s.PostId == postId);
+
+    public async Task<ServiceOutputModel> Get(string serviceId, CancellationToken cancellationToken = default)
+        => mapper.Map<ServiceOutputModel>(await this.GetById(serviceId, cancellationToken));
 }

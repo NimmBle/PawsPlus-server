@@ -6,8 +6,9 @@ public record Age
     
     public int Months { get; private set; }
 
-    public Age() 
-    {}
+    public Age()
+    {
+    }
     
     private Age(int years, int months)
     {
