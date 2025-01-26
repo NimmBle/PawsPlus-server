@@ -16,10 +16,14 @@ public interface IIdentity
     Task<Result<LoginOutputModel>> Login(LoginUserCommand userInput);
 
     Task<Result> ChangeEmail(string userId, string newEmail);
-
-    Task<bool> EmailAlreadyExists(string email);
-
+    
     Task<Result> ConfirmEmail(string id, string token);
+    
+    // Task<bool> EmailAlreadyExists(string email);
+    
+    // Task SendPasswordResetEmail(string email);
+    //
+    // Task<Result> ResetPassword(string email, string oldPassword, string newPassword);
     
     Task<IList<string>> GetRoles(string userId);
 }

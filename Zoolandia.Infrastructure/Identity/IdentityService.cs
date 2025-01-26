@@ -1,11 +1,9 @@
-﻿using System.Text;
-using System.Transactions;
+﻿using System.Transactions;
 using System.Web;
 using Microsoft.AspNetCore.Identity;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Zoolandia.Application.Common;
-using Zoolandia.Application.Features.Profile.Queries;
 using Zoolandia.Application.Features.Profile.Queries.Mine;
 using Zoolandia.Application.Identity;
 using Zoolandia.Application.Identity.Commands;
@@ -123,7 +121,46 @@ internal class IdentityService(
         
         return Result.Success;
     }
- 
+
+    // public async Task SendPasswordResetEmail(string email)
+    // {
+    //     var user = await userManager.FindByEmailAsync(email);
+    //     var token = await userManager.GeneratePasswordResetTokenAsync(user);
+    //     
+    //     var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+    //     var confirmationLink =
+    //         $"http://localhost:4200/auth/confirm-email?email={email}&token={HttpUtility.UrlEncode(token)}";
+    //     
+    //     var client = new SendGridClient(apiKey);
+    //     var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
+    //     var subject = "Създаване на нова парола";
+    //     var to = new EmailAddress(user.Email, user.UserName);
+    //     var htmlContent = $@"
+    //     <html>
+    //     <body style='font-family: Oswald, sans-serif;'>
+    //       <p>Хей!</p>
+    //       <p>За да създадеш новата си парола последвай линка: <br/> <a href='{confirmationLink}'>създай нова парола </a> </p>
+    //       <p>Благодарим предварително!</p>
+    //       <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+    //     </body>
+    //     </html>";
+    //     
+    //     var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+    //     
+    //     var result = await client.SendEmailAsync(message);
+    //
+    //     if (result.IsSuccessStatusCode)
+    //     {
+    //         Console.WriteLine("Email sent");
+    //     }
+    // }
+    //
+    // public Task<Result> ResetPassword(string email, string oldPassword, string newPassword)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+
     public async Task<bool> EmailAlreadyExists(string email)
     {
         var userExists = await userManager.FindByEmailAsync(email);
@@ -174,7 +211,7 @@ internal class IdentityService(
             $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
         
         var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+ - no-reply");
+        var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
         var subject = "Потвърждаване на имейл адрес";
         var to = new EmailAddress(user.Email, user.UserName);
         var htmlContent = $@"
