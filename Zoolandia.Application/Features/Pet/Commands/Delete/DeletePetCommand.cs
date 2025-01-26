@@ -12,8 +12,6 @@ public class DeletePetCommand : EntityCommand<string>, IRequest<Result>
         public async Task<Result> Handle(
             DeletePetCommand request,
             CancellationToken cancellationToken)
-        {
-            return await petDomainRepository.Delete(request.Id);
-        }
+            => await petDomainRepository.Delete(request.Id);
     }
 }

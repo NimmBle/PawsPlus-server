@@ -5,9 +5,11 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IServiceDomainRepository : IDomainRepository<Service>
 {
-    Task<Service> GetById(string id);
+    Task<Service> GetById(string id, CancellationToken cancellationToken = default);
     
-    Task<Service> GetByName(string serviceName);
+    Task<Service> GetByName(string serviceName, CancellationToken cancellationToken = default);
     
-    Task<bool> AlreadyExists(string serviceName, string postId);
+    Task<bool> Delete(string id, CancellationToken cancellationToken = default);
+    
+    Task<bool> AlreadyExists(string serviceName, string postId, CancellationToken cancellationToken = default);
 }

@@ -11,17 +11,30 @@ public class ServiceRepository(
     : DataRepository<ZoolandiaDbContext, Service>(db),
         IServiceDomainRepository
 {
-    public async Task<Service> GetById(string id)
+    public async Task<Service> GetById(string id, CancellationToken cancellationToken = default)
         => await All()
-            .Where(s => s.Id == id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(s => s.Id == id);
 
-    public async Task<Service> GetByName(string serviceName)
+    public async Task<Service> GetByName(string serviceName, CancellationToken cancellationToken = default)
         => await All()
             .Where(s => s.Name == serviceName)
             .FirstOrDefaultAsync();
 
-    public async Task<bool> AlreadyExists(string serviceName, string postId)
+    public async Task<bool> Delete(string id, CancellationToken cancellationToken = default)
+    {
+        var service = await this.GetById(id);
+
+        if (service == null)
+            return false;
+
+        this.Data.Services.Remove(service);
+        
+        await this.Data.SaveChangesAsync(cancellationToken);
+
+        return true;
+    }
+
+    public async Task<bool> AlreadyExists(string serviceName, string postId, CancellationToken cancellationToken = default)
         => await All()
             .AnyAsync(s => s.Name == serviceName && s.PostId == postId);
 }
