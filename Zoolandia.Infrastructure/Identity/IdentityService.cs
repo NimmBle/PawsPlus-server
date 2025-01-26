@@ -60,7 +60,7 @@ internal class IdentityService(
                 var rolesResult = await userManager.AddToRoleAsync(user, Enum.GetName(userInput.Role));
                 var roleErrors = rolesResult.Errors.Select(e => e.Description);
                 
-                await SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
+                // await SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
                 
                 scope.Complete();
                 
@@ -117,7 +117,7 @@ internal class IdentityService(
         if (!identityResult.Succeeded)
             return Result.Failure(identityResult.Errors.Select(e => e.Description));
         
-        await SendConfirmationEmail(user);
+        // await SendConfirmationEmail(user);
         
         return Result.Success;
     }
