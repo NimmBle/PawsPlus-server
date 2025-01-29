@@ -7,21 +7,21 @@ namespace Zoolandia.Application.Features.Service.Commands.Edit;
 public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
 {
     public class EditServiceCommandHandler(
-        IServiceDomainRepository serviceRepository)
+        IServiceDomainRepository serviceDomainRepository)
         : IRequestHandler<EditServiceCommand, Result>
     {
         public async Task<Result> Handle(
             EditServiceCommand request,
             CancellationToken cancellationToken)
         {
-            var service = await serviceRepository.GetById(request.Id);
+            var service = await serviceDomainRepository.Find(request.Id);
 
             service.UpdatePrice(request.Price);
             service.UpdateAvailableDates(request.AvailableDates);
             
-            await serviceRepository.Update(service);
+            await serviceDomainRepository.Update(service);
 
-            return true;
+            return Result.Success;
         }
     }
 }

@@ -33,7 +33,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
             var user = result.Data;
 
-            Profile profile = new(
+            var profile = new Profile(
                 request.FirstName,
                 request.LastName,
                 request.PhoneNumber

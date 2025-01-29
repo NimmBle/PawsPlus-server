@@ -17,44 +17,35 @@ public class PetRepository
             IPetDomainRepository,
             IPetQueryRepository
 {
-    public async Task<Pet> Get(string id, CancellationToken cancellationToken = default)
+    public async Task<Pet> Find(string id,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(p => p.Id == id)
-            .FirstOrDefaultAsync();
-
-    // fix
-    public async Task<bool> Delete(string id, CancellationToken cancellationToken = default)
+            .FirstOrDefaultAsync(cancellationToken);
+    
+    public async Task<bool> Delete(string id,
+        CancellationToken cancellationToken = default)
     {
-        var pet = await this.Get(id);
+        var pet = await this.Find(id);
 
         if (pet == null)
             return false;
 
         this.Data.Pets.Remove(pet);
 
-        await this.Data.SaveChangesAsync();
+        await this.Data.SaveChangesAsync(cancellationToken);
 
         return true;
     }
 
-    public async Task<PetOutputModel> GetPetByProfile(string profileId)
-    { 
-        // return mapper
-        //     .Map<PetOutputModel>(await GetPet(p => p.ProfileId == profileId));
-        
-        var pet = await GetPet(p => p.ProfileId == profileId);
-        
-        return mapper.Map<PetOutputModel>(pet);
-    }
-
-    public async Task<Pet> GetPetById(string id)
-        => await this
-            .All()
-            .Where(p => p.Id == id)
-            .FirstOrDefaultAsync();
+    public async Task<PetOutputModel> GetPetByProfile(string profileId,
+        CancellationToken cancellationToken = default)
+         => mapper.Map<PetOutputModel>(await GetPet(p => p.ProfileId == profileId));
     
-    private async Task<Pet?> GetPet(Expression<Func<Pet, bool>> predicate)
+    
+    private async Task<Pet?> GetPet(Expression<Func<Pet, bool>> predicate,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(predicate)

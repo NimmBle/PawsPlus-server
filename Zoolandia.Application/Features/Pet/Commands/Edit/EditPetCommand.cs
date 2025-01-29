@@ -14,13 +14,12 @@ public class EditPetCommand
     
     public class EditPetCommandHandler
         (IPetDomainRepository petDomainRepository, 
-            IPetQueryRepository petQueryRepository,
             IMapper mapper)
         : IRequestHandler<EditPetCommand, Result>
     {
         public async Task<Result> Handle(EditPetCommand request, CancellationToken cancellationToken)
         {
-            var pet = await petQueryRepository.GetPetById(request.Id);
+            var pet = await petDomainRepository.Find(request.Id);
 
             if (pet == null)
                 return false;

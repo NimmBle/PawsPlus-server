@@ -13,35 +13,29 @@ using Profile = Zoolandia.Domain.Models.Profile;
 namespace Zoolandia.Infrastructure.Repositories;
 
 public class ProfileRepository(
-    ZoolandiaDbContext db,
-    IMapper mapper)
+    ZoolandiaDbContext db)
     : DataRepository<ZoolandiaDbContext, Profile>(db),
         IProfileDomainRepository,
         IProfileQueryRepository
 {
-    public async Task<Profile> Get(string profileId)
+    public async Task<Profile> Find(string profileId,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(p => p.Id == profileId)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<Profile> GetByUser(string userId)
+    public async Task<Profile> FindByUser(string userId,
+        CancellationToken cancellationToken = default)
         => await this
             .Data
             .Users
             .Where(u => u.Id == userId)
             .Select(u => u.Profile)
-            .FirstOrDefaultAsync();
-
-    public async Task<string> GetProfileId(string userId, CancellationToken cancellationToken = default)
-        => await this
-            .Data
-            .Users
-            .Where(u => u.Id == userId)
-            .Select(u => u.Profile!.Id)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<T> GetDetailsBase<T>(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken = default)
+    public async Task<T> GetDetailsBase<T>(Expression<Func<User, bool>> predicate,
+        CancellationToken cancellationToken = default)
         where T : ProfileOutputModel, new()
         => await this
                 .Data
@@ -60,17 +54,12 @@ public class ProfileRepository(
                 })
                 .FirstOrDefaultAsync(cancellationToken);
     
-    public async Task<ProfileDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default)
+    public async Task<ProfileDetailsOutputModel> GetDetails(string profileId,
+        CancellationToken cancellationToken = default)
         => await GetDetailsBase<ProfileDetailsOutputModel>(u => u.Profile.Id == profileId, cancellationToken);
 
-    public async Task<MineProfileOutputModel> GetMineProfileByUser(string userId, CancellationToken cancellationToken = default)
+    public async Task<MineProfileOutputModel> GetDetailsByUser(string userId,
+        CancellationToken cancellationToken = default)
         => await GetDetailsBase<MineProfileOutputModel>(p => p.Id == userId, cancellationToken); 
-
-    public async Task<string> GetEmailByUser(string userId, CancellationToken cancellationToken = default)
-        => await this
-            .Data
-            .Users
-            .Where(u => u.Id == userId)
-            .Select(u => u.Email)
-            .FirstOrDefaultAsync(cancellationToken);
+    
 }

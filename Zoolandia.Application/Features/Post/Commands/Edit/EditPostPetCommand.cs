@@ -15,10 +15,10 @@ public class EditPostPetCommand : PostInputModel, IRequest<Result>
     {
         public async Task<Result> Handle(EditPostPetCommand request, CancellationToken cancellationToken)
         {
-            var post = await postDomainRepository.GetWithoutServices(request.Id);
+            var post = await postDomainRepository.Find(request.Id);
     
             if (post == null)
-                return Result.Failure("Post not found");
+                return "Post not found";
 
             post
                 .UpdatePetTypes(request.Pet)

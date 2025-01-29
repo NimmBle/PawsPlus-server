@@ -5,6 +5,7 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IPetDomainRepository : IDomainRepository<Pet>
 {
-    Task<Pet> Get(string petId, CancellationToken cancellationToken = default);
-    Task<bool> Delete(string petId, CancellationToken cancellationToken = default);
+    Task<Pet> Find(string Id, CancellationToken cancellationToken = default);
+    
+    Task<bool> Delete(string Id, CancellationToken cancellationToken = default);
 }

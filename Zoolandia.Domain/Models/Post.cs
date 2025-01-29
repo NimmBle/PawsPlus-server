@@ -90,7 +90,7 @@ public class Post : Entity<string>, IAggregateRoot
             this.PetTypes.Remove(petType);
         }
 
-        if (petType == PetType.Dog)
+        if (petType == PetType.Dog && this.PetTypes.Count > 0)
         {
             this.Weights.Clear();
         }

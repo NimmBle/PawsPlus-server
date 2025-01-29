@@ -13,20 +13,16 @@ public class CreatePetCommand
 {
     public class CreatePetCommandHandler(
         ICurrentUser currentUser,
-        IProfileDomainRepository profileRepository,
-        IPetFactory petFactory,
-        IPetDomainRepository petRepository)
+        IProfileDomainRepository profileDomainRepository,
+        IPetDomainRepository petDomainRepository,
+        IPetFactory petFactory)
         : IRequestHandler<CreatePetCommand, Result<CreatePetOutputModel>>
     {
         public async Task<Result<CreatePetOutputModel>> Handle(
             CreatePetCommand request,
             CancellationToken cancellationToken)
         {
-            
-            if (request.Age.Years == 0 && request.Age.Months == 0)
-                return "Please enter a valid age";
-            
-            var profile = await profileRepository.GetByUser(currentUser.UserId);
+            var profile = await profileDomainRepository.FindByUser(currentUser.UserId);
 
             if (profile == null)
                 return "There is no Profile with this id";
@@ -61,7 +57,7 @@ public class CreatePetCommand
                 .WithProfileId(profile.Id)
                 .Build();
 
-            await petRepository.Save(pet, cancellationToken);
+            await petDomainRepository.Save(pet, cancellationToken);
 
             return new CreatePetOutputModel(pet.Id);
         }

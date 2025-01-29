@@ -5,7 +5,7 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IPostDomainRepository : IDomainRepository<Post>
 {
-    Task<Post> GetWithoutServices(string id, CancellationToken cancellationToken = default);
+    Task<Post> Find(string id, CancellationToken cancellationToken = default);
     
-    Task<Post> Get(string id, CancellationToken cancellationToken = default);
+    Task<bool> Delete(string id, CancellationToken cancellationToken = default);
 }

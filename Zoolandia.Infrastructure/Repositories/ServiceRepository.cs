@@ -14,18 +14,15 @@ public class ServiceRepository(
         IServiceDomainRepository,
         IServiceQueryRepository
 {
-    public async Task<Service> GetById(string id, CancellationToken cancellationToken = default)
+    public async Task<Service> Find(string id,
+        CancellationToken cancellationToken = default)
         => await All()
             .FirstOrDefaultAsync(s => s.Id == id);
 
-    public async Task<Service> GetByName(string serviceName, CancellationToken cancellationToken = default)
-        => await All()
-            .Where(s => s.Name == serviceName)
-            .FirstOrDefaultAsync();
-
-    public async Task<bool> Delete(string id, CancellationToken cancellationToken = default)
+    public async Task<bool> Delete(string id,
+        CancellationToken cancellationToken = default)
     {
-        var service = await this.GetById(id);
+        var service = await this.Find(id);
 
         if (service == null)
             return false;
@@ -37,10 +34,14 @@ public class ServiceRepository(
         return true;
     }
 
-    public async Task<bool> AlreadyExists(string serviceName, string postId, CancellationToken cancellationToken = default)
+    public async Task<bool> AlreadyExists(string serviceName,
+        string postId,
+        CancellationToken cancellationToken = default)
         => await All()
             .AnyAsync(s => s.Name == serviceName && s.PostId == postId);
 
-    public async Task<ServiceOutputModel> Get(string serviceId, CancellationToken cancellationToken = default)
-        => mapper.Map<ServiceOutputModel>(await this.GetById(serviceId, cancellationToken));
+    public async Task<ServiceOutputModel> Get(string serviceId,
+        CancellationToken cancellationToken = default)
+        => mapper
+            .Map<ServiceOutputModel>(await this.Find(serviceId, cancellationToken));
 }

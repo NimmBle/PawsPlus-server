@@ -19,22 +19,35 @@ public class PostRepository(
         IPostQueryRepository
 {
     
-    public async Task<Post> GetWithoutServices(string id, CancellationToken cancellationToken = default)
-        => await All()
-            .Where(p => p.Id == id)
-            .FirstOrDefaultAsync(cancellationToken);
-    
-    public async Task<Post> Get(string id, CancellationToken cancellationToken = default)
+    public async Task<Post> Find(string id,
+        CancellationToken cancellationToken = default)
         => await All()
             .Where(p => p.Id == id)
             .Include(p => p.Services)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<PostDetailsOutputModel> GetDetails(string Id, CancellationToken cancellationToken = default)
-        => mapper
-            .Map<PostDetailsOutputModel>(await Get(Id));
+    public async Task<bool> Delete(string id,
+        CancellationToken cancellationToken = default)
+    {
+        var post = await this.Find(id);
 
-    public async Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId, CancellationToken cancellationToken = default)
+        if (post == null)
+            return false;
+        
+        this.Data.Posts.Remove(post);
+        
+        await this.Data.SaveChangesAsync(cancellationToken);
+
+        return true;
+    }
+
+    public async Task<PostDetailsOutputModel> GetDetails(string Id,
+        CancellationToken cancellationToken = default)
+        => mapper
+            .Map<PostDetailsOutputModel>(await Find(Id, cancellationToken));
+
+    public async Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId,
+        CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()

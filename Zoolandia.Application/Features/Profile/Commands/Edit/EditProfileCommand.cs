@@ -23,7 +23,7 @@ public class EditProfileCommand
     
     public class EditUserCommandHandler(
         ICurrentUser currentUser,
-        IProfileDomainRepository profileRepository)
+        IProfileDomainRepository profileDomainRepository)
         : IRequestHandler<EditProfileCommand, Result>
     {
         public async Task<Result> Handle(
@@ -31,7 +31,7 @@ public class EditProfileCommand
             CancellationToken cancellationToken)
         {
             var currentUserId = currentUser.UserId;
-            var profile = await profileRepository.GetByUser(currentUserId);
+            var profile = await profileDomainRepository.FindByUser(currentUserId);
 
             if (profile == null)
                 return false;
@@ -46,7 +46,7 @@ public class EditProfileCommand
                 .UpdatePhoneNumber(request.PhoneNumber)
                 .UpdateDescription(request.Description);
             
-            await profileRepository.Update(profile);
+            await profileDomainRepository.Update(profile);
 
             return true;
         }

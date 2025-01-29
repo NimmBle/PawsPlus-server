@@ -15,15 +15,12 @@ public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Resul
         public async Task<Result> Handle(DeletePostPetCommand request, CancellationToken cancellationToken)
         {
             if (request.PetTypeId == null)
-                return Result.Failure("No pet type specified");
+                return "No pet type specified";
             
-            var post = await postDomainRepository.GetWithoutServices(request.Id);
+            var post = await postDomainRepository.Find(request.Id);
             
             if (post == null) 
-                return Result.Failure("Post not found");
-            
-            if (!post.PetTypes.Contains(request.PetTypeId))
-                return Result.Failure("Post doesn't contain the specified pet type");
+                return "Post not found";
             
             post.RemovePetType(request.PetTypeId);
             

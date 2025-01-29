@@ -8,7 +8,7 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
 {
     public class LoginUserCommandHandler(
         IIdentity identity,
-        IProfileDomainRepository profileRepository) 
+        IProfileDomainRepository profileDomainRepository) 
         : IRequestHandler<LoginUserCommand, 
             Result<LoginOutputModel>>
     {
@@ -25,7 +25,7 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             if (user.Roles.Contains("Administrator"))
                 return user;
 
-            var profile = await profileRepository.GetByUser(user.Id);
+            var profile = await profileDomainRepository.FindByUser(user.Id);
 
             user = new LoginOutputModel(
                 user.Id,
@@ -36,7 +36,7 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             
             profile.UpdateFirstLogin();
             
-            await profileRepository.Update(profile);
+            await profileDomainRepository.Update(profile);
             
             return user;
         }
