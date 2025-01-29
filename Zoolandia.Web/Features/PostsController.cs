@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Zoolandia.Application.Features.Post.Commands.Create;
+using Zoolandia.Application.Features.Post.Commands.Delete;
+using Zoolandia.Application.Features.Post.Commands.Edit;
 using Zoolandia.Application.Features.Post.Queries;
 using Zoolandia.Application.Features.Post.Queries.Search;
-using Zoolandia.Application.Features.Service.Commands.Create;
-using Zoolandia.Application.Features.Service.Commands.Edit;
 
 namespace Zoolandia.Web.Features;
 
@@ -19,9 +19,19 @@ public class PostsController : ApiController
     public async Task<ActionResult> Create(CreatePostCommand command)
         => await this.Send(command);
 
+    [HttpPut]
+    [Route(Id)]
+    public async Task<ActionResult> EditPet(EditPostPetCommand command)
+        => await this.Send(command);
+
     [HttpGet]
     [Route(nameof(Search))]
     public async Task<ActionResult<SearchPostsOutputModel>> Search(
         [FromQuery] SearchPostsQuery query)
         => await this.Send(query);
+    
+    [HttpDelete]
+    [Route(Id)]
+    public async Task<ActionResult> DeletePet(DeletePostPetCommand command)
+        => await this.Send(command);
 }

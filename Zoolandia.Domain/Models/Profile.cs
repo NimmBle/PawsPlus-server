@@ -3,16 +3,16 @@ using Zoolandia.Domain.Common.Models;
 using Zoolandia.Domain.Exceptions;
 
 using static Zoolandia.Domain.Models.ModelConstants.Common;
-using static Zoolandia.Domain.Models.ModelConstants.Profile;
 
 namespace Zoolandia.Domain.Models;
 
-public class Profile : Entity<string>, IAggregateRoot
+public sealed class Profile : Entity<string>, IAggregateRoot
 {
     public Profile(string firstName, 
         string lastName,
         string phoneNumber)
     {
+        this.Id = Guid.NewGuid().ToString();
         this.FirstName = firstName;
         this.LastName = lastName;
         this.PhoneNumber = phoneNumber;

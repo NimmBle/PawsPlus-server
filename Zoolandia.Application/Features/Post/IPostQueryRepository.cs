@@ -7,11 +7,11 @@ namespace Zoolandia.Application.Features.Post;
 
 public interface IPostQueryRepository
 { 
-    Task<PostDetailsOutputModel> GetPostDetails(string profileId, CancellationToken cancellationToken = default);
+    Task<PostDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default);
 
-    Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId, CancellationToken cancellationToken = default);
+    Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId, CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyCollection<PostOutputModel>> SearchPosts(Expression<Func<Domain.Models.Post, bool>> predicate,
+    Task<IReadOnlyCollection<PostOutputModel>> Search(Expression<Func<Domain.Models.Post, bool>> predicate,
         ServiceType serviceType,
         int skip,
         int take,

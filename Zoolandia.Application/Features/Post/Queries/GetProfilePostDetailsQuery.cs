@@ -15,7 +15,7 @@ public class GetProfilePostDetailsQuery : IRequest<Result<PostDetailsOutputModel
             GetProfilePostDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            return await postQueryRepository.GetPostDetailsByProfile(request.Id);
+            return await postQueryRepository.GetDetailsByProfile(request.Id);
         }
         
     }

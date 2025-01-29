@@ -17,7 +17,11 @@ public class GetProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>
             CancellationToken cancellationToken)
         {
             var profile = await profileQueryRepository.GetDetails(request.Id);
-            profile.Post = await postQueryRepository.GetPostDetailsByProfile(request.Id);
+            
+            if (profile == null)
+                return Result<ProfileDetailsOutputModel>.Failure("Profile not found");
+            
+            profile.Post = await postQueryRepository.GetDetailsByProfile(request.Id);
             
             return profile; 
         }

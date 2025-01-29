@@ -19,7 +19,8 @@ public class Result
     public static Result Failure(IEnumerable<string> errors)
         => new Result(false, errors.ToList());
     
-
+    public static Result Failure(string error)
+        => new Result(false, new List<string> { error });
 
     public static implicit operator Result(string error)
         => Failure(new List<string>() { error });

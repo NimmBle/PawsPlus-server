@@ -60,7 +60,7 @@ internal class IdentityService(
                 var rolesResult = await userManager.AddToRoleAsync(user, Enum.GetName(userInput.Role));
                 var roleErrors = rolesResult.Errors.Select(e => e.Description);
                 
-                // await SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
+                _ = SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
                 
                 scope.Complete();
                 
@@ -229,11 +229,6 @@ internal class IdentityService(
         
         var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
         
-        var result = await client.SendEmailAsync(message);
-
-        if (result.IsSuccessStatusCode)
-        {
-            Console.WriteLine("Email sent");
-        }
+         client.SendEmailAsync(message);
     }
 }

@@ -89,6 +89,8 @@ public class SearchPostsParams
                 .Where(ad => ad.Contains(DateOnly.Parse(EndDate)))
                 .Any());
         }
+        
+        // Location
 
         return predicate;
     }

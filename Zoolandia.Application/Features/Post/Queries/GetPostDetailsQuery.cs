@@ -16,7 +16,7 @@ public class GetPostDetailsQuery : IRequest<Result<PostDetailsOutputModel>>
             GetPostDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            return await postQueryRepository.GetPostDetails(request.Id);
+            return await postQueryRepository.GetDetails(request.Id);
         }
     }
 }

@@ -18,7 +18,7 @@ public class SearchPostsQuery : SearchPostsParams, IRequest<Result<SearchPostsOu
             int skip = (request.Page - 1) * request.PostsPerPage;
             int take = request.PostsPerPage;
             
-            var posts = await postRepository.SearchPosts(predicate,
+            var posts = await postRepository.Search(predicate,
                 request.ServiceType,
                 skip,
                 take,

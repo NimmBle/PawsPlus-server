@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.ObjectModel;
-using Zoolandia.Domain.Common;
+﻿using Zoolandia.Domain.Common;
 using Zoolandia.Domain.Common.Models;
 using Zoolandia.Domain.Enums;
 using Zoolandia.Domain.Enums.Pet;
@@ -29,11 +27,12 @@ public class Post : Entity<string>, IAggregateRoot
     public StateType Status { get; private set; } = StateType.None;
 
     public string ProfileId { get; private set; }
+    
     public Profile Profile { get; set; }
 
-    public IList<PetType> PetTypes { get; set; } = new List<PetType>();
+    public List<PetType> PetTypes { get; private set; } = new();
 
-    public IList<Weight>? Weights { get; set; } = new List<Weight>();
+    public List<Weight>? Weights { get; private set; } = new();
 
     public IReadOnlyCollection<Service> Services => _services.ToList().AsReadOnly();
 
@@ -42,7 +41,7 @@ public class Post : Entity<string>, IAggregateRoot
         foreach (var service in services)
             this._services.Add(new Service(service));
     }
-    
+
     public Post ChangeState(string type)
     {
         switch (type)
@@ -60,7 +59,40 @@ public class Post : Entity<string>, IAggregateRoot
                 this.Status = Enumeration.FromValue<StateType>(4);
                 break;
         }
-        
+
         return this;
+    }
+ 
+    public Post UpdatePetTypes(PetType petTypes)
+    {
+        if (this.PetTypes.Contains(petTypes))
+            return this;
+        
+        this.PetTypes.Add(petTypes);
+
+        return this;
+    }
+
+    public Post UpdateWeights(List<Weight> weights)
+    {
+        if (weights == null || weights.Count == 0)
+            return this;
+        
+        this.Weights = weights;
+
+        return this;
+    }
+
+    public void RemovePetType(PetType petType)
+    {
+        if (this.PetTypes.Contains(petType))
+        {
+            this.PetTypes.Remove(petType);
+        }
+
+        if (petType == PetType.Dog)
+        {
+            this.Weights.Clear();
+        }
     }
 }

@@ -18,21 +18,30 @@ public class PostRepository(
         IPostDomainRepository,
         IPostQueryRepository
 {
-    public async Task<PostDetailsOutputModel> GetPostDetails(string Id, CancellationToken cancellationToken = default)
-        => await mapper
-            .ProjectTo<PostDetailsOutputModel>(this
-                .All()
-                .Where(p => p.Id == Id))
-            .FirstOrDefaultAsync();
+    
+    public async Task<Post> GetWithoutServices(string id, CancellationToken cancellationToken = default)
+        => await All()
+            .Where(p => p.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
+    
+    public async Task<Post> Get(string id, CancellationToken cancellationToken = default)
+        => await All()
+            .Where(p => p.Id == id)
+            .Include(p => p.Services)
+            .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<PostDetailsOutputModel> GetPostDetailsByProfile(string profileId, CancellationToken cancellationToken = default)
+    public async Task<PostDetailsOutputModel> GetDetails(string Id, CancellationToken cancellationToken = default)
+        => mapper
+            .Map<PostDetailsOutputModel>(await Get(Id));
+
+    public async Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId, CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()
                 .Where(p => p.ProfileId == profileId))
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<IReadOnlyCollection<PostOutputModel>> SearchPosts(Expression<Func<Post, bool>> predicate,
+    public async Task<IReadOnlyCollection<PostOutputModel>> Search(Expression<Func<Post, bool>> predicate,
         ServiceType serviceType,
         int skip,
         int take,
