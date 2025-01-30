@@ -13,15 +13,16 @@ public class Pet : Entity<string>, IAggregateRoot
         PetType petType,
         Age age,
         Gender gender,
-        string breed,
+        ICollection<Breed> breeds,
         string? weight,
         Personality? personality,
         HealthStatus? healthStatus,
         string profileId
     )
-        : this(name, photoUrl, petType, gender, breed, weight, profileId)
+        : this(name, photoUrl, petType, gender, weight, profileId)
     {
         this.Age = Age.Create(age);
+        this.Breeds = breeds;
         this.Personality = Personality.Create(personality);
         this.HealthStatus = HealthStatus.Create(healthStatus);
     }
@@ -31,7 +32,6 @@ public class Pet : Entity<string>, IAggregateRoot
         string photoUrl,
         PetType petType,
         Gender gender,
-        string breed,
         string? weight,
         string profileId
     )
@@ -42,7 +42,6 @@ public class Pet : Entity<string>, IAggregateRoot
         this.PhotoUrl = photoUrl;
         this.PetType = petType;
         this.Gender = gender;
-        this.Breed = breed;
         this.Weight = weight;
         this.ProfileId = profileId;
     }
@@ -60,7 +59,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public Gender Gender { get; private set; }
 
     [JsonProperty(Required = Required.Always)]
-    public string Breed { get; private set; }
+    public ICollection<Breed> Breeds { get; private set; } = new HashSet<Breed>();
     
     public string? Weight { get; private set; } // change type to Enum
 
@@ -78,7 +77,7 @@ public class Pet : Entity<string>, IAggregateRoot
         PetType petType,
         Age age,
         Gender gender,
-        string breed,
+        ICollection<Breed> breeds,
         string? weight,
         Personality? personality,
         HealthStatus? healthStatus)
@@ -88,7 +87,7 @@ public class Pet : Entity<string>, IAggregateRoot
         this.PetType = petType;
         this.Age = UpdateAge(age);
         this.Gender = gender;
-        this.Breed = breed;
+        this.Breeds = breeds;
         this.Weight = weight;
         this.Personality = Personality.Create(personality);
         this.HealthStatus = HealthStatus.Create(healthStatus);

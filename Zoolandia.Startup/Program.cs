@@ -3,6 +3,7 @@ using Zoolandia.Domain;
 using Zoolandia.Infrastructure;
 using Zoolandia.Infrastructure.Common.Persistence;
 using Zoolandia.Web;
+using Zoolandia.Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,28 +22,36 @@ builder.Logging.AddDebug();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseInnerExceptionHandler();
     app.UseHsts();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    DataSeed.SeedData(services).Wait();
-}
-app.UseHttpsRedirection();
-app.UseCors(opt => opt
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-);
-app.UseRouting();
-app.UseSwagger();
-app.UseSwaggerUI(opt => opt
-    .SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
-app.UseAuthorization();
-app.MapControllers();
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     DataSeed.SeedData(services).Wait();
+// }
+
+app
+    .UseHttpsRedirection()
+    .UseRouting()
+    .UseCors(opt => opt
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader())
+    .UseSwagger()
+    .UseSwaggerUI(opt => opt
+        .SwaggerEndpoint("/swagger/v1/swagger.json", "v1"))
+    .UseAuthorization()
+    .UseAuthorization()
+    .UseEndpoints(endpoints => endpoints
+        .MapControllers()
+    );
+    
 app.Run();

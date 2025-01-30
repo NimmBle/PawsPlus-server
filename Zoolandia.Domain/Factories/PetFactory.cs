@@ -11,7 +11,7 @@ public class PetFactory : IPetFactory
     private PetType petType = default!;
     private Age age = default!;
     private Gender gender;
-    private string breed;
+    private ICollection<Breed> breeds;
     private string? weight = default;
     private Personality? personality = default;
     private HealthStatus? healthStatus = default;
@@ -50,9 +50,9 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public IPetFactory WithBreed(string breed)
+    public IPetFactory WithBreed(ICollection<Breed> breeds)
     {
-        this.breed = breed;
+        this.breeds = breeds;
         return this;
     }
 
@@ -111,7 +111,7 @@ public class PetFactory : IPetFactory
             this.petType,
             this.age,
             this.gender,
-            this.breed,
+            this.breeds,
             this.weight,
             this.personality,
             this.healthStatus,

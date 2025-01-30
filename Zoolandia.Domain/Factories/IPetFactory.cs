@@ -16,7 +16,7 @@ public interface IPetFactory : IFactory<Pet>
 
     IPetFactory WithGender(Gender gender);
 
-    IPetFactory WithBreed(string breed);
+    IPetFactory WithBreed(ICollection<Breed> breeds);
 
     IPetFactory WithWeight(string weight);
 

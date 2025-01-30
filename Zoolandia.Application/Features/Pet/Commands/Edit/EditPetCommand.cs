@@ -30,7 +30,7 @@ public class EditPetCommand
                 request.PetType,
                 mapper.Map<Age>(request.Age),
                 request.Gender,
-                request.Breed,
+                request.Breeds,
                 request.Weight,
                 mapper.Map<Personality>(request.Personality),
                 mapper.Map<HealthStatus>(request.HealthStatus));

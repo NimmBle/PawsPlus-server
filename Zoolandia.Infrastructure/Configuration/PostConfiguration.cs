@@ -12,25 +12,13 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
-        // var petTypeConverter = new ValueConverter<HashSet<PetType>, string>(
-        //     v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-        //     v => JsonSerializer.Deserialize<HashSet<PetType>>(v, (JsonSerializerOptions?)null) ?? new HashSet<PetType>()
-        // );
-        //
-        // var weightTypeConverter = new ValueConverter<HashSet<Weight>, string>(
-        //     v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-        //     v => JsonSerializer.Deserialize<HashSet<Weight>>(v, (JsonSerializerOptions?)null) ?? new HashSet<Weight>()
-        // );
+        // builder
+        //     .Property(p => p.PetTypes)
+        //     .HasConversion(new EnumToStringConverter<PetType>());
         //
         // builder
-        //     .Property(typeof(HashSet<PetType>), "_types")
-        //     .HasConversion(petTypeConverter, new ValueComparer<>())
-        //     .HasColumnName("Pets");
-        //
-        // builder
-        //     .Property(typeof(HashSet<Weight>), "_weights")
-        //     .HasConversion(weightTypeConverter)
-        //     .HasColumnName("Weights");
+        //     .Property(p => p.Weights)
+        //     .HasConversion(new EnumToStringConverter<Weight>());
         
         builder
             .HasMany(p => p.Services)

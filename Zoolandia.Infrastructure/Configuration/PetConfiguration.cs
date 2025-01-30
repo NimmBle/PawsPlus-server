@@ -8,6 +8,14 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
     public void Configure(EntityTypeBuilder<Pet> builder)
     {
+
+        builder
+            .Property(p => p.Gender)
+            .HasConversion<string>();
+
+        builder
+            .HasMany(p => p.Breeds)
+            .WithMany(b => b.Pets);
         
         builder
             .OwnsOne(
@@ -40,6 +48,5 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     hs.Property(hs => hs.OtherDietaryNeeds).HasColumnName("OtherDietaryNeeds").IsRequired();
                     hs.Property(hs => hs.HealthProblems).HasColumnName("HealthProblems").IsRequired();
                 });
-        
     }
 }

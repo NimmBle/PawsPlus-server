@@ -22,6 +22,9 @@ public class ApiController : ControllerBase
             .RequestServices
             .GetService<IMediator>();
 
+    protected Task<ActionResult<TResult>> Send<TResult>(IRequest<TResult> request)
+        => Mediator.Send(request).ToActionResult();
+    
     protected Task<ActionResult> Send(IRequest<Result> request)
         => Mediator.Send(request).ToActionResult();
 

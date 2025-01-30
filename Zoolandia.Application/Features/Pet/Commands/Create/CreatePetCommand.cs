@@ -39,7 +39,7 @@ public class CreatePetCommand
                 .WithType(request.PetType)
                 .WithAge(request.Age.Years, request.Age.Months)
                 .WithGender(request.Gender)
-                .WithBreed(request.Breed)
+                .WithBreed(request.Breeds)
                 .WithWeight(request.Weight)
                 .WithPersonality(
                     request.Personality.Temperament,

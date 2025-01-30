@@ -1,4 +1,5 @@
 ﻿using Zoolandia.Domain.Enums.Pet;
+using Zoolandia.Domain.Models;
 
 namespace Zoolandia.Application.Features.Pet.Commands.Common;
 
@@ -14,7 +15,7 @@ public abstract class BasePetInputModel<TCommand>
     
     public Gender Gender { get; set; }
 
-    public string Breed { get; set; }
+    public ICollection<Domain.Models.Breed> Breeds { get; set; }
 
     public string? Weight { get; set; }
 
