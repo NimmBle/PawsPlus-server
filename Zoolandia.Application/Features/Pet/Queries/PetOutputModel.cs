@@ -1,4 +1,5 @@
 ﻿using Zoolandia.Application.Common.Mapping;
+using Zoolandia.Application.Features.Breed.Queries;
 using Zoolandia.Domain.Enums.Pet;
 using Zoolandia.Domain.Models;
 using Zoolandia.Domain.ValueObjects;
@@ -19,7 +20,7 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
     
     public Gender Gender { get; set; }
 
-    public string Breed { get; set; }
+    public ICollection<BreedOutputModel> Breeds { get; set; }
 
     public string? Weight { get; set; }
 

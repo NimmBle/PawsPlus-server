@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Zoolandia.Application.Common;
+using Zoolandia.Domain.Enums.Pet;
 using Zoolandia.Domain.Repositories;
 using Zoolandia.Domain.ValueObjects;
 
@@ -13,7 +14,8 @@ public class EditPetCommand
     public string? Id { get; set; }
     
     public class EditPetCommandHandler
-        (IPetDomainRepository petDomainRepository, 
+        (IPetDomainRepository petDomainRepository,
+            IBreedDomainRepository breedDomainRepository,
             IMapper mapper)
         : IRequestHandler<EditPetCommand, Result>
     {
@@ -24,13 +26,19 @@ public class EditPetCommand
             if (pet == null)
                 return false;
 
+            var breeds = new HashSet<Domain.Models.Breed>();
+            foreach (var breed in request.Breeds)
+            {
+                breeds.Add(await breedDomainRepository.Find(breed.Id));
+            }
+            
             pet.Update(
                 request.Name,
                 request.PhotoUrl,
                 request.PetType,
                 mapper.Map<Age>(request.Age),
                 request.Gender,
-                request.Breeds,
+                breeds,
                 request.Weight,
                 mapper.Map<Personality>(request.Personality),
                 mapper.Map<HealthStatus>(request.HealthStatus));

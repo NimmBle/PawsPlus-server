@@ -87,8 +87,8 @@ public class PetFactory : IPetFactory
         string? otherDietaryNeeds,
         string? healthProblems)
     {
-        this.healthStatus = HealthStatus.Create(
-            isVaccinated,
+        this.healthStatus = HealthStatus
+            .Create(isVaccinated,
             isCastrated,
             takesMedications,
             hasEatingSchedule,

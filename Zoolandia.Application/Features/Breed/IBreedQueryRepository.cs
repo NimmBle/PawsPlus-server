@@ -4,5 +4,5 @@ namespace Zoolandia.Application.Features.Breed;
 
 public interface IBreedQueryRepository
 {
-    Task<IEnumerable<BreedOutputModel>> GetBreeds(string breedName, CancellationToken cancellationToken = default);
+    Task<IEnumerable<BreedOutputModel>> GetBreeds(string petType, CancellationToken cancellationToken = default);
 }

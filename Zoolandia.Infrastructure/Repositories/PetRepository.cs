@@ -22,6 +22,7 @@ public class PetRepository
         => await this
             .All()
             .Where(p => p.Id == id)
+            .Include(p => p.Breeds)
             .FirstOrDefaultAsync(cancellationToken);
     
     public async Task<bool> Delete(string id,
@@ -52,5 +53,6 @@ public class PetRepository
             .Include(p => p.Age)
             .Include(p => p.Personality)
             .Include(p => p.HealthStatus)
+            .Include(p => p.Breeds)
             .FirstOrDefaultAsync();
 }

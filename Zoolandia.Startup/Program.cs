@@ -32,12 +32,6 @@ else
     app.UseHsts();
 }
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     DataSeed.SeedData(services).Wait();
-// }
-
 app
     .UseHttpsRedirection()
     .UseRouting()

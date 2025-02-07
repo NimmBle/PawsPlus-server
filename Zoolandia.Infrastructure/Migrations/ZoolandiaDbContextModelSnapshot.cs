@@ -24,8 +24,8 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BreedPet", b =>
                 {
-                    b.Property<string>("BreedsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BreedsId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PetsId")
                         .HasColumnType("nvarchar(450)");
@@ -34,7 +34,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                     b.HasIndex("PetsId");
 
-                    b.ToTable("BreedPet");
+                    b.ToTable("BreedPet", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -66,22 +66,22 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb56c1eb-485e-4694-9c3e-b8c8e5521651",
-                            ConcurrencyStamp = "eb56c1eb-485e-4694-9c3e-b8c8e5521651",
+                            Id = "a85e34ee-f074-4f6c-91bf-5edd618bf4df",
+                            ConcurrencyStamp = "a85e34ee-f074-4f6c-91bf-5edd618bf4df",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "b4f3e8b0-0ded-4268-b7c5-acd9cf4f2a11",
-                            ConcurrencyStamp = "b4f3e8b0-0ded-4268-b7c5-acd9cf4f2a11",
+                            Id = "ab01e1f0-6438-45d5-8a64-7aaa455b732a",
+                            ConcurrencyStamp = "ab01e1f0-6438-45d5-8a64-7aaa455b732a",
                             Name = "Sitter",
                             NormalizedName = "SITTER"
                         },
                         new
                         {
-                            Id = "0030eb75-e251-4c89-afd3-d37f823447a3",
-                            ConcurrencyStamp = "0030eb75-e251-4c89-afd3-d37f823447a3",
+                            Id = "1a7de29d-cb50-471f-b583-390a70b62eb1",
+                            ConcurrencyStamp = "1a7de29d-cb50-471f-b583-390a70b62eb1",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -176,8 +176,8 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "48f7a329-7f4b-4203-a388-e6b43df53cb2",
-                            RoleId = "0030eb75-e251-4c89-afd3-d37f823447a3"
+                            UserId = "90a4e54d-1a0b-428e-ab90-fae7b5356f92",
+                            RoleId = "1a7de29d-cb50-471f-b583-390a70b62eb1"
                         });
                 });
 
@@ -202,822 +202,1140 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Breed", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Breeds");
+                    b.ToTable("Breeds", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = "b7f3750a-529d-48a7-8781-a71e759634c1",
-                            Name = "Аффенпинчер"
+                            Id = 1,
+                            Name = "Аффенпинчер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "f09d4845-c139-413d-baa8-49e479e7aa2f",
-                            Name = "Афганска хрътка"
+                            Id = 2,
+                            Name = "Афганска хрътка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "72d7d858-07c7-47f0-9d59-4cea618ebe70",
-                            Name = "Африканско ловно куче"
+                            Id = 3,
+                            Name = "Африканско ловно куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "af516786-cf92-46d7-b45f-d87238ea7bb4",
-                            Name = "Айредейл териер"
+                            Id = 4,
+                            Name = "Еърдейл териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "b2e77a64-41eb-4435-b3cc-d8c54faac668",
-                            Name = "Акбаш куче"
+                            Id = 5,
+                            Name = "Акбаш куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1d914e82-4d03-4e6c-99a6-92a48a830d43",
-                            Name = "Акита"
+                            Id = 6,
+                            Name = "Акита",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2ffe991a-ed1b-4c8f-be6e-54e64a7aae25",
-                            Name = "Алапахски булдог"
+                            Id = 7,
+                            Name = "Алапахски булдог",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "95055a73-9503-4924-9df2-ea3994ccc789",
-                            Name = "Аляски хъски"
+                            Id = 8,
+                            Name = "Аляски хъски",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "a8f222d5-40eb-4ab3-8014-567c5b2fd340",
-                            Name = "Аляски маламут"
+                            Id = 9,
+                            Name = "Аляски маламут",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "c2635807-10d8-494d-9878-a467d1c06873",
-                            Name = "Американски булдог"
+                            Id = 10,
+                            Name = "Американски булдог",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "09ce802e-a6f9-4575-8bd3-41faf28394a2",
-                            Name = "Американски були"
+                            Id = 11,
+                            Name = "Американски були",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "85a26ec1-82fb-409b-a4dc-42221b998dc7",
-                            Name = "Американско ескимоско куче"
+                            Id = 12,
+                            Name = "Американско ескимоско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "4331e2e7-4341-40c7-8ca6-074411e28b91",
-                            Name = "Американска лисица"
+                            Id = 13,
+                            Name = "Американска лисица",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "878c3159-6ed2-4049-80cb-e627a7482c21",
-                            Name = "Американски питбул териер"
+                            Id = 14,
+                            Name = "Американски питбул териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "90fabfdd-f82b-4c32-8a53-c72aa9dbbddc",
-                            Name = "Американски стафордширски териер"
+                            Id = 15,
+                            Name = "Американски стафордширски териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "9a9a0b39-0b91-490e-9b32-a16f8a365988",
-                            Name = "Американски воден спаниел"
+                            Id = 16,
+                            Name = "Американски воден шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2181effe-3204-4f23-99f3-f67806a75e18",
-                            Name = "Анатолийско пастирско куче"
+                            Id = 17,
+                            Name = "Анатолийско пастирско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "46289fba-e0f7-40fb-bca8-255faa635353",
-                            Name = "Апензелер сененхунд"
+                            Id = 18,
+                            Name = "Апенцелер зененхунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d747061b-3839-4031-ae9b-d218e0508835",
-                            Name = "Австралийско пастирско куче"
+                            Id = 19,
+                            Name = "Австралийско пастирско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "8fdaa201-6e09-402e-8a25-243e53303646",
-                            Name = "Австралийски келпи"
+                            Id = 20,
+                            Name = "Австралийски келпи",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "525e6cde-5bb5-40a0-b88c-2559ee698839",
-                            Name = "Австралийска овчарка"
+                            Id = 21,
+                            Name = "Австралийска овчарка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "76398435-deb4-4f5a-ad2d-18d7cda31fb2",
-                            Name = "Австралийски териер"
+                            Id = 22,
+                            Name = "Австралийски териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "b2d0518a-344f-487c-a71f-80b9b65e1fc8",
-                            Name = "Азавах"
+                            Id = 23,
+                            Name = "Азавах",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "273d38b6-96a6-441e-b3c9-98fdba49eb35",
-                            Name = "Барбе"
+                            Id = 24,
+                            Name = "Барбе",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "0b86eea9-fc47-417e-996d-993a2c2cec2e",
-                            Name = "Басенджи"
+                            Id = 25,
+                            Name = "Басенджи",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1131eb14-4185-46a7-b40c-91243602c3c7",
-                            Name = "Басет Гаскон"
+                            Id = 26,
+                            Name = "Гасконски басет",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "8c73c36d-ee30-4fed-8b0a-b0e623d24b3d",
-                            Name = "Басет хрътка"
+                            Id = 27,
+                            Name = "Басет хрътка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "471d5bb9-754e-4fd1-994c-68b5fb2c049f",
-                            Name = "Бийгъл"
+                            Id = 28,
+                            Name = "Бийгъл",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "94034642-b551-4f9a-9f17-cc66efe86d7a",
-                            Name = "Брадато коли"
+                            Id = 29,
+                            Name = "Брадато коли",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d7f19651-38d2-4d8c-9030-6ffee4a45d61",
-                            Name = "Босерон"
+                            Id = 30,
+                            Name = "Босерон",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "569e5432-e2aa-4615-8c94-e8a52550797b",
-                            Name = "Бедлингтон териер"
+                            Id = 31,
+                            Name = "Бедлингтон териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "96556aa4-3a11-4b23-904c-15be0247e556",
-                            Name = "Белгийски малиноа"
+                            Id = 32,
+                            Name = "Белгийски малиноа",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1187bcc4-2613-4a12-9533-664d61a74fcb",
-                            Name = "Белгийски тервюрен"
+                            Id = 33,
+                            Name = "Белгийски тервюрен",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "bd2c30f1-2c66-45e4-aecc-2a7881b110b4",
-                            Name = "Бернско планинско куче"
+                            Id = 34,
+                            Name = "Бернско планинско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1e6b7c65-bf5d-44ed-9395-b7d10550ec89",
-                            Name = "Бишон фризе"
+                            Id = 35,
+                            Name = "Бишон фризе",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "4627b48d-c68b-4c97-8cd6-c04364cde8ae",
-                            Name = "Черно-тан кунхаунд"
+                            Id = 36,
+                            Name = "Черно-тан кунхаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "394debaf-70c5-40a8-8813-0c3f2d2c8653",
-                            Name = "Блъдхаунд"
+                            Id = 37,
+                            Name = "Блъдхаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "9b8a367d-abb8-476e-b2a1-cca3e14917d8",
-                            Name = "Блутик кунхаунд"
+                            Id = 38,
+                            Name = "Блутик кунхаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "71b67024-ea6b-498c-b45d-edf137e35ef1",
-                            Name = "Бурбул"
+                            Id = 39,
+                            Name = "Бурбул",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "7ceefaac-9ff2-4d53-9176-5c27c0b0a335",
-                            Name = "Бордър коли"
+                            Id = 40,
+                            Name = "Бордър коли",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "9da898ea-dcb9-4047-abd0-05821d88c0d8",
-                            Name = "Бордър териер"
+                            Id = 41,
+                            Name = "Бордър териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "c8941f55-d4cb-483b-8c49-27ca74237598",
-                            Name = "Бостън териер"
+                            Id = 42,
+                            Name = "Бостън териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "59e76a57-b55f-4d71-ac9e-44452fde66fd",
-                            Name = "Бувие де Фландр"
+                            Id = 43,
+                            Name = "Бувие де Фландр",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "be3bb04b-0c46-4a3b-a30a-c8c9c3aa0839",
-                            Name = "Боксер"
+                            Id = 44,
+                            Name = "Боксер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2145cad1-6e04-41bc-be45-bab93023b4a2",
-                            Name = "Бойкин спаниел"
+                            Id = 45,
+                            Name = "Бойкин шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "f14e847c-fb4e-4caf-bbff-1156f4e52049",
-                            Name = "Брако Италиано"
+                            Id = 46,
+                            Name = "Брако Италиано",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "6dbde251-779d-4e6f-8c57-5712f7f0b8ba",
-                            Name = "Бриар"
+                            Id = 47,
+                            Name = "Бриар",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "18bd3272-8bf6-4fdc-bc4d-06ee6c5e102d",
-                            Name = "Бретон"
+                            Id = 48,
+                            Name = "Бретонски епаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "da54f688-e5f7-4586-a5a3-e3fda7c230d9",
-                            Name = "Бул териер"
+                            Id = 49,
+                            Name = "Бул териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "a8a24aad-b3be-4590-ae85-b9d1bf3532dc",
-                            Name = "Бул мастиф"
+                            Id = 50,
+                            Name = "Бул мастиф",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "f16a76b7-0661-4077-a0b1-a94aab1e6ee4",
-                            Name = "Кеърн териер"
+                            Id = 51,
+                            Name = "Керн териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "fe7b0154-6186-45b9-a4b9-3b928ca87f6f",
-                            Name = "Кане корсо"
+                            Id = 52,
+                            Name = "Кане корсо",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e4669323-0b89-4b56-9164-a002939daf80",
-                            Name = "Кардиган уелско корги"
+                            Id = 53,
+                            Name = "Уелско корги кардиган",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "7c24dbd5-e904-472e-9b0a-7e2fee11c2c6",
-                            Name = "Катахула леопард куче"
+                            Id = 54,
+                            Name = "Куче леопард от Катахула",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "26067593-b432-4921-8c80-75caf4a0bdf2",
-                            Name = "Кавказка овчарка"
+                            Id = 55,
+                            Name = "Кавказка овчарка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "c9e582f2-9cd9-4f62-857c-e0e551cd4bcc",
-                            Name = "Кавалер Кинг Чарлз спаниел"
+                            Id = 56,
+                            Name = "Кавалер Кинг Чарлз шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "90ad73f4-7046-474e-9d41-041ded1233c6",
-                            Name = "Чесапийк бей ретривър"
+                            Id = 57,
+                            Name = "Чесапийк бей ретрийвър",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "5edf7e4f-8bea-4545-b2b1-673038af4118",
-                            Name = "Китайско хохлато куче"
+                            Id = 58,
+                            Name = "Китайско голо качулато куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "a979f0c7-88bc-4f51-9086-1e6f937ac367",
-                            Name = "Китайски шарпей"
+                            Id = 59,
+                            Name = "Китайски шарпей",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "119529bf-b243-47a0-8703-51fead148b0d",
-                            Name = "Чинук"
+                            Id = 60,
+                            Name = "Чинук",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "9e1310b9-d207-40ab-8576-d2729f176de2",
-                            Name = "Чау Чау"
+                            Id = 61,
+                            Name = "Чау Чау",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "cd8de5df-cafc-42d0-8f96-ca7ae0e6b3dc",
-                            Name = "Клъмбър спаниел"
+                            Id = 62,
+                            Name = "Кламбър шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "666db580-91a5-439d-acf7-7ecd9a3903d7",
-                            Name = "Кокер спаниел"
+                            Id = 63,
+                            Name = "Кокер шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "b435aac5-c9bd-4485-92e7-b26c047df248",
-                            Name = "Кокер американски"
+                            Id = 64,
+                            Name = "Американски кокер шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d13431d4-f3f6-4b68-bea2-fcf5d6288f2b",
-                            Name = "Котон де Тулеар"
+                            Id = 65,
+                            Name = "Котон де тулеар",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2d7546a2-3121-453b-b264-504b188e114c",
-                            Name = "Далматинец"
+                            Id = 66,
+                            Name = "Далматинец",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "56896123-95b6-4080-bef0-4fff0075f3a5",
-                            Name = "Доберман"
+                            Id = 67,
+                            Name = "Доберман",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "7bf9398c-8596-43a1-a085-d2e1d8068a81",
-                            Name = "Дого Аржентино"
+                            Id = 68,
+                            Name = "Дого Аржентино",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "0fd22c97-1652-48fd-a591-9b8ddb407578",
-                            Name = "Холандска овчарка"
+                            Id = 69,
+                            Name = "Холандско пастирско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e79de270-bbe8-48e2-8dba-7f1362523edd",
-                            Name = "Английски сетер"
+                            Id = 70,
+                            Name = "Английски сетер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "6f07b960-1df3-4d61-93b0-e493578933a8",
-                            Name = "Английска овчарка"
+                            Id = 71,
+                            Name = "Английско пастирско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d6ee7c7c-095f-4ec4-8f1d-d18924bc1e7f",
-                            Name = "Английски спрингер спаниел"
+                            Id = 72,
+                            Name = "Английски спрингер шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "05657640-c961-4367-9a44-613cfad6dd7f",
-                            Name = "Английски той спаниел"
+                            Id = 73,
+                            Name = "Английски той шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "cda3d20c-6234-4be8-a182-bc5169f6123c",
-                            Name = "Английски териер"
+                            Id = 74,
+                            Name = "Английски териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "cbc63ccd-cfa2-4953-8194-19ee47e54c5c",
-                            Name = "Евразиец"
+                            Id = 75,
+                            Name = "Евразиец",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "f47e8ea1-ca18-42a7-8dcd-09f6e4bd524a",
-                            Name = "Полски спаниел"
+                            Id = 76,
+                            Name = "Полски шпаньол",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "8734a595-87d3-43b3-930e-f089866c5fd1",
-                            Name = "Финландско лапландско куче"
+                            Id = 77,
+                            Name = "Финландско лапландско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d4a39613-9343-4c2d-a151-62b6949331cc",
-                            Name = "Финландски шпиц"
+                            Id = 78,
+                            Name = "Финландски шпиц",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2638067f-b5fc-428a-8804-e2a6e758f3c6",
-                            Name = "Френски булдог"
+                            Id = 79,
+                            Name = "Френски булдог",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "af9258d4-8384-4a5d-bf12-60164fc4eec7",
-                            Name = "Немски пинчер"
+                            Id = 80,
+                            Name = "Немски пинчер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "dfd72ca2-2edb-46d7-b8c0-2c41c390f220",
-                            Name = "Немска овчарка"
+                            Id = 81,
+                            Name = "Немска овчарка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "651207a0-6fbb-4245-8265-d80dc566d1f0",
-                            Name = "Немски късокосмест пойнтер"
+                            Id = 82,
+                            Name = "Немски късокосмест пойнтер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "dee993f3-4592-4d2f-9033-91aa58ee162e",
-                            Name = "Гигантски шнауцер"
+                            Id = 83,
+                            Name = "Гигантски шнауцер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "30283d66-cebd-4f5b-aaa7-280b4a7d84c9",
-                            Name = "Глен имаал териер"
+                            Id = 84,
+                            Name = "Глен ъф Имаал териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "237fe6f8-b675-491e-adcf-0ecd3fee3a2a",
-                            Name = "Голдън ретривър"
+                            Id = 85,
+                            Name = "Голдън ретрийвър",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "446ebe17-dfdd-431c-8ad2-c967b6fb2265",
-                            Name = "Гордън сетер"
+                            Id = 86,
+                            Name = "Гордън сетер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "ca6f547a-cee0-4d20-b717-d4a986a58114",
-                            Name = "Немски дог"
+                            Id = 87,
+                            Name = "Немски мастиф",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "5dfe3489-0073-44dd-94f5-45096291efca",
-                            Name = "Пиренейска планинска овчарка"
+                            Id = 88,
+                            Name = "Пиренейска планинска овчарка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1b8569b9-4fc4-4666-88a3-3b9b3e24b68b",
-                            Name = "Грейхаунд"
+                            Id = 89,
+                            Name = "Грейхаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "c83fef2a-8201-4c50-8899-0db225329ea8",
-                            Name = "Грифон брюкселуа"
+                            Id = 90,
+                            Name = "Грифон брюкселуа",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "fd96ec10-cd13-4afc-8205-4b347a94c029",
-                            Name = "Харие"
+                            Id = 91,
+                            Name = "Харие",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "f22b2fa4-300e-4cf5-82e2-99ebd1ed8acd",
-                            Name = "Хаванез"
+                            Id = 92,
+                            Name = "Хаванез",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "89bf4a88-4613-4a77-888f-8b16b891bed8",
-                            Name = "Ирландски сетер"
+                            Id = 93,
+                            Name = "Ирландски сетер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "ef2580e0-17ce-477d-bd27-f488240855d7",
-                            Name = "Ирландски териер"
+                            Id = 94,
+                            Name = "Ирландски териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "91e0d574-0484-4189-8186-1c5b90948bc7",
-                            Name = "Ирландски вълкодав"
+                            Id = 95,
+                            Name = "Ирландски вълкодав",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "67b4f3ca-9f50-41f5-b38b-97ee944138fa",
-                            Name = "Италианска хрътка"
+                            Id = 96,
+                            Name = "Италиански грейхаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e049c369-4e63-4d22-bb79-5790cf9481ad",
-                            Name = "Японски чин"
+                            Id = 97,
+                            Name = "Японски чин",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1afbd14d-cfef-4602-8a27-e7eeb9c80975",
-                            Name = "Японски шпиц"
+                            Id = 98,
+                            Name = "Японски шпиц",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "a304abda-2627-493a-a32e-a394b40443d9",
-                            Name = "Кеесхонд"
+                            Id = 99,
+                            Name = "Кеесхонд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "1cb8f21e-0c8e-4706-888c-74d84e9093a0",
-                            Name = "Комондор"
+                            Id = 100,
+                            Name = "Комондор",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "b06d371d-3a5a-4c65-8947-b80679c7e84c",
-                            Name = "Койкер хондже"
+                            Id = 101,
+                            Name = "Койкер хондие",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "f00a505e-1f8d-444c-8d1b-78952b3dc66e",
-                            Name = "Кувас"
+                            Id = 102,
+                            Name = "Кувас",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "4f41ba5a-3127-4ad2-abcd-214057a2efa8",
-                            Name = "Лабрадор ретривър"
+                            Id = 103,
+                            Name = "Лабрадор ретрийвър",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "a9474ee6-a735-4344-9eb7-56d39dcd9082",
-                            Name = "Лагото романьоло"
+                            Id = 104,
+                            Name = "Лагото романьоло",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "899a9791-49b8-4465-b88e-c5f195069346",
-                            Name = "Ланкашър хийлър"
+                            Id = 105,
+                            Name = "Ланкашир хийлър",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "4470850a-4aae-4836-b880-3eb7b654bf1e",
-                            Name = "Леонбергер"
+                            Id = 106,
+                            Name = "Леонбергер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "429d5c44-c6ea-4e4d-8d81-c6214b5ef228",
-                            Name = "Лхаса апсо"
+                            Id = 107,
+                            Name = "Лхаса апсо",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2127e22e-fd96-4a45-b072-31b4296653e6",
-                            Name = "Малтийска болонка"
+                            Id = 108,
+                            Name = "Малтийско болонезе",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "63c4244b-6175-4899-bb3b-455a75e05a73",
-                            Name = "Мини американска овчарка"
+                            Id = 109,
+                            Name = "Миниатюрна американска овчарка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "ffa5460b-d0ac-4be1-8510-04666bacb6da",
-                            Name = "Миниатюрен пинчер"
+                            Id = 110,
+                            Name = "Миниатюрен пинчер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "26c267a2-445c-41ae-9e19-2f7acf6df182",
-                            Name = "Миниатюрен шнауцер"
+                            Id = 111,
+                            Name = "Миниатюрен шнауцер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d8c6d422-e640-4586-b4ca-2d678538f694",
-                            Name = "Нюфаундленд"
+                            Id = 112,
+                            Name = "Нюфаундленд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "9af7e45f-78b9-4a3f-9970-94896d16c925",
-                            Name = "Норфолк териер"
+                            Id = 113,
+                            Name = "Норфолк териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "53fa79a2-ff46-498a-844e-4187b4bb7a75",
-                            Name = "Норич териер"
+                            Id = 114,
+                            Name = "Норич териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "008a68a6-c879-4710-b99c-c9287ee6e66e",
-                            Name = "Нова шотландска патица ретривър"
+                            Id = 115,
+                            Name = "Нова шотландска патица ретрийвър",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "324fbd2b-2382-40dc-b123-cbf0ca0c4c51",
-                            Name = "Старо английско овчарско куче"
+                            Id = 116,
+                            Name = "Староанглийско овчарско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "ea6474c6-5290-49ed-8b69-a139704ee34f",
-                            Name = "Оригинален английски булдог"
+                            Id = 117,
+                            Name = "Староанглийски булдог",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "b000a904-221d-4abb-9115-4e1b77757b6e",
-                            Name = "Папийон"
+                            Id = 118,
+                            Name = "Папийон",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "3d285c30-dafd-48aa-9db1-61d2ae09a674",
-                            Name = "Пекинез"
+                            Id = 119,
+                            Name = "Пекинез",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "46e47479-81ab-4ee2-8832-96949c33ed1b",
-                            Name = "Уелско корги пембрук"
+                            Id = 120,
+                            Name = "Уелско корги пембрук",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e75993d4-8b57-4730-89f9-e6ec1da671fc",
-                            Name = "Перро депреса канарио"
+                            Id = 121,
+                            Name = "Преса канарио",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e071f902-df40-4a36-9697-b88271ef6269",
-                            Name = "Фараонско куче"
+                            Id = 122,
+                            Name = "Фараонско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "ad7db344-2af4-45eb-89b5-0847c1ee3bda",
-                            Name = "Плот"
+                            Id = 123,
+                            Name = "Плот хаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "6f2b8519-2e64-496e-bd33-d245253e4c91",
-                            Name = "Померан"
+                            Id = 124,
+                            Name = "Померан",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e7202a83-3e66-4519-a56f-2fa8543da263",
-                            Name = "Пудел миниатюрен"
+                            Id = 125,
+                            Name = "Пудел миниатюрен",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "49decdd4-a07b-41fc-ad7b-e3531c9adfc2",
-                            Name = "Пудел той"
+                            Id = 126,
+                            Name = "Пудел той",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "70dcd163-badd-4d76-9b70-6e18ffce5b1b",
-                            Name = "Мопс"
+                            Id = 127,
+                            Name = "Мопс",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "45369fd4-ac48-47da-ba26-2168977181fb",
-                            Name = "Пули"
+                            Id = 128,
+                            Name = "Пули",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "0c1c2787-00ec-4ef4-9d3a-74643b93a8b3",
-                            Name = "Пуми"
+                            Id = 129,
+                            Name = "Пуми",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e5ccb9fd-4e19-41cb-ad9d-58893207f737",
-                            Name = "Плъхов териер"
+                            Id = 130,
+                            Name = "Рат териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "c12dff1d-67e2-46b3-827a-dcbbc8c1225d",
-                            Name = "Редбоун кунхаунд"
+                            Id = 131,
+                            Name = "Редбоун кунхаунд",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e85e176a-4a29-40b3-ac09-de9745f172a4",
-                            Name = "Родезийски риджбек"
+                            Id = 132,
+                            Name = "Родезийски риджбек",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "155e0de4-7848-437c-8417-540d598fd43c",
-                            Name = "Ротвайлер"
+                            Id = 133,
+                            Name = "Ротвайлер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "58e8d596-2b63-4fb8-844c-23201e04288d",
-                            Name = "Руска той териер"
+                            Id = 134,
+                            Name = "Руски той териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "2122ac4d-a187-4a62-86c7-203c0c8a6600",
-                            Name = "Свети Бернар"
+                            Id = 135,
+                            Name = "Санбернар",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "644cae7e-7c19-438b-854d-f106d31ac9fb",
-                            Name = "Салуки"
+                            Id = 136,
+                            Name = "Салуки",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "e49f123b-3850-4e70-a161-59b301eba289",
-                            Name = "Самоед"
+                            Id = 137,
+                            Name = "Самоед",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "8d7c1e5e-83ba-44d9-a10e-46454dfaa09f",
-                            Name = "Шиперке"
+                            Id = 138,
+                            Name = "Шиперке",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "65d29b58-3dd5-4e6d-bd75-5ef705bff8b1",
-                            Name = "Шотландски еленов хрътка"
+                            Id = 139,
+                            Name = "Шотландска еленова хрътка",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "5d4a8036-4271-4bbe-8c55-6520c215133f",
-                            Name = "Шотландски териер"
+                            Id = 140,
+                            Name = "Шотландски териер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "0fb9c8a7-9dd2-49b2-b3fd-95556c18bad5",
-                            Name = "Шетландско овчарско куче"
+                            Id = 141,
+                            Name = "Шетландско овчарско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "87cf3b49-beb0-4339-b621-f0affe704a42",
-                            Name = "Шиба ину"
+                            Id = 142,
+                            Name = "Шиба ину",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "ecad49c5-1368-420e-99b3-e71f47ab44ea",
-                            Name = "Ши Тцу"
+                            Id = 143,
+                            Name = "Ши Тцу",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "45c1c55b-7e05-4d5e-a5b6-86cd43cb2af1",
-                            Name = "Шило овчар"
+                            Id = 144,
+                            Name = "Шило пастирско куче",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "d4532717-1bbe-452d-8a13-bd2bd15d9f59",
-                            Name = "Сибирско хъски"
+                            Id = 145,
+                            Name = "Сибирско хъски",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "9878caa5-3e16-4f3d-9ac9-1df8fc8a86f6",
-                            Name = "Копринено териер"
+                            Id = 146,
+                            Name = "Визла",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "088931dd-abc3-43d4-9abb-d265af2f73a1",
-                            Name = "Гладък фокс териер"
+                            Id = 147,
+                            Name = "Ваймаранер",
+                            PetType = "Dog"
                         },
                         new
                         {
-                            Id = "b372e082-d272-4e02-a4c0-4bef8c3b6ddf",
-                            Name = "Мека пшенична териер"
+                            Id = 148,
+                            Name = "Абисинска",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "3570c569-c20e-4129-bd5c-0cb540132d61",
-                            Name = "Испанско водно куче"
+                            Id = 149,
+                            Name = "Австралийска мъгла",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "6c2bb3c0-f02b-4a75-b5f5-ae9fd9b29e17",
-                            Name = "Спиноне Италиано"
+                            Id = 150,
+                            Name = "Азиатска",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "6fd145d2-1166-4d47-b1f0-e8f858eee41f",
-                            Name = "Стафордширски бул териер"
+                            Id = 151,
+                            Name = "Американска грубокосместа",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "e318bcdc-371a-4894-bcea-c00f28a1e972",
-                            Name = "Стандартен шнауцер"
+                            Id = 152,
+                            Name = "Балийска",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "c3d16897-3490-4db0-bd6b-8044c78a8b1c",
-                            Name = "Шведски валхунд"
+                            Id = 153,
+                            Name = "Бенгалска",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "fcdaa1f3-a583-4cb6-80d6-34497b499a88",
-                            Name = "Тайландско гребено куче"
+                            Id = 154,
+                            Name = "Бирманска",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "7d4e3e50-1a48-4471-9ab2-3f36fdc2c34f",
-                            Name = "Тибетски мастиф"
+                            Id = 155,
+                            Name = "Британска късокосместа",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "120aac19-7d56-46c1-b2d5-de6c19ba363a",
-                            Name = "Тибетски спаниел"
+                            Id = 156,
+                            Name = "Бурманска",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "4e2bf30a-2655-4722-b9fb-978a461174e6",
-                            Name = "Тибетски териер"
+                            Id = 157,
+                            Name = "Бурмила",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "766dab57-e828-4c54-8841-110de83f4ff9",
-                            Name = "Играчка фокс териер"
+                            Id = 158,
+                            Name = "Девон Рекс",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "ca6085c5-fe49-4100-bb49-dc0d19788ff1",
-                            Name = "Дървесен уокър кунхаунд"
+                            Id = 159,
+                            Name = "Египетска Мау",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "f0f11b0b-a3aa-4b11-b917-0f24118f6830",
-                            Name = "Визла"
+                            Id = 160,
+                            Name = "Европейска късокосместа",
+                            PetType = "Cat"
                         },
                         new
                         {
-                            Id = "d40d0a3b-bc12-4884-8d3b-f2baeb772d58",
-                            Name = "Ваймаранер"
+                            Id = 161,
+                            Name = "Канадски сфинкс",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 162,
+                            Name = "Корат",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 163,
+                            Name = "Корниш Рекс",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 164,
+                            Name = "Мейн Куун",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 165,
+                            Name = "Норвежка горска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 166,
+                            Name = "Ориенталска късокосместа",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 167,
+                            Name = "Персийска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 168,
+                            Name = "Петерболд",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 169,
+                            Name = "Пикси-боб",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 170,
+                            Name = "Рагдол",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 171,
+                            Name = "Руска синя",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 172,
+                            Name = "Селкирк Рекс",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 173,
+                            Name = "Серенгети",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 174,
+                            Name = "Сиамска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 175,
+                            Name = "Сибирска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 176,
+                            Name = "Сингапурска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 177,
+                            Name = "Сомалийска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 178,
+                            Name = "Тайска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 179,
+                            Name = "Тонкинска",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 180,
+                            Name = "Турска Ангора",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 181,
+                            Name = "Турски ван",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 182,
+                            Name = "Украински Левкой",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 183,
+                            Name = "Уралски Рекс",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 184,
+                            Name = "Шартрьо",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 185,
+                            Name = "Шотландска клепоуха",
+                            PetType = "Cat"
+                        },
+                        new
+                        {
+                            Id = 186,
+                            Name = "Японски бобтейл",
+                            PetType = "Cat"
                         });
                 });
 
@@ -1053,7 +1371,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
-                    b.ToTable("Pets");
+                    b.ToTable("Pets", (string)null);
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Post", b =>
@@ -1077,7 +1395,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Profile", b =>
@@ -1109,7 +1427,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("Zoolandia.Domain.Models.Service", b =>
@@ -1135,7 +1453,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Zoolandia.Infrastructure.Identity.User", b =>
@@ -1212,17 +1530,17 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "48f7a329-7f4b-4203-a388-e6b43df53cb2",
+                            Id = "90a4e54d-1a0b-428e-ab90-fae7b5356f92",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "199cefe5-944a-4cb6-b1d3-3af15b2ce6fd",
+                            ConcurrencyStamp = "b0cf6a01-d0f1-4618-8450-11ac47331d17",
                             Email = "hristopanev20@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "HRISTOPANEV20@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE9rxy1X1TDj4l1+jh1zt2K7/UW1Q9N+B0oPy58n65VOeDxEHw3Bmqvyl6e2ns+dwA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFqwApVW7mAckrqHqcwviF32VIEW+SJfDTlS9Iiq7As5VRByI0iL+c/8lIIAd4DoBQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1d86d206-40b0-4e78-b096-c8366ea1b44e",
+                            SecurityStamp = "a17c7fbb-7b59-442c-8bb4-96ef718a5e52",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -1302,7 +1620,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Zoolandia.Domain.ValueObjects.Age", "Age", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.Models.Pet.Age#Zoolandia.Domain.ValueObjects.Age", "Age", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -1317,13 +1635,13 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets");
+                            b1.ToTable("Pets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
                         });
 
-                    b.OwnsOne("Zoolandia.Domain.ValueObjects.HealthStatus", "HealthStatus", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.Models.Pet.HealthStatus#Zoolandia.Domain.ValueObjects.HealthStatus", "HealthStatus", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -1360,13 +1678,13 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets");
+                            b1.ToTable("Pets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
                         });
 
-                    b.OwnsOne("Zoolandia.Domain.ValueObjects.Personality", "Personality", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.Models.Pet.Personality#Zoolandia.Domain.ValueObjects.Personality", "Personality", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -1396,7 +1714,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets");
+                            b1.ToTable("Pets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
@@ -1419,7 +1737,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Zoolandia.Domain.Models.StateType", "Status", b1 =>
+                    b.OwnsOne("Zoolandia.Domain.Models.Post.Status#Zoolandia.Domain.Models.StateType", "Status", b1 =>
                         {
                             b1.Property<string>("PostId")
                                 .HasColumnType("nvarchar(450)");
@@ -1429,7 +1747,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
 
                             b1.HasKey("PostId");
 
-                            b1.ToTable("Posts");
+                            b1.ToTable("Posts", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PostId");

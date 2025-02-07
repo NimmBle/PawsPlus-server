@@ -11,15 +11,19 @@ namespace Zoolandia.Infrastructure.Repositories;
 public class BreedRepository(ZoolandiaDbContext db,
     IMapper mapper)
     : DataRepository<ZoolandiaDbContext, Breed>(db),
-        IBreedQueryRepository,
-        IBreedDomainRepository
+        IBreedDomainRepository,
+        IBreedQueryRepository
 {
-    public async Task<IEnumerable<BreedOutputModel>> GetBreeds(string breedName,
+    public async Task<IEnumerable<BreedOutputModel>> GetBreeds(string petType,
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<BreedOutputModel>(db
                 .Breeds
-                .Where(b => b.Name.Contains(breedName)))
+                .Where(b => b.PetType.ToString() == petType))
             .ToListAsync(cancellationToken);
 
+    public async Task<Breed> Find(int id,
+        CancellationToken cancellationToken = default)
+        => await All()
+            .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
 }

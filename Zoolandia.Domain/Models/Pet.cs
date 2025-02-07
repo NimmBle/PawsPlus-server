@@ -57,8 +57,7 @@ public class Pet : Entity<string>, IAggregateRoot
     
     [JsonProperty(Required = Required.Always)]
     public Gender Gender { get; private set; }
-
-    [JsonProperty(Required = Required.Always)]
+    
     public ICollection<Breed> Breeds { get; private set; } = new HashSet<Breed>();
     
     public string? Weight { get; private set; } // change type to Enum
@@ -85,19 +84,19 @@ public class Pet : Entity<string>, IAggregateRoot
         this.Name = name;
         this.PhotoUrl = photoUrl;
         this.PetType = petType;
-        this.Age = UpdateAge(age);
+        this.Age = Age.Create(age);
         this.Gender = gender;
-        this.Breeds = breeds;
+        UpdateBreeds(breeds);
         this.Weight = weight;
         this.Personality = Personality.Create(personality);
         this.HealthStatus = HealthStatus.Create(healthStatus);
     }
 
-    private Age UpdateAge(Age age)
+    private void UpdateBreeds(ICollection<Breed> breeds)
     {
-        if (age.Years <= 0 && age.Months <= 0)
-            throw new ArgumentOutOfRangeException("Age must be greater than 0");
-        
-        return Age.Create(age);
+        this.Breeds.Clear();
+
+        this.Breeds = breeds;
+
     }
 }

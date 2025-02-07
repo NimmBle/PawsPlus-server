@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Common.Contracts;
 using Zoolandia.Application.Features.Pet.Commands.Common;
@@ -15,7 +16,9 @@ public class CreatePetCommand
         ICurrentUser currentUser,
         IProfileDomainRepository profileDomainRepository,
         IPetDomainRepository petDomainRepository,
-        IPetFactory petFactory)
+        IBreedDomainRepository breedDomainRepository,
+        IPetFactory petFactory,
+        IMapper mapper)
         : IRequestHandler<CreatePetCommand, Result<CreatePetOutputModel>>
     {
         public async Task<Result<CreatePetOutputModel>> Handle(
@@ -32,6 +35,12 @@ public class CreatePetCommand
             
             if (profile.Id != request.ProfileId)
                 return "You cannot create a pet for this user";
+
+            var breeds = new List<Domain.Models.Breed>();
+            foreach (var breed in request.Breeds)
+            {
+                breeds.Add(await breedDomainRepository.Find(breed.Id));
+            }
             
             var pet = petFactory
                 .WithName(request.Name)
@@ -39,7 +48,7 @@ public class CreatePetCommand
                 .WithType(request.PetType)
                 .WithAge(request.Age.Years, request.Age.Months)
                 .WithGender(request.Gender)
-                .WithBreed(request.Breeds)
+                .WithBreed(breeds)
                 .WithWeight(request.Weight)
                 .WithPersonality(
                     request.Personality.Temperament,

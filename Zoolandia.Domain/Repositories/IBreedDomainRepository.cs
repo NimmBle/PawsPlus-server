@@ -5,5 +5,5 @@ namespace Zoolandia.Domain.Repositories;
 
 public interface IBreedDomainRepository : IDomainRepository<Breed>
 {
-    
+    Task<Breed> Find(int id, CancellationToken cancellationToken = default);
 }

@@ -15,7 +15,7 @@ public abstract class BasePetInputModel<TCommand>
     
     public Gender Gender { get; set; }
 
-    public ICollection<Domain.Models.Breed> Breeds { get; set; }
+    public ICollection<BreedInputModel> Breeds { get; set; }
 
     public string? Weight { get; set; }
 
