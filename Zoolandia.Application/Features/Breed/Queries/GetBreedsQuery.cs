@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Zoolandia.Domain.Enums.Pet;
 
 namespace Zoolandia.Application.Features.Breed.Queries;
 
 public class GetBreedsQuery : IRequest<IEnumerable<BreedOutputModel>>
 {
-    public string PetType { get; set; }
+    public PetType PetType { get; set; }
     
     public class GetBreedsQueryHandler(IBreedQueryRepository breedQueryRepository)
         : IRequestHandler<GetBreedsQuery, IEnumerable<BreedOutputModel>>

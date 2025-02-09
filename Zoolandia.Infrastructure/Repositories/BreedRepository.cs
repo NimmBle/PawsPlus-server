@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Zoolandia.Application.Features.Breed;
 using Zoolandia.Application.Features.Breed.Queries;
+using Zoolandia.Domain.Enums.Pet;
 using Zoolandia.Domain.Models;
 using Zoolandia.Domain.Repositories;
 using Zoolandia.Infrastructure.Common.Persistence;
@@ -14,12 +15,12 @@ public class BreedRepository(ZoolandiaDbContext db,
         IBreedDomainRepository,
         IBreedQueryRepository
 {
-    public async Task<IEnumerable<BreedOutputModel>> GetBreeds(string petType,
+    public async Task<IEnumerable<BreedOutputModel>> GetBreeds(PetType petType,
         CancellationToken cancellationToken = default)
         => await mapper
-            .ProjectTo<BreedOutputModel>(db
-                .Breeds
-                .Where(b => b.PetType.ToString() == petType))
+            .ProjectTo<BreedOutputModel>(this
+                .All()
+                .Where(b => b.PetType == petType))
             .ToListAsync(cancellationToken);
 
     public async Task<Breed> Find(int id,
