@@ -14,6 +14,8 @@ public class PostOutputModel
     
     public string Description { get; set; }
     
+    public string PlaceId { get; set; }
+    
     public int ServicePrice { get; set; }
     
 }

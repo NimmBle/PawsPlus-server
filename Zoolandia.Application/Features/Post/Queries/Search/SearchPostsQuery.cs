@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using MediatR;
+﻿using MediatR;
 using Zoolandia.Application.Common;
 
 namespace Zoolandia.Application.Features.Post.Queries.Search;

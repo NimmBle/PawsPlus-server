@@ -19,6 +19,8 @@ public class ProfileOutputModel : IMapFrom<Domain.Models.Profile>
 
     public string PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
     
+    public string PlaceId { get; set; }
+    
     public IList<string>? Roles { get; set; } = new List<string>();
     
 }

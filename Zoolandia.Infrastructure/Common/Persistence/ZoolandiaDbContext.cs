@@ -36,7 +36,7 @@ public class
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
         SeedBreeds(builder.Entity<Breed>());
-        // SeedAdminAndRoles(builder);
+        SeedAdminAndRoles(builder);
         
         base.OnModelCreating(builder);
     }

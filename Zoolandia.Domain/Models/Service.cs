@@ -42,6 +42,10 @@ public class Service : Entity<string>, IAggregateRoot
 
     public void UpdateAvailableDates(List<DateOnly> newAvailableDates)
     {
-        AvailableDates = newAvailableDates;
+        var yesterday = DateOnly.FromDateTime(DateTime.Today.AddDays(-1));
+        
+        newAvailableDates.RemoveAll(date => date <= yesterday);
+        
+        AvailableDates = newAvailableDates; 
     }
 }

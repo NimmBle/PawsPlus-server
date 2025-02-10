@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.JavaScript;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using System.Linq.Expressions;
+using NetTopologySuite.Geometries;
 using Zoolandia.Application.Common;
 using Zoolandia.Domain.Enums;
 using Zoolandia.Domain.Enums.Pet;
@@ -55,8 +53,11 @@ public class SearchPostsParams
         if (Latitude != 0 && Latitude != null &&
             Longitude != 0 && Longitude != null)
         {
-            predicate = predicate.And(p => p.Profile
-                .Location.GetDistanceInKilometers(Latitude.Value, Longitude.Value) <= 1.5);
+            double radiusInKilometers = 1.5;
+            
+            var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
+
+            predicate = predicate.And(p => p.Profile.Location.Point.Distance(centerPoint) * 100 < radiusInKilometers);
         }
         
         // StardDate and EndDate

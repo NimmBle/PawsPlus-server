@@ -38,8 +38,12 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
 
 
         builder
-            .OwnsOne(p => p.Location);
-
+            .OwnsOne(p => p.Location, opt =>
+            {
+                opt.Property(l => l.Point)
+                    .HasColumnType("geometry");
+            });
+        
         builder
             .HasOne(p => p.Pet)
             .WithOne(p => p.Profile);

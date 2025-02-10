@@ -8,7 +8,7 @@ using NetTopologySuite.Geometries;
 namespace Zoolandia.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class seedbreedsandroles : Migration
+    public partial class Seedbreedsandroles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
             migrationBuilder.AddColumn<Point>(
                 name: "Location_Point",
                 table: "Profiles",
-                type: "geography",
+                type: "geometry",
                 nullable: true);
 
             migrationBuilder.AlterColumn<string>(
@@ -83,15 +83,15 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "27173fe5-6684-4d53-8e7c-fd604a8b0f1c", "27173fe5-6684-4d53-8e7c-fd604a8b0f1c", "Sitter", "SITTER" },
-                    { "34ac2d6f-2f79-4fc3-909a-a90a97e63264", "34ac2d6f-2f79-4fc3-909a-a90a97e63264", "Owner", "OWNER" },
-                    { "941a3f58-d0c2-4457-a647-028f12d82a82", "941a3f58-d0c2-4457-a647-028f12d82a82", "Administrator", "ADMINISTRATOR" }
+                    { "020ae868-c87b-429e-bf53-91a164c95bd2", "020ae868-c87b-429e-bf53-91a164c95bd2", "Owner", "OWNER" },
+                    { "2b36e6fc-8886-4224-91bb-8b0cfc744627", "2b36e6fc-8886-4224-91bb-8b0cfc744627", "Sitter", "SITTER" },
+                    { "ddd0a343-5d90-46cb-a020-7c2910d436e9", "ddd0a343-5d90-46cb-a020-7c2910d436e9", "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfileId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b2ef868d-a668-42f9-9fda-cf6874758069", 0, "b9f39baf-a942-4641-8077-23a8fa479e7c", "hristopanev20@gmail.com", true, false, null, "HRISTOPANEV20@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEHJ2hIk4l2KnH0glYmsmnZh+6N+0R4bxowlN6uKmriDlKP+iQBGALg7D18paFu8paQ==", null, false, null, "e310c575-eb9b-48e2-9bb1-f17d7c120995", false, "admin" });
+                values: new object[] { "33896ccc-d260-415f-bbc1-8379ccf04c0e", 0, "ba416b33-d51a-403a-9496-3f9b8587bfba", "hristopanev20@gmail.com", true, false, null, "HRISTOPANEV20@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEG/vPoGvgalVLrMeU5FRRSvVUo/F0G074AUgbKWGbmNORr7CBeF0igt2h418Nn34FA==", null, false, null, "cf6c4666-82b2-4e46-85d1-c79a0ae4e58d", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Breeds",
@@ -289,7 +289,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "941a3f58-d0c2-4457-a647-028f12d82a82", "b2ef868d-a668-42f9-9fda-cf6874758069" });
+                values: new object[] { "ddd0a343-5d90-46cb-a020-7c2910d436e9", "33896ccc-d260-415f-bbc1-8379ccf04c0e" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BreedPet_PetsId",
@@ -321,27 +321,27 @@ namespace Zoolandia.Infrastructure.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "27173fe5-6684-4d53-8e7c-fd604a8b0f1c");
+                keyValue: "020ae868-c87b-429e-bf53-91a164c95bd2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "34ac2d6f-2f79-4fc3-909a-a90a97e63264");
+                keyValue: "2b36e6fc-8886-4224-91bb-8b0cfc744627");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { "941a3f58-d0c2-4457-a647-028f12d82a82", "b2ef868d-a668-42f9-9fda-cf6874758069" });
+                keyValues: new object[] { "ddd0a343-5d90-46cb-a020-7c2910d436e9", "33896ccc-d260-415f-bbc1-8379ccf04c0e" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "941a3f58-d0c2-4457-a647-028f12d82a82");
+                keyValue: "ddd0a343-5d90-46cb-a020-7c2910d436e9");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "b2ef868d-a668-42f9-9fda-cf6874758069");
+                keyValue: "33896ccc-d260-415f-bbc1-8379ccf04c0e");
 
             migrationBuilder.DropColumn(
                 name: "Location_PlaceId",

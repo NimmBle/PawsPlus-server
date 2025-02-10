@@ -67,22 +67,22 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "34ac2d6f-2f79-4fc3-909a-a90a97e63264",
-                            ConcurrencyStamp = "34ac2d6f-2f79-4fc3-909a-a90a97e63264",
+                            Id = "020ae868-c87b-429e-bf53-91a164c95bd2",
+                            ConcurrencyStamp = "020ae868-c87b-429e-bf53-91a164c95bd2",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "27173fe5-6684-4d53-8e7c-fd604a8b0f1c",
-                            ConcurrencyStamp = "27173fe5-6684-4d53-8e7c-fd604a8b0f1c",
+                            Id = "2b36e6fc-8886-4224-91bb-8b0cfc744627",
+                            ConcurrencyStamp = "2b36e6fc-8886-4224-91bb-8b0cfc744627",
                             Name = "Sitter",
                             NormalizedName = "SITTER"
                         },
                         new
                         {
-                            Id = "941a3f58-d0c2-4457-a647-028f12d82a82",
-                            ConcurrencyStamp = "941a3f58-d0c2-4457-a647-028f12d82a82",
+                            Id = "ddd0a343-5d90-46cb-a020-7c2910d436e9",
+                            ConcurrencyStamp = "ddd0a343-5d90-46cb-a020-7c2910d436e9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -177,8 +177,8 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "b2ef868d-a668-42f9-9fda-cf6874758069",
-                            RoleId = "941a3f58-d0c2-4457-a647-028f12d82a82"
+                            UserId = "33896ccc-d260-415f-bbc1-8379ccf04c0e",
+                            RoleId = "ddd0a343-5d90-46cb-a020-7c2910d436e9"
                         });
                 });
 
@@ -1528,17 +1528,17 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b2ef868d-a668-42f9-9fda-cf6874758069",
+                            Id = "33896ccc-d260-415f-bbc1-8379ccf04c0e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b9f39baf-a942-4641-8077-23a8fa479e7c",
+                            ConcurrencyStamp = "ba416b33-d51a-403a-9496-3f9b8587bfba",
                             Email = "hristopanev20@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "HRISTOPANEV20@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHJ2hIk4l2KnH0glYmsmnZh+6N+0R4bxowlN6uKmriDlKP+iQBGALg7D18paFu8paQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG/vPoGvgalVLrMeU5FRRSvVUo/F0G074AUgbKWGbmNORr7CBeF0igt2h418Nn34FA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e310c575-eb9b-48e2-9bb1-f17d7c120995",
+                            SecurityStamp = "cf6c4666-82b2-4e46-85d1-c79a0ae4e58d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -1768,7 +1768,7 @@ namespace Zoolandia.Infrastructure.Data.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<Point>("Point")
-                                .HasColumnType("geography");
+                                .HasColumnType("geometry");
 
                             b1.HasKey("ProfileId");
 

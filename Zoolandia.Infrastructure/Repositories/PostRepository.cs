@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 using Zoolandia.Application.Features.Post;
 using Zoolandia.Application.Features.Post.Queries;
 using Zoolandia.Application.Features.Post.Queries.Search;
@@ -69,6 +70,7 @@ public class PostRepository(
                 LastName = p.Profile.LastName,
                 PhotoUrl = p.Profile.PhotoUrl,
                 Description = p.Profile.Description,
+                PlaceId = p.Profile.Location.PlaceId,
                 ServicePrice = p.Services
                     .Where(s => s.Name == serviceType.ToString())
                     .Select(s => s.Price)
