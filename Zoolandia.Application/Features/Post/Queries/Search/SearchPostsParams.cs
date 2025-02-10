@@ -14,6 +14,10 @@ public class SearchPostsParams
     
     public ServiceType ServiceType { get; set; }
     
+    public double? Latitude { get; set; }
+    
+    public double? Longitude { get; set; }
+    
     public string? StartDate { get; set; }
     
     public string? EndDate { get; set; }
@@ -46,22 +50,15 @@ public class SearchPostsParams
                 .Where(s => s.Name == ServiceType.ToString())
                 .Any());
         }
-
-        // MIN AND MAX PRICE
-        if (MinPrice is not null && MinPrice < MaxPrice)
+        
+        // Location
+        if (Latitude != 0 && Latitude != null &&
+            Longitude != 0 && Longitude != null)
         {
-            predicate = predicate.And(p => p.Services
-                .Where(s => s.Price >= MinPrice)
-                .Any());
+            predicate = predicate.And(p => p.Profile
+                .Location.GetDistanceInKilometers(Latitude.Value, Longitude.Value) <= 1.5);
         }
-
-        if (MaxPrice is not null && MaxPrice > MinPrice)
-        {
-            predicate = predicate.And(p => p.Services
-                .Where(s => s.Price <= MaxPrice)
-                .Any());
-        }
-
+        
         // StardDate and EndDate
         if (StartDate is not null && EndDate is not null)
         {
@@ -89,8 +86,21 @@ public class SearchPostsParams
                 .Where(ad => ad.Contains(DateOnly.Parse(EndDate)))
                 .Any());
         }
-        
-        // Location
+
+        // MIN AND MAX PRICE
+        if (MinPrice is not null && MinPrice < MaxPrice)
+        {
+            predicate = predicate.And(p => p.Services
+                .Where(s => s.Price >= MinPrice)
+                .Any());
+        }
+
+        if (MaxPrice is not null && MaxPrice > MinPrice)
+        {
+            predicate = predicate.And(p => p.Services
+                .Where(s => s.Price <= MaxPrice)
+                .Any());
+        }
 
         return predicate;
     }

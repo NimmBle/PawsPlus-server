@@ -39,6 +39,7 @@ public static class InfrastructureConfiguration
                 .UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
                     sqlServer => sqlServer
+                        .UseNetTopologySuite()
                         .MigrationsAssembly(typeof(ZoolandiaDbContext).Assembly.FullName)));
     public static IServiceCollection AddIdentity(
         this IServiceCollection services,

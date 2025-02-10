@@ -1,7 +1,7 @@
 ﻿using Zoolandia.Domain.Common;
 using Zoolandia.Domain.Common.Models;
 using Zoolandia.Domain.Exceptions;
-
+using Zoolandia.Domain.ValueObjects;
 using static Zoolandia.Domain.Models.ModelConstants.Common;
 
 namespace Zoolandia.Domain.Models;
@@ -30,7 +30,7 @@ public sealed class Profile : Entity<string>, IAggregateRoot
 
     public bool FirstLogin { get; private set; } = true;
 
-    // public string? Address { get; set; }
+    public Location? Location { get; set; }
 
     public Pet? Pet { get; private set; }
     
@@ -61,14 +61,6 @@ public sealed class Profile : Entity<string>, IAggregateRoot
 
         return this;
     }
-
-    public Profile UpdateDescription(string description)
-    {
-        // ValidateDescription(description);
-        this.Description = description;
-
-        return this;
-    }
     
     public Profile UpdatePhoneNumber(string phoneNumber)
     {
@@ -78,6 +70,24 @@ public sealed class Profile : Entity<string>, IAggregateRoot
         return this;
     }
 
+    public Profile UpdateDescription(string description)
+    {
+        // ValidateDescription(description);
+        this.Description = description;
+
+        return this;
+    }
+
+    public Profile UpdateLocation(string placeId,
+        double latitude,
+        double longitude)
+    {
+        this.Location = new Location(placeId,
+            latitude,
+            longitude);
+
+        return this;
+    }
     public void UpdateFirstLogin()
     {
         this.FirstLogin = false;

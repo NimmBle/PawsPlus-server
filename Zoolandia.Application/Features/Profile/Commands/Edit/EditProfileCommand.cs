@@ -20,6 +20,8 @@ public class EditProfileCommand
     
     public string? Description { get; set; }
     
+    public LocationInputModel Location { get; set; }
+    
     
     public class EditUserCommandHandler(
         ICurrentUser currentUser,
@@ -38,13 +40,16 @@ public class EditProfileCommand
             
             if (request.Id != profile.Id)
                 return "You cannot edit this User";
-            
+
             profile
                 .UpdateFirstName(request.FirstName)
                 .UpdateLastName(request.LastName)
                 .UpdatePhotoUrl(request.PhotoUrl)
                 .UpdatePhoneNumber(request.PhoneNumber)
-                .UpdateDescription(request.Description);
+                .UpdateDescription(request.Description)
+                .UpdateLocation(request.Location.PlaceId, 
+                    request.Location.Latitude,
+                    request.Location.Longitude);
             
             await profileDomainRepository.Update(profile);
 
