@@ -23,7 +23,7 @@ public class BreedRepository(ZoolandiaDbContext db,
                 .Where(b => b.PetType == petType))
             .ToListAsync(cancellationToken);
 
-    public async Task<Breed> Find(int id,
+    public async Task<Breed> Find(string id,
         CancellationToken cancellationToken = default)
         => await All()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);

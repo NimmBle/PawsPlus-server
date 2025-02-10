@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Zoolandia.Application.Common;
 using Zoolandia.Application.Common.Contracts;
-using Zoolandia.Application.Features.Pet.Commands.Common;
 using Zoolandia.Domain.Factories;
 using Zoolandia.Domain.Repositories;
 
@@ -17,8 +15,7 @@ public class CreatePetCommand
         IProfileDomainRepository profileDomainRepository,
         IPetDomainRepository petDomainRepository,
         IBreedDomainRepository breedDomainRepository,
-        IPetFactory petFactory,
-        IMapper mapper)
+        IPetFactory petFactory)
         : IRequestHandler<CreatePetCommand, Result<CreatePetOutputModel>>
     {
         public async Task<Result<CreatePetOutputModel>> Handle(
