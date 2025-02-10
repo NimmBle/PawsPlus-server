@@ -4,6 +4,6 @@ namespace Zoolandia.Application.Features.Post.Commands;
 
 public class PostInputModel
 {
-    public HashSet<Weight>? Weights { get; set; }
+    public List<Weight>? Weights { get; set; }
     
 }

@@ -8,9 +8,9 @@ public class PostDetailsOutputModel : IMapFrom<Domain.Models.Post>
 {
     public string Id { get; set; }
 
-    public HashSet<Weight> Weights { get; set; }
+    public List<Weight> Weights { get; set; }
 
-    public HashSet<PetType> Pets { get; set; }
+    public List<PetType> Pets { get; set; }
 
     public ICollection<ServiceOutputModel> Services { get; set; }
 

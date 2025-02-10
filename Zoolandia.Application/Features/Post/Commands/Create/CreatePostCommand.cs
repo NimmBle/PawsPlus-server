@@ -8,8 +8,8 @@ namespace Zoolandia.Application.Features.Post.Commands.Create;
 
 public class CreatePostCommand : PostInputModel, IRequest<Result>
 {
-    public HashSet<ServiceType> Services { get; set; }
-    public HashSet<PetType> Pets { get; set; }
+    public List<ServiceType> Services { get; set; }
+    public List<PetType> Pets { get; set; }
     public string profileId { get; set; }
     
     public class CreatePostCommandHandler(

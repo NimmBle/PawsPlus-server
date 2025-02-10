@@ -7,15 +7,15 @@ namespace Zoolandia.Domain.Models;
 
 public class Post : Entity<string>, IAggregateRoot
 {
-    private readonly HashSet<Service> _services = new();
+    private readonly List<Service> _services = new();
 
     internal Post()
     {
     }
 
     public Post(
-        HashSet<PetType> petTypes,
-        HashSet<Weight> weights,
+        List<PetType> petTypes,
+        List<Weight> weights,
         string profileId)
     {
         this.Id = Guid.NewGuid().ToString();
@@ -34,9 +34,9 @@ public class Post : Entity<string>, IAggregateRoot
 
     public List<Weight>? Weights { get; private set; } = new();
 
-    public IReadOnlyCollection<Service> Services => _services.ToList().AsReadOnly();
+    public IReadOnlyCollection<Service> Services => _services.AsReadOnly();
 
-    public void AddServices(HashSet<ServiceType> services)
+    public void AddServices(List<ServiceType> services)
     {
         foreach (var service in services)
             this._services.Add(new Service(service));
