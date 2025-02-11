@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet ef "$@" -p Zoolandia.Infrastructure -s Zoolandia.Startup
+dotnet ef "$@" -p PawsPlus.Infrastructure -s PawsPlus.Startup
