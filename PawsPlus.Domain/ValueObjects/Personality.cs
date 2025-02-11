@@ -1,0 +1,51 @@
+﻿using PawsPlus.Domain.Enums.Pet;
+
+namespace PawsPlus.Domain.ValueObjects;
+
+public record Personality
+{
+
+    public string? Temperament { get; private set; }
+
+    public string? ActivityLevel { get; private set; }
+    
+    public Training? IsTrained { get; private set; }
+    
+    public Fear? HasFears { get; private set; }
+    
+    public string? FearsDescription { get; private set; }
+
+    public Personality()
+    {}
+    
+    public Personality(
+        string? temperament,
+        string? activityLevel,
+        Training? isTrained,
+        Fear? hasFears,
+        string? fearsDescription)
+    {
+        this.Temperament = temperament;
+        this.ActivityLevel = activityLevel;
+        this.IsTrained = isTrained;
+        this.HasFears = hasFears;
+        this.FearsDescription = fearsDescription;
+    }
+
+    
+    public static Personality Create(
+        string? temperament,
+        string? activityLevel,
+        Training? isTrained,
+        Fear? hasFears,
+        string? fearsDescription)
+        => new (temperament, activityLevel, isTrained, hasFears, fearsDescription);
+
+    public static Personality Create(Personality personality)
+        => Create(
+            personality.Temperament,
+            personality.ActivityLevel,
+            personality.IsTrained,
+            personality.HasFears,
+            personality.FearsDescription);
+}
