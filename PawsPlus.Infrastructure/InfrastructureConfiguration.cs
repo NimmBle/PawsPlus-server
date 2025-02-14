@@ -15,6 +15,7 @@ using PawsPlus.Infrastructure.Common.Persistence;
 using PawsPlus.Infrastructure.Files;
 using PawsPlus.Infrastructure.Identity;
 using PawsPlus.Domain.Common;
+using PawsPlus.Infrastructure.Serialization;
 
 namespace PawsPlus.Infrastructure;
 
@@ -28,7 +29,8 @@ public static class InfrastructureConfiguration
             .AddIdentity(configuration)
             .AddSwagger()
             .AddRepositories()
-            .AddFiles();
+            .AddFiles()
+            .AddConverters();
 
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
@@ -111,4 +113,11 @@ public static class InfrastructureConfiguration
     
     public static IServiceCollection AddFiles(this IServiceCollection services)
         => services.AddTransient<IFile, FileService>();
+
+    public static IServiceCollection AddConverters(this IServiceCollection services)
+        => services
+            .Configure<JsonOptions>(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+            });
 }

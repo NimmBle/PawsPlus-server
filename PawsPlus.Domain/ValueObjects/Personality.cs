@@ -5,15 +5,15 @@ namespace PawsPlus.Domain.ValueObjects;
 public record Personality
 {
 
-    public string? Temperament { get; private set; }
+    public string? Temperament { get; init; }
 
-    public string? ActivityLevel { get; private set; }
+    public string? ActivityLevel { get; init; }
     
-    public Training? IsTrained { get; private set; }
+    public Training? IsTrained { get; init; }
     
-    public Fear? HasFears { get; private set; }
+    public Fear? HasFears { get; init; }
     
-    public string? FearsDescription { get; private set; }
+    public string? FearsDescription { get; init; }
 
     public Personality()
     {}

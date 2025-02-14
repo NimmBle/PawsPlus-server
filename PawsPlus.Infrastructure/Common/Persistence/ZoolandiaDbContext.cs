@@ -21,6 +21,8 @@ public class
     public DbSet<Service> Services { get; set; } = default!;
     
     public DbSet<Breed> Breeds { get; set; } = default!;
+    
+    public DbSet<Booking> Bookings { get; set; } = default!;
 
     // public DbSet<Meeting> Meetings { get; set; } = default!;
 
@@ -35,7 +37,7 @@ public class
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
         
         SeedBreeds(builder.Entity<Breed>());
-        SeedAdminAndRoles(builder);
+        // SeedAdminAndRoles(builder);
         
         base.OnModelCreating(builder);
     }

@@ -4,9 +4,9 @@ public record Age
 {
     private const int MinimumAge = 0;
     
-    public int Years { get; private set; }
+    public int Years { get; init; }
     
-    public int Months { get; private set; }
+    public int Months { get; init; }
 
     public Age()
     {

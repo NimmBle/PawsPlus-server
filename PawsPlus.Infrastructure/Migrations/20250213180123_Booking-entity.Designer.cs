@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using PawsPlus.Infrastructure.Common.Persistence;
@@ -12,9 +13,11 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    partial class ZoolandiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250213180123_Booking-entity")]
+    partial class Bookingentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,9 +185,8 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.Property<DateOnly>("FromDay")
                         .HasColumnType("date");
 
-                    b.Property<string>("FromTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<TimeOnly>("FromTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("MeetingPlaceLocation")
                         .HasColumnType("nvarchar(max)");
@@ -207,9 +209,8 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.Property<DateOnly>("ToDay")
                         .HasColumnType("date");
 
-                    b.Property<string>("ToTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<TimeOnly>("ToTime")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 

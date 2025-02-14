@@ -4,17 +4,17 @@
 public record HealthStatus
 {
     
-    public bool? IsVaccinated { get; private set; }
+    public bool? IsVaccinated { get; init; }
     
-    public bool? IsCastrated { get; private set; }
+    public bool? IsCastrated { get; init; }
     
-    public bool? TakesMedications { get; private set; }
+    public bool? TakesMedications { get; init; }
     
-    public string? HasEatingSchedule { get; private set; }
+    public string? HasEatingSchedule { get; init; }
     
-    public string? OtherDietaryNeeds { get; private set; }
+    public string? OtherDietaryNeeds { get; init; }
     
-    public string? HealthProblems { get; private set; }
+    public string? HealthProblems { get; init; }
     
     public HealthStatus()
     {}

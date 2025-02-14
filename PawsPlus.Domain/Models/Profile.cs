@@ -6,7 +6,7 @@ using static PawsPlus.Domain.Models.ModelConstants.Common;
 
 namespace PawsPlus.Domain.Models;
 
-public sealed class Profile : Entity<string>, IAggregateRoot
+public class Profile : Entity<string>, IAggregateRoot
 {
     public Profile(string firstName, 
         string lastName,
@@ -35,6 +35,10 @@ public sealed class Profile : Entity<string>, IAggregateRoot
     public Pet? Pet { get; private set; }
     
     public Post? Post { get; private set; }
+    
+    public virtual ICollection<Booking> BookingsAsSitter { get; set; } = new List<Booking>();
+    
+    public virtual ICollection<Booking> BookingsAsOwner { get; set; } = new List<Booking>();
     
     // public Meeting? Meeting { get; private set; }
 
