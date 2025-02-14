@@ -1,5 +1,6 @@
 using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Service;
 using PawsPlus.Domain.Repositories;
 
@@ -9,7 +10,8 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 {
     
     public class CreateBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
-        IServiceQueryRepository serviceQueryRepository) 
+        IServiceQueryRepository serviceQueryRepository,
+        ICurrentUser currentUser) 
         : IRequestHandler<CreateBookingCommand, Result>
     {
         public async Task<Result> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -28,9 +30,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                 request.AdditionalDescription,
                 serviceId,
                 request.SitterId,
-                request.OwnerId);
-            
-            
+                currentUser.UserId);
 
             await bookingDomainRepository.Save(booking);
             

@@ -22,5 +22,4 @@ public class CreateBookingInputModel
     
     public string SitterId { get; set; }
 
-    public string OwnerId { get; set; }
 }
