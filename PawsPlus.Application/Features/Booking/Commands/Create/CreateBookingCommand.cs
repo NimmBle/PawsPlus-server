@@ -23,18 +23,16 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             var currentUserId = currentUser.UserId;
             var ownerProfileId = await profileQueryRepository.GetProfileIdByUser(currentUserId);
             
-            var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
             
             var serviceId = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
-            
             
             if (serviceId == null)
                 return Result.Failure("No service of this type is found");
 
-            var booking = new Domain.Models.Booking(request.FromDay,
-                request.FromTime,
-                request.ToDay,
-                request.ToTime,
+            var booking = new Domain.Models.Booking(request.StartDay,
+                request.StartTime,
+                request.EndDay,
+                request.EndTime,
                 request.MeetingPlaceType,
                 request.MeetingPlaceLocation,
                 request.AdditionalDescription,
@@ -44,6 +42,8 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 
             await bookingDomainRepository.Save(booking);
 
+            // var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
+            
             // var requestResult = await emailSender.SendRequestEmail(sitterUserId, currentUserId);
             //
             // if (!requestResult)

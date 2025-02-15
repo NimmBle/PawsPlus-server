@@ -18,6 +18,7 @@ public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
 
             service.UpdatePrice(request.Price);
             service.UpdateAvailableDates(request.AvailableDates);
+            service.UpdateMeetingPlaces(request.MeetingPlaces);
             
             await serviceDomainRepository.Update(service);
 

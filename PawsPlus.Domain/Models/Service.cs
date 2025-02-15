@@ -18,11 +18,13 @@ public class Service : Entity<string>, IAggregateRoot
     public Service(ServiceType serviceType,
         int price,
         List<DateOnly>? availableDates,
+        List<MeetingPlaceType> meetingPlaces,
         string postId)
         : this(serviceType)
     {
         this.Price = price;
         this.AvailableDates = availableDates;
+        this.MeetingPlaces = meetingPlaces;
         this.PostId = postId;
     }
 
@@ -34,12 +36,14 @@ public class Service : Entity<string>, IAggregateRoot
     
     public ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
     
+    public List<MeetingPlaceType> MeetingPlaces { get; private set; } = new List<MeetingPlaceType>();
+    
     public string PostId { get; private set; }
     public Post Post { get; private set; }
 
     public void UpdatePrice(int newPrice)
     {
-        Price = newPrice;
+        this.Price = newPrice;
     }
 
     public void UpdateAvailableDates(List<DateOnly> newAvailableDates)
@@ -48,6 +52,11 @@ public class Service : Entity<string>, IAggregateRoot
         
         newAvailableDates.RemoveAll(date => date <= yesterday);
         
-        AvailableDates = newAvailableDates; 
+        this.AvailableDates = newAvailableDates; 
+    }
+
+    public void UpdateMeetingPlaces(List<MeetingPlaceType> newMeetingPlaces)
+    {
+        this.MeetingPlaces = newMeetingPlaces;
     }
 }

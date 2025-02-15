@@ -5,12 +5,13 @@ namespace PawsPlus.Application.Features.Booking.Commands.Create;
 
 public class CreateBookingInputModel
 {
-    public DateOnly FromDay { get; set; }
+    public DateOnly StartDay { get; set; }
     
-    public TimeOnly FromTime { get; set; }
+    public TimeOnly StartTime { get; set; }
     
-    public DateOnly ToDay { get; set; }
-    public TimeOnly ToTime { get; set; }
+    public DateOnly EndDay { get; set; }
+    
+    public TimeOnly EndTime { get; set; }
     
     public MeetingPlaceType MeetingPlaceType { get; set; }
     

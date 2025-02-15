@@ -12,14 +12,14 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .HasKey(b => b.Id);
         
         builder
-            .Property(b => b.FromTime)
+            .Property(b => b.StartTime)
             .HasConversion(
                 to => to.ToString("HH:mm"),
                 from => TimeOnly.ParseExact(from, "HH:mm")
             );
         
         builder
-            .Property(b => b.ToTime)
+            .Property(b => b.EndTime)
             .HasConversion(
                 to => to.ToString("HH:mm"),
                 from => TimeOnly.ParseExact(from, "HH:mm")

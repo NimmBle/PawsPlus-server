@@ -11,10 +11,10 @@ public class Booking : Entity<string>, IAggregateRoot
     {
     }
     
-    public Booking(DateOnly fromDay,
-        TimeOnly fromTime,
-        DateOnly toDay,
-        TimeOnly toTime,
+    public Booking(DateOnly startDay,
+        TimeOnly startTime,
+        DateOnly endDay,
+        TimeOnly endTime,
         MeetingPlaceType meetingPlaceType,
         string? meetingPlaceLocation,
         string? additionalDescription,
@@ -23,10 +23,10 @@ public class Booking : Entity<string>, IAggregateRoot
         string ownerId)
     {
         this.Id = Guid.NewGuid().ToString();
-        this.FromDay = fromDay;
-        this.FromTime = fromTime;
-        this.ToDay = toDay;
-        this.ToTime = toTime;
+        this.StartDay = startDay;
+        this.StartTime = startTime;
+        this.EndDay = endDay;
+        this.EndTime = endTime;
         this.MeetingPlaceType = meetingPlaceType;
         this.MeetingPlaceLocation = meetingPlaceLocation;
         this.AdditionalDescription = additionalDescription;
@@ -35,11 +35,11 @@ public class Booking : Entity<string>, IAggregateRoot
         this.OwnerId = ownerId;
     }
 
-    public DateOnly FromDay { get; private set; }
-    public TimeOnly FromTime { get; private set; }
+    public DateOnly StartDay { get; private set; }
+    public TimeOnly StartTime { get; private set; }
     
-    public DateOnly ToDay { get; private set; }
-    public TimeOnly ToTime { get; private set; }
+    public DateOnly EndDay { get; private set; }
+    public TimeOnly EndTime { get; private set; }
     
     public MeetingPlaceType MeetingPlaceType { get; private set; }
     
