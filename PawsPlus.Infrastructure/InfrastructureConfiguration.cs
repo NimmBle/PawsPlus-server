@@ -15,7 +15,9 @@ using PawsPlus.Infrastructure.Common.Persistence;
 using PawsPlus.Infrastructure.Files;
 using PawsPlus.Infrastructure.Identity;
 using PawsPlus.Domain.Common;
+using PawsPlus.Domain.Services;
 using PawsPlus.Infrastructure.Serialization;
+using PawsPlus.Infrastructure.Services;
 
 namespace PawsPlus.Infrastructure;
 
@@ -30,7 +32,8 @@ public static class InfrastructureConfiguration
             .AddSwagger()
             .AddRepositories()
             .AddFiles()
-            .AddConverters();
+            .AddConverters()
+            .AddEmailSender();
 
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
@@ -120,4 +123,7 @@ public static class InfrastructureConfiguration
             {
                 options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
             });
+
+    public static IServiceCollection AddEmailSender(this IServiceCollection services)
+        => services.AddTransient<IEmailSender, EmailSender>();
 }

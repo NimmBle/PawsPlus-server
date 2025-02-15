@@ -14,12 +14,12 @@ public interface IIdentity
 
     Task<Result> ChangeEmail(string userId, string newEmail);
     
-    Task<Result> ConfirmEmail(string id, string token);
+    Task<Result> ConfirmEmail(string userid, string token);
     
     // Task<bool> EmailAlreadyExists(string email);
     
     // Task SendPasswordResetEmail(string email);
-    //
+    
     // Task<Result> ResetPassword(string email, string oldPassword, string newPassword);
     
     Task<IList<string>> GetRoles(string userId);

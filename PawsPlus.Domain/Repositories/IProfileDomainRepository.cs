@@ -9,4 +9,4 @@ public interface IProfileDomainRepository : IDomainRepository<Profile>
     
     Task<Profile> FindByUser(string userId, CancellationToken cancellationToken = default);
     
-}
+}   

@@ -60,6 +60,21 @@ public class ProfileRepository(
 
     public async Task<MineProfileOutputModel> GetDetailsByUser(string userId,
         CancellationToken cancellationToken = default)
-        => await GetDetailsBase<MineProfileOutputModel>(p => p.Id == userId, cancellationToken); 
-    
+        => await GetDetailsBase<MineProfileOutputModel>(p => p.Id == userId, cancellationToken);
+
+    public async Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default)
+        => await this
+            .Data
+            .Users
+            .Where(u => u.Id == userId)
+            .Select(u => u.Profile.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+    public async Task<string> GetUserIdByProfileId(string profileId, CancellationToken cancellationToken = default)
+        => await this
+            .Data
+            .Users
+            .Where(u => u.Profile.Id == profileId)
+            .Select(u => u.Id)
+            .FirstOrDefaultAsync(cancellationToken);
 }

@@ -9,4 +9,8 @@ public interface IProfileQueryRepository
     
     Task<MineProfileOutputModel> GetDetailsByUser(string userId, CancellationToken cancellationToken = default);
     
+    Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default);
+    
+    Task<string> GetUserIdByProfileId(string profileId, CancellationToken cancellationToken = default);
+    
 }

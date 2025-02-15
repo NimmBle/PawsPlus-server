@@ -170,9 +170,9 @@ internal class IdentityService(
         return false;
     }
 
-    public async Task<Result> ConfirmEmail(string id, string token)
+    public async Task<Result> ConfirmEmail(string userid, string token)
     {
-        var user = await userManager.FindByIdAsync(id);
+        var user = await userManager.FindByIdAsync(userid);
 
         if (user == null)
             return "User not found";
