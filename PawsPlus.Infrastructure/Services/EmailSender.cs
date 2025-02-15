@@ -17,8 +17,7 @@ public class EmailSender(UserManager<User> userManager,
         var ownerProfile = await profileDomainRepository.FindByUser(ownerId);
         
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-        var openProfileLink =
-            $"https://www.youtube.com/watch?v=-NrFMmYVKbkz";
+        var profileNotificationsLink = "http://localhost:4200/my-profile-details/notifications";
         
         
         var client = new SendGridClient(apiKey);
@@ -31,7 +30,7 @@ public class EmailSender(UserManager<User> userManager,
           <p>Здравейте!</p>
           <p>Имате нова заявка от {ownerProfile.FirstName} {ownerProfile.LastName}</p>
           <p>
-            За да видите повече детайли относно заявка, както и да я одобрите или откажете, вижте профила си в Лапички+ - <a href={openProfileLink}>Отвори профил</a>
+            За да видите повече детайли относно заявка, както и да я одобрите или откажете, вижте профила си в Лапички+ - <a href={profileNotificationsLink}>Отвори профил</a>
           </p>
           <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
         </body>

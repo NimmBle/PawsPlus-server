@@ -32,7 +32,7 @@ public class Service : Entity<string>, IAggregateRoot
 
     public List<DateOnly>? AvailableDates { get; private set; } = new List<DateOnly>();
     
-    public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+    public ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
     
     public string PostId { get; private set; }
     public Post Post { get; private set; }

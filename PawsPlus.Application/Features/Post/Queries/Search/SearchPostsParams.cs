@@ -63,15 +63,17 @@ public class SearchPostsParams
         // StardDate and EndDate
         if (StartDate is not null && EndDate is not null)
         {
-            predicate = predicate.And(p => p.Services
-                .Select(s => s.AvailableDates)
-                .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
-                .Any());
+            var startDate = DateOnly.Parse(StartDate);
+            var endDate = DateOnly.Parse(EndDate);
             
+            var totalDays = endDate.DayNumber - startDate.DayNumber + 1;
+
+            var requiredDates = Enumerable.Range(0, totalDays)
+                .Select(offset => startDate.AddDays(offset))
+                .ToList();
+
             predicate = predicate.And(p => p.Services
-                .Select(s => s.AvailableDates)
-                .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
-                .Any());
+                .Any(s => requiredDates.All(rd => s.AvailableDates.Contains(rd))));
         }
         else if (StartDate is not null && EndDate is null)
         {

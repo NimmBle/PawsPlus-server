@@ -44,10 +44,10 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 
             await bookingDomainRepository.Save(booking);
 
-            var requestResult = await emailSender.SendRequestEmail(sitterUserId, currentUserId);
-
-            if (!requestResult)
-                return Result.Failure("Failed to send email");
+            // var requestResult = await emailSender.SendRequestEmail(sitterUserId, currentUserId);
+            //
+            // if (!requestResult)
+            //     return Result.Failure("Failed to send email");
             
             return Result.Success;
         }
