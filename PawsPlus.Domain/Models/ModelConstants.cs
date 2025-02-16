@@ -18,7 +18,7 @@ public class ModelConstants
     
     public class Profile
     {
-        public const int MaxDescriptionLength = 1024;
+        public const int MaxDescriptionLength = 2048;
         
         public const int MinPhoneNumberLength = 7;
         public const int MaxPhoneNumberLength = 10;
