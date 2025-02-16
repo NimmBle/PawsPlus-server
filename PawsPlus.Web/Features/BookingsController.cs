@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Features.Booking.Commands.Create;
 
 namespace PawsPlus.Web.Features;
 
+[Authorize(Roles = Owner)]
 public class BookingsController : ApiController
 {
     [HttpPost]

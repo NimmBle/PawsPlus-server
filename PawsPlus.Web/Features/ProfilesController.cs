@@ -17,12 +17,14 @@ public class ProfilesController : ApiController
         => await this.Send(query);
     
     [HttpGet]
+    [Authorize(Roles = Owner)]
     [Route(Id + PathSeparator + nameof(MyPet))]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
         => await this.Send(query);  
     
     [HttpGet]
+    [Authorize(Roles = Sitter)]
     [Route(Id + PathSeparator + nameof(MyPost))]
     public async Task<ActionResult<PostDetailsOutputModel>> MyPost(
         [FromRoute] GetProfilePostDetailsQuery query)
@@ -33,12 +35,6 @@ public class ProfilesController : ApiController
     public async Task<ActionResult<ProfileDetailsOutputModel>> Details(
         [FromRoute] GetProfileDetailsQuery query)
         => await this.Send(query);
-
-    [HttpGet]
-    [Authorize(Roles = Administrator)]
-    [Route(nameof(MyPets))]
-    public async Task<string> MyPets()
-        => "banans";
     
     [HttpPut]
     [Route(Id)]

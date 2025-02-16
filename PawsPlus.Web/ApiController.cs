@@ -14,7 +14,10 @@ public class ApiController : ControllerBase
 {
     public const string Id = "{Id}";
     public const string PathSeparator = "/";
+    
     public const string Administrator = "Administrator";
+    public const string Owner = "Owner";
+    public const string Sitter = "Sitter";
     
     private IMediator? mediator;
     protected IMediator Mediator

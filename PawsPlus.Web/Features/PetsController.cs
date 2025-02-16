@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Features.Pet.Commands.Create;
 using PawsPlus.Application.Features.Pet.Commands.Delete;
 using PawsPlus.Application.Features.Pet.Commands.Edit;
 
 namespace PawsPlus.Web.Features;
 
+[Authorize(Roles = Owner)]
 public class PetsController : ApiController
 {
 

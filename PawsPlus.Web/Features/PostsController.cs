@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Features.Post.Commands.Create;
 using PawsPlus.Application.Features.Post.Commands.Delete;
 using PawsPlus.Application.Features.Post.Commands.Edit;
@@ -7,6 +8,7 @@ using PawsPlus.Application.Features.Post.Queries.Search;
 
 namespace PawsPlus.Web.Features;
 
+[Authorize(Roles = Sitter)]
 public class PostsController : ApiController
 {
     [HttpGet]
@@ -26,6 +28,7 @@ public class PostsController : ApiController
 
     [HttpGet]
     [Route(nameof(Search))]
+    [AllowAnonymous]
     public async Task<ActionResult<SearchPostsOutputModel>> Search(
         [FromQuery] SearchPostsQuery query)
         => await this.Send(query);

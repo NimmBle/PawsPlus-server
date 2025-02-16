@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Features.Service.Commands.Create;
 using PawsPlus.Application.Features.Service.Commands.Delete;
 using PawsPlus.Application.Features.Service.Commands.Edit;
@@ -6,6 +7,7 @@ using PawsPlus.Application.Features.Service.Queries;
 
 namespace PawsPlus.Web.Features;
 
+[Authorize(Roles = Sitter)]
 public class ServicesController : ApiController
 {
     
@@ -16,7 +18,7 @@ public class ServicesController : ApiController
         => await this.Send(query);
     
     [HttpPost]
-    public async Task<ActionResult<string>> Create(CreateServiceCommand command)
+    public async Task<ActionResult> Create(CreateServiceCommand command)
         => await this.Send(command);
     
     [HttpPut]
