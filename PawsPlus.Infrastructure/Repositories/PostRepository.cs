@@ -55,6 +55,7 @@ public class PostRepository(
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<PostOutputModel>> Search(Expression<Func<Post, bool>> predicate,
+        Expression<Func<Post, object>> orderBy,
         ServiceType serviceType,
         int skip,
         int take,
@@ -62,6 +63,7 @@ public class PostRepository(
         => await this
             .All()
             .Where(predicate)
+            .OrderByDescending(orderBy)
             .Select(p => new PostOutputModel
             {
                 Id = p.ProfileId,

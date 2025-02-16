@@ -14,17 +14,19 @@ public class SearchPostsQuery : SearchPostsParams, IRequest<Result<SearchPostsOu
             CancellationToken cancellationToken)
         {
             var predicate = request.ToPredicate();
+            var orderBy = request.OrderBy();
             int skip = (request.Page - 1) * request.PostsPerPage;
             int take = request.PostsPerPage;
             
             var posts = await postRepository.Search(predicate,
+                orderBy,
                 request.ServiceType,
                 skip,
                 take,
                 cancellationToken);
 
             if (posts is null)
-                return Result<SearchPostsOutputModel>.Failure("No posts found");
+                return "No posts found";
             
             int totalPages = (int)Math.Ceiling(posts.Count() / request.PostsPerPage * 1.0);
             

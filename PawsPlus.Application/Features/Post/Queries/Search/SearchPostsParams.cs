@@ -3,6 +3,7 @@ using NetTopologySuite.Geometries;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Enums;
 using PawsPlus.Domain.Enums.Pet;
+using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Post.Queries.Search;
 
@@ -31,13 +32,15 @@ public class SearchPostsParams
     
     public Expression<Func<Domain.Models.Post, bool>> ToPredicate()
     {
-        Expression<Func<Domain.Models.Post, bool>> predicate = x => true;   
+        Expression<Func<Domain.Models.Post, bool>> predicate = x => true;
 
+        // predicate = predicate.And(p => p.Status == StateType.Approved);
+        
         // PetType
         if (!string.IsNullOrWhiteSpace(PetType.ToString()))
         {
             predicate = predicate.And(p => Enumerable
-                .Select<PetType, PetType>(p.PetTypes, t => t)
+                .Select(p.PetTypes, t => t)
                 .Contains(PetType));
         }
         
@@ -50,17 +53,17 @@ public class SearchPostsParams
         }
         
         // Location
-        if (Latitude != 0 && Latitude != null &&
-            Longitude != 0 && Longitude != null)
-        {
-            double radiusInKilometers = 1.5;
-            
-            var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
-
-            predicate = predicate.And(p => p.Profile.Location.Point.Distance(centerPoint) * 100 < radiusInKilometers);
-        }
+        // if (Latitude != 0 && Latitude != null &&
+        //     Longitude != 0 && Longitude != null)
+        // {
+        //     double radiusInKilometers = 1.5;
+        //     
+        //     var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
+        //
+        //     predicate = predicate.And(p => p.Profile.Location.Point.Distance(centerPoint) * 100 < radiusInKilometers);
+        // }
         
-        // StardDate and EndDate
+        // StartDate and EndDate
         if (StartDate is not null && EndDate is not null)
         {
             var startDate = DateOnly.Parse(StartDate);
@@ -106,5 +109,24 @@ public class SearchPostsParams
         }
 
         return predicate;
+    }
+
+    public Expression<Func<Domain.Models.Post, object>> OrderBy()
+    {
+        Expression<Func<Domain.Models.Post, object>> orderBy;
+
+        if (Latitude != 0 && Latitude != null &&
+            Longitude != 0 && Longitude != null)
+        {
+            var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
+            orderBy = p =>
+                p.Profile.Location.Point.Distance(centerPoint);
+        }
+        else
+        {
+            orderBy = p => p.Id;
+        }
+
+        return orderBy;
     }
 }
