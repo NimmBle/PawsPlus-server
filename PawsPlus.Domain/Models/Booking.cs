@@ -1,6 +1,9 @@
 using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Enums;
+using PawsPlus.Domain.Exceptions;
+using static PawsPlus.Domain.Models.ModelConstants.Common;
+using static PawsPlus.Domain.Models.ModelConstants.Booking;
 
 namespace PawsPlus.Domain.Models;
 
@@ -22,6 +25,8 @@ public class Booking : Entity<string>, IAggregateRoot
         string sitterId,
         string ownerId)
     {
+        this.Validate(additionalDescription);
+        
         this.Id = Guid.NewGuid().ToString();
         this.StartDay = startDay;
         this.StartTime = startTime;
@@ -83,4 +88,16 @@ public class Booking : Entity<string>, IAggregateRoot
 
         return this;
     }
+
+    private void Validate(string? additionalDescription)
+    {
+        this.ValidateDescription(additionalDescription);
+    }
+
+    private void ValidateDescription(string? additionalDescription)
+        => Guard.ForStringLength<InvalidBookingException>(
+            additionalDescription,
+            Zero,
+            MaxDescriptionLength,
+            nameof(AdditionalDescription));
 }

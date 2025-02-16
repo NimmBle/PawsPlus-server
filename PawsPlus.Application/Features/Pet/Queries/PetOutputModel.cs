@@ -21,7 +21,7 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
 
     public ICollection<BreedOutputModel> Breeds { get; set; }
 
-    public string? Weight { get; set; }
+    public Weight? Weight { get; set; }
 
     public Personality? Personality { get; set; }
 

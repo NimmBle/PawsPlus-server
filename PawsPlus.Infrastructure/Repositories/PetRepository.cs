@@ -53,5 +53,5 @@ public class PetRepository
             .Include(p => p.Personality)
             .Include(p => p.HealthStatus)
             .Include(p => p.Breeds)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 }

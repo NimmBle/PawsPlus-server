@@ -16,7 +16,7 @@ public abstract class BasePetInputModel<TCommand>
 
     public ICollection<BreedInputModel> Breeds { get; set; }
 
-    public string? Weight { get; set; }
+    public Weight Weight { get; set; }
 
     public PersonalityInputModel? Personality { get; set; } = new PersonalityInputModel();
 

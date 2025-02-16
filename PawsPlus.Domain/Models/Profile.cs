@@ -3,6 +3,7 @@ using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Exceptions;
 using PawsPlus.Domain.ValueObjects;
 using static PawsPlus.Domain.Models.ModelConstants.Common;
+using static PawsPlus.Domain.Models.ModelConstants.Profile;
 
 namespace PawsPlus.Domain.Models;
 
@@ -12,6 +13,8 @@ public class Profile : Entity<string>, IAggregateRoot
         string lastName,
         string phoneNumber)
     {
+        this.Validate(firstName, lastName, phoneNumber);
+        
         this.Id = Guid.NewGuid().ToString();
         this.FirstName = firstName;
         this.LastName = lastName;
@@ -39,8 +42,6 @@ public class Profile : Entity<string>, IAggregateRoot
     public virtual ICollection<Booking> BookingsAsSitter { get; set; } = new List<Booking>();
     
     public virtual ICollection<Booking> BookingsAsOwner { get; set; } = new List<Booking>();
-    
-    // public Meeting? Meeting { get; private set; }
 
     public Profile UpdateFirstName(string firstName)
     {
@@ -68,7 +69,7 @@ public class Profile : Entity<string>, IAggregateRoot
     
     public Profile UpdatePhoneNumber(string phoneNumber)
     {
-        // ValidatePhoneNumber(phoneNumber);
+        ValidatePhoneNumber(phoneNumber);
         this.PhoneNumber = phoneNumber;
 
         return this;
@@ -76,7 +77,7 @@ public class Profile : Entity<string>, IAggregateRoot
 
     public Profile UpdateDescription(string description)
     {
-        // ValidateDescription(description);
+        ValidateDescription(description);
         this.Description = description;
 
         return this;
@@ -97,6 +98,15 @@ public class Profile : Entity<string>, IAggregateRoot
         this.FirstLogin = false;
     }
 
+    public void Validate(string firstName,
+        string lastName,
+        string phoneNumber)
+    {
+        this.ValidateFirstName(firstName);
+        this.ValidateLastName(lastName);
+        this.ValidatePhoneNumber(phoneNumber);
+    }
+
     public void ValidateFirstName(string firstName)
         => Guard.ForStringLength<InvalidProfileException>(
             firstName,
@@ -115,4 +125,18 @@ public class Profile : Entity<string>, IAggregateRoot
         => Guard.ForValidUrl<InvalidProfileException>(
             photoUrl,
             nameof(PhotoUrl));
+
+    private void ValidatePhoneNumber(string phoneNumber)
+        => Guard.ForStringLength<InvalidProfileException>(
+            phoneNumber,
+            MinPhoneNumberLength,
+            MaxPhoneNumberLength,
+            nameof(PhoneNumber));
+
+    private void ValidateDescription(string description)
+        => Guard.ForStringLength<InvalidProfileException>(
+            description,
+            Zero,
+            MaxDescriptionLength,
+            nameof(Description));
 }

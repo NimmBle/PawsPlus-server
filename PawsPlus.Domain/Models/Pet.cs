@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using PawsPlus.Domain.Common;
+using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Enums.Pet;
+using PawsPlus.Domain.Exceptions;
 using PawsPlus.Domain.ValueObjects;
+using static PawsPlus.Domain.Models.ModelConstants.Common;
 
 namespace PawsPlus.Domain.Models;
 
@@ -14,7 +17,7 @@ public class Pet : Entity<string>, IAggregateRoot
         Age age,
         Gender gender,
         ICollection<Breed> breeds,
-        string? weight,
+        Weight? weight,
         Personality? personality,
         HealthStatus? healthStatus,
         string profileId
@@ -32,12 +35,13 @@ public class Pet : Entity<string>, IAggregateRoot
         string photoUrl,
         PetType petType,
         Gender gender,
-        string? weight,
+        Weight? weight,
         string profileId
     )
     {
+        this.Validate(name, photoUrl);
+        
         this.Id = Guid.NewGuid().ToString();
-
         this.Name = name;
         this.PhotoUrl = photoUrl;
         this.PetType = petType;
@@ -60,7 +64,7 @@ public class Pet : Entity<string>, IAggregateRoot
     
     public ICollection<Breed> Breeds { get; private set; } = new HashSet<Breed>();
     
-    public string? Weight { get; private set; } // change type to Enum
+    public Weight? Weight { get; private set; }
 
     public Personality? Personality { get; private set; }
 
@@ -77,7 +81,7 @@ public class Pet : Entity<string>, IAggregateRoot
         Age age,
         Gender gender,
         ICollection<Breed> breeds,
-        string? weight,
+        Weight? weight,
         Personality? personality,
         HealthStatus? healthStatus)
     {
@@ -99,4 +103,23 @@ public class Pet : Entity<string>, IAggregateRoot
         this.Breeds = breeds;
 
     }
+    
+    
+    private void Validate(string name, string photoUrl)
+    {
+        this.ValidateName(name);
+        this.ValidatePhotoUrl(photoUrl);
+    }
+
+    private void ValidateName(string name)
+        => Guard.ForStringLength<InvalidPetException>(
+            name,
+            MinNameLength,
+            MaxNameLength,
+            nameof(Name));
+
+    private void ValidatePhotoUrl(string photoUrl)
+        => Guard.ForValidUrl<InvalidPetException>(
+            photoUrl,
+            nameof(PhotoUrl));
 }

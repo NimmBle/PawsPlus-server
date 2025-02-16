@@ -12,7 +12,7 @@ public class PetFactory : IPetFactory
     private Age age = default!;
     private Gender gender;
     private ICollection<Breed> breeds;
-    private string? weight = default;
+    private Weight? weight = default;
     private Personality? personality = default;
     private HealthStatus? healthStatus = default;
     private string profileId;
@@ -56,7 +56,7 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public IPetFactory WithWeight(string weight)
+    public IPetFactory WithWeight(Weight weight)
     {
         this.weight = weight;
         return this;
@@ -105,8 +105,7 @@ public class PetFactory : IPetFactory
     }
 
     public Pet Build()
-        => new Pet(
-            this.name,
+        => new (this.name,
             this.photoUrl,
             this.petType,
             this.age,

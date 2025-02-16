@@ -2,6 +2,7 @@
 using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Enums;
 using PawsPlus.Domain.Enums.Pet;
+using PawsPlus.Domain.Exceptions;
 
 namespace PawsPlus.Domain.Models;
 
@@ -18,12 +19,13 @@ public class Post : Entity<string>, IAggregateRoot
         List<Weight> weights,
         string profileId)
     {
+        this.Validate(petTypes, weights);
+        
         this.Id = Guid.NewGuid().ToString();
         this.PetTypes = petTypes.ToList();
         this.Weights = weights.ToList();
         this.ProfileId = profileId;
     }
-
     public StateType Status { get; private set; } = StateType.None;
 
     public string ProfileId { get; private set; }
@@ -75,8 +77,7 @@ public class Post : Entity<string>, IAggregateRoot
 
     public Post UpdateWeights(List<Weight> weights)
     {
-        if (weights == null || weights.Count == 0)
-            return this;
+        this.ValidateWeights(weights);
         
         this.Weights = weights;
 
@@ -95,4 +96,30 @@ public class Post : Entity<string>, IAggregateRoot
             this.Weights.Clear();
         }
     }
+
+    private void Validate(List<PetType> petTypes, List<Weight> weights)
+    {
+        this.ValidatePetTypes(petTypes);
+        this.ValidateWeights(weights);
+    }
+
+    private void ValidatePetTypes(List<PetType> petTypes)
+    {
+        if (petTypes.All(w => Enum.IsDefined(typeof(PetType), w)))
+        {
+            return;
+        }
+        
+        throw new InvalidPostException();
+    }
+
+    private void ValidateWeights(List<Weight> weights)
+    {
+        if (weights.All(w => Enum.IsDefined(typeof(Weight), w)))
+        {
+            return;
+        }
+        
+        throw new InvalidPostException();
+    } 
 }

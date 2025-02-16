@@ -7,7 +7,7 @@ public class GetProfilePetQuery : IRequest<Result<PetOutputModel>>
 {
     public string Id { get; set; }
     
-    public class GetProfilePetQueryHander
+    public class GetProfilePetQueryHandler
         (IPetQueryRepository petQueryRepository)
         : IRequestHandler<GetProfilePetQuery, Result<PetOutputModel>>
     {

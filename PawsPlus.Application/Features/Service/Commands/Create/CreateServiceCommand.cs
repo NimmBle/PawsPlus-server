@@ -4,13 +4,13 @@ using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Service.Commands.Create;
 
-public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result<string>>
+public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
 {
     public class CreateServiceCommandHandler(
         IServiceDomainRepository serviceRepository) 
-        : IRequestHandler<CreateServiceCommand, Result<string>>
+        : IRequestHandler<CreateServiceCommand, Result>
     {
-        public async Task<Result<string>> Handle(
+        public async Task<Result> Handle(
             CreateServiceCommand request,
             CancellationToken cancellationToken)
         {
@@ -28,7 +28,7 @@ public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result<str
             
             await serviceRepository.Save(service);
 
-            return Result<string>.SuccessWith(service.Id);
+            return Result.Success;
         }
     }
 }

@@ -27,6 +27,16 @@ public static class Guard
         ThrowException<TException>($"{name} must be between {minLength} and {maxLength}");
     }
 
+    public static void ForNegativeNumber<TException>(int value, string name = "Value")
+        where TException : BaseDomainException, new()
+    {
+        if (value >= 0)
+        {
+            return;
+        }
+        ThrowException<TException>($"{name} must be a positive number");
+    }
+    
     public static void ThrowException<TException>(string errorMessage)
         where TException : BaseDomainException, new()
     {

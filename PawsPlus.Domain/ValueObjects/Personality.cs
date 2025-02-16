@@ -18,13 +18,14 @@ public record Personality
     public Personality()
     {}
     
-    public Personality(
+    private Personality(
         string? temperament,
         string? activityLevel,
         Training? isTrained,
         Fear? hasFears,
         string? fearsDescription)
     {
+        
         this.Temperament = temperament;
         this.ActivityLevel = activityLevel;
         this.IsTrained = isTrained;

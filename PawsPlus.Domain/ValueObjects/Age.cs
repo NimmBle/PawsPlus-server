@@ -1,31 +1,31 @@
-﻿namespace PawsPlus.Domain.ValueObjects;
+﻿using PawsPlus.Domain.Common.Models;
+using PawsPlus.Domain.Exceptions;
+
+namespace PawsPlus.Domain.ValueObjects;
 
 public record Age
 {
-    private const int MinimumAge = 0;
-    
-    public int Years { get; init; }
-    
-    public int Months { get; init; }
-
     public Age()
     {
     }
     
     private Age(int years, int months)
     {
+        Guard.ForNegativeNumber<InvalidPetException>(years, nameof(Years));
+        Guard.ForNegativeNumber<InvalidPetException>(months, nameof(Months));
+        
         this.Years = years;
         this.Months = months;
     }
+    
+    private const int MinimumAge = 0;
+    
+    public int Years { get; init; }
+    
+    public int Months { get; init; }
 
     public static Age? Create(int years, int months)
     {
-        if (years <= MinimumAge && months <= MinimumAge)
-        {
-            // throw domain error here
-            return null;
-        }
-
         return new Age(years, months);
     }
 

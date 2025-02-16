@@ -1,11 +1,12 @@
-﻿using FluentValidation;
+using FluentValidation;
 using static PawsPlus.Domain.Models.ModelConstants.Common;
 
-namespace PawsPlus.Application.Features.Pet.Commands.Create;
 
-public class CreatePetCommandValidation : AbstractValidator<CreatePetCommand>
+namespace PawsPlus.Application.Features.Pet.Commands.Edit;
+
+public class EditPetCommandValidation : AbstractValidator<EditPetCommand>
 {
-    public CreatePetCommandValidation()
+    public EditPetCommandValidation()
     {
         RuleFor(p => p.Name)
             .MinimumLength(MinNameLength)

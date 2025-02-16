@@ -19,6 +19,9 @@ public class ModelConstants
     public class Profile
     {
         public const int MaxDescriptionLength = 1024;
+        
+        public const int MinPhoneNumberLength = 7;
+        public const int MaxPhoneNumberLength = 10;
     }
     
     public class Pet
@@ -26,7 +29,7 @@ public class ModelConstants
         public const int MaxDescriptionLength = 1024;
     }
     
-    public class JobPost
+    public class Booking
     {
         public const int MaxDescriptionLength = 1024;
     }

@@ -21,6 +21,7 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
             CreatePostCommand request,
             CancellationToken cancellationToken)
         {
+            
             var post = new Domain.Models.Post(
                 request.Pets,
                 request.Weights,
