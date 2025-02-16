@@ -23,7 +23,7 @@ public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
                 request.ServiceType,
                 request.Price,
                 request.AvailableDates,
-                request.MeetingPlaces,
+                request.MeetingPlaces.ToList(),
                 request.PostId); 
             
             await serviceRepository.Save(service);

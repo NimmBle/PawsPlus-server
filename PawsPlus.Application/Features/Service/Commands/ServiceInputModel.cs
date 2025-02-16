@@ -9,5 +9,5 @@ public abstract class ServiceInputModel
         
     public List<DateOnly>? AvailableDates { get; set; }
     
-    public List<MeetingPlaceType> MeetingPlaces { get; set; }
+    public HashSet<MeetingPlaceType> MeetingPlaces { get; set; }
 }
