@@ -19,7 +19,7 @@ public class Booking : Entity<string>, IAggregateRoot
         DateOnly endDay,
         TimeOnly endTime,
         MeetingPlaceType meetingPlaceType,
-        string? meetingPlaceLocation,
+        string? meetingPlaceId,
         string? additionalDescription,
         string serviceId,
         string sitterId,
@@ -33,7 +33,7 @@ public class Booking : Entity<string>, IAggregateRoot
         this.EndDay = endDay;
         this.EndTime = endTime;
         this.MeetingPlaceType = meetingPlaceType;
-        this.MeetingPlaceLocation = meetingPlaceLocation;
+        this.MeetingPlaceId = meetingPlaceId;
         this.AdditionalDescription = additionalDescription;
         this.ServiceId = serviceId;
         this.SitterId = sitterId;
@@ -48,7 +48,7 @@ public class Booking : Entity<string>, IAggregateRoot
     
     public MeetingPlaceType MeetingPlaceType { get; private set; }
     
-    public string? MeetingPlaceLocation { get; private set; }
+    public string? MeetingPlaceId { get; private set; }
     
     public string? AdditionalDescription { get; private set; }
     

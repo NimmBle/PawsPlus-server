@@ -34,7 +34,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                 request.EndDay,
                 request.EndTime,
                 request.MeetingPlaceType,
-                request.MeetingPlaceLocation,
+                request.MeetingPlaceId,
                 request.AdditionalDescription,
                 serviceId,
                 request.SitterId,
@@ -42,12 +42,12 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 
             await bookingDomainRepository.Save(booking);
 
-            // var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
+            var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
             
-            // var requestResult = await emailSender.SendRequestEmail(sitterUserId, currentUserId);
-            //
-            // if (!requestResult)
-            //     return Result.Failure("Failed to send email");
+            var requestResult = await emailSender.SendRequestEmail(sitterUserId, request.MeetingPlaceLocation);
+            
+            if (!requestResult)
+                return Result.Failure("Failed to send email");
             
             return Result.Success;
         }
