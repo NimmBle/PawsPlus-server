@@ -13,10 +13,10 @@ public class Profile : Entity<string>, IAggregateRoot
         string lastName,
         string phoneNumber)
     {
-        this.Validate(firstName, lastName, phoneNumber);
+        this.Validate(firstName, lastName);
         
         this.Id = Guid.NewGuid().ToString();
-        this.FirstName = firstName;
+        this.FirstName = firstName; 
         this.LastName = lastName;
         this.PhoneNumber = phoneNumber;
     }
@@ -99,12 +99,10 @@ public class Profile : Entity<string>, IAggregateRoot
     }
 
     public void Validate(string firstName,
-        string lastName,
-        string phoneNumber)
+        string lastName)
     {
         this.ValidateFirstName(firstName);
         this.ValidateLastName(lastName);
-        this.ValidatePhoneNumber(phoneNumber);
     }
 
     public void ValidateFirstName(string firstName)

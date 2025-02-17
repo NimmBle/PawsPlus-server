@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Features.Profile.Queries.Mine;
 using PawsPlus.Application.Identity;
-using PawsPlus.Application.Identity.Commands.CreateUser;
 using PawsPlus.Application.Identity.Commands.LoginUser;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -38,25 +37,29 @@ internal class IdentityService(
         return profile;
     }
 
-    public async Task<Result<IUser>> Register(CreateUserCommand userInput)
+    public async Task<Result<IUser>> Register(string email,
+        string firstName,
+        string lastName,
+        string password,
+        string role)
     {
         var user = new User()
         {
-            UserName = userInput.Email,
-            Email = userInput.Email,
+            UserName = firstName + " " + lastName,
+            Email = email
         };
         
         using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
             try
             {
-                var identityResult = await userManager.CreateAsync(user, userInput.Password);
+                var identityResult = await userManager.CreateAsync(user, password);
                 var errors = identityResult.Errors.Select(e => e.Description);
 
                 if (!identityResult.Succeeded)
                     return Result<IUser>.Failure(errors);
 
-                var rolesResult = await userManager.AddToRoleAsync(user, Enum.GetName(userInput.Role));
+                var rolesResult = await userManager.AddToRoleAsync(user, role);
                 var roleErrors = rolesResult.Errors.Select(e => e.Description);
                 
                 // _ = SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);

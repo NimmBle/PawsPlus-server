@@ -25,19 +25,22 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
             CreateUserCommand request,
             CancellationToken cancellationToken)
         {
-            
-            var result = await identity.Register(request);
+            var result = await identity.Register(request.Email,
+                request.FirstName,
+                request.LastName,
+                request.Password,
+                request.Role.ToString());
 
             if (!result.Succeeded)
                 return Result.Failure(result.Errors); // remove Result.Failure after implementing IUser
 
             var user = result.Data;
-
+            
             var profile = new Profile(
                 request.FirstName,
                 request.LastName,
                 request.PhoneNumber
-                );
+            );
             
             user.CreateProfile(profile);
 

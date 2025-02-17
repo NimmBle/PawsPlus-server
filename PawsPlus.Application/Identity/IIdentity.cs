@@ -1,5 +1,4 @@
 ﻿using PawsPlus.Application.Common;
-using PawsPlus.Application.Identity.Commands.CreateUser;
 using PawsPlus.Application.Identity.Commands.LoginUser;
 
 namespace PawsPlus.Application.Identity;
@@ -7,8 +6,8 @@ namespace PawsPlus.Application.Identity;
 public interface IIdentity
 {
     // Task<Result<MineProfileOutputModel>> GetUserProfile(string userId);
-    
-    Task<Result<IUser>> Register(CreateUserCommand userInput);
+
+    Task<Result<IUser>> Register(string email, string firstName, string lastName, string password, string role);
 
     Task<Result<LoginOutputModel>> Login(LoginUserCommand userInput);
 

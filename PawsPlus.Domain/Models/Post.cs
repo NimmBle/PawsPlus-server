@@ -38,6 +38,12 @@ public class Post : Entity<string>, IAggregateRoot
 
     public IReadOnlyCollection<Service> Services => _services.AsReadOnly();
 
+    public bool IsAlreadyResolved()
+    {
+        return Status.Equals(StateType.Approved) || 
+               Status.Equals(StateType.Disapproved);
+    }
+    
     public void AddServices(List<ServiceType> services)
     {
         foreach (var service in services)

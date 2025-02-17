@@ -14,7 +14,7 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
     
     public class CreatePostCommandHandler(
         IPostDomainRepository postRepository,
-        IServiceDomainRepository serviceRepository)
+        IProfileDomainRepository profileDomainRepository)
         : IRequestHandler<CreatePostCommand, Result>
     {
         public async Task<Result> Handle(
@@ -29,9 +29,12 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
                 );
             
             post.AddServices(request.Services);
-            
             await postRepository.Save(post, cancellationToken);
 
+            var profile = await profileDomainRepository.Find(request.profileId);
+            profile.UpdateFirstLogin();
+            await profileDomainRepository.Update(profile, cancellationToken);
+            
             return true;
         }
     }
