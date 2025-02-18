@@ -11,21 +11,10 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
         builder
             .HasKey(p => p.Id);
         
-        // builder
-        //     .Property(p => p.PetTypes)
-        //     .HasConversion(new EnumToStringConverter<PetType>());
-        //
-        // builder
-        //     .Property(p => p.Weights)
-        //     .HasConversion(new EnumToStringConverter<Weight>());
-        
         builder
             .HasMany(p => p.Services)
             .WithOne(s => s.Post)
             .HasForeignKey(s => s.PostId);
-        //
-        // builder
-        //     .UsePropertyAccessMode(PropertyAccessMode.Field);
         
         builder
             .OwnsOne(p => p.Status,

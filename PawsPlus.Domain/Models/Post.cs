@@ -26,7 +26,7 @@ public class Post : Entity<string>, IAggregateRoot
         this.Weights = weights.ToList();
         this.ProfileId = profileId;
     }
-    public StateType Status { get; private set; } = StateType.None;
+    public PostState Status { get; private set; } = PostState.None;
 
     public string ProfileId { get; private set; }
     
@@ -40,8 +40,8 @@ public class Post : Entity<string>, IAggregateRoot
 
     public bool IsAlreadyResolved()
     {
-        return Status.Equals(StateType.Approved) || 
-               Status.Equals(StateType.Disapproved);
+        return Status.Equals(PostState.Approved) || 
+               Status.Equals(PostState.Disapproved);
     }
     
     public void AddServices(List<ServiceType> services)
@@ -55,16 +55,16 @@ public class Post : Entity<string>, IAggregateRoot
         switch (type)
         {
             case "None":
-                this.Status = Enumeration.FromValue<StateType>(1);
+                this.Status = Enumeration.FromValue<PostState>(1);
                 break;
             case "Pending":
-                this.Status = Enumeration.FromValue<StateType>(2);
+                this.Status = Enumeration.FromValue<PostState>(2);
                 break;
             case "Disapproved":
-                this.Status = Enumeration.FromValue<StateType>(3);
+                this.Status = Enumeration.FromValue<PostState>(3);
                 break;
             case "Approved":
-                this.Status = Enumeration.FromValue<StateType>(4);
+                this.Status = Enumeration.FromValue<PostState>(4);
                 break;
         }
 

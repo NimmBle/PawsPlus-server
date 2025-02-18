@@ -8,7 +8,7 @@ using PawsPlus.Application.Files;
 using PawsPlus.Application.Files.Commands.UploadImage;
 using PawsPlus.Application.Files.Commands.UploadImages;
 
-namespace PawsPlus.Infrastructure.Files;
+namespace PawsPlus.Infrastructure.Services;
 
 public class FileService(IOptions<ApplicationSettings> applicationSettings) : IFile
 {

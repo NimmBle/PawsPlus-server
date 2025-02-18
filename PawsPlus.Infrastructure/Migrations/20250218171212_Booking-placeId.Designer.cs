@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using PawsPlus.Infrastructure.Common.Persistence;
@@ -12,9 +13,11 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    partial class ZoolandiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250218171212_Booking-placeId")]
+    partial class BookingplaceId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1637,7 +1640,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("PawsPlus.Domain.Models.BookingState", "Status", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.RequestState", "RequestStatus", b1 =>
                         {
                             b1.Property<string>("BookingId")
                                 .HasColumnType("nvarchar(450)");
@@ -1655,12 +1658,12 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.Navigation("Owner");
 
+                    b.Navigation("RequestStatus")
+                        .IsRequired();
+
                     b.Navigation("Service");
 
                     b.Navigation("Sitter");
-
-                    b.Navigation("Status")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Pet", b =>
@@ -1788,7 +1791,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("PawsPlus.Domain.Models.PostState", "Status", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.StateType", "Status", b1 =>
                         {
                             b1.Property<string>("PostId")
                                 .HasColumnType("nvarchar(450)");

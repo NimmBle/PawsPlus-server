@@ -97,7 +97,7 @@ public class EmailSender(UserManager<User> userManager,
         <body style='font-family: Oswald, sans-serif;'>
             <p>Привет, {sitter.UserName}!</p>
             <p>За съжаление, твоят профил <b>не е одобрен</b>.</p>
-            <p>Причини за това са:</p>
+            <p>Причина/и за това е/са:</p>
             <p>{stateReason}</p>
             <p>Твоите усилия далеч не са били напразно, не се оберазкожавай. Помисли върху решаване на засегнатите поблеми и опитай отново. Очакваме те!</p>
             <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
@@ -109,5 +109,20 @@ public class EmailSender(UserManager<User> userManager,
         var result = await client.SendEmailAsync(message, cancellationToken);
 
         return result.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> SendBookingApproveEmail(string ownerId, CancellationToken cancellationToken = default)
+    {
+        return true;
+    }
+
+    public async Task<bool> SendBookingDisapproveEmail(string ownerId, CancellationToken cancellationToken = default)
+    {
+        return true;
+    }
+
+    public async Task<bool> SendBookingCancelEmail(string sitterId, CancellationToken cancellationToken = default)
+    {
+        return true;
     }
 }

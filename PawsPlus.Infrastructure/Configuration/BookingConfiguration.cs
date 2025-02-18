@@ -44,7 +44,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .OnDelete(DeleteBehavior.Restrict);
         
         builder
-            .OwnsOne(p => p.RequestStatus,
+            .OwnsOne(p => p.Status,
                 s =>
                 {
                     s.WithOwner();

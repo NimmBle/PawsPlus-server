@@ -43,14 +43,14 @@ public class PostsController : ApiController
     public async Task<ActionResult> DeletePet(DeletePostPetCommand command)
         => await this.Send(command);
 
-    [HttpPut]
+    [HttpPatch]
     [Authorize(Roles = Administrator)]
     [Route(Id + PathSeparator + nameof(Approve))]
     public async Task<ActionResult> Approve(
         [FromRoute] ApprovePostCommand command)
         => await this.Send(command);
 
-    [HttpPut]
+    [HttpPatch]
     [Authorize(Roles = Administrator)]
     [Route(Id + PathSeparator + nameof(Disapprove))]
     public async Task<ActionResult> Disapprove(DisapprovePostCommand command)

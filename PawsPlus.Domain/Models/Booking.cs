@@ -35,6 +35,7 @@ public class Booking : Entity<string>, IAggregateRoot
         this.MeetingPlaceType = meetingPlaceType;
         this.MeetingPlaceId = meetingPlaceId;
         this.AdditionalDescription = additionalDescription;
+        this.Status = BookingState.Pending;
         this.ServiceId = serviceId;
         this.SitterId = sitterId;
         this.OwnerId = ownerId;
@@ -52,8 +53,7 @@ public class Booking : Entity<string>, IAggregateRoot
     
     public string? AdditionalDescription { get; private set; }
     
-    public RequestState RequestStatus { get; private set; } = RequestState.Pending;
-    
+    public BookingState Status { get; private set; } = BookingState.Pending;
     
     public string ServiceId { get; private set; }
     
@@ -67,22 +67,28 @@ public class Booking : Entity<string>, IAggregateRoot
     
     public virtual Profile Owner { get; set; }
     
+    public bool IsAlreadyResolved()
+    {
+        return Status.Equals(BookingState.Canceled) || 
+               Status.Equals(BookingState.Disapproved) ||
+               Status.Equals(BookingState.Approved);
+    }
     
     public Booking ChangeState(string type)
     {
         switch (type)
         {
             case "Pending":
-                this.RequestStatus = Enumeration.FromValue<RequestState>(1);
+                this.Status = Enumeration.FromValue<BookingState>(1);
                 break;
             case "Canceled":
-                this.RequestStatus = Enumeration.FromValue<RequestState>(2);
+                this.Status = Enumeration.FromValue<BookingState>(2);
                 break;
             case "Disapproved":
-                this.RequestStatus = Enumeration.FromValue<RequestState>(3);
+                this.Status = Enumeration.FromValue<BookingState>(3);
                 break;
             case "Approved":
-                this.RequestStatus = Enumeration.FromValue<RequestState>(4);
+                this.Status = Enumeration.FromValue<BookingState>(4);
                 break;
         }
 
