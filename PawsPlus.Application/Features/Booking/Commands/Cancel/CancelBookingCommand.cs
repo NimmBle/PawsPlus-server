@@ -1,5 +1,6 @@
 using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
 
@@ -22,12 +23,12 @@ public class CancelBookingCommand : IRequest<Result>
 
             if (booking == null)
             {
-                return "No booking found";
+                return BookingErrors.BookingNotFound(request.Id);
             }
 
             if (booking.IsAlreadyResolved())
             {
-                return "Booking is already resolved";
+                return BookingErrors.BookingAlreadyResolved;
             }
             
             booking.ChangeState("Canceled");
@@ -37,7 +38,7 @@ public class CancelBookingCommand : IRequest<Result>
 
             if (result == false)
             {
-                return "Unable to send booking cancellation email";
+                return BookingErrors.UnableToSendEmail;
             }
             
             return Result.Success;

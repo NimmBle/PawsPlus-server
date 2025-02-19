@@ -3,6 +3,7 @@ using PawsPlus.Application.Common;
 using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Profile;
 using PawsPlus.Application.Features.Service;
+using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
 
@@ -25,10 +26,12 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             
             
             var serviceId = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
-            
-            if (serviceId == null)
-                return Result.Failure("No service of this type is found");
 
+            if (serviceId == null)
+            {
+                return ServiceErrors.ServiceNotFound;
+            }
+            
             var booking = new Domain.Models.Booking(request.StartDay,
                 request.StartTime,
                 request.EndDay,
@@ -44,10 +47,12 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 
             var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
             
-            var requestResult = await emailSender.SendRequestEmail(sitterUserId, request.MeetingPlaceLocation);
-            
+            var requestResult = await emailSender.SendRequestEmail(sitterUserId);
+
             if (!requestResult)
-                return Result.Failure("Failed to send email");
+            {
+                return BookingErrors.UnableToSendEmail;
+            }
             
             return Result.Success;
         }

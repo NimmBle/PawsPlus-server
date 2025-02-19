@@ -18,12 +18,17 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
         {
             var result = await identity.Login(request);
             if (!result.Succeeded)
-                return result.Errors;
+            {
+                return result.Error; 
+            }
+                
 
             var user = result.Data;
 
             if (user.Roles.Contains("Administrator"))
-                return user;
+            {
+                return user; 
+            }
 
             var profile = await profileDomainRepository.FindByUser(user.Id);
 

@@ -1,39 +1,40 @@
-﻿namespace PawsPlus.Application.Common;
+﻿using PawsPlus.Domain.Common;
+
+namespace PawsPlus.Application.Common;
 
 public class Result
 {
 
-    internal Result(bool succeeded, List<string> errors)
+    internal Result(bool succeeded, Error error)
     {
         this.Succeeded = succeeded;
-        this.Errors = errors;
+        this.Error = error;
     }
     public bool Succeeded { get; private set; }
     
-    public List<string> Errors { get; private set; }
+    public Error Error { get; private set; }
+    
+    public List<Error> Errors { get; private set; } = new List<Error>();
     
     
     public static Result Success
-        => new Result(true, new List<string>());
+        => new Result(true, Error.None);
 
-    public static Result Failure(IEnumerable<string> errors)
-        => new Result(false, errors.ToList());
-    
-    public static Result Failure(string error)
-        => new Result(false, new List<string> { error });
+    public static Result Failure(Error error)
+        => new Result(false, error);
 
-    public static implicit operator Result(string error)
-        => Failure(new List<string>() { error });
+    public static implicit operator Result(Error error)
+        => Failure(error);
 
     public static implicit operator Result(bool success)
-        => success ? Success : Failure(new[] { "Unsuccessful operation " });
+        => Success;
 }
 
 public class Result<TData> : Result
 {
     private readonly TData _data;
 
-    private Result(bool succeeded, TData data, List<string> error)
+    private Result(bool succeeded, TData data, Error error)
         : base(succeeded, error)
         => this._data = data;
 
@@ -41,22 +42,22 @@ public class Result<TData> : Result
         => this.Succeeded
             ? this._data
             : throw new InvalidOperationException(
-                $"{nameof(this.Data)} is unavailable with a failed result. Use {this.Errors} instead. ");
+                $"{nameof(this.Data)} is unavailable with a failed result. Use {this.Error} instead. ");
     
     public static Result<TData> SuccessWith(TData data)
-        => new(true, data, new List<string>());
+        => new(true, data, Error.None);
     
-    public static Result<TData> Failure(string error)
-        => Failure(new List<string> { error });
+    public static Result<TData> Failure(Error error)
+        => new(false, default!, error);
     
-    public static Result<TData> Failure(IEnumerable<string> errors)
-        => new(false, default!, errors.ToList());
+    // public static Result<TData> Failure(IEnumerable<string> errors)
+    //     => new(false, default!, errors.ToList());
     
-    public static implicit operator Result<TData>(string error)
-        => Failure(new List<string> { error });
+    public static implicit operator Result<TData>(Error error)
+        => Failure(error);
 
-    public static implicit operator Result<TData>(List<string> errors)
-        => Failure(errors);
+    // public static implicit operator Result<TData>(List<string> errors)
+    //     => Failure(errors);
 
     public static implicit operator Result<TData>(TData data)
         => SuccessWith(data);

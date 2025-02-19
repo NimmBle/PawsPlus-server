@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Features.Post;
+using PawsPlus.Domain.Errors;
 
 namespace PawsPlus.Application.Features.Profile.Queries.Search;
 
@@ -17,11 +18,19 @@ public class GetProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>
             CancellationToken cancellationToken)
         {
             var profile = await profileQueryRepository.GetDetails(request.Id);
-            
+
             if (profile == null)
-                return Result<ProfileDetailsOutputModel>.Failure("Profile not found");
+            {
+                return ProfileErrors.ProfileNotFound(request.Id);
+            }
+                
             
             profile.Post = await postQueryRepository.GetDetailsByProfile(request.Id);
+
+            if (profile.Post == null)
+            {
+                return ProfileErrors.ProfilePostNotFound(request.Id);
+            }
             
             return profile; 
         }

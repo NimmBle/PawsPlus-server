@@ -15,8 +15,6 @@ internal class IdentityService(
         IJwtTokenGenerator jwtTokenGenerator)
     : IIdentity
 {
-    
-    private const string InvalidErrorMessage = "Invalid Credentials";
 
     public async Task<Result<MineProfileOutputModel>> GetUserProfile(string userId)
     {
@@ -57,7 +55,7 @@ internal class IdentityService(
                 var errors = identityResult.Errors.Select(e => e.Description);
 
                 if (!identityResult.Succeeded)
-                    return Result<IUser>.Failure(errors);
+                    return IdentityErrors.UserCreationFailed;
 
                 var rolesResult = await userManager.AddToRoleAsync(user, role);
                 var roleErrors = rolesResult.Errors.Select(e => e.Description);
@@ -65,11 +63,11 @@ internal class IdentityService(
                 // _ = SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
                 
                 scope.Complete();
-                
+
                 return rolesResult.Succeeded
                     ? Result<IUser>.SuccessWith(user)
-                    : Result<IUser>.Failure(roleErrors);
-                
+                    : IdentityErrors.UserRolesFailed;
+
             }
             catch (Exception ex)
             {
@@ -83,11 +81,11 @@ internal class IdentityService(
     {
         var user = await userManager.FindByEmailAsync(userInput.Email);
         if (user == null)
-            return InvalidErrorMessage;
+            return IdentityErrors.InvalidCredentials;
 
         var passwordValid = await userManager.CheckPasswordAsync(user, userInput.Password);
         if (!passwordValid)
-            return InvalidErrorMessage;
+            return IdentityErrors.InvalidCredentials;
         
         var userRoles = await userManager.GetRolesAsync(user);
 
@@ -101,11 +99,16 @@ internal class IdentityService(
     public async Task<Result> ChangeEmail(string userId, string newEmail)
     {
         if (await EmailAlreadyExists(newEmail))
-            return "Email already exists";
+        {
+            return IdentityErrors.EmailNotUnique;
+        }
+
         
         var user = await userManager.FindByIdAsync(userId);
         if (user == null)
-            return false;
+        {
+            return IdentityErrors.UserNotFound(userId);
+        }
 
         user.Email = newEmail;
         user.NormalizedEmail = newEmail.ToUpper().Normalize();
@@ -115,9 +118,10 @@ internal class IdentityService(
         user.NormalizedUserName = newEmail.ToUpper().Normalize();
 
         var identityResult = await userManager.UpdateAsync(user);
-
         if (!identityResult.Succeeded)
-            return Result.Failure(identityResult.Errors.Select(e => e.Description));
+        {
+            return IdentityErrors.EmailChangeFailed;
+        }
         
         // await SendConfirmationEmail(user);
         
@@ -173,23 +177,31 @@ internal class IdentityService(
         return false;
     }
 
-    public async Task<Result> ConfirmEmail(string userid, string token)
+    public async Task<Result> ConfirmEmail(string userId, string token)
     {
-        var user = await userManager.FindByIdAsync(userid);
+        var user = await userManager.FindByIdAsync(userId);
 
         if (user == null)
-            return "User not found";
+        {
+            return IdentityErrors.UserNotFound(userId);
+        }
         
         var isVerified = await userManager.IsEmailConfirmedAsync(user);
 
         if (isVerified)
-            return "Email is already confirmed";
+        {
+            return IdentityErrors.EmailAlreadyConfirmed(user.Email);
+        }
+            
         
         var decodedToken = HttpUtility.UrlDecode(token);
         var result = await userManager.ConfirmEmailAsync(user, decodedToken);
 
         if (!result.Succeeded)
-            return "Email confirmation failed";
+        {
+            return IdentityErrors.EmailConfirmationFailed(user.Email);
+        }
+            
 
         return Result.Success;
     }

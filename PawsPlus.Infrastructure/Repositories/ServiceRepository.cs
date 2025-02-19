@@ -25,9 +25,6 @@ public class ServiceRepository(
     {
         var service = await this.Find(id);
 
-        if (service == null)
-            return false;
-
         this.Data.Services.Remove(service);
         
         await this.Data.SaveChangesAsync(cancellationToken);

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Common.Contracts;
+using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Profile.Commands.Edit;
@@ -39,7 +40,7 @@ public class EditProfileCommand
                 return false;
             
             if (request.Id != profile.Id)
-                return "You cannot edit this User";
+                return ProfileErrors.ProfileAccessNotAllowed(request.Id);
 
             profile
                 .UpdateFirstName(request.FirstName)

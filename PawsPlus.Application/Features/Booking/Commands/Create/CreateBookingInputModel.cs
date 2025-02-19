@@ -15,8 +15,6 @@ public class CreateBookingInputModel
     
     public MeetingPlaceType MeetingPlaceType { get; init; }
     
-    public string? MeetingPlaceLocation { get; init; }
-    
     public string? MeetingPlaceId { get; init; }
     
     public string? AdditionalDescription { get; init; }

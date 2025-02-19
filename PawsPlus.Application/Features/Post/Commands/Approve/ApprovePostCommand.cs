@@ -1,5 +1,6 @@
 using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
@@ -20,12 +21,12 @@ public class ApprovePostCommand : IRequest<Result>
 
             if (post == null)
             {
-                return "The post is not found";
+                return PostErrors.PostNotFound(request.Id);
             }
 
             if (post.IsAlreadyResolved())
             {
-                return "Post has already been approved or disapproved";
+                return PostErrors.PostAlreadyResolved;
             }
 
             post.ChangeState("Approved");

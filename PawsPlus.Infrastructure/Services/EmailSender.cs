@@ -13,7 +13,7 @@ public class EmailSender(UserManager<User> userManager,
     IProfileQueryRepository profileQueryRepository)
     : IEmailSender
 {
-    public async Task<bool> SendRequestEmail(string sitterId, string? meetingPlaceLocation, CancellationToken cancellationToken = default)
+    public async Task<bool> SendRequestEmail(string sitterId, CancellationToken cancellationToken = default)
     {
         var sitter = await userManager.FindByIdAsync(sitterId);
         

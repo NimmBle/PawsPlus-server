@@ -32,7 +32,10 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
                 request.Role.ToString());
 
             if (!result.Succeeded)
-                return Result.Failure(result.Errors); // remove Result.Failure after implementing IUser
+            {
+                return result.Error;
+            }
+                
 
             var user = result.Data;
             

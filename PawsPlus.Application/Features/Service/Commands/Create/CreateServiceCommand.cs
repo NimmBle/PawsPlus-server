@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Service.Commands.Create;
@@ -15,9 +16,12 @@ public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
             CancellationToken cancellationToken)
         {
             var alreadyExists = await serviceRepository.AlreadyExists(request.ServiceType.ToString(), request.PostId);
-            
+
             if (alreadyExists)
-                return Result<string>.Failure("Service already exists");
+            {
+                return ServiceErrors.ServiceAlreadyExists;
+            }
+                
 
             var service = new Domain.Models.Service(
                 request.ServiceType,

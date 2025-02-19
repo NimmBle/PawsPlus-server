@@ -35,7 +35,7 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
             profile.UpdateFirstLogin();
             await profileDomainRepository.Update(profile, cancellationToken);
             
-            return true;
+            return Result.Success;
         }
     }
 }

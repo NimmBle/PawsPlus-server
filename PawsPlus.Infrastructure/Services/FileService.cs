@@ -7,19 +7,19 @@ using PawsPlus.Application.Common;
 using PawsPlus.Application.Files;
 using PawsPlus.Application.Files.Commands.UploadImage;
 using PawsPlus.Application.Files.Commands.UploadImages;
+using PawsPlus.Domain.Errors;
 
 namespace PawsPlus.Infrastructure.Services;
 
 public class FileService(IOptions<ApplicationSettings> applicationSettings) : IFile
 {
-    private const string NoFileProvidedErrorMessage = "No file was uploaded";
     
     public async Task<Result<UploadImageOutputModel>> UploadImage(IFormFile image)
     {
         Cloudinary cloudinary = new(applicationSettings.Value.CloudinarySecret);
 
         if (image.Length == 0)
-            return NoFileProvidedErrorMessage;
+            return FileErrors.FileLengthInvalid;
 
         var imageName = Regex.Replace(image.FileName, @"\s+", "");
         
@@ -45,7 +45,7 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
         Cloudinary cloudinary = new(applicationSettings.Value.CloudinarySecret);
 
         if (images.Count == 0)
-            return NoFileProvidedErrorMessage;
+            return FileErrors.FileLengthInvalid;
 
         var imageUrls = new List<string>();
 

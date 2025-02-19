@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Common.Contracts;
+using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Factories;
 using PawsPlus.Domain.Repositories;
 
@@ -25,7 +26,7 @@ public class CreatePetCommand
             var profile = await profileDomainRepository.FindByUser(currentUser.UserId);
             
             if (profile.Id != request.ProfileId)
-                return "You cannot create a pet for this user";
+                return PetErrors.PetAccessNotAllowed;
 
             var breeds = new List<Domain.Models.Breed>();
             foreach (var breed in request.Breeds)

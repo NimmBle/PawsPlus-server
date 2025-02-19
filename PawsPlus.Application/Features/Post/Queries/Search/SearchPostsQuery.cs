@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Domain.Errors;
 
 namespace PawsPlus.Application.Features.Post.Queries.Search;
 
@@ -25,8 +26,10 @@ public class SearchPostsQuery : SearchPostsParams, IRequest<Result<SearchPostsOu
                 take,
                 cancellationToken);
 
-            if (posts is null)
-                return "No posts found";
+            if (posts == null)
+            {
+                return PostErrors.PostsNotFound(); 
+            }
             
             int totalPages = (int)Math.Ceiling(posts.Count() / request.PostsPerPage * 1.0);
             

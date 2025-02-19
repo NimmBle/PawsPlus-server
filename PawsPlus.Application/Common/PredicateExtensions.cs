@@ -2,7 +2,7 @@
 
 namespace PawsPlus.Application.Common;
 
-public static class PredicateExtention
+public static class PredicateExtensions
 {
     public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expr1,
         Expression<Func<T, bool>> expr2)
