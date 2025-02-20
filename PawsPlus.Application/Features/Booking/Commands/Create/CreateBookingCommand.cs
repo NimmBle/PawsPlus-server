@@ -43,7 +43,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                 .WithMeetingPlaceId(request.MeetingPlaceId)
                 .WithAdditionalDescription(request.AdditionalDescription)
                 .WithServiceId(serviceId)
-                .WithServiceId(request.SitterId)
+                .WithSitterId(request.SitterId)
                 .WithOwnerId(ownerProfileId)
                 .Build();
 
