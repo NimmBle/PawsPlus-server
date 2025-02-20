@@ -2,13 +2,13 @@
 using PawsPlus.Domain.Models;
 using PawsPlus.Domain.ValueObjects;
 
-namespace PawsPlus.Domain.Factories;
+namespace PawsPlus.Domain.Factories.Pet;
 
 public class PetFactory : IPetFactory
 {
     private string name = default!;
     private string photoUrl = default!;
-    private PetType petType = default!;
+    private AnimalType animalType = default!;
     private Age age = default!;
     private Gender gender;
     private ICollection<Breed> breeds;
@@ -29,9 +29,9 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public IPetFactory WithType(PetType type)
+    public IPetFactory WithType(AnimalType animalType)
     {
-        this.petType = type;
+        this.animalType = animalType;
         return this;
     }
 
@@ -104,10 +104,10 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public Pet Build()
+    public Models.Pet Build()
         => new (this.name,
             this.photoUrl,
-            this.petType,
+            this.animalType,
             this.age,
             this.gender,
             this.breeds,

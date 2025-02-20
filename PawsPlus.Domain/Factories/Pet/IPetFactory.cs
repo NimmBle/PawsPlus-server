@@ -2,15 +2,15 @@
 using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Models;
 
-namespace PawsPlus.Domain.Factories;
+namespace PawsPlus.Domain.Factories.Pet;
 
-public interface IPetFactory : IFactory<Pet>
+public interface IPetFactory : IFactory<Models.Pet>
 {
     IPetFactory WithName(string name);
 
     IPetFactory WithPhotoUrl(string photoUrl);
 
-    IPetFactory WithType(PetType type);
+    IPetFactory WithType(AnimalType animalType);
 
     IPetFactory WithAge(int years, int months);
 

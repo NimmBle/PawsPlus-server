@@ -12,5 +12,8 @@ public class PostErrors
     
     public static Error PostAlreadyResolved => Error.Conflict(
         "Post.PostAlreadyResolved", $"This post has already been resolved");
+    
+    public static Error PostAnimalTypeNotFound => Error.Conflict(
+        "Post.PostAnimalTypeNotFound", $"This post does not contains the animal type you have requested");
 
 }

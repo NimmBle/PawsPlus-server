@@ -15,16 +15,23 @@ public class BreedRepository(ZoolandiaDbContext db,
         IBreedDomainRepository,
         IBreedQueryRepository
 {
-    public async Task<IEnumerable<BreedOutputModel>> GetBreeds(PetType petType,
+    public async Task<IEnumerable<BreedOutputModel>> GetBreeds(int animalTypeId,
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<BreedOutputModel>(this
                 .All()
-                .Where(b => b.PetType == petType))
+                .Where(b => b.AnimalType.Id == animalTypeId))
             .ToListAsync(cancellationToken);
 
     public async Task<Breed> Find(string id,
         CancellationToken cancellationToken = default)
-        => await All()
+        => await this
+            .All()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
+
+    public async Task<List<Breed>> FindAll(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+        => await this
+            .All()
+            .Where(at => ids.Contains(at.Id))
+            .ToListAsync(cancellationToken);
 }

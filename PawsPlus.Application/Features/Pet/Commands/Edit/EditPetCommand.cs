@@ -15,6 +15,7 @@ public class EditPetCommand
     public class EditPetCommandHandler
         (IPetDomainRepository petDomainRepository,
             IBreedDomainRepository breedDomainRepository,
+            IAnimalTypeDomainRepository animalTypeDomainRepository,
             IMapper mapper)
         : IRequestHandler<EditPetCommand, Result>
     {
@@ -25,16 +26,15 @@ public class EditPetCommand
             if (pet == null)
                 return false;
 
-            var breeds = new HashSet<Domain.Models.Breed>();
-            foreach (var breed in request.Breeds)
-            {
-                breeds.Add(await breedDomainRepository.Find(breed.Id));
-            }
+            var breedsIds = request.Breeds.Select(breed => breed.Id);
+            var breeds = await breedDomainRepository.FindAll(breedsIds);
+            
+            var animalType = await animalTypeDomainRepository.Find(request.PetType);
             
             pet.Update(
                 request.Name,
                 request.PhotoUrl,
-                request.PetType,
+                animalType,
                 mapper.Map<Age>(request.Age),
                 request.Gender,
                 breeds,

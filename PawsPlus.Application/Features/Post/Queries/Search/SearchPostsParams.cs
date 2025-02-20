@@ -9,7 +9,7 @@ namespace PawsPlus.Application.Features.Post.Queries.Search;
 
 public class SearchPostsParams
 {
-    public PetType PetType { get; set; }
+    public int PetType { get; set; }
     
     public ServiceType ServiceType { get; set; }
     
@@ -37,19 +37,17 @@ public class SearchPostsParams
         // predicate = predicate.And(p => p.Status == StateType.Approved);
         
         // PetType
-        if (!string.IsNullOrWhiteSpace(PetType.ToString()))
+        if (PetType != 0)
         {
-            predicate = predicate.And(p => Enumerable
-                .Select(p.PetTypes, t => t)
-                .Contains(PetType));
+            predicate = predicate.And(p => p.AnimalTypes
+                .Any(at => at.Id == PetType));
         }
         
         // ServiceType
         if (!string.IsNullOrWhiteSpace(ServiceType.ToString()))
         {
             predicate = predicate.And(p => p.Services
-                .Where(s => s.Name == ServiceType.ToString())
-                .Any());
+                .Any(s => s.Name == ServiceType.ToString()));
         }
         
         // Location

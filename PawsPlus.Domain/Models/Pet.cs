@@ -10,10 +10,14 @@ namespace PawsPlus.Domain.Models;
 
 public class Pet : Entity<string>, IAggregateRoot
 {
+    private Pet()
+    {
+    }
+    
     internal Pet(
         string name,
         string photoUrl,
-        PetType petType,
+        AnimalType animalType,
         Age age,
         Gender gender,
         ICollection<Breed> breeds,
@@ -22,7 +26,7 @@ public class Pet : Entity<string>, IAggregateRoot
         HealthStatus? healthStatus,
         string profileId
     )
-        : this(name, photoUrl, petType, gender, weight, profileId)
+        : this(name, photoUrl, animalType, gender, weight, profileId)
     {
         this.Age = Age.Create(age);
         this.Breeds = breeds;
@@ -33,7 +37,7 @@ public class Pet : Entity<string>, IAggregateRoot
     internal Pet(
         string name,
         string photoUrl,
-        PetType petType,
+        AnimalType animalType,
         Gender gender,
         Weight? weight,
         string profileId
@@ -44,7 +48,7 @@ public class Pet : Entity<string>, IAggregateRoot
         this.Id = Guid.NewGuid().ToString();
         this.Name = name;
         this.PhotoUrl = photoUrl;
-        this.PetType = petType;
+        this.AnimalType = animalType;
         this.Gender = gender;
         this.Weight = weight;
         this.ProfileId = profileId;
@@ -54,8 +58,8 @@ public class Pet : Entity<string>, IAggregateRoot
 
     public string PhotoUrl { get; private set; } = default!;
 
-    [JsonProperty(Required = Required.Always)]
-    public PetType PetType { get; private set; }
+    // [JsonProperty(Required = Required.Always)]
+    public AnimalType AnimalType { get; private set; }
     
     public Age? Age { get; private set; }
     
@@ -77,7 +81,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public void Update(
         string name,
         string photoUrl,
-        PetType petType,
+        AnimalType animalType,
         Age age,
         Gender gender,
         ICollection<Breed> breeds,
@@ -87,7 +91,7 @@ public class Pet : Entity<string>, IAggregateRoot
     {
         this.Name = name;
         this.PhotoUrl = photoUrl;
-        this.PetType = petType;
+        this.AnimalType = animalType;
         this.Age = Age.Create(age);
         this.Gender = gender;
         UpdateBreeds(breeds);

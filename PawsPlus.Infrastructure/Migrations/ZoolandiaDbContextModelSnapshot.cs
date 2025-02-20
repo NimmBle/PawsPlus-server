@@ -23,6 +23,21 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AnimalTypePost", b =>
+                {
+                    b.Property<int>("AnimalTypesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PostsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AnimalTypesId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("AnimalTypePost");
+                });
+
             modelBuilder.Entity("BreedPet", b =>
                 {
                     b.Property<string>("BreedsId")
@@ -171,6 +186,35 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("PawsPlus.Domain.Models.AnimalType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnimalTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dog"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Cat"
+                        });
+                });
+
             modelBuilder.Entity("PawsPlus.Domain.Models.Booking", b =>
                 {
                     b.Property<string>("Id")
@@ -227,15 +271,21 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("AnimalTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AnimalTypeId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PetType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AnimalTypeId");
+
+                    b.HasIndex("AnimalTypeId1");
 
                     b.ToTable("Breeds");
 
@@ -243,1118 +293,1118 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         new
                         {
                             Id = "1",
-                            Name = "Аффенпинчер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Аффенпинчер"
                         },
                         new
                         {
                             Id = "2",
-                            Name = "Афганска хрътка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Афганска хрътка"
                         },
                         new
                         {
                             Id = "3",
-                            Name = "Африканско ловно куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Африканско ловно куче"
                         },
                         new
                         {
                             Id = "4",
-                            Name = "Еърдейл териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Еърдейл териер"
                         },
                         new
                         {
                             Id = "5",
-                            Name = "Акбаш куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Акбаш куче"
                         },
                         new
                         {
                             Id = "6",
-                            Name = "Акита",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Акита"
                         },
                         new
                         {
                             Id = "7",
-                            Name = "Алапахски булдог",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Алапахски булдог"
                         },
                         new
                         {
                             Id = "8",
-                            Name = "Аляски хъски",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Аляски хъски"
                         },
                         new
                         {
                             Id = "9",
-                            Name = "Аляски маламут",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Аляски маламут"
                         },
                         new
                         {
                             Id = "10",
-                            Name = "Американски булдог",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американски булдог"
                         },
                         new
                         {
                             Id = "11",
-                            Name = "Американски були",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американски були"
                         },
                         new
                         {
                             Id = "12",
-                            Name = "Американско ескимоско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американско ескимоско куче"
                         },
                         new
                         {
                             Id = "13",
-                            Name = "Американска лисица",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американска лисица"
                         },
                         new
                         {
                             Id = "14",
-                            Name = "Американски питбул териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американски питбул териер"
                         },
                         new
                         {
                             Id = "15",
-                            Name = "Американски стафордширски териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американски стафордширски териер"
                         },
                         new
                         {
                             Id = "16",
-                            Name = "Американски воден шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американски воден шпаньол"
                         },
                         new
                         {
                             Id = "17",
-                            Name = "Анатолийско пастирско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Анатолийско пастирско куче"
                         },
                         new
                         {
                             Id = "18",
-                            Name = "Апенцелер зененхунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Апенцелер зененхунд"
                         },
                         new
                         {
                             Id = "19",
-                            Name = "Австралийско пастирско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Австралийско пастирско куче"
                         },
                         new
                         {
                             Id = "20",
-                            Name = "Австралийски келпи",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Австралийски келпи"
                         },
                         new
                         {
                             Id = "21",
-                            Name = "Австралийска овчарка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Австралийска овчарка"
                         },
                         new
                         {
                             Id = "22",
-                            Name = "Австралийски териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Австралийски териер"
                         },
                         new
                         {
                             Id = "23",
-                            Name = "Азавах",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Азавах"
                         },
                         new
                         {
                             Id = "24",
-                            Name = "Барбе",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Барбе"
                         },
                         new
                         {
                             Id = "25",
-                            Name = "Басенджи",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Басенджи"
                         },
                         new
                         {
                             Id = "26",
-                            Name = "Гасконски басет",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Гасконски басет"
                         },
                         new
                         {
                             Id = "27",
-                            Name = "Басет хрътка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Басет хрътка"
                         },
                         new
                         {
                             Id = "28",
-                            Name = "Бийгъл",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бийгъл"
                         },
                         new
                         {
                             Id = "29",
-                            Name = "Брадато коли",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Брадато коли"
                         },
                         new
                         {
                             Id = "30",
-                            Name = "Босерон",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Босерон"
                         },
                         new
                         {
                             Id = "31",
-                            Name = "Бедлингтон териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бедлингтон териер"
                         },
                         new
                         {
                             Id = "32",
-                            Name = "Белгийски малиноа",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Белгийски малиноа"
                         },
                         new
                         {
                             Id = "33",
-                            Name = "Белгийски тервюрен",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Белгийски тервюрен"
                         },
                         new
                         {
                             Id = "34",
-                            Name = "Бернско планинско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бернско планинско куче"
                         },
                         new
                         {
                             Id = "35",
-                            Name = "Бишон фризе",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бишон фризе"
                         },
                         new
                         {
                             Id = "36",
-                            Name = "Черно-тан кунхаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Черно-тан кунхаунд"
                         },
                         new
                         {
                             Id = "37",
-                            Name = "Блъдхаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Блъдхаунд"
                         },
                         new
                         {
                             Id = "38",
-                            Name = "Блутик кунхаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Блутик кунхаунд"
                         },
                         new
                         {
                             Id = "39",
-                            Name = "Бурбул",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бурбул"
                         },
                         new
                         {
                             Id = "40",
-                            Name = "Бордър коли",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бордър коли"
                         },
                         new
                         {
                             Id = "41",
-                            Name = "Бордър териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бордър териер"
                         },
                         new
                         {
                             Id = "42",
-                            Name = "Бостън териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бостън териер"
                         },
                         new
                         {
                             Id = "43",
-                            Name = "Бувие де Фландр",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бувие де Фландр"
                         },
                         new
                         {
                             Id = "44",
-                            Name = "Боксер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Боксер"
                         },
                         new
                         {
                             Id = "45",
-                            Name = "Бойкин шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бойкин шпаньол"
                         },
                         new
                         {
                             Id = "46",
-                            Name = "Брако Италиано",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Брако Италиано"
                         },
                         new
                         {
                             Id = "47",
-                            Name = "Бриар",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бриар"
                         },
                         new
                         {
                             Id = "48",
-                            Name = "Бретонски епаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бретонски епаньол"
                         },
                         new
                         {
                             Id = "49",
-                            Name = "Бул териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бул териер"
                         },
                         new
                         {
                             Id = "50",
-                            Name = "Бул мастиф",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Бул мастиф"
                         },
                         new
                         {
                             Id = "51",
-                            Name = "Керн териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Керн териер"
                         },
                         new
                         {
                             Id = "52",
-                            Name = "Кане корсо",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кане корсо"
                         },
                         new
                         {
                             Id = "53",
-                            Name = "Уелско корги кардиган",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Уелско корги кардиган"
                         },
                         new
                         {
                             Id = "54",
-                            Name = "Куче леопард от Катахула",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Куче леопард от Катахула"
                         },
                         new
                         {
                             Id = "55",
-                            Name = "Кавказка овчарка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кавказка овчарка"
                         },
                         new
                         {
                             Id = "56",
-                            Name = "Кавалер Кинг Чарлз шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кавалер Кинг Чарлз шпаньол"
                         },
                         new
                         {
                             Id = "57",
-                            Name = "Чесапийк бей ретрийвър",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Чесапийк бей ретрийвър"
                         },
                         new
                         {
                             Id = "58",
-                            Name = "Китайско голо качулато куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Китайско голо качулато куче"
                         },
                         new
                         {
                             Id = "59",
-                            Name = "Китайски шарпей",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Китайски шарпей"
                         },
                         new
                         {
                             Id = "60",
-                            Name = "Чинук",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Чинук"
                         },
                         new
                         {
                             Id = "61",
-                            Name = "Чау Чау",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Чау Чау"
                         },
                         new
                         {
                             Id = "62",
-                            Name = "Кламбър шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кламбър шпаньол"
                         },
                         new
                         {
                             Id = "63",
-                            Name = "Кокер шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кокер шпаньол"
                         },
                         new
                         {
                             Id = "64",
-                            Name = "Американски кокер шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Американски кокер шпаньол"
                         },
                         new
                         {
                             Id = "65",
-                            Name = "Котон де тулеар",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Котон де тулеар"
                         },
                         new
                         {
                             Id = "66",
-                            Name = "Далматинец",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Далматинец"
                         },
                         new
                         {
                             Id = "67",
-                            Name = "Доберман",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Доберман"
                         },
                         new
                         {
                             Id = "68",
-                            Name = "Дого Аржентино",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Дого Аржентино"
                         },
                         new
                         {
                             Id = "69",
-                            Name = "Холандско пастирско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Холандско пастирско куче"
                         },
                         new
                         {
                             Id = "70",
-                            Name = "Английски сетер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Английски сетер"
                         },
                         new
                         {
                             Id = "71",
-                            Name = "Английско пастирско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Английско пастирско куче"
                         },
                         new
                         {
                             Id = "72",
-                            Name = "Английски спрингер шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Английски спрингер шпаньол"
                         },
                         new
                         {
                             Id = "73",
-                            Name = "Английски той шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Английски той шпаньол"
                         },
                         new
                         {
                             Id = "74",
-                            Name = "Английски териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Английски териер"
                         },
                         new
                         {
                             Id = "75",
-                            Name = "Евразиец",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Евразиец"
                         },
                         new
                         {
                             Id = "76",
-                            Name = "Полски шпаньол",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Полски шпаньол"
                         },
                         new
                         {
                             Id = "77",
-                            Name = "Финландско лапландско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Финландско лапландско куче"
                         },
                         new
                         {
                             Id = "78",
-                            Name = "Финландски шпиц",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Финландски шпиц"
                         },
                         new
                         {
                             Id = "79",
-                            Name = "Френски булдог",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Френски булдог"
                         },
                         new
                         {
                             Id = "80",
-                            Name = "Немски пинчер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Немски пинчер"
                         },
                         new
                         {
                             Id = "81",
-                            Name = "Немска овчарка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Немска овчарка"
                         },
                         new
                         {
                             Id = "82",
-                            Name = "Немски късокосмест пойнтер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Немски късокосмест пойнтер"
                         },
                         new
                         {
                             Id = "83",
-                            Name = "Гигантски шнауцер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Гигантски шнауцер"
                         },
                         new
                         {
                             Id = "84",
-                            Name = "Глен ъф Имаал териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Глен ъф Имаал териер"
                         },
                         new
                         {
                             Id = "85",
-                            Name = "Голдън ретрийвър",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Голдън ретрийвър"
                         },
                         new
                         {
                             Id = "86",
-                            Name = "Гордън сетер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Гордън сетер"
                         },
                         new
                         {
                             Id = "87",
-                            Name = "Немски мастиф",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Немски мастиф"
                         },
                         new
                         {
                             Id = "88",
-                            Name = "Пиренейска планинска овчарка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Пиренейска планинска овчарка"
                         },
                         new
                         {
                             Id = "89",
-                            Name = "Грейхаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Грейхаунд"
                         },
                         new
                         {
                             Id = "90",
-                            Name = "Грифон брюкселуа",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Грифон брюкселуа"
                         },
                         new
                         {
                             Id = "91",
-                            Name = "Харие",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Харие"
                         },
                         new
                         {
                             Id = "92",
-                            Name = "Хаванез",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Хаванез"
                         },
                         new
                         {
                             Id = "93",
-                            Name = "Ирландски сетер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ирландски сетер"
                         },
                         new
                         {
                             Id = "94",
-                            Name = "Ирландски териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ирландски териер"
                         },
                         new
                         {
                             Id = "95",
-                            Name = "Ирландски вълкодав",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ирландски вълкодав"
                         },
                         new
                         {
                             Id = "96",
-                            Name = "Италиански грейхаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Италиански грейхаунд"
                         },
                         new
                         {
                             Id = "97",
-                            Name = "Японски чин",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Японски чин"
                         },
                         new
                         {
                             Id = "98",
-                            Name = "Японски шпиц",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Японски шпиц"
                         },
                         new
                         {
                             Id = "99",
-                            Name = "Кеесхонд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кеесхонд"
                         },
                         new
                         {
                             Id = "100",
-                            Name = "Комондор",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Комондор"
                         },
                         new
                         {
                             Id = "101",
-                            Name = "Койкер хондие",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Койкер хондие"
                         },
                         new
                         {
                             Id = "102",
-                            Name = "Кувас",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Кувас"
                         },
                         new
                         {
                             Id = "103",
-                            Name = "Лабрадор ретрийвър",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Лабрадор ретрийвър"
                         },
                         new
                         {
                             Id = "104",
-                            Name = "Лагото романьоло",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Лагото романьоло"
                         },
                         new
                         {
                             Id = "105",
-                            Name = "Ланкашир хийлър",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ланкашир хийлър"
                         },
                         new
                         {
                             Id = "106",
-                            Name = "Леонбергер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Леонбергер"
                         },
                         new
                         {
                             Id = "107",
-                            Name = "Лхаса апсо",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Лхаса апсо"
                         },
                         new
                         {
                             Id = "108",
-                            Name = "Малтийско болонезе",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Малтийско болонезе"
                         },
                         new
                         {
                             Id = "109",
-                            Name = "Миниатюрна американска овчарка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Миниатюрна американска овчарка"
                         },
                         new
                         {
                             Id = "110",
-                            Name = "Миниатюрен пинчер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Миниатюрен пинчер"
                         },
                         new
                         {
                             Id = "111",
-                            Name = "Миниатюрен шнауцер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Миниатюрен шнауцер"
                         },
                         new
                         {
                             Id = "112",
-                            Name = "Нюфаундленд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Нюфаундленд"
                         },
                         new
                         {
                             Id = "113",
-                            Name = "Норфолк териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Норфолк териер"
                         },
                         new
                         {
                             Id = "114",
-                            Name = "Норич териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Норич териер"
                         },
                         new
                         {
                             Id = "115",
-                            Name = "Нова шотландска патица ретрийвър",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Нова шотландска патица ретрийвър"
                         },
                         new
                         {
                             Id = "116",
-                            Name = "Староанглийско овчарско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Староанглийско овчарско куче"
                         },
                         new
                         {
                             Id = "117",
-                            Name = "Староанглийски булдог",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Староанглийски булдог"
                         },
                         new
                         {
                             Id = "118",
-                            Name = "Папийон",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Папийон"
                         },
                         new
                         {
                             Id = "119",
-                            Name = "Пекинез",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Пекинез"
                         },
                         new
                         {
                             Id = "120",
-                            Name = "Уелско корги пембрук",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Уелско корги пембрук"
                         },
                         new
                         {
                             Id = "121",
-                            Name = "Преса канарио",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Преса канарио"
                         },
                         new
                         {
                             Id = "122",
-                            Name = "Фараонско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Фараонско куче"
                         },
                         new
                         {
                             Id = "123",
-                            Name = "Плот хаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Плот хаунд"
                         },
                         new
                         {
                             Id = "124",
-                            Name = "Померан",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Померан"
                         },
                         new
                         {
                             Id = "125",
-                            Name = "Пудел миниатюрен",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Пудел миниатюрен"
                         },
                         new
                         {
                             Id = "126",
-                            Name = "Пудел той",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Пудел той"
                         },
                         new
                         {
                             Id = "127",
-                            Name = "Мопс",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Мопс"
                         },
                         new
                         {
                             Id = "128",
-                            Name = "Пули",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Пули"
                         },
                         new
                         {
                             Id = "129",
-                            Name = "Пуми",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Пуми"
                         },
                         new
                         {
                             Id = "130",
-                            Name = "Рат териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Рат териер"
                         },
                         new
                         {
                             Id = "131",
-                            Name = "Редбоун кунхаунд",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Редбоун кунхаунд"
                         },
                         new
                         {
                             Id = "132",
-                            Name = "Родезийски риджбек",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Родезийски риджбек"
                         },
                         new
                         {
                             Id = "133",
-                            Name = "Ротвайлер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ротвайлер"
                         },
                         new
                         {
                             Id = "134",
-                            Name = "Руски той териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Руски той териер"
                         },
                         new
                         {
                             Id = "135",
-                            Name = "Санбернар",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Санбернар"
                         },
                         new
                         {
                             Id = "136",
-                            Name = "Салуки",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Салуки"
                         },
                         new
                         {
                             Id = "137",
-                            Name = "Самоед",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Самоед"
                         },
                         new
                         {
                             Id = "138",
-                            Name = "Шиперке",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Шиперке"
                         },
                         new
                         {
                             Id = "139",
-                            Name = "Шотландска еленова хрътка",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Шотландска еленова хрътка"
                         },
                         new
                         {
                             Id = "140",
-                            Name = "Шотландски териер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Шотландски териер"
                         },
                         new
                         {
                             Id = "141",
-                            Name = "Шетландско овчарско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Шетландско овчарско куче"
                         },
                         new
                         {
                             Id = "142",
-                            Name = "Шиба ину",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Шиба ину"
                         },
                         new
                         {
                             Id = "143",
-                            Name = "Ши Тцу",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ши Тцу"
                         },
                         new
                         {
                             Id = "144",
-                            Name = "Шило пастирско куче",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Шило пастирско куче"
                         },
                         new
                         {
                             Id = "145",
-                            Name = "Сибирско хъски",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Сибирско хъски"
                         },
                         new
                         {
                             Id = "146",
-                            Name = "Визла",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Визла"
                         },
                         new
                         {
                             Id = "147",
-                            Name = "Ваймаранер",
-                            PetType = "Dog"
+                            AnimalTypeId = 1,
+                            Name = "Ваймаранер"
                         },
                         new
                         {
                             Id = "148",
-                            Name = "Абисинска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Абисинска"
                         },
                         new
                         {
                             Id = "149",
-                            Name = "Австралийска мъгла",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Австралийска мъгла"
                         },
                         new
                         {
                             Id = "150",
-                            Name = "Азиатска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Азиатска"
                         },
                         new
                         {
                             Id = "151",
-                            Name = "Американска грубокосместа",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Американска грубокосместа"
                         },
                         new
                         {
                             Id = "152",
-                            Name = "Балийска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Балийска"
                         },
                         new
                         {
                             Id = "153",
-                            Name = "Бенгалска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Бенгалска"
                         },
                         new
                         {
                             Id = "154",
-                            Name = "Бирманска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Бирманска"
                         },
                         new
                         {
                             Id = "155",
-                            Name = "Британска късокосместа",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Британска късокосместа"
                         },
                         new
                         {
                             Id = "156",
-                            Name = "Бурманска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Бурманска"
                         },
                         new
                         {
                             Id = "157",
-                            Name = "Бурмила",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Бурмила"
                         },
                         new
                         {
                             Id = "158",
-                            Name = "Девон Рекс",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Девон Рекс"
                         },
                         new
                         {
                             Id = "159",
-                            Name = "Египетска Мау",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Египетска Мау"
                         },
                         new
                         {
                             Id = "160",
-                            Name = "Европейска късокосместа",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Европейска късокосместа"
                         },
                         new
                         {
                             Id = "161",
-                            Name = "Канадски сфинкс",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Канадски сфинкс"
                         },
                         new
                         {
                             Id = "162",
-                            Name = "Корат",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Корат"
                         },
                         new
                         {
                             Id = "163",
-                            Name = "Корниш Рекс",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Корниш Рекс"
                         },
                         new
                         {
                             Id = "164",
-                            Name = "Мейн Куун",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Мейн Куун"
                         },
                         new
                         {
                             Id = "165",
-                            Name = "Норвежка горска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Норвежка горска"
                         },
                         new
                         {
                             Id = "166",
-                            Name = "Ориенталска късокосместа",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Ориенталска късокосместа"
                         },
                         new
                         {
                             Id = "167",
-                            Name = "Персийска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Персийска"
                         },
                         new
                         {
                             Id = "168",
-                            Name = "Петерболд",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Петерболд"
                         },
                         new
                         {
                             Id = "169",
-                            Name = "Пикси-боб",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Пикси-боб"
                         },
                         new
                         {
                             Id = "170",
-                            Name = "Рагдол",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Рагдол"
                         },
                         new
                         {
                             Id = "171",
-                            Name = "Руска синя",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Руска синя"
                         },
                         new
                         {
                             Id = "172",
-                            Name = "Селкирк Рекс",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Селкирк Рекс"
                         },
                         new
                         {
                             Id = "173",
-                            Name = "Серенгети",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Серенгети"
                         },
                         new
                         {
                             Id = "174",
-                            Name = "Сиамска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Сиамска"
                         },
                         new
                         {
                             Id = "175",
-                            Name = "Сибирска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Сибирска"
                         },
                         new
                         {
                             Id = "176",
-                            Name = "Сингапурска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Сингапурска"
                         },
                         new
                         {
                             Id = "177",
-                            Name = "Сомалийска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Сомалийска"
                         },
                         new
                         {
                             Id = "178",
-                            Name = "Тайска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Тайска"
                         },
                         new
                         {
                             Id = "179",
-                            Name = "Тонкинска",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Тонкинска"
                         },
                         new
                         {
                             Id = "180",
-                            Name = "Турска Ангора",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Турска Ангора"
                         },
                         new
                         {
                             Id = "181",
-                            Name = "Турски ван",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Турски ван"
                         },
                         new
                         {
                             Id = "182",
-                            Name = "Украински Левкой",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Украински Левкой"
                         },
                         new
                         {
                             Id = "183",
-                            Name = "Уралски Рекс",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Уралски Рекс"
                         },
                         new
                         {
                             Id = "184",
-                            Name = "Шартрьо",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Шартрьо"
                         },
                         new
                         {
                             Id = "185",
-                            Name = "Шотландска клепоуха",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Шотландска клепоуха"
                         },
                         new
                         {
                             Id = "186",
-                            Name = "Японски бобтейл",
-                            PetType = "Cat"
+                            AnimalTypeId = 2,
+                            Name = "Японски бобтейл"
                         });
                 });
 
@@ -1363,6 +1413,9 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("AnimalTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1370,9 +1423,6 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PetType")
-                        .HasColumnType("int");
 
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
@@ -1387,6 +1437,8 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AnimalTypeId");
+
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
@@ -1397,10 +1449,6 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PetTypes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileId")
                         .IsRequired()
@@ -1551,6 +1599,21 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("AnimalTypePost", b =>
+                {
+                    b.HasOne("PawsPlus.Domain.Models.AnimalType", null)
+                        .WithMany()
+                        .HasForeignKey("AnimalTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PawsPlus.Domain.Models.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BreedPet", b =>
                 {
                     b.HasOne("PawsPlus.Domain.Models.Breed", null)
@@ -1663,8 +1726,29 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PawsPlus.Domain.Models.Breed", b =>
+                {
+                    b.HasOne("PawsPlus.Domain.Models.AnimalType", "AnimalType")
+                        .WithMany()
+                        .HasForeignKey("AnimalTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PawsPlus.Domain.Models.AnimalType", null)
+                        .WithMany("Breeds")
+                        .HasForeignKey("AnimalTypeId1");
+
+                    b.Navigation("AnimalType");
+                });
+
             modelBuilder.Entity("PawsPlus.Domain.Models.Pet", b =>
                 {
+                    b.HasOne("PawsPlus.Domain.Models.AnimalType", "AnimalType")
+                        .WithMany()
+                        .HasForeignKey("AnimalTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PawsPlus.Domain.Models.Profile", "Profile")
                         .WithOne("Pet")
                         .HasForeignKey("PawsPlus.Domain.Models.Pet", "ProfileId")
@@ -1773,6 +1857,8 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.Navigation("Age");
 
+                    b.Navigation("AnimalType");
+
                     b.Navigation("HealthStatus");
 
                     b.Navigation("Personality");
@@ -1853,6 +1939,11 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("PawsPlus.Domain.Models.AnimalType", b =>
+                {
+                    b.Navigation("Breeds");
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Post", b =>

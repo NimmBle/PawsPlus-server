@@ -1,16 +1,15 @@
 ﻿using MediatR;
-using PawsPlus.Domain.Enums.Pet;
 
 namespace PawsPlus.Application.Features.Breed.Queries;
 
 public class GetBreedsQuery : IRequest<IEnumerable<BreedOutputModel>>
 {
-    public PetType PetType { get; set; }
+    public int AnimalTypeId { get; set; }
     
     public class GetBreedsQueryHandler(IBreedQueryRepository breedQueryRepository)
         : IRequestHandler<GetBreedsQuery, IEnumerable<BreedOutputModel>>
     {
         public async Task<IEnumerable<BreedOutputModel>> Handle(GetBreedsQuery request, CancellationToken cancellationToken)
-            => await breedQueryRepository.GetBreeds(request.PetType, cancellationToken);
+            => await breedQueryRepository.GetBreeds(request.AnimalTypeId, cancellationToken);
     }
 }

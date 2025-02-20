@@ -2,7 +2,7 @@
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Domain.Errors;
-using PawsPlus.Domain.Factories;
+using PawsPlus.Domain.Factories.Pet;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Pet.Commands.Create;
@@ -16,6 +16,7 @@ public class CreatePetCommand
         IProfileDomainRepository profileDomainRepository,
         IPetDomainRepository petDomainRepository,
         IBreedDomainRepository breedDomainRepository,
+        IAnimalTypeDomainRepository animalTypeDomainRepository,
         IPetFactory petFactory)
         : IRequestHandler<CreatePetCommand, Result<CreatePetOutputModel>>
     {
@@ -27,17 +28,16 @@ public class CreatePetCommand
             
             if (profile.Id != request.ProfileId)
                 return PetErrors.PetAccessNotAllowed;
+            
+            var breedsIds = request.Breeds.Select(breed => breed.Id);
+            var breeds = await breedDomainRepository.FindAll(breedsIds);
 
-            var breeds = new List<Domain.Models.Breed>();
-            foreach (var breed in request.Breeds)
-            {
-                breeds.Add(await breedDomainRepository.Find(breed.Id));
-            }
+            var animalTypes = await animalTypeDomainRepository.Find(request.PetType);
             
             var pet = petFactory
                 .WithName(request.Name)
                 .WithPhotoUrl(request.PhotoUrl)
-                .WithType(request.PetType)
+                .WithType(animalTypes)
                 .WithAge(request.Age.Years, request.Age.Months)
                 .WithGender(request.Gender)
                 .WithBreed(breeds)

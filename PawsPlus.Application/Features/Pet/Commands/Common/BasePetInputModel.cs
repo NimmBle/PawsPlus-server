@@ -1,4 +1,5 @@
 ﻿using PawsPlus.Domain.Enums.Pet;
+using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Pet.Commands.Common;
 
@@ -8,7 +9,7 @@ public abstract class BasePetInputModel<TCommand>
 
     public string PhotoUrl { get; set; } = default!;
 
-    public PetType PetType { get; set; }
+    public int PetType { get; set; }
 
     public AgeInputModel? Age { get; set; } = new AgeInputModel();
     

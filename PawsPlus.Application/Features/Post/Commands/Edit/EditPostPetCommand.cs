@@ -9,9 +9,10 @@ namespace PawsPlus.Application.Features.Post.Commands.Edit;
 public class EditPostPetCommand : PostInputModel, IRequest<Result>
 {
     public string Id { get; set; }
-    public PetType Pet { get; set; }
+    public int Pet { get; set; }
     
-    public class EditPostCommandHandler(IPostDomainRepository postDomainRepository)
+    public class EditPostCommandHandler(IPostDomainRepository postDomainRepository,
+        IAnimalTypeDomainRepository animalTypeDomainRepository)
         : IRequestHandler<EditPostPetCommand, Result>
     {
         public async Task<Result> Handle(EditPostPetCommand request, CancellationToken cancellationToken)
@@ -23,8 +24,10 @@ public class EditPostPetCommand : PostInputModel, IRequest<Result>
                 return PostErrors.PostNotFound(request.Id); 
             }
 
+            var animalType = await animalTypeDomainRepository.Find(request.Pet);
+            
             post
-                .UpdatePetTypes(request.Pet)
+                .UpdatePetTypes(animalType)
                 .UpdateWeights(request.Weights.ToList());
             
             await postDomainRepository.Update(post);

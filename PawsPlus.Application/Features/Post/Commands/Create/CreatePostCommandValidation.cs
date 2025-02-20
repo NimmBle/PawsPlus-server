@@ -17,9 +17,9 @@ public class CreatePostCommandValidation : AbstractValidator<CreatePostCommand>
             .Must(serviceTypes => serviceTypes.All(p => Enum.IsDefined(typeof(ServiceType), p)))
             .WithMessage("All service types must be valid members of the ServiceType enum.");
         
-        RuleFor(p => p.Pets)
-            .NotNull()
-            .Must(petTypes => petTypes.All(p => Enum.IsDefined(typeof(PetType), p)))
-            .WithMessage("All pet types must be valid members of the PetType enum.");
+        // RuleFor(p => p.Pets)
+        //     .NotNull()
+        //     .Must(petTypes => petTypes.All(p => Enum.IsDefined(typeof(PetType), p)))
+        //     .WithMessage("All pet types must be valid members of the PetType enum.");
     }
 }

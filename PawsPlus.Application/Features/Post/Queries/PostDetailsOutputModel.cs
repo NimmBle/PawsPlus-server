@@ -10,12 +10,12 @@ public class PostDetailsOutputModel : IMapFrom<Domain.Models.Post>
 
     public List<Weight> Weights { get; set; }
 
-    public List<PetType> Pets { get; set; }
+    public List<int> Pets { get; set; }
 
     public ICollection<ServiceOutputModel> Services { get; set; }
 
     public virtual void Mapping(AutoMapper.Profile mapper)
         => mapper
             .CreateMap<Domain.Models.Post, PostDetailsOutputModel>()
-            .ForMember(dest => dest.Pets, opt => opt.MapFrom(p => p.PetTypes));
+            .ForMember(dest => dest.Pets, opt => opt.MapFrom(p => p.AnimalTypes.Select(a => a.Id).ToList()));
 }

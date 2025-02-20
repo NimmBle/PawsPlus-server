@@ -5,5 +5,5 @@ namespace PawsPlus.Application.Features.Breed;
 
 public interface IBreedQueryRepository
 {
-    Task<IEnumerable<BreedOutputModel>> GetBreeds(PetType petType, CancellationToken cancellationToken = default);
+    Task<IEnumerable<BreedOutputModel>> GetBreeds(int animalTypeId, CancellationToken cancellationToken = default);
 }

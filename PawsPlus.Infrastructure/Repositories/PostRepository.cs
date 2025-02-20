@@ -24,6 +24,7 @@ public class PostRepository(
         => await All()
             .Where(p => p.Id == id)
             .Include(p => p.Services)
+            .Include(p => p.AnimalTypes)
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<bool> Delete(string id,
@@ -64,6 +65,7 @@ public class PostRepository(
             .All()
             .Where(predicate)
             .OrderByDescending(orderBy)
+            .Include(p => p.AnimalTypes)
             .Select(p => new PostOutputModel
             {
                 Id = p.ProfileId,

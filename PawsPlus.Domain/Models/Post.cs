@@ -15,14 +15,14 @@ public class Post : Entity<string>, IAggregateRoot
     }
 
     public Post(
-        List<PetType> petTypes,
+        List<AnimalType> animalTypes,
         List<Weight> weights,
         string profileId)
     {
-        this.Validate(petTypes, weights);
+        this.Validate(animalTypes, weights);
         
         this.Id = Guid.NewGuid().ToString();
-        this.PetTypes = petTypes.ToList();
+        this.AnimalTypes = animalTypes.ToList();
         this.Weights = weights.ToList();
         this.ProfileId = profileId;
     }
@@ -32,7 +32,7 @@ public class Post : Entity<string>, IAggregateRoot
     
     public Profile Profile { get; set; }
 
-    public List<PetType> PetTypes { get; private set; } = new();
+    public List<AnimalType> AnimalTypes { get; private set; } = new();
 
     public List<Weight>? Weights { get; private set; } = new();
 
@@ -71,12 +71,14 @@ public class Post : Entity<string>, IAggregateRoot
         return this;
     }
  
-    public Post UpdatePetTypes(PetType petTypes)
+    public Post UpdatePetTypes(AnimalType animalType)
     {
-        if (this.PetTypes.Contains(petTypes))
+        if (this.AnimalTypes.Any(p => p == animalType))
+        {
             return this;
+        }
         
-        this.PetTypes.Add(petTypes);
+        this.AnimalTypes.Add(animalType);
 
         return this;
     }
@@ -90,34 +92,34 @@ public class Post : Entity<string>, IAggregateRoot
         return this;
     }
 
-    public void RemovePetType(PetType petType)
+    public void RemovePetType(AnimalType animalType)
     {
-        if (this.PetTypes.Contains(petType))
+        if (this.AnimalTypes.Contains(animalType))
         {
-            this.PetTypes.Remove(petType);
+            this.AnimalTypes.Remove(animalType);
         }
 
-        if (petType == PetType.Dog && this.PetTypes.Count > 0)
+        if (animalType.Name == "Dog")
         {
             this.Weights.Clear();
         }
     }
 
-    private void Validate(List<PetType> petTypes, List<Weight> weights)
+    private void Validate(List<AnimalType> petTypes, List<Weight> weights)
     {
-        this.ValidatePetTypes(petTypes);
+        // this.ValidatePetTypes(petTypes);
         this.ValidateWeights(weights);
     }
-
-    private void ValidatePetTypes(List<PetType> petTypes)
-    {
-        if (petTypes.All(w => Enum.IsDefined(typeof(PetType), w)))
-        {
-            return;
-        }
-        
-        throw new InvalidPostException();
-    }
+    //
+    // private void ValidatePetTypes(List<AnimalType> petTypes)
+    // {
+    //     if (petTypes.All(at => Enum.IsDefined(typeof(AnimalType), w)))
+    //     {
+    //         return;
+    //     }
+    //     
+    //     throw new InvalidPostException();
+    // }
 
     private void ValidateWeights(List<Weight> weights)
     {

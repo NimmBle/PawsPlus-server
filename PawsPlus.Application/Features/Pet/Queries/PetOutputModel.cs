@@ -13,7 +13,7 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
 
     public string PhotoUrl { get; set; } = default!;
 
-    public PetType PetType { get; set; }
+    public int PetType { get; set; }
 
     public Age? Age { get; set; }
     
@@ -29,5 +29,6 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
 
     virtual public void Mapping(AutoMapper.Profile profile)
         => profile
-            .CreateMap<Domain.Models.Pet, PetOutputModel>();
+            .CreateMap<Domain.Models.Pet, PetOutputModel>()
+            .ForMember(p => p.PetType, opts => opts.MapFrom(p => p.AnimalType.Id));
 }

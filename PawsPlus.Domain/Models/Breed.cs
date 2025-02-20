@@ -1,5 +1,4 @@
 ﻿using PawsPlus.Domain.Common;
-using PawsPlus.Domain.Enums.Pet;
 
 namespace PawsPlus.Domain.Models;
 
@@ -9,20 +8,23 @@ public class Breed : Entity<string>, IAggregateRoot
     {
         this.Id = id;
     }
-    private Breed(string id, string name, PetType petType)
+    private Breed(string id, string name, int animalTypeId)
     {
         this.Id = id;
         this.Name = name;
-        this.PetType = petType;
+        this.AnimalTypeId = animalTypeId;
     }
     public string Name { get; private set; }
     
-    public PetType PetType { get; private set; }
+    public int AnimalTypeId { get; private set; }
+    
+    public AnimalType AnimalType { get; private set; }
+    
     public ICollection<Pet> Pets { get; private set; }
 
     public static Breed CreateDogBreed(string id, string name)
-        => new Breed(id, name, PetType.Dog);
+        => new Breed(id, name, 1);
     
     public static Breed CreateCatBreed(string id, string name)
-        => new Breed(id, name, PetType.Cat);
+        => new Breed(id, name, 2);
 }

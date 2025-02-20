@@ -23,25 +23,29 @@ public class
     public DbSet<Breed> Breeds { get; set; } = default!;
     
     public DbSet<Booking> Bookings { get; set; } = default!;
-
-    // public DbSet<Meeting> Meetings { get; set; } = default!;
+    
+    public DbSet<AnimalType> AnimalTypes { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        // builder
-        //     .Entity<Meeting>()
-        //     .HasOne(p => p.Profile)
-        //     .WithOne(p => p.Meeting)
-        //     .HasForeignKey<Meeting>("SitterId");
         
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
-        
+
+        SeedAnimalTypes(builder.Entity<AnimalType>());
         SeedBreeds(builder.Entity<Breed>());
         // SeedAdminAndRoles(builder);
         
         base.OnModelCreating(builder);
     }
-    
+
+    private static void SeedAnimalTypes(EntityTypeBuilder<AnimalType> entity)
+    {
+        entity.HasData(
+            new AnimalType(1, "Dog"),
+            new AnimalType(2, "Cat")
+            );
+    }
+
     private static void SeedBreeds(EntityTypeBuilder<Breed> entity)
     {
         SeedDogBreeds(entity);
