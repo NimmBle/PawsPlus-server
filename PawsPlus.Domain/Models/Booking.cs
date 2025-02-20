@@ -14,7 +14,7 @@ public class Booking : Entity<string>, IAggregateRoot
     {
     }
     
-    public Booking(DateOnly startDay,
+    internal Booking(DateOnly startDay,
         TimeOnly startTime,
         DateOnly endDay,
         TimeOnly endTime,

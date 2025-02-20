@@ -4,6 +4,7 @@ using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Profile;
 using PawsPlus.Application.Features.Service;
 using PawsPlus.Domain.Errors;
+using PawsPlus.Domain.Factories.Booking;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
 
@@ -13,6 +14,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 {
     
     public class CreateBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
+        IBookingFactory bookingFactory,
         IServiceQueryRepository serviceQueryRepository,
         IProfileQueryRepository profileQueryRepository,
         ICurrentUser currentUser,
@@ -31,17 +33,19 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             {
                 return ServiceErrors.ServiceNotFound;
             }
-            
-            var booking = new Domain.Models.Booking(request.StartDay,
-                request.StartTime,
-                request.EndDay,
-                request.EndTime,
-                request.MeetingPlaceType,
-                request.MeetingPlaceId,
-                request.AdditionalDescription,
-                serviceId,
-                request.SitterId,
-                ownerProfileId);
+
+            var booking = bookingFactory
+                .WithStartDay(request.StartDay)
+                .WithStartTime(request.StartTime)
+                .WithEndDay(request.EndDay)
+                .WithEndTime(request.EndTime)
+                .WithMeetingPlaceType(request.MeetingPlaceType)
+                .WithMeetingPlaceId(request.MeetingPlaceId)
+                .WithAdditionalDescription(request.AdditionalDescription)
+                .WithServiceId(serviceId)
+                .WithServiceId(request.SitterId)
+                .WithOwnerId(ownerProfileId)
+                .Build();
 
             await bookingDomainRepository.Save(booking);
 
