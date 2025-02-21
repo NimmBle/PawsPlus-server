@@ -35,7 +35,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasIndex("PostsId");
 
-                    b.ToTable("AnimalTypePost");
+                    b.ToTable("AnimalTypePost", (string)null);
                 });
 
             modelBuilder.Entity("BreedPet", b =>
@@ -50,7 +50,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasIndex("PetsId");
 
-                    b.ToTable("BreedPet");
+                    b.ToTable("BreedPet", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -200,7 +200,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnimalTypes");
+                    b.ToTable("AnimalTypes", (string)null);
 
                     b.HasData(
                         new
@@ -263,7 +263,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasIndex("SitterId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Breed", b =>
@@ -287,7 +287,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasIndex("AnimalTypeId1");
 
-                    b.ToTable("Breeds");
+                    b.ToTable("Breeds", (string)null);
 
                     b.HasData(
                         new
@@ -1442,7 +1442,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
-                    b.ToTable("Pets");
+                    b.ToTable("Pets", (string)null);
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Post", b =>
@@ -1462,7 +1462,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Profile", b =>
@@ -1494,7 +1494,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Service", b =>
@@ -1524,7 +1524,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("PawsPlus.Infrastructure.Identity.User", b =>
@@ -1700,7 +1700,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("PawsPlus.Domain.Models.BookingState", "Status", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.Booking.Status#PawsPlus.Domain.Models.BookingState", "Status", b1 =>
                         {
                             b1.Property<string>("BookingId")
                                 .HasColumnType("nvarchar(450)");
@@ -1710,7 +1710,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.HasKey("BookingId");
 
-                            b1.ToTable("Bookings");
+                            b1.ToTable("Bookings", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("BookingId");
@@ -1755,7 +1755,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("PawsPlus.Domain.ValueObjects.Age", "Age", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.Pet.Age#PawsPlus.Domain.ValueObjects.Age", "Age", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -1770,13 +1770,13 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets");
+                            b1.ToTable("Pets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
                         });
 
-                    b.OwnsOne("PawsPlus.Domain.ValueObjects.HealthStatus", "HealthStatus", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.Pet.HealthStatus#PawsPlus.Domain.ValueObjects.HealthStatus", "HealthStatus", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -1813,13 +1813,13 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets");
+                            b1.ToTable("Pets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
                         });
 
-                    b.OwnsOne("PawsPlus.Domain.ValueObjects.Personality", "Personality", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.Pet.Personality#PawsPlus.Domain.ValueObjects.Personality", "Personality", b1 =>
                         {
                             b1.Property<string>("PetId")
                                 .HasColumnType("nvarchar(450)");
@@ -1849,7 +1849,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("Pets");
+                            b1.ToTable("Pets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
@@ -1874,7 +1874,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("PawsPlus.Domain.Models.PostState", "Status", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.Post.Status#PawsPlus.Domain.Models.PostState", "Status", b1 =>
                         {
                             b1.Property<string>("PostId")
                                 .HasColumnType("nvarchar(450)");
@@ -1884,7 +1884,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.HasKey("PostId");
 
-                            b1.ToTable("Posts");
+                            b1.ToTable("Posts", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PostId");
@@ -1898,7 +1898,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Profile", b =>
                 {
-                    b.OwnsOne("PawsPlus.Domain.ValueObjects.Location", "Location", b1 =>
+                    b.OwnsOne("PawsPlus.Domain.Models.Profile.Location#PawsPlus.Domain.ValueObjects.Location", "Location", b1 =>
                         {
                             b1.Property<string>("ProfileId")
                                 .HasColumnType("nvarchar(450)");
@@ -1911,7 +1911,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.HasKey("ProfileId");
 
-                            b1.ToTable("Profiles");
+                            b1.ToTable("Profiles", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ProfileId");

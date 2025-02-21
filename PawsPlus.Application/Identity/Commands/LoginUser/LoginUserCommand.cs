@@ -21,8 +21,7 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             {
                 return result.Error; 
             }
-                
-
+            
             var user = result.Data;
 
             if (user.Roles.Contains("Administrator"))
@@ -31,8 +30,13 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             }
 
             var profile = await profileDomainRepository.FindByUser(user.Id);
-
+            
             user.FirstLogin = profile.FirstLogin;
+            
+            if (user.Roles.Contains("Owner"))
+            {
+                profile.UpdateFirstLogin();
+            }
             
             return user;
         }

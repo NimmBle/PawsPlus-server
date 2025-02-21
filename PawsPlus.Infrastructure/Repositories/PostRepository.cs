@@ -52,7 +52,8 @@ public class PostRepository(
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()
-                .Where(p => p.ProfileId == profileId))
+                .Where(p => p.ProfileId == profileId)
+                .Include(p => p.AnimalTypes))
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<PostOutputModel>> Search(Expression<Func<Post, bool>> predicate,

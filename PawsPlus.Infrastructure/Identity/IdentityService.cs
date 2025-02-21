@@ -43,7 +43,7 @@ internal class IdentityService(
     {
         var user = new User()
         {
-            UserName = firstName + " " + lastName,
+            UserName = $"{firstName} {lastName}",
             Email = email
         };
         
@@ -60,7 +60,7 @@ internal class IdentityService(
                 var rolesResult = await userManager.AddToRoleAsync(user, role);
                 var roleErrors = rolesResult.Errors.Select(e => e.Description);
                 
-                // _ = SendConfirmationEmail(user, userInput.FirstName, userInput.LastName);
+                _ = SendConfirmationEmail(user, firstName, lastName);
                 
                 scope.Complete();
 

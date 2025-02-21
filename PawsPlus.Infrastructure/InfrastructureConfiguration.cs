@@ -50,8 +50,8 @@ public static class InfrastructureConfiguration
     {
         services.AddIdentity<User, IdentityRole>(opt =>
             {
-                opt.User.AllowedUserNameCharacters += " ";
-                
+                opt.User.AllowedUserNameCharacters = null;
+                opt.User.RequireUniqueEmail = true;
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireLowercase = false;
                 opt.Password.RequireNonAlphanumeric = false;

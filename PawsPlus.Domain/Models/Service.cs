@@ -52,7 +52,7 @@ public class Service : Entity<string>, IAggregateRoot
         this.Price = newPrice;
     }
 
-    public void UpdateAvailableDates(List<DateOnly> newAvailableDates)
+    public void UpdateAvailableDates(List<DateOnly>? newAvailableDates)
     {
         var yesterday = DateOnly.FromDateTime(DateTime.Today.AddDays(-1));
 
