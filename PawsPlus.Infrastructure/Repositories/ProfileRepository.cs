@@ -49,8 +49,10 @@ public class ProfileRepository(
                     Email = u.Email,
                     PhoneNumber = u.Profile.PhoneNumber,
                     PhotoUrl = u.Profile.PhotoUrl,
-                    PlaceId = u.Profile.Location.PlaceId,
-                                    
+                    Location = new LocationOutputModel()
+                    {
+                        PlaceId = u.Profile.Location.PlaceId 
+                    }
                 })
                 .FirstOrDefaultAsync(cancellationToken);
     

@@ -16,7 +16,7 @@ public class Post : Entity<string>, IAggregateRoot
 
     public Post(
         List<AnimalType> animalTypes,
-        List<Weight> weights,
+        List<Weight>? weights,
         string profileId)
     {
         this.Validate(animalTypes, weights);
