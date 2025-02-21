@@ -4,6 +4,9 @@ namespace PawsPlus.Application.Identity;
 
 public class IdentityErrors
 {
+    public static Error IdentityError(string description) => Error.Validation(
+        "Identity.IdentityError", description);
+    
     public static Error UserNotFound(string id) => Error.NotFound(
         "Identity.UserNotFound", $"No user found with the given id: '{id}'"); 
     

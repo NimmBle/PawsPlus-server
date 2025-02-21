@@ -14,9 +14,6 @@ public class Result
     
     public Error Error { get; private set; }
     
-    public List<Error> Errors { get; private set; } = new List<Error>();
-    
-    
     public static Result Success
         => new Result(true, Error.None);
 
@@ -50,14 +47,8 @@ public class Result<TData> : Result
     public static Result<TData> Failure(Error error)
         => new(false, default!, error);
     
-    // public static Result<TData> Failure(IEnumerable<string> errors)
-    //     => new(false, default!, errors.ToList());
-    
     public static implicit operator Result<TData>(Error error)
         => Failure(error);
-
-    // public static implicit operator Result<TData>(List<string> errors)
-    //     => Failure(errors);
 
     public static implicit operator Result<TData>(TData data)
         => SuccessWith(data);
