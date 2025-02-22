@@ -6,6 +6,7 @@ using PawsPlus.Application.Features.Post.Commands.Delete;
 using PawsPlus.Application.Features.Post.Commands.Disapprove;
 using PawsPlus.Application.Features.Post.Commands.Edit;
 using PawsPlus.Application.Features.Post.Queries;
+using PawsPlus.Application.Features.Post.Queries.Pending;
 using PawsPlus.Application.Features.Post.Queries.Search;
 
 namespace PawsPlus.Web.Features;
@@ -43,6 +44,13 @@ public class PostsController : ApiController
     public async Task<ActionResult> DeletePet(DeletePostPetCommand command)
         => await this.Send(command);
 
+    [HttpGet]
+    [Authorize(Roles = Administrator)]
+    [Route(nameof(Pending))]
+    public async Task<ActionResult<ICollection<PendingPostOutputModel>>> Pending(
+        [FromRoute] GetPendingPostsQuery query)
+        => await this.Send(query);
+    
     [HttpPatch]
     [Authorize(Roles = Administrator)]
     [Route(Id + PathSeparator + nameof(Approve))]

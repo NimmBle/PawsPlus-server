@@ -28,7 +28,7 @@ public class SearchPostsQuery : SearchPostsParams, IRequest<Result<SearchPostsOu
 
             if (posts == null)
             {
-                return PostErrors.PostsNotFound(); 
+                return new SearchPostsOutputModel();
             }
             
             int totalPages = (int)Math.Ceiling(posts.Count() / request.PostsPerPage * 1.0);

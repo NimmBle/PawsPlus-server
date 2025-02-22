@@ -2,6 +2,10 @@
 
 public class SearchPostsOutputModel
 {
+    internal SearchPostsOutputModel()
+    {
+    }
+    
     internal SearchPostsOutputModel(IReadOnlyCollection<PostOutputModel> posts, int totalPages, int page = 1)
     {
         Posts = posts;

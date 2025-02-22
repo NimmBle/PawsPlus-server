@@ -27,5 +27,6 @@ public class BookingRepository(
                 .All()
                 .Where(b => b.SitterId == sitterId && 
                             b.Status.Value == BookingState.Pending.Value))
+            .AsNoTracking()
             .ToListAsync(cancellationToken);
 }

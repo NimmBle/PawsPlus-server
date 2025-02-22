@@ -46,11 +46,13 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
         
         builder
             .HasOne(p => p.Pet)
-            .WithOne(p => p.Profile);
+            .WithOne(p => p.Profile)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(p => p.Post)
-            .WithOne(p => p.Profile);
+            .WithOne(p => p.Profile)
+            .OnDelete(DeleteBehavior.Cascade);
 
         // builder
         //     .HasOne(p => p.Meeting)

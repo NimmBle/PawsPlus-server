@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PawsPlus.Application.Features.Post;
 using PawsPlus.Application.Features.Post.Queries;
+using PawsPlus.Application.Features.Post.Queries.Pending;
 using PawsPlus.Application.Features.Post.Queries.Search;
 using PawsPlus.Domain.Enums;
 using PawsPlus.Domain.Models;
@@ -55,6 +56,17 @@ public class PostRepository(
                 .Where(p => p.ProfileId == profileId)
                 .Include(p => p.AnimalTypes))
             .FirstOrDefaultAsync(cancellationToken);
+
+    public async Task<ICollection<PendingPostOutputModel>> GetPending(int skip,
+        int take,
+        CancellationToken cancellationToken = default)
+        => await mapper
+            .ProjectTo<PendingPostOutputModel>(this
+                .All()
+                .Where(p => p.Status.Value == PostState.Pending.Value)
+                .Skip(skip)
+                .Take(take))
+            .ToListAsync(cancellationToken);
 
     public async Task<IReadOnlyCollection<PostOutputModel>> Search(Expression<Func<Post, bool>> predicate,
         Expression<Func<Post, object>> orderBy,
