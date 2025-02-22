@@ -20,13 +20,12 @@ public class BookingRepository(
             .All()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
 
-    public async Task<ICollection<BookingOutputModel>> GetPendingBookings(string sitterId,
+    public async Task<ICollection<BookingOutputModel>> GetPendingBookings(string id,
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<BookingOutputModel>(this
                 .All()
-                .Where(b => b.SitterId == sitterId && 
-                            b.Status.Value == BookingState.Pending.Value))
-            .AsNoTracking()
+                .Where(b => (b.SitterId == id && b.Status.Value == BookingState.Pending.Value) || b.OwnerId == id)
+            .AsNoTracking())
             .ToListAsync(cancellationToken);
 }

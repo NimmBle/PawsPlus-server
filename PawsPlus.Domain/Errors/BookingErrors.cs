@@ -15,4 +15,7 @@ public class BookingErrors
     
     public static Error UnableToSendEmail => Error.Conflict(
         "Booking.UnableToSendEmail", $"The booking has been updated, but could not send email"); 
+    
+    public static Error OwnerPetIsNull => Error.Validation(
+        "Booking.OwnerPetIsNull", $"The owner does not have a pet. Please create one before trying to book a sitter");
 }
