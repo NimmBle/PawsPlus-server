@@ -23,12 +23,14 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
     {
         public async Task<Result> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
-            var currentUserId = currentUser.UserId;
-            var ownerProfileId = await profileQueryRepository.GetProfileIdByUser(currentUserId);
-            
-            
+            var ownerProfile = await profileQueryRepository.GetPetLocation(currentUser.UserId);
             var serviceId = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
 
+            if (!ownerProfile.HasPet)
+            {
+                return BookingErrors.OwnerPetIsNull;
+            }
+            
             if (serviceId == null)
             {
                 return ServiceErrors.ServiceNotFound;
@@ -40,23 +42,28 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                 .WithEndDay(request.EndDay)
                 .WithEndTime(request.EndTime)
                 .WithMeetingPlaceType(request.MeetingPlaceType)
-                .WithMeetingPlaceId(request.MeetingPlaceId)
                 .WithAdditionalDescription(request.AdditionalDescription)
                 .WithServiceId(serviceId)
                 .WithSitterId(request.SitterId)
-                .WithOwnerId(ownerProfileId)
-                .Build();
+                .WithOwnerId(ownerProfile.OwnerId);
 
-            await bookingDomainRepository.Save(booking);
-
-            var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
-            
-            var requestResult = await emailSender.SendRequestEmail(sitterUserId);
-
-            if (!requestResult)
+            if (request.MeetingPlaceType.Equals(Domain.Enums.MeetingPlaceType.AtOwnersPlace))
             {
-                return BookingErrors.UnableToSendEmail;
+                booking = booking
+                    .WithMeetingPlaceId(ownerProfile.PlaceId);
             }
+            else
+            {
+                booking = booking
+                    .WithMeetingPlaceType(request.MeetingPlaceType);
+            }
+            
+
+            await bookingDomainRepository.Save(booking.Build());
+
+            // var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
+            
+            // emailSender.SendRequestEmail(sitterUserId);
             
             return Result.Success;
         }

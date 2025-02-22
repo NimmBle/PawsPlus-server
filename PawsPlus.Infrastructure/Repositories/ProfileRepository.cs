@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PawsPlus.Application.Features.Profile;
 using PawsPlus.Application.Features.Profile.Queries;
@@ -12,7 +13,8 @@ using Profile = PawsPlus.Domain.Models.Profile;
 namespace PawsPlus.Infrastructure.Repositories;
 
 public class ProfileRepository(
-    ZoolandiaDbContext db)
+    ZoolandiaDbContext db,
+    IMapper mapper)
     : DataRepository<ZoolandiaDbContext, Profile>(db),
         IProfileDomainRepository,
         IProfileQueryRepository
@@ -63,6 +65,16 @@ public class ProfileRepository(
     public async Task<MineProfileOutputModel> GetDetailsByUser(string userId,
         CancellationToken cancellationToken = default)
         => await GetDetailsBase<MineProfileOutputModel>(p => p.Id == userId, cancellationToken);
+
+    public async Task<ProfilePetLocationDto> GetPetLocation(string userId,
+        CancellationToken cancellationToken = default)
+        => await mapper
+            .ProjectTo<ProfilePetLocationDto>(this
+                .Data
+                .Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.Profile))
+            .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default)
         => await this
