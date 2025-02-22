@@ -3,7 +3,7 @@ using PawsPlus.Application.Features.Breed.Queries;
 using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.ValueObjects;
 
-namespace PawsPlus.Application.Features.Pet.Queries;
+namespace PawsPlus.Application.Features.Profile.Queries.MinePet;
 
 public class PetOutputModel : IMapFrom<Domain.Models.Pet>
 {
@@ -30,5 +30,5 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
     virtual public void Mapping(AutoMapper.Profile profile)
         => profile
             .CreateMap<Domain.Models.Pet, PetOutputModel>()
-            .ForMember(p => p.PetType, opt => opt.MapFrom(p => p.AnimalType.Id));
+            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.AnimalType.Id));
 }

@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Application.Features.Pet;
 
-namespace PawsPlus.Application.Features.Pet.Queries;
+namespace PawsPlus.Application.Features.Profile.Queries.MinePet;
 
 public class GetProfilePetQuery : IRequest<Result<PetOutputModel>>
 {

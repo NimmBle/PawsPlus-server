@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PawsPlus.Application.Features.Pet.Queries;
 using PawsPlus.Application.Features.Post.Queries;
 using PawsPlus.Application.Features.Profile.Commands.Edit;
 using PawsPlus.Application.Features.Profile.Queries.Mine;
+using PawsPlus.Application.Features.Profile.Queries.MinePet;
 using PawsPlus.Application.Features.Profile.Queries.Search;
 
 namespace PawsPlus.Web.Features;
