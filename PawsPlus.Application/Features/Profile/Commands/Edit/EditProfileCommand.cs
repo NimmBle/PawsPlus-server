@@ -48,9 +48,10 @@ public class EditProfileCommand
                 .UpdatePhotoUrl(request.PhotoUrl)
                 .UpdatePhoneNumber(request.PhoneNumber)
                 .UpdateDescription(request.Description)
-                .UpdateLocation(request.Location.PlaceId, 
+                .UpdateLocation(request.Location.PlaceId,
                     request.Location.Latitude,
-                    request.Location.Longitude);
+                    request.Location.Longitude)
+                .UpdateFirstLogin();
             
             await profileDomainRepository.Update(profile);
 

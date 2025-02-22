@@ -33,11 +33,6 @@ public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel
             
             user.FirstLogin = profile.FirstLogin;
             
-            if (user.Roles.Contains("Owner"))
-            {
-                profile.UpdateFirstLogin();
-            }
-            
             return user;
         }
     }
