@@ -18,7 +18,7 @@ public interface IPetFactory : IFactory<Models.Pet>
 
     IPetFactory WithBreed(ICollection<Breed> breeds);
 
-    IPetFactory WithWeight(Weight weight);
+    IPetFactory WithWeight(Weight? weight);
 
     IPetFactory WithPersonality(
         string? temperament,
