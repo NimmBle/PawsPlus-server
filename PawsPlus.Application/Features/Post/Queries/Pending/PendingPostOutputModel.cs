@@ -23,11 +23,11 @@ public class PendingPostOutputModel : IMapFrom<Domain.Models.Post>
     public void Mapping(AutoMapper.Profile mapper)
         => mapper
             .CreateMap<Domain.Models.Post, PendingPostOutputModel>()
-            .ForMember(p => p.FirstName, opt => opt.MapFrom(p => p.Profile.FirstName))
-            .ForMember(p => p.LastName, opt => opt.MapFrom(p => p.Profile.LastName))
-            .ForMember(p => p.PhotoUrl, opt => opt.MapFrom(p => p.Profile.PhotoUrl))
-            .ForMember(p => p.ServiceNames, opt => opt.MapFrom(p => p.Services.Select( s => s.Name)))
-            .ForMember(p => p.AnimalTypes, opt => opt.MapFrom(p => p.AnimalTypes.Select( s => s.Name)))
-            .ForMember(p => p.PostId, opt => opt.MapFrom(p => p.Id))
-            .ForMember(p => p.ProfileId, opt => opt.MapFrom(p => p.ProfileId));
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(p => p.Profile.FirstName))
+            .ForMember(dest => dest.LastName, opt => opt.MapFrom(p => p.Profile.LastName))
+            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(p => p.Profile.PhotoUrl))
+            .ForMember(dest => dest.ServiceNames, opt => opt.MapFrom(p => p.Services.Select( s => s.Name)))
+            .ForMember(dest => dest.AnimalTypes, opt => opt.MapFrom(p => p.AnimalTypes.Select( s => s.Name)))
+            .ForMember(dest => dest.PostId, opt => opt.MapFrom(p => p.Id))
+            .ForMember(dest => dest.ProfileId, opt => opt.MapFrom(p => p.ProfileId));
 }

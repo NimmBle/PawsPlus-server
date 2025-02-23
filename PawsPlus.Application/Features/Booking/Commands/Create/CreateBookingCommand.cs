@@ -58,12 +58,11 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                     .WithMeetingPlaceType(request.MeetingPlaceType);
             }
             
-
             await bookingDomainRepository.Save(booking.Build());
 
-            // var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
+            var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
             
-            // emailSender.SendRequestEmail(sitterUserId);
+            await emailSender.SendRequestEmail(sitterUserId);
             
             return Result.Success;
         }

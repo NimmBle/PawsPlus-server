@@ -35,7 +35,7 @@ public class ApproveBookingCommand : IRequest<Result>
             await bookingDomainRepository.Update(booking);
             
             var result = await emailSender.SendBookingApproveEmail(request.OwnerId);
-
+            
             if (result == false)
             {
                 return BookingErrors.UnableToSendEmail;

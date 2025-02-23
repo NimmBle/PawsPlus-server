@@ -65,7 +65,11 @@ internal class IdentityService(
                     return IdentityErrors.IdentityError(roleError);
                 }
                 
-                _ = SendConfirmationEmail(user, firstName, lastName);
+                var sendGridResponse = await SendConfirmationEmail(user, firstName, lastName);
+                if (!sendGridResponse.IsSuccessStatusCode)
+                {
+                    return IdentityErrors.IdentityError("Unable to send a confirmation email. Please try registering again.");
+                }
                 
                 scope.Complete();
 
@@ -84,14 +88,17 @@ internal class IdentityService(
     {
         var user = await userManager.FindByEmailAsync(userInput.Email);
         if (user == null)
+        {
             return IdentityErrors.InvalidCredentials;
-
+        }
+            
         var passwordValid = await userManager.CheckPasswordAsync(user, userInput.Password);
         if (!passwordValid)
+        {
             return IdentityErrors.InvalidCredentials;
-        
+        }
+            
         var userRoles = await userManager.GetRolesAsync(user);
-
         var token = jwtTokenGenerator.GenerateToken(user.Id, userInput.Email, userRoles);
         
         var roles = await userManager.GetRolesAsync(user);
@@ -131,44 +138,44 @@ internal class IdentityService(
         return Result.Success;
     }
 
-    // public async Task SendPasswordResetEmail(string email)
-    // {
-    //     var user = await userManager.FindByEmailAsync(email);
-    //     var token = await userManager.GeneratePasswordResetTokenAsync(user);
-    //     
-    //     var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-    //     var confirmationLink =
-    //         $"http://localhost:4200/auth/confirm-email?email={email}&token={HttpUtility.UrlEncode(token)}";
-    //     
-    //     var client = new SendGridClient(apiKey);
-    //     var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
-    //     var subject = "Създаване на нова парола";
-    //     var to = new EmailAddress(user.Email, user.UserName);
-    //     var htmlContent = $@"
-    //     <html>
-    //     <body style='font-family: Oswald, sans-serif;'>
-    //       <p>Хей!</p>
-    //       <p>За да създадеш новата си парола последвай линка: <br/> <a href='{confirmationLink}'>създай нова парола </a> </p>
-    //       <p>Благодарим предварително!</p>
-    //       <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
-    //     </body>
-    //     </html>";
-    //     
-    //     var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
-    //     
-    //     var result = await client.SendEmailAsync(message);
-    //
-    //     if (result.IsSuccessStatusCode)
-    //     {
-    //         Console.WriteLine("Email sent");
-    //     }
-    // }
-    //
-    // public Task<Result> ResetPassword(string email, string oldPassword, string newPassword)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
+    public async Task SendPasswordResetEmail(string email)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        
+        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+        var confirmationLink =
+            $"http://localhost:4200/auth/reset-password?token={HttpUtility.UrlEncode(token)}";
+        
+        var client = new SendGridClient(apiKey);
+        var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
+        var subject = "Създаване на нова парола";
+        var to = new EmailAddress(user.Email, user.UserName);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+          <p>Хей!</p>
+          <p>За да създадеш новата си парола последвай линка: <br/> <a href='{confirmationLink}'>създай нова парола </a> </p>
+          <p>Благодарим предварително!</p>
+          <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+        
+        var result = await client.SendEmailAsync(message);
+    
+        if (result.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Email sent");
+        }
+    }
+    
+    public async Task<Result> ChangePassword(string email, string oldPassword, string newPassword)
+    {
+        return IdentityErrors.IdentityError("Not implemented yet.");
+    }
+    
 
     public async Task<bool> EmailAlreadyExists(string email)
     {
@@ -183,23 +190,20 @@ internal class IdentityService(
     public async Task<Result> ConfirmEmail(string userId, string token)
     {
         var user = await userManager.FindByIdAsync(userId);
-
         if (user == null)
         {
             return IdentityErrors.UserNotFound(userId);
         }
         
         var isVerified = await userManager.IsEmailConfirmedAsync(user);
-
         if (isVerified)
         {
             return IdentityErrors.EmailAlreadyConfirmed(user.Email);
         }
-            
         
         var decodedToken = HttpUtility.UrlDecode(token);
+        
         var result = await userManager.ConfirmEmailAsync(user, decodedToken);
-
         if (!result.Succeeded)
         {
             return IdentityErrors.EmailConfirmationFailed(user.Email);
@@ -219,9 +223,8 @@ internal class IdentityService(
     }
 
 
-    public async Task SendConfirmationEmail(User user, string firstName = "", string lastName = "")
+    public async Task<Response> SendConfirmationEmail(User user, string firstName = "", string lastName = "")
     {
-        // var apiKey = "REDACTED_SENDGRID_API_KEY";
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
         var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
         var confirmationLink =
@@ -246,6 +249,8 @@ internal class IdentityService(
         
         var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
         
-         client.SendEmailAsync(message);
+        return await client.SendEmailAsync(message);
+        
+        
     }
 }

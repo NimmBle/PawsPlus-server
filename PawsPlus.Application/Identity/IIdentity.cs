@@ -17,9 +17,9 @@ public interface IIdentity
     
     // Task<bool> EmailAlreadyExists(string email);
     
-    // Task SendPasswordResetEmail(string email);
+    Task SendPasswordResetEmail(string email);
     
-    // Task<Result> ResetPassword(string email, string oldPassword, string newPassword);
+    Task<Result> ChangePassword(string email, string oldPassword, string newPassword);
     
     Task<IList<string>> GetRoles(string userId);
 }

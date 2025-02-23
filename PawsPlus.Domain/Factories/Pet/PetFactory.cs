@@ -56,7 +56,7 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public IPetFactory WithWeight(Weight weight)
+    public IPetFactory WithWeight(Weight? weight)
     {
         this.weight = weight;
         return this;
