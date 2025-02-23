@@ -51,15 +51,15 @@ public class SearchPostsParams
         }
         
         // Location
-        // if (Latitude != 0 && Latitude != null &&
-        //     Longitude != 0 && Longitude != null)
-        // {
-        //     double radiusInKilometers = 1.5;
-        //     
-        //     var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
-        //
-        //     predicate = predicate.And(p => p.Profile.Location.Point.Distance(centerPoint) * 100 < radiusInKilometers);
-        // }
+        if (Latitude != 0 && Latitude != null &&
+            Longitude != 0 && Longitude != null)
+        {
+            double radiusInKilometers = 25.0;
+            
+            var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
+        
+            predicate = predicate.And(p => p.Profile.Location.Point.Distance(centerPoint) * 100 < radiusInKilometers);
+        }
         
         // StartDate and EndDate
         if (StartDate is not null && EndDate is not null)
