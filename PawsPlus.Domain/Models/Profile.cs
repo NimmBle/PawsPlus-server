@@ -75,8 +75,13 @@ public class Profile : Entity<string>, IAggregateRoot
         return this;
     }
 
-    public Profile UpdateDescription(string description)
+    public Profile UpdateDescription(string? description)
     {
+        if (description == null)
+        {
+            return this;
+        }
+        
         ValidateDescription(description);
         this.Description = description;
 
