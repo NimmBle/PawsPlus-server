@@ -26,7 +26,7 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
                 });
 
         builder
-            .HasMany(p => p.AnimalTypes)
+            .HasMany(p => p.Animals)
             .WithMany(p => p.Posts);
     }
 }

@@ -15,14 +15,14 @@ public class Post : Entity<string>, IAggregateRoot
     }
 
     public Post(
-        List<AnimalType> animalTypes,
+        List<Animal> animalTypes,
         List<Weight>? weights,
         string profileId)
     {
         this.Validate(animalTypes, weights);
         
         this.Id = Guid.NewGuid().ToString();
-        this.AnimalTypes = animalTypes.ToList();
+        this.Animals = animalTypes.ToList();
         this.Weights = weights.ToList();
         this.ProfileId = profileId;
     }
@@ -32,7 +32,7 @@ public class Post : Entity<string>, IAggregateRoot
     
     public Profile Profile { get; set; }
 
-    public List<AnimalType> AnimalTypes { get; private set; } = new();
+    public List<Animal> Animals { get; private set; } = new();
 
     public List<Weight>? Weights { get; private set; } = new();
 
@@ -71,14 +71,14 @@ public class Post : Entity<string>, IAggregateRoot
         return this;
     }
  
-    public Post UpdatePetTypes(AnimalType animalType)
+    public Post UpdatePetTypes(Animal animal)
     {
-        if (this.AnimalTypes.Any(p => p == animalType))
+        if (this.Animals.Any(p => p == animal))
         {
             return this;
         }
         
-        this.AnimalTypes.Add(animalType);
+        this.Animals.Add(animal);
 
         return this;
     }
@@ -92,20 +92,20 @@ public class Post : Entity<string>, IAggregateRoot
         return this;
     }
 
-    public void RemovePetType(AnimalType animalType)
+    public void RemovePetType(Animal animal)
     {
-        if (this.AnimalTypes.Contains(animalType))
+        if (this.Animals.Contains(animal))
         {
-            this.AnimalTypes.Remove(animalType);
+            this.Animals.Remove(animal);
         }
 
-        if (animalType.Name == "Dog")
+        if (animal.Name == "Dog")
         {
             this.Weights.Clear();
         }
     }
 
-    private void Validate(List<AnimalType> petTypes, List<Weight> weights)
+    private void Validate(List<Animal> petTypes, List<Weight> weights)
     {
         // this.ValidatePetTypes(petTypes);
         this.ValidateWeights(weights);

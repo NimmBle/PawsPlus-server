@@ -17,5 +17,5 @@ public class PostDetailsOutputModel : IMapFrom<Domain.Models.Post>
     public virtual void Mapping(AutoMapper.Profile mapper)
         => mapper
             .CreateMap<Domain.Models.Post, PostDetailsOutputModel>()
-            .ForMember(dest => dest.Pets, opt => opt.MapFrom(p => p.AnimalTypes.Select(a => a.Id).ToList()));
+            .ForMember(dest => dest.Pets, opt => opt.MapFrom(p => p.Animals.Select(a => a.Id).ToList()));
 }

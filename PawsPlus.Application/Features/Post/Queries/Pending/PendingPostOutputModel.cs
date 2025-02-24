@@ -27,7 +27,7 @@ public class PendingPostOutputModel : IMapFrom<Domain.Models.Post>
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(p => p.Profile.LastName))
             .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(p => p.Profile.PhotoUrl))
             .ForMember(dest => dest.ServiceNames, opt => opt.MapFrom(p => p.Services.Select( s => s.Name)))
-            .ForMember(dest => dest.AnimalTypes, opt => opt.MapFrom(p => p.AnimalTypes.Select( s => s.Name)))
+            .ForMember(dest => dest.AnimalTypes, opt => opt.MapFrom(p => p.Animals.Select( s => s.Name)))
             .ForMember(dest => dest.PostId, opt => opt.MapFrom(p => p.Id))
             .ForMember(dest => dest.ProfileId, opt => opt.MapFrom(p => p.ProfileId));
 }

@@ -1,37 +1,45 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Errors;
+using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Service.Commands.Create;
 
 public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
 {
-    public class CreateServiceCommandHandler(IServiceDomainRepository serviceRepository,
-        IMeetingPlaceDomainRepository meetingPlaceRepository) 
+    public class CreateServiceCommandHandler(IServiceDomainRepository serviceDomainRepository,
+        IMeetingPlaceDomainRepository meetingPlaceDomainRepository,
+        IDateDomainRepository dateDomainRepository) 
         : IRequestHandler<CreateServiceCommand, Result>
     {
         public async Task<Result> Handle(
             CreateServiceCommand request,
             CancellationToken cancellationToken)
         {
-            var alreadyExists = await serviceRepository.AlreadyExists(request.ServiceType.ToString(), request.PostId);
+            var alreadyExists = await serviceDomainRepository.AlreadyExists(request.ServiceType.ToString(), request.PostId);
 
             if (alreadyExists)
             {
                 return ServiceErrors.ServiceAlreadyExists;
             }
 
-            var meetingPlaces = await meetingPlaceRepository.FindAll(request.MeetingPlaces);
+            var meetingPlaces = await meetingPlaceDomainRepository.FindAll(request.MeetingPlaces);
 
+            var availableDates = new List<Date>();
+            foreach (var date in request.AvailableDates)
+            {
+                availableDates.Add(new Date(date));
+            }
+            
             var service = new Domain.Models.Service(
                 request.ServiceType,
                 request.Price,
-                request.AvailableDates,
+                availableDates,
                 meetingPlaces,
                 request.PostId); 
             
-            await serviceRepository.Save(service);
+            await serviceDomainRepository.Save(service);
 
             return Result.Success;
         }

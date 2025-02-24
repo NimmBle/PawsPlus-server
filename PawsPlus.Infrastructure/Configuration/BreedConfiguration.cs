@@ -13,7 +13,7 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
             .HasKey(p => p.Id);
 
         builder
-            .HasOne(b => b.AnimalType)
+            .HasOne(b => b.Animal)
             .WithMany(a => a.Breeds)
             .HasForeignKey(b => b.AnimalTypeId)
             .OnDelete(DeleteBehavior.Restrict);

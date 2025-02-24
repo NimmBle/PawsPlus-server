@@ -24,9 +24,11 @@ public class
     
     public DbSet<Booking> Bookings { get; set; } = default!;
     
-    public DbSet<AnimalType> AnimalTypes { get; set; } = default!;
+    public DbSet<Animal> Animals { get; set; } = default!;
     
     public DbSet<MeetingPlace> MeetingPlaces { get; set; } = default!;
+    
+    public DbSet<Date> Dates { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -34,7 +36,7 @@ public class
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
 
         SeedMeetingPlaces(builder.Entity<MeetingPlace>());
-        SeedAnimalTypes(builder.Entity<AnimalType>());
+        SeedAnimals(builder.Entity<Animal>());
         SeedBreeds(builder.Entity<Breed>());
         // SeedAdminAndRoles(builder);
         
@@ -50,11 +52,11 @@ public class
             );
     }
 
-    private static void SeedAnimalTypes(EntityTypeBuilder<AnimalType> entity)
+    private static void SeedAnimals(EntityTypeBuilder<Animal> entity)
     {
         entity.HasData(
-            new AnimalType(1, "Dog"),
-            new AnimalType(2, "Cat")
+            new Animal(1, "Dog"),
+            new Animal(2, "Cat")
             );
     }
 

@@ -20,6 +20,6 @@ public class ServiceOutputModel : IMapFrom<Domain.Models.Service>
     public virtual void Mapping(AutoMapper.Profile profile)
         => profile
             .CreateMap<Domain.Models.Service, ServiceOutputModel>()
-            .ForMember(dest => dest.MeetingPlaces, opt => opt.MapFrom(src => src.MeetingPlaces.Select(meetingPlace => meetingPlace.Id)));
-
+            .ForMember(dest => dest.MeetingPlaces, opt => opt.MapFrom(src => src.MeetingPlaces.Select(meetingPlace => meetingPlace.Id)))
+            .ForMember(dest => dest.AvailableDates, opt => opt.MapFrom(src => src.AvailableDates.Select(ad => ad.Day)));
 }

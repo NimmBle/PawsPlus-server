@@ -32,6 +32,6 @@ public class PetDetailsOutputModel : IMapFrom<ModelConstants.Pet>
     virtual public void Mapping(AutoMapper.Profile profile)
         => profile
             .CreateMap<Domain.Models.Pet, PetDetailsOutputModel>()
-            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.AnimalType.Id));
+            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.Animal.Id));
 
 }

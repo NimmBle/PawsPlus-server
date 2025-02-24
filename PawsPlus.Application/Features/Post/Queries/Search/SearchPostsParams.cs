@@ -39,7 +39,7 @@ public class SearchPostsParams
         // PetType
         if (PetType != 0)
         {
-            predicate = predicate.And(p => p.AnimalTypes
+            predicate = predicate.And(p => p.Animals
                 .Any(at => at.Id == PetType));
         }
         
@@ -74,21 +74,23 @@ public class SearchPostsParams
                 .ToList();
 
             predicate = predicate.And(p => p.Services
-                .Any(s => requiredDates.All(rd => s.AvailableDates.Contains(rd))));
+                .Any(s => requiredDates
+                .All(rd => s.AvailableDates
+                .All(d => d.Day.Equals(rd)))));
         }
         else if (StartDate is not null && EndDate is null)
         {
             predicate = predicate.And(p => p.Services
                 .Select(s => s.AvailableDates)
-                .Where(ad => ad.Contains(DateOnly.Parse(StartDate)))
-                .Any());
+                .Any(ad => ad
+                .Any( d => d.Day.Equals(DateOnly.Parse(StartDate)))));
         }
         else if (StartDate is null && EndDate is not null)
         {
             predicate = predicate.And(p => p.Services
                 .Select(s => s.AvailableDates)
-                .Where(ad => ad.Contains(DateOnly.Parse(EndDate)))
-                .Any());
+                .Any(ad => ad
+                .Any(d => d.Day.Equals(DateOnly.Parse(EndDate)))));
         }
 
         // MIN AND MAX PRICE

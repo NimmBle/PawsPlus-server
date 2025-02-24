@@ -18,6 +18,7 @@ public class ServiceRepository(
     public async Task<Service> Find(string id,
         CancellationToken cancellationToken = default)
         => await All()
+            .Include(s => s.AvailableDates)
             .Include(s => s.MeetingPlaces)
             .FirstOrDefaultAsync(s => s.Id == id);
 

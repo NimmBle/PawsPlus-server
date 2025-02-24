@@ -11,5 +11,9 @@ public class ServiceConfirguration : IEntityTypeConfiguration<Service>
         builder
             .HasMany(s => s.MeetingPlaces)
             .WithMany(m => m.Services);
+        
+        builder
+            .HasMany(s => s.AvailableDates)
+            .WithMany(s => s.Services);
     }
 }

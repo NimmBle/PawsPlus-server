@@ -14,7 +14,7 @@ public class Breed : Entity<string>, IAggregateRoot
     
     public int AnimalTypeId { get; private set; }
     
-    public AnimalType AnimalType { get; private set; }
+    public Animal Animal { get; private set; }
     
     public ICollection<Pet> Pets { get; private set; }
 

@@ -8,7 +8,7 @@ public class PetFactory : IPetFactory
 {
     private string name = default!;
     private string photoUrl = default!;
-    private AnimalType animalType = default!;
+    private Animal animal = default!;
     private Age age = default!;
     private Gender gender;
     private ICollection<Breed> breeds;
@@ -29,9 +29,9 @@ public class PetFactory : IPetFactory
         return this;
     }
 
-    public IPetFactory WithType(AnimalType animalType)
+    public IPetFactory WithType(Animal animal)
     {
-        this.animalType = animalType;
+        this.animal = animal;
         return this;
     }
 
@@ -107,7 +107,7 @@ public class PetFactory : IPetFactory
     public Models.Pet Build()
         => new (this.name,
             this.photoUrl,
-            this.animalType,
+            this.animal,
             this.age,
             this.gender,
             this.breeds,

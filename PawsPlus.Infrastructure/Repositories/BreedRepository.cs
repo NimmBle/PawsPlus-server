@@ -20,7 +20,7 @@ public class BreedRepository(ZoolandiaDbContext db,
         => await mapper
             .ProjectTo<BreedOutputModel>(this
                 .All()
-                .Where(b => b.AnimalType.Id == animalTypeId))
+                .Where(b => b.Animal.Id == animalTypeId))
             .ToListAsync(cancellationToken);
 
     public async Task<Breed> Find(string id,

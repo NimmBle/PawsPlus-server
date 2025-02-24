@@ -3,9 +3,9 @@ using PawsPlus.Domain.Common;
 
 namespace PawsPlus.Domain.Models;
 
-public class AnimalType : Entity<int>, IAggregateRoot
+public class Animal : Entity<int>, IAggregateRoot
 {
-    public AnimalType(int id, string name)
+    public Animal(int id, string name)
     {
         this.Id = id;
         this.Name = name;

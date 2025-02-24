@@ -10,7 +10,7 @@ public interface IPetFactory : IFactory<Models.Pet>
 
     IPetFactory WithPhotoUrl(string photoUrl);
 
-    IPetFactory WithType(AnimalType animalType);
+    IPetFactory WithType(Animal animal);
 
     IPetFactory WithAge(int years, int months);
 

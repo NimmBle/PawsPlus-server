@@ -10,7 +10,10 @@ public class GetServiceQuery : IRequest<Result<ServiceOutputModel>>
     public class GetServiceQueryHandler(IServiceQueryRepository serviceQueryRepository)
         : IRequestHandler<GetServiceQuery, Result<ServiceOutputModel>>
     {
-        public async Task<Result<ServiceOutputModel>> Handle(GetServiceQuery request, CancellationToken cancellationToken)
-            => await serviceQueryRepository.Get(request.Id);
+        public async Task<Result<ServiceOutputModel>> Handle(GetServiceQuery request,
+            CancellationToken cancellationToken)
+        {
+            return await serviceQueryRepository.Get(request.Id);
+        }
     }
 }

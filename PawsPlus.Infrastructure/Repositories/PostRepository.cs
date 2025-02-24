@@ -25,7 +25,7 @@ public class PostRepository(
         => await All()
             .Where(p => p.Id == id)
             .Include(p => p.Services)
-            .Include(p => p.AnimalTypes)
+            .Include(p => p.Animals)
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<bool> Delete(string id,
@@ -54,7 +54,7 @@ public class PostRepository(
             .ProjectTo<PostDetailsOutputModel>(this
                 .All()
                 .Where(p => p.ProfileId == profileId)
-                .Include(p => p.AnimalTypes))
+                .Include(p => p.Animals))
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<ICollection<PendingPostOutputModel>> GetPending(int skip,
@@ -78,7 +78,7 @@ public class PostRepository(
             .All()
             .Where(predicate)
             .OrderByDescending(orderBy)
-            .Include(p => p.AnimalTypes)
+            .Include(p => p.Animals)
             .Select(p => new PostOutputModel
             {
                 Id = p.ProfileId,

@@ -17,7 +17,7 @@ public class Pet : Entity<string>, IAggregateRoot
     internal Pet(
         string name,
         string photoUrl,
-        AnimalType animalType,
+        Animal animal,
         Age age,
         Gender gender,
         ICollection<Breed> breeds,
@@ -26,7 +26,7 @@ public class Pet : Entity<string>, IAggregateRoot
         HealthStatus? healthStatus,
         string profileId
     )
-        : this(name, photoUrl, animalType, gender, weight, profileId)
+        : this(name, photoUrl, animal, gender, weight, profileId)
     {
         this.Age = Age.Create(age);
         this.Breeds = breeds;
@@ -37,7 +37,7 @@ public class Pet : Entity<string>, IAggregateRoot
     internal Pet(
         string name,
         string photoUrl,
-        AnimalType animalType,
+        Animal animal,
         Gender gender,
         Weight? weight,
         string profileId
@@ -48,7 +48,7 @@ public class Pet : Entity<string>, IAggregateRoot
         this.Id = Guid.NewGuid().ToString();
         this.Name = name;
         this.PhotoUrl = photoUrl;
-        this.AnimalType = animalType;
+        this.Animal = animal;
         this.Gender = gender;
         this.Weight = weight;
         this.ProfileId = profileId;
@@ -59,7 +59,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public string PhotoUrl { get; private set; } = default!;
 
     // [JsonProperty(Required = Required.Always)]
-    public AnimalType AnimalType { get; private set; }
+    public Animal Animal { get; private set; }
     
     public Age? Age { get; private set; }
     
@@ -81,7 +81,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public void Update(
         string name,
         string photoUrl,
-        AnimalType animalType,
+        Animal animal,
         Age age,
         Gender gender,
         ICollection<Breed> breeds,
@@ -91,7 +91,7 @@ public class Pet : Entity<string>, IAggregateRoot
     {
         this.Name = name;
         this.PhotoUrl = photoUrl;
-        this.AnimalType = animalType;
+        this.Animal = animal;
         this.Age = Age.Create(age);
         this.Gender = gender;
         UpdateBreeds(breeds);
