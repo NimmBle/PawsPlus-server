@@ -14,12 +14,14 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
 
         builder
             .HasOne(b => b.AnimalType)
-            .WithMany()
+            .WithMany(a => a.Breeds)
             .HasForeignKey(b => b.AnimalTypeId)
             .OnDelete(DeleteBehavior.Restrict);
         
         // builder
         //     .Property(b => b.PetType)
         //     .HasConversion<string>();
+        
+        
     }
 }

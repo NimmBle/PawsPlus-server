@@ -23,7 +23,7 @@ public class BookingOutputModel : IMapFrom<Domain.Models.Booking>
     
     public MeetingPlaceType MeetingPlaceType { get; init; }
     
-    public string? MeetingPlaceId { get; init; }
+    public string? GooglePlaceId { get; init; }
     
     public string? AdditionalDescription { get; init; }
     

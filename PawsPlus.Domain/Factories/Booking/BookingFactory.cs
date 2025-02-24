@@ -1,4 +1,4 @@
-using PawsPlus.Domain.Enums;
+using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Domain.Factories.Booking;
 
@@ -8,8 +8,8 @@ public class BookingFactory : IBookingFactory
     private TimeOnly startTime;
     private DateOnly endDay;
     private TimeOnly endTime;
-    private MeetingPlaceType meetingPlaceType;
-    private string? meetingPlaceId;
+    private MeetingPlace meetingPlace;
+    private string? googlePlaceId;
     private string? additionalDescription;
     private string serviceId;
     private string sitterId;
@@ -39,15 +39,15 @@ public class BookingFactory : IBookingFactory
         return this;
     }
 
-    public IBookingFactory WithMeetingPlaceType(MeetingPlaceType meetingPlaceType)
+    public IBookingFactory WithMeetingPlace(MeetingPlace meetingPlace)
     {
-        this.meetingPlaceType = meetingPlaceType;
+        this.meetingPlace = meetingPlace;
         return this;
     }
 
-    public IBookingFactory WithMeetingPlaceId(string meetingPlaceId)
+    public IBookingFactory WithGooglePlaceId(string googlePlaceId)
     {
-        this.meetingPlaceId = meetingPlaceId;
+        this.googlePlaceId = googlePlaceId;
         return this;
     }
 
@@ -76,14 +76,14 @@ public class BookingFactory : IBookingFactory
     }
     
     public Models.Booking Build()
-        => new(startDay,
-            startTime,
-            endDay,
-            endTime,
-            meetingPlaceType,
-            meetingPlaceId,
-            additionalDescription,
-            serviceId,
-            sitterId,
-            ownerId);
+        => new(this.startDay,
+            this.startTime,
+            this.endDay,
+            this.endTime,
+            this.meetingPlace,
+            this.googlePlaceId,
+            this.additionalDescription,
+            this.serviceId,
+            this.sitterId,
+            this.ownerId);
 }

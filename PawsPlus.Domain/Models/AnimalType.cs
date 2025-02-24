@@ -5,11 +5,6 @@ namespace PawsPlus.Domain.Models;
 
 public class AnimalType : Entity<int>, IAggregateRoot
 {
-    public AnimalType(int id)
-    {
-        Id = id;
-    }
-    
     public AnimalType(int id, string name)
     {
         this.Id = id;

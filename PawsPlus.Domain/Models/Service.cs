@@ -20,11 +20,11 @@ public class Service : Entity<string>, IAggregateRoot
     public Service(ServiceType serviceType,
         int price,
         List<DateOnly>? availableDates,
-        List<MeetingPlaceType> meetingPlaces,
+        List<MeetingPlace> meetingPlaces,
         string postId)
         : this(serviceType)
     {
-        this.Validate(price, meetingPlaces);
+        this.Validate(price);
             
         this.Price = price;
         this.AvailableDates = availableDates;
@@ -38,9 +38,9 @@ public class Service : Entity<string>, IAggregateRoot
 
     public List<DateOnly>? AvailableDates { get; private set; } = new List<DateOnly>();
 
-    public ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
+    public List<Booking> Bookings { get; private set; } = new List<Booking>();
 
-    public List<MeetingPlaceType> MeetingPlaces { get; private set; } = new List<MeetingPlaceType>();
+    public List<MeetingPlace> MeetingPlaces { get; private set; } = new List<MeetingPlace>();
 
     public string PostId { get; private set; }
     public Post Post { get; private set; }
@@ -61,31 +61,18 @@ public class Service : Entity<string>, IAggregateRoot
         this.AvailableDates = newAvailableDates;
     }
 
-    public void UpdateMeetingPlaces(List<MeetingPlaceType> newMeetingPlaces)
+    public void UpdateMeetingPlaces(List<MeetingPlace> newMeetingPlaces)
     {
-        this.ValidateMeetingPlaces(newMeetingPlaces);
-        
         this.MeetingPlaces = newMeetingPlaces;
     }
 
-    private void Validate(int price, List<MeetingPlaceType> meetingPlaces)
+    private void Validate(int price)
     {
         this.ValidatePrice(price);
-        this.ValidateMeetingPlaces(meetingPlaces);
     }
 
     private void ValidatePrice(int price)
         => Guard.ForNegativeNumber<InvalidServiceException>(
             price,
             nameof(price));
-
-    private void ValidateMeetingPlaces(List<MeetingPlaceType> meetingPlaces)
-    {
-        if (meetingPlaces.All(places => Enum.IsDefined(typeof(MeetingPlaceType), places)))
-        {
-            return;
-        }
-
-        throw new InvalidServiceException();
-    } 
 }

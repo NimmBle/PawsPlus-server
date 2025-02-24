@@ -25,17 +25,29 @@ public class
     public DbSet<Booking> Bookings { get; set; } = default!;
     
     public DbSet<AnimalType> AnimalTypes { get; set; } = default!;
+    
+    public DbSet<MeetingPlace> MeetingPlaces { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
 
+        SeedMeetingPlaces(builder.Entity<MeetingPlace>());
         SeedAnimalTypes(builder.Entity<AnimalType>());
         SeedBreeds(builder.Entity<Breed>());
         // SeedAdminAndRoles(builder);
         
         base.OnModelCreating(builder);
+    }
+
+    private void SeedMeetingPlaces(EntityTypeBuilder<MeetingPlace> entity)
+    {
+        entity.HasData(
+            new MeetingPlace(1, "AtOwners"),
+            new MeetingPlace(2, "AtSitters"),
+            new MeetingPlace(3, "Another")
+            );
     }
 
     private static void SeedAnimalTypes(EntityTypeBuilder<AnimalType> entity)
@@ -202,7 +214,7 @@ public class
             Breed.CreateDogBreed("145", "Сибирско хъски"),
             Breed.CreateDogBreed("146", "Визла"),
             Breed.CreateDogBreed("147", "Ваймаранер")
-        );
+            );
     }
     
     private static void SeedCatBreeds(EntityTypeBuilder<Breed> entity)
@@ -247,7 +259,7 @@ public class
             Breed.CreateCatBreed("184", "Шартрьо"),
             Breed.CreateCatBreed("185", "Шотландска клепоуха"),
             Breed.CreateCatBreed("186", "Японски бобтейл")
-        );
+            );
     }
     
     private static void SeedAdminAndRoles(ModelBuilder builder)

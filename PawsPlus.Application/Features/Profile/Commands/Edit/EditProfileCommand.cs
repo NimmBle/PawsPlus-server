@@ -37,10 +37,14 @@ public class EditProfileCommand
             var profile = await profileDomainRepository.FindByUser(currentUserId);
 
             if (profile == null)
-                return false;
+            {
+                return ProfileErrors.ProfileNotFound(currentUserId);
+            }
             
             if (request.Id != profile.Id)
+            {
                 return ProfileErrors.ProfileAccessNotAllowed(request.Id);
+            }
 
             profile
                 .UpdateFirstName(request.FirstName)

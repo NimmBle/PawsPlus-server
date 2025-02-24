@@ -8,6 +8,8 @@ public class ServiceConfirguration : IEntityTypeConfiguration<Service>
 {
     public void Configure(EntityTypeBuilder<Service> builder)
     {
-  
+        builder
+            .HasMany(s => s.MeetingPlaces)
+            .WithMany(m => m.Services);
     }
 }

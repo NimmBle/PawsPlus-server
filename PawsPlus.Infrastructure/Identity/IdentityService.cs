@@ -1,6 +1,8 @@
-﻿using System.Transactions;
+﻿using System.Text;
+using System.Transactions;
 using System.Web;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Features.Profile.Queries.Mine;
 using PawsPlus.Application.Identity;
@@ -91,6 +93,10 @@ internal class IdentityService(
         {
             return IdentityErrors.InvalidCredentials;
         }
+        if (!user.EmailConfirmed)
+        {
+            return IdentityErrors.EmailNotConfirmed;    
+        }
             
         var passwordValid = await userManager.CheckPasswordAsync(user, userInput.Password);
         if (!passwordValid)
@@ -142,10 +148,11 @@ internal class IdentityService(
     {
         var user = await userManager.FindByEmailAsync(email);
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        var tokenBytes = Encoding.UTF8.GetBytes(token);
         
         var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
         var confirmationLink =
-            $"http://localhost:4200/auth/reset-password?token={HttpUtility.UrlEncode(token)}";
+            $"http://localhost:4200/auth/reset-password?token={WebEncoders.Base64UrlEncode(tokenBytes)}";
         
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
@@ -201,9 +208,7 @@ internal class IdentityService(
             return IdentityErrors.EmailAlreadyConfirmed(user.Email);
         }
         
-        var decodedToken = HttpUtility.UrlDecode(token);
-        
-        var result = await userManager.ConfirmEmailAsync(user, decodedToken);
+        var result = await userManager.ConfirmEmailAsync(user, token);
         if (!result.Succeeded)
         {
             return IdentityErrors.EmailConfirmationFailed(user.Email);
@@ -231,7 +236,7 @@ internal class IdentityService(
             $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
         
         var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
+        var from = new EmailAddress("no-reply@pawsplus.eu", "Екипът на Лапички+");
         var subject = "Потвърждаване на имейл адрес";
         var to = new EmailAddress(user.Email, user.UserName);
         var htmlContent = $@"

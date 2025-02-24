@@ -26,6 +26,7 @@ public class BookingRepository(
             .ProjectTo<BookingOutputModel>(this
                 .All()
                 .Where(b => (b.SitterId == id && b.Status.Value == BookingState.Pending.Value) || b.OwnerId == id)
-            .AsNoTracking())
+                .AsNoTracking()
+                .OrderBy(b => b.Status.Value))
             .ToListAsync(cancellationToken);
 }

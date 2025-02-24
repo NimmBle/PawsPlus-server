@@ -17,6 +17,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
         IBookingFactory bookingFactory,
         IServiceQueryRepository serviceQueryRepository,
         IProfileQueryRepository profileQueryRepository,
+        IMeetingPlaceDomainRepository meetingPlaceDomainRepository,
         ICurrentUser currentUser,
         IEmailSender emailSender) 
         : IRequestHandler<CreateBookingCommand, Result>
@@ -35,30 +36,33 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             {
                 return ServiceErrors.ServiceNotFound;
             }
+            
+            var meetingPlace = await meetingPlaceDomainRepository.Find(request.MeetingPlaceType);
 
             var booking = bookingFactory
                 .WithStartDay(request.StartDay)
                 .WithStartTime(request.StartTime)
                 .WithEndDay(request.EndDay)
                 .WithEndTime(request.EndTime)
-                .WithMeetingPlaceType(request.MeetingPlaceType)
+                .WithMeetingPlace(meetingPlace)
                 .WithAdditionalDescription(request.AdditionalDescription)
                 .WithServiceId(serviceId)
                 .WithSitterId(request.SitterId)
                 .WithOwnerId(ownerProfile.OwnerId);
 
-            if (request.MeetingPlaceType.Equals(Domain.Enums.MeetingPlaceType.AtOwnersPlace))
+            if (request.MeetingPlaceType == 1)
             {
                 booking = booking
-                    .WithMeetingPlaceId(ownerProfile.PlaceId);
+                    .WithGooglePlaceId(ownerProfile.PlaceId);
             }
             else
             {
                 booking = booking
-                    .WithMeetingPlaceType(request.MeetingPlaceType);
+                    .WithGooglePlaceId(request.MeetingPlaceId);
             }
-            
-            await bookingDomainRepository.Save(booking.Build());
+
+            var bookingBuild = booking.Build();
+            await bookingDomainRepository.Save(bookingBuild);
 
             var sitterUserId = await profileQueryRepository.GetUserIdByProfileId(request.SitterId);
             

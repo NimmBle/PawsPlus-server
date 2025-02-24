@@ -18,8 +18,8 @@ public class Booking : Entity<string>, IAggregateRoot
         TimeOnly startTime,
         DateOnly endDay,
         TimeOnly endTime,
-        MeetingPlaceType meetingPlaceType,
-        string? meetingPlaceId,
+        MeetingPlace meetingPlace,
+        string? googlePlaceId,
         string? additionalDescription,
         string serviceId,
         string sitterId,
@@ -32,8 +32,8 @@ public class Booking : Entity<string>, IAggregateRoot
         this.StartTime = startTime;
         this.EndDay = endDay;
         this.EndTime = endTime;
-        this.MeetingPlaceType = meetingPlaceType;
-        this.MeetingPlaceId = meetingPlaceId;
+        this.MeetingPlace = meetingPlace;
+        this.GooglePlaceId = googlePlaceId;
         this.AdditionalDescription = additionalDescription;
         this.Status = BookingState.Pending;
         this.ServiceId = serviceId;
@@ -47,9 +47,10 @@ public class Booking : Entity<string>, IAggregateRoot
     public DateOnly EndDay { get; private set; }
     public TimeOnly EndTime { get; private set; }
     
-    public MeetingPlaceType MeetingPlaceType { get; private set; }
+    public int MeetingPlaceId { get; private set; }
+    public MeetingPlace MeetingPlace { get; private set; }
     
-    public string? MeetingPlaceId { get; private set; }
+    public string? GooglePlaceId { get; private set; }
     
     public string? AdditionalDescription { get; private set; }
     

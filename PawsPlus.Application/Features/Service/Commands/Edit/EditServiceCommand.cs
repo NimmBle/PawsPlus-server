@@ -7,8 +7,8 @@ namespace PawsPlus.Application.Features.Service.Commands.Edit;
 
 public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
 {
-    public class EditServiceCommandHandler(
-        IServiceDomainRepository serviceDomainRepository)
+    public class EditServiceCommandHandler(IServiceDomainRepository serviceDomainRepository,
+        IMeetingPlaceDomainRepository meetingPlaceDomainRepository)
         : IRequestHandler<EditServiceCommand, Result>
     {
         public async Task<Result> Handle(
@@ -21,10 +21,11 @@ public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
             }
             
             var service = await serviceDomainRepository.Find(request.Id);
+            var meetingPlaces = await meetingPlaceDomainRepository.FindAll(request.MeetingPlaces);
             
             service.UpdatePrice(request.Price);
             service.UpdateAvailableDates(request.AvailableDates);
-            service.UpdateMeetingPlaces(request.MeetingPlaces.ToList());
+            service.UpdateMeetingPlaces(meetingPlaces);
 
             await serviceDomainRepository.Update(service);
 

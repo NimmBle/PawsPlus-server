@@ -1,5 +1,5 @@
 using PawsPlus.Domain.Common;
-using PawsPlus.Domain.Enums;
+using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Domain.Factories.Booking;
 
@@ -13,9 +13,9 @@ public interface IBookingFactory : IFactory<Models.Booking>
     
     IBookingFactory WithEndTime(TimeOnly endTime);
     
-    IBookingFactory WithMeetingPlaceType(MeetingPlaceType meetingPlaceType);
+    IBookingFactory WithMeetingPlace(MeetingPlace meetingPlace);
     
-    IBookingFactory WithMeetingPlaceId(string? meetingPlaceId);
+    IBookingFactory WithGooglePlaceId(string? meetingPlaceId);
     
     IBookingFactory WithAdditionalDescription(string? additionalDescription);
     

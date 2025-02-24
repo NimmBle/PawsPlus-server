@@ -13,8 +13,8 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    [Migration("20250219215942_AnimalType-table")]
-    partial class AnimalTypetable
+    [Migration("20250224011324_MeetingPlace-table")]
+    partial class MeetingPlacetable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,21 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.HasIndex("PetsId");
 
                     b.ToTable("BreedPet");
+                });
+
+            modelBuilder.Entity("MeetingPlaceService", b =>
+                {
+                    b.Property<int>("MeetingPlacesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServicesId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MeetingPlacesId", "ServicesId");
+
+                    b.HasIndex("ServicesId");
+
+                    b.ToTable("MeetingPlaceService");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -233,10 +248,10 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MeetingPlaceId")
+                    b.Property<string>("GooglePlaceId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MeetingPlaceType")
+                    b.Property<int>("MeetingPlaceId")
                         .HasColumnType("int");
 
                     b.Property<string>("OwnerId")
@@ -260,6 +275,8 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MeetingPlaceId");
+
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("ServiceId");
@@ -277,9 +294,6 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.Property<int>("AnimalTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AnimalTypeId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -287,8 +301,6 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnimalTypeId");
-
-                    b.HasIndex("AnimalTypeId1");
 
                     b.ToTable("Breeds");
 
@@ -1411,6 +1423,23 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PawsPlus.Domain.Models.MeetingPlace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeetingPlaces");
+                });
+
             modelBuilder.Entity("PawsPlus.Domain.Models.Pet", b =>
                 {
                     b.Property<string>("Id")
@@ -1506,10 +1535,6 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AvailableDates")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MeetingPlaces")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -1632,6 +1657,21 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MeetingPlaceService", b =>
+                {
+                    b.HasOne("PawsPlus.Domain.Models.MeetingPlace", null)
+                        .WithMany()
+                        .HasForeignKey("MeetingPlacesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PawsPlus.Domain.Models.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1685,6 +1725,12 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Booking", b =>
                 {
+                    b.HasOne("PawsPlus.Domain.Models.MeetingPlace", "MeetingPlace")
+                        .WithMany("Bookings")
+                        .HasForeignKey("MeetingPlaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("PawsPlus.Domain.Models.Profile", "Owner")
                         .WithMany("BookingsAsOwner")
                         .HasForeignKey("OwnerId")
@@ -1719,6 +1765,8 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                                 .HasForeignKey("BookingId");
                         });
 
+                    b.Navigation("MeetingPlace");
+
                     b.Navigation("Owner");
 
                     b.Navigation("Service");
@@ -1732,14 +1780,10 @@ namespace PawsPlus.Infrastructure.Data.Migrations
             modelBuilder.Entity("PawsPlus.Domain.Models.Breed", b =>
                 {
                     b.HasOne("PawsPlus.Domain.Models.AnimalType", "AnimalType")
-                        .WithMany()
+                        .WithMany("Breeds")
                         .HasForeignKey("AnimalTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("PawsPlus.Domain.Models.AnimalType", null)
-                        .WithMany("Breeds")
-                        .HasForeignKey("AnimalTypeId1");
 
                     b.Navigation("AnimalType");
                 });
@@ -1947,6 +1991,11 @@ namespace PawsPlus.Infrastructure.Data.Migrations
             modelBuilder.Entity("PawsPlus.Domain.Models.AnimalType", b =>
                 {
                     b.Navigation("Breeds");
+                });
+
+            modelBuilder.Entity("PawsPlus.Domain.Models.MeetingPlace", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Post", b =>

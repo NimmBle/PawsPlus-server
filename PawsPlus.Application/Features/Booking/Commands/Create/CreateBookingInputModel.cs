@@ -13,7 +13,7 @@ public class CreateBookingInputModel
     
     public TimeOnly EndTime { get; init; }
     
-    public MeetingPlaceType MeetingPlaceType { get; init; }
+    public int MeetingPlaceType { get; init; }
     
     public string? MeetingPlaceId { get; init; }
     

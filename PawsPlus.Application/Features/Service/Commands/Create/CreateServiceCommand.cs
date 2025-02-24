@@ -7,8 +7,8 @@ namespace PawsPlus.Application.Features.Service.Commands.Create;
 
 public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
 {
-    public class CreateServiceCommandHandler(
-        IServiceDomainRepository serviceRepository) 
+    public class CreateServiceCommandHandler(IServiceDomainRepository serviceRepository,
+        IMeetingPlaceDomainRepository meetingPlaceRepository) 
         : IRequestHandler<CreateServiceCommand, Result>
     {
         public async Task<Result> Handle(
@@ -21,13 +21,14 @@ public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
             {
                 return ServiceErrors.ServiceAlreadyExists;
             }
-                
+
+            var meetingPlaces = await meetingPlaceRepository.FindAll(request.MeetingPlaces);
 
             var service = new Domain.Models.Service(
                 request.ServiceType,
                 request.Price,
                 request.AvailableDates,
-                request.MeetingPlaces.ToList(),
+                meetingPlaces,
                 request.PostId); 
             
             await serviceRepository.Save(service);

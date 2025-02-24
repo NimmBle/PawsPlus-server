@@ -44,6 +44,12 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .OnDelete(DeleteBehavior.Restrict);
         
         builder
+            .HasOne(b => b.MeetingPlace)
+            .WithMany(p => p.Bookings)
+            .HasForeignKey(b => b.MeetingPlaceId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder
             .OwnsOne(p => p.Status,
                 s =>
                 {
