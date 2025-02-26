@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using PawsPlus.Infrastructure.Common.Persistence;
@@ -12,9 +13,11 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ZoolandiaDbContext))]
-    partial class ZoolandiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250224043652_weights-table")]
+    partial class weightstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,8 +254,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AdditionalDescription")
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("EndDay")
                         .HasColumnType("date");
@@ -1490,13 +1492,11 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
@@ -1545,30 +1545,25 @@ namespace PawsPlus.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("FirstLogin")
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoUrl")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1930,8 +1925,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.Property<string>("HealthProblems")
                                 .IsRequired()
-                                .HasMaxLength(1024)
-                                .HasColumnType("nvarchar(1024)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("HealthProblems");
 
                             b1.Property<bool?>("IsCastrated")
@@ -1946,8 +1940,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.Property<string>("OtherDietaryNeeds")
                                 .IsRequired()
-                                .HasMaxLength(1024)
-                                .HasColumnType("nvarchar(1024)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("OtherDietaryNeeds");
 
                             b1.Property<bool?>("TakesMedications")
@@ -1975,8 +1968,7 @@ namespace PawsPlus.Infrastructure.Data.Migrations
 
                             b1.Property<string>("FearsDescription")
                                 .IsRequired()
-                                .HasMaxLength(1024)
-                                .HasColumnType("nvarchar(1024)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("FearsDescription");
 
                             b1.Property<int>("HasFears")

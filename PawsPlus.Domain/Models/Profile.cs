@@ -1,4 +1,5 @@
-﻿using PawsPlus.Domain.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Exceptions;
 using PawsPlus.Domain.ValueObjects;
@@ -26,7 +27,7 @@ public class Profile : Entity<string>, IAggregateRoot
     public string LastName { get; private set; }
 
     public string PhoneNumber { get; private set; }
-
+    
     public string PhotoUrl { get; private set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1736432338/vk3ewpd0s0xcaywgjd29.svg";
 
     public string? Description { get; private set; }

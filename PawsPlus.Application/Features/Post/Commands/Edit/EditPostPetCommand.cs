@@ -12,7 +12,8 @@ public class EditPostPetCommand : PostInputModel, IRequest<Result>
     public int Pet { get; set; }
     
     public class EditPostCommandHandler(IPostDomainRepository postDomainRepository,
-        IAnimalTypeDomainRepository animalTypeDomainRepository)
+        IAnimalTypeDomainRepository animalTypeDomainRepository,
+        IWeightDomainRepository weightDomainRepository)
         : IRequestHandler<EditPostPetCommand, Result>
     {
         public async Task<Result> Handle(EditPostPetCommand request, CancellationToken cancellationToken)
@@ -25,10 +26,11 @@ public class EditPostPetCommand : PostInputModel, IRequest<Result>
             }
 
             var animalType = await animalTypeDomainRepository.Find(request.Pet);
+            var weights = await weightDomainRepository.FindAll(request.Weights);
             
             post
                 .UpdatePetTypes(animalType)
-                .UpdateWeights(request.Weights.ToList());
+                .UpdateWeights(weights.ToList());
             
             await postDomainRepository.Update(post);
             

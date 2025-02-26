@@ -1,6 +1,7 @@
 ﻿using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Models;
+using Weight = PawsPlus.Domain.Models.Weight;
 
 namespace PawsPlus.Domain.Factories.Pet;
 

@@ -16,7 +16,8 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
     public class CreatePostCommandHandler(
         IPostDomainRepository postRepository,
         IProfileDomainRepository profileDomainRepository,
-        IAnimalTypeDomainRepository animalTypeDomainRepository)
+        IAnimalTypeDomainRepository animalTypeDomainRepository,
+        IWeightDomainRepository weightDomainRepository)
         : IRequestHandler<CreatePostCommand, Result>
     {
         public async Task<Result> Handle(
@@ -24,10 +25,11 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
             CancellationToken cancellationToken)
         {
             var animalTypes = await animalTypeDomainRepository.FindAll(request.Pets);
+            var weights = await weightDomainRepository.FindAll(request.Weights);
             
             var post = new Domain.Models.Post(
                 animalTypes,
-                request.Weights,
+                weights.ToList(),
                 request.profileId
                 );
             

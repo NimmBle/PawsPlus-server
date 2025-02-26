@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PawsPlus.Application.Features.Post.Commands.Activate;
 using PawsPlus.Application.Features.Post.Commands.Approve;
 using PawsPlus.Application.Features.Post.Commands.Create;
 using PawsPlus.Application.Features.Post.Commands.Delete;
@@ -50,6 +51,12 @@ public class PostsController : ApiController
     public async Task<ActionResult<ICollection<PendingPostOutputModel>>> Pending(
         [FromRoute] GetPendingPostsQuery query)
         => await this.Send(query);
+    
+    [HttpPatch]
+    [Route(Id + PathSeparator + nameof(Activate))]
+    public async Task<ActionResult> Activate(
+        [FromRoute] ActivatePostCommand command)
+        => await this.Send(command);
     
     [HttpPatch]
     [Authorize(Roles = Administrator)]

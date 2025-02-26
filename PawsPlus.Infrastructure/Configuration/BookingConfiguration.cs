@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PawsPlus.Domain.Models;
+using static PawsPlus.Domain.Models.ModelConstants.Booking;
 
 namespace PawsPlus.Infrastructure.Configuration;
 
@@ -8,6 +9,10 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 {
     public void Configure(EntityTypeBuilder<Booking> builder)
     {
+        builder
+            .Property(b => b.AdditionalDescription)
+            .HasMaxLength(MaxDescriptionLength);
+        
         builder
             .HasKey(b => b.Id);
         

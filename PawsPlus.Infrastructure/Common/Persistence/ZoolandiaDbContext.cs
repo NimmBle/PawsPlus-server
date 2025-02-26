@@ -29,6 +29,8 @@ public class
     public DbSet<MeetingPlace> MeetingPlaces { get; set; } = default!;
     
     public DbSet<Date> Dates { get; set; } = default!;
+    
+    public DbSet<Weight> Weights { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -15,27 +15,27 @@ public class ProfilesController : ApiController
     public async Task<ActionResult<MineProfileOutputModel>> Mine(
         [FromQuery] MineProfileQuery query)
         => await this.Send(query);
-    
+
     [HttpGet]
     [Authorize(Roles = Owner)]
     [Route(Id + PathSeparator + nameof(MyPet))]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
-        => await this.Send(query);  
-    
+        => await this.Send(query);
+
     [HttpGet]
     [Authorize(Roles = Sitter)]
     [Route(Id + PathSeparator + nameof(MyPost))]
     public async Task<ActionResult<PostDetailsOutputModel>> MyPost(
         [FromRoute] GetProfilePostDetailsQuery query)
         => await this.Send(query);
-        
+
     [HttpGet]
     [Route(Id)]
     public async Task<ActionResult<ProfileDetailsOutputModel>> Details(
         [FromRoute] GetProfileDetailsQuery query)
         => await this.Send(query);
-    
+
     [HttpPut]
     [Route(Id)]
     public async Task<ActionResult> Edit(EditProfileCommand command)

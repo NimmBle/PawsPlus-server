@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static PawsPlus.Domain.Models.ModelConstants.Common;
+using static PawsPlus.Domain.Models.ModelConstants.Profile;
 using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Infrastructure.Configuration;
@@ -17,26 +19,30 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
 
         builder
             .Property(p => p.FirstName)
+            .HasMaxLength(MaxNameLength)
             .IsRequired();
         
         builder
             .Property(p => p.LastName)
+            .HasMaxLength(MaxNameLength)
             .IsRequired();
         
         builder
             .Property(p => p.PhoneNumber)
+            .HasMaxLength(MaxPhoneNumberLength)
             .IsRequired();
 
         builder
             .Property(p => p.PhotoUrl)
+            .HasMaxLength(MaxUrlLength)
             .IsRequired(false);
         
         builder
             .Property(p => p.Description)
+            .HasMaxLength(MaxDescriptionLength)
             .IsRequired(false);
 
-
-
+        
         builder
             .OwnsOne(p => p.Location, opt =>
             {

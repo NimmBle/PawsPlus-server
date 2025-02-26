@@ -22,11 +22,17 @@ public class PostRepository(
     
     public async Task<Post> Find(string id,
         CancellationToken cancellationToken = default)
-        => await All()
+        => await this
+            .All()
             .Where(p => p.Id == id)
             .Include(p => p.Services)
             .Include(p => p.Animals)
             .FirstOrDefaultAsync(cancellationToken);
+
+    public async Task<Post> FindByProfile(string profileId, CancellationToken cancellationToken = default)
+        => await this
+            .All()
+            .FirstOrDefaultAsync(p => p.ProfileId == profileId, cancellationToken);
 
     public async Task<bool> Delete(string id,
         CancellationToken cancellationToken = default)

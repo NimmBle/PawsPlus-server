@@ -68,7 +68,8 @@ public class Pet : Entity<string>, IAggregateRoot
     
     public ICollection<Breed> Breeds { get; private set; } = new HashSet<Breed>();
     
-    public Weight? Weight { get; private set; }
+    public int? WeightId { get; private set; }
+    public Weight Weight { get; private set; }
 
     public Personality? Personality { get; private set; }
 

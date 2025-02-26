@@ -4,6 +4,7 @@ using PawsPlus.Application.Features.Profile.Queries.MinePet;
 using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Models;
 using PawsPlus.Domain.ValueObjects;
+using Weight = PawsPlus.Domain.Models.Weight;
 
 namespace PawsPlus.Application.Features.Pet.Queries.Details;
 

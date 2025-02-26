@@ -17,6 +17,7 @@ public class CreatePetCommand
         IPetDomainRepository petDomainRepository,
         IBreedDomainRepository breedDomainRepository,
         IAnimalTypeDomainRepository animalTypeDomainRepository,
+        IWeightDomainRepository weightDomainRepository,
         IPetFactory petFactory)
         : IRequestHandler<CreatePetCommand, Result<CreatePetOutputModel>>
     {
@@ -34,14 +35,13 @@ public class CreatePetCommand
 
             var animalTypes = await animalTypeDomainRepository.Find(request.PetType);
             
-            var pet = petFactory
+            var petBuilder = petFactory
                 .WithName(request.Name)
                 .WithPhotoUrl(request.PhotoUrl)
                 .WithType(animalTypes)
                 .WithAge(request.Age.Years, request.Age.Months)
                 .WithGender(request.Gender)
                 .WithBreed(breeds)
-                .WithWeight(request.Weight)
                 .WithPersonality(
                     request.Personality.Temperament,
                     request.Personality.ActivityLevel,
@@ -55,8 +55,17 @@ public class CreatePetCommand
                     request.HealthStatus.HasEatingSchedule,
                     request.HealthStatus.OtherDietaryNeeds,
                     request.HealthStatus.HealthProblems)
-                .WithProfileId(profile.Id)
-                .Build();
+                .WithProfileId(profile.Id);
+            
+            var weight = await weightDomainRepository.Find(request.Weight);
+            
+            if (request.Weight != null)
+            {
+                petBuilder.WithWeight(weight);
+            }
+            
+            var pet = petBuilder.Build();
+
 
             await petDomainRepository.Save(pet, cancellationToken);
 

@@ -16,6 +16,7 @@ public class EditPetCommand
         (IPetDomainRepository petDomainRepository,
             IBreedDomainRepository breedDomainRepository,
             IAnimalTypeDomainRepository animalTypeDomainRepository,
+            IWeightDomainRepository weightDomainRepository,
             IMapper mapper)
         : IRequestHandler<EditPetCommand, Result>
     {
@@ -30,6 +31,7 @@ public class EditPetCommand
             var breeds = await breedDomainRepository.FindAll(breedsIds);
             
             var animalType = await animalTypeDomainRepository.Find(request.PetType);
+            var weight = await weightDomainRepository.Find(request.Weight);
             
             pet.Update(
                 request.Name,
@@ -38,7 +40,7 @@ public class EditPetCommand
                 mapper.Map<Age>(request.Age),
                 request.Gender,
                 breeds,
-                request.Weight,
+                weight,
                 mapper.Map<Personality>(request.Personality),
                 mapper.Map<HealthStatus>(request.HealthStatus));
 
