@@ -1,0 +1,2 @@
+1. In the identity service, inject the emailsend and send the confirmation email email through it.
+2. Fix the result class to accept the weird identity service error lists. 
