@@ -23,6 +23,9 @@ public class PetRepository
             .All()
             .Where(p => p.Id == id)
             .Include(p => p.Breeds)
+            .Include(p => p.Age)
+            .Include(p => p.HealthStatus)
+            .Include(p => p.Personality)
             .FirstOrDefaultAsync(cancellationToken);
     
     public async Task<bool> Delete(string id,

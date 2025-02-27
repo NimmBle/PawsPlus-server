@@ -14,15 +14,15 @@ public class MineProfileOutputModel : IMapFrom<Domain.Models.Profile>
 
     public string PhoneNumber { get; set; }
     
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     public string PhotoUrl { get; set; } = "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg";
     
-    public LocationOutputModel Location { get; set; }
+    public LocationOutputModel? Location { get; set; }
     
     public IList<string>? Roles { get; set; } = new List<string>();
     
-    public int PostStatus { get; set; }
+    public int? PostStatus { get; set; }
 
     public void Mapping(AutoMapper.Profile mapper)
         => mapper

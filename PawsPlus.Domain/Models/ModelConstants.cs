@@ -11,14 +11,14 @@ public class ModelConstants
         public const int MinEmailLength = 6;
         public const int MaxEmailLength = 50;
         
-        public const int MaxUrlLength = 512;
+        public const int MaxUrlLength = 1024;
         
         public const int Zero = 0;
     }
     
     public class Profile
     {
-        public const int MaxDescriptionLength = 512;
+        public const int MaxDescriptionLength = 1024;
         
         public const int MinPhoneNumberLength = 7;
         public const int MaxPhoneNumberLength = 10;
@@ -28,11 +28,11 @@ public class ModelConstants
     {
         public const int MaxGenderLength = 10;
         public const int MaxNameLength = 20;
-        public const int MaxDescriptionLength = 512;
+        public const int MaxDescriptionLength = 1024;
     }
     
     public class Booking
     {
-        public const int MaxDescriptionLength = 512;
+        public const int MaxDescriptionLength = 1024;
     }
 }

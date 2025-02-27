@@ -24,7 +24,7 @@ public class User : IdentityUser, IUser
         if (Profile != null)
             throw new Exception(); // Add DomainExceptions
         
-        Profile = profile;
+        this.Profile = profile;
     }
     
 }

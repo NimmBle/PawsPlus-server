@@ -17,7 +17,10 @@ public class MineProfileQuery : IRequest<Result<MineProfileOutputModel>>
             MineProfileQuery request,
             CancellationToken cancellationToken)
         {
-            var profile = await profileQueryRepository.GetDetailsByUser(currentUser.UserId);
+            var profileId = await profileQueryRepository.GetProfileIdByUser(currentUser.UserId);
+            
+            var profile = await profileQueryRepository.GetMine(profileId);
+            
             profile.Roles = await identity.GetRoles(currentUser.UserId);
 
             return profile;

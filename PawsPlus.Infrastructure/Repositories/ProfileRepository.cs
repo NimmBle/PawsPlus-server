@@ -43,13 +43,14 @@ public class ProfileRepository(
                 .Where(p => p.Id == profileId))
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<MineProfileOutputModel> GetDetailsByUser(string userId,
+    public async Task<MineProfileOutputModel> GetMine(string id,
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<MineProfileOutputModel>(this
                 .Data
                 .Users
-                .Where(u => u.Id == userId)
+                .Where(u => u.Profile.Id == id)
+                .Include(p => p.Profile.Location)
                 .Select(u => u.Profile))
             .FirstOrDefaultAsync(cancellationToken);
 
