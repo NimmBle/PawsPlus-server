@@ -15,7 +15,6 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
     
     public class CreatePostCommandHandler(
         IPostDomainRepository postRepository,
-        IProfileDomainRepository profileDomainRepository,
         IAnimalTypeDomainRepository animalTypeDomainRepository,
         IWeightDomainRepository weightDomainRepository)
         : IRequestHandler<CreatePostCommand, Result>
@@ -35,10 +34,6 @@ public class CreatePostCommand : PostInputModel, IRequest<Result>
             
             post.AddServices(request.Services);
             await postRepository.Save(post, cancellationToken);
-
-            var profile = await profileDomainRepository.Find(request.profileId);
-            profile.UpdateFirstLogin();
-            await profileDomainRepository.Update(profile, cancellationToken);
             
             return Result.Success;
         }

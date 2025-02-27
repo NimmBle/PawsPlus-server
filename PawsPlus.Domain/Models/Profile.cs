@@ -99,9 +99,14 @@ public class Profile : Entity<string>, IAggregateRoot
 
         return this;
     }
-    public void UpdateFirstLogin()
+    public Profile UpdateFirstLogin()
     {
-        this.FirstLogin = false;
+        if (this.Description != null || this.Location != null)
+        {
+            this.FirstLogin = false;   
+        }
+
+        return this;
     }
 
     public void Validate(string firstName,

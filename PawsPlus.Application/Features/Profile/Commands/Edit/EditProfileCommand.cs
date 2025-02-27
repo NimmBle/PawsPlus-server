@@ -47,6 +47,7 @@ public class EditProfileCommand
             }
 
             profile
+                .UpdateFirstLogin()
                 .UpdateFirstName(request.FirstName)
                 .UpdateLastName(request.LastName)
                 .UpdatePhotoUrl(request.PhotoUrl)
@@ -54,8 +55,8 @@ public class EditProfileCommand
                 .UpdateDescription(request.Description)
                 .UpdateLocation(request.Location.PlaceId,
                     request.Location.Latitude,
-                    request.Location.Longitude)
-                .UpdateFirstLogin();
+                    request.Location.Longitude);
+                
             
             await profileDomainRepository.Update(profile);
 
