@@ -15,9 +15,9 @@ public interface IIdentity
     
     Task<Result> ConfirmEmail(string userId, string token);
     
-    Task SendPasswordResetEmail(string email);
+    // Task SendPasswordResetEmail(string email);
     
-    Task<Result> ChangePassword(string email, string oldPassword, string newPassword);
+    Task<Result> ChangePassword(string email, string currentPassword, string newPassword);
     
     Task<IList<string>> GetRoles(string userId);
     

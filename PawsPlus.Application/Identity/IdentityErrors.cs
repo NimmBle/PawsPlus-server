@@ -37,4 +37,7 @@ public class IdentityErrors
     public static Error EmailChangeFailed => Error.Failure(
         "Identity.EmailChangeFailed", $"You cannot change your email at this moment. Please try again");
     
+    
+    public static Error PasswordChangeFailed => Error.Failure(
+        "Identity.PasswordChangeFailed", "We could not change your password. Please try again");
 }

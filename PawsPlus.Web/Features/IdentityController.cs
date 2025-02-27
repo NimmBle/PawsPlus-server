@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Identity.Commands.ChangeEmail;
+using PawsPlus.Application.Identity.Commands.ChangePassword;
 using PawsPlus.Application.Identity.Commands.ConfirmEmail;
 using PawsPlus.Application.Identity.Commands.CreateUser;
 using PawsPlus.Application.Identity.Commands.LoginUser;
@@ -26,9 +27,15 @@ public class IdentityController : ApiController
     public async Task<ActionResult> ConfirmEmail(ConfirmEmailCommand command)
         => await this.Send(command);
 
+    // [HttpPut]
+    // [Authorize]
+    // [Route(nameof(ChangeEmail))]
+    // public async Task<ActionResult> ChangeEmail(ChangeEmailCommand command)
+    //     => await this.Send(command);
+
     [HttpPut]
     [Authorize]
-    [Route(nameof(ChangeEmail))]
-    public async Task<ActionResult> ChangeEmail(ChangeEmailCommand command)
+    [Route(nameof(ChangePassword))]
+    public async Task<ActionResult> ChangePassword(ChangePasswordCommand command)
         => await this.Send(command);
 }

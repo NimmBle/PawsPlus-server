@@ -18,24 +18,24 @@ internal class IdentityService(
     : IIdentity
 {
 
-    public async Task<Result<MineProfileOutputModel>> GetUserProfile(string userId)
-    {
-        var user = await userManager.FindByIdAsync(userId);
-        var roles = await userManager.GetRolesAsync(user);
-        var profile = new MineProfileOutputModel()
-        {
-            Id = user.Profile.Id,
-            Email = user.Email,
-            FirstName = user.Profile.FirstName,
-            LastName = user.Profile.LastName,
-            Description = user.Profile.Description,
-            PhoneNumber = user.Profile.PhoneNumber,
-            PhotoUrl = user.Profile.PhotoUrl,
-            Roles = roles, 
-        };
-
-        return profile;
-    }
+    // public async Task<Result<MineProfileOutputModel>> GetUserProfile(string userId)
+    // {
+    //     var user = await userManager.FindByIdAsync(userId);
+    //     var roles = await userManager.GetRolesAsync(user);
+    //     var profile = new MineProfileOutputModel()
+    //     {
+    //         Id = user.Profile.Id,
+    //         Email = user.Email,
+    //         FirstName = user.Profile.FirstName,
+    //         LastName = user.Profile.LastName,
+    //         Description = user.Profile.Description,
+    //         PhoneNumber = user.Profile.PhoneNumber,
+    //         PhotoUrl = user.Profile.PhotoUrl,
+    //         Roles = roles, 
+    //     };
+    //
+    //     return profile;
+    // }
 
     public async Task<Result<IUser>> Register(string email,
         string firstName,
@@ -45,7 +45,7 @@ internal class IdentityService(
     {
         var user = new User()
         {
-            UserName = $"{firstName} {lastName}",
+            UserName = email,
             Email = email
         };
         
@@ -144,43 +144,52 @@ internal class IdentityService(
         return Result.Success;
     }
 
-    public async Task SendPasswordResetEmail(string email)
+    // public async Task SendPasswordResetEmail(string email)
+    // {
+    //     var user = await userManager.FindByEmailAsync(email);
+    //     var token = await userManager.GeneratePasswordResetTokenAsync(user);
+    //     var tokenBytes = Encoding.UTF8.GetBytes(token);
+    //     
+    //     var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+    //     var confirmationLink =
+    //         $"http://localhost:4200/auth/reset-password?token={WebEncoders.Base64UrlEncode(tokenBytes)}";
+    //     
+    //     var client = new SendGridClient(apiKey);
+    //     var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
+    //     var subject = "Създаване на нова парола";
+    //     var to = new EmailAddress(user.Email, user.UserName);
+    //     var htmlContent = $@"
+    //     <html>
+    //     <body style='font-family: Oswald, sans-serif;'>
+    //       <p>Хей!</p>
+    //       <p>За да създадеш новата си парола последвай линка: <br/> <a href='{confirmationLink}'>създай нова парола </a> </p>
+    //       <p>Благодарим предварително!</p>
+    //       <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+    //     </body>
+    //     </html>";
+    //     
+    //     var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+    //     
+    //     var result = await client.SendEmailAsync(message);
+    //
+    //     if (result.IsSuccessStatusCode)
+    //     {
+    //         Console.WriteLine("Email sent");
+    //     }
+    // }
+    
+    public async Task<Result> ChangePassword(string email, string currentPassword, string newPassword)
     {
         var user = await userManager.FindByEmailAsync(email);
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
-        var tokenBytes = Encoding.UTF8.GetBytes(token);
-        
-        var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-        var confirmationLink =
-            $"http://localhost:4200/auth/reset-password?token={WebEncoders.Base64UrlEncode(tokenBytes)}";
-        
-        var client = new SendGridClient(apiKey);
-        var from = new EmailAddress("no-reply@pawsplus.eu", "Лапички+");
-        var subject = "Създаване на нова парола";
-        var to = new EmailAddress(user.Email, user.UserName);
-        var htmlContent = $@"
-        <html>
-        <body style='font-family: Oswald, sans-serif;'>
-          <p>Хей!</p>
-          <p>За да създадеш новата си парола последвай линка: <br/> <a href='{confirmationLink}'>създай нова парола </a> </p>
-          <p>Благодарим предварително!</p>
-          <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
-        </body>
-        </html>";
-        
-        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
-        
-        var result = await client.SendEmailAsync(message);
-    
-        if (result.IsSuccessStatusCode)
+
+        var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+        if (!result.Succeeded)
         {
-            Console.WriteLine("Email sent");
+            return IdentityErrors.PasswordChangeFailed;
         }
-    }
-    
-    public async Task<Result> ChangePassword(string email, string oldPassword, string newPassword)
-    {
-        return IdentityErrors.IdentityError("Not implemented yet.");
+        
+        return Result.Success;
     }
     
 
