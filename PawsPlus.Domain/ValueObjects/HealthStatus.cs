@@ -72,16 +72,27 @@ public record HealthStatus
     }
 
     private void ValidateHealthProblems(string? healthProblems)
-        => Guard.ForStringLength<InvalidPetException>(
-            healthProblems,
-            Zero,
-            MaxDescriptionLength,
-            nameof(HealthProblems));
+    {
+        if (healthProblems != null)
+        {
+            Guard.ForStringLength<InvalidPetException>(
+                healthProblems,
+                Zero,
+                MaxDescriptionLength,
+                nameof(HealthProblems));
+        }
+    }
+        
 
     private void ValidateDietaryNeeds(string? dietaryNeeds)
-        => Guard.ForStringLength<InvalidPetException>(
-            dietaryNeeds,
-            Zero,
-            MaxDescriptionLength,
-            nameof(OtherDietaryNeeds));
+    {
+        if (dietaryNeeds != null)
+        {
+            Guard.ForStringLength<InvalidPetException>(
+                dietaryNeeds,
+                Zero,
+                MaxDescriptionLength,
+                nameof(OtherDietaryNeeds));
+        }
+    }
 }
