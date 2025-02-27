@@ -27,6 +27,12 @@ public class BookingOutputModel : IMapFrom<Domain.Models.Booking>
     
     public string? AdditionalDescription { get; init; }
     
+    public string SitterFirstName { get; init; }
+    
+    public string SitterLastName { get; init; }
+    
+    public string SitterPhotoUrl { get; init; }
+    
     public string Status { get; init; }
     
     public string PetId { get; init; }
@@ -43,6 +49,9 @@ public class BookingOutputModel : IMapFrom<Domain.Models.Booking>
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Owner.LastName))
             .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Owner.PhotoUrl))
             .ForMember(dest => dest.OwnerDescription, opt => opt.MapFrom(src => src.Owner.Description))
+            .ForMember(dest => dest.SitterFirstName, opt => opt.MapFrom(src => src.Sitter.FirstName))
+            .ForMember(dest => dest.SitterLastName, opt => opt.MapFrom(src => src.Sitter.LastName))
+            .ForMember(dest => dest.SitterPhotoUrl, opt => opt.MapFrom(src => src.Sitter.PhotoUrl))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(b => b.Status.Name))
             .ForMember(dest => dest.PetId, opt => opt.MapFrom(src => src.Owner.Pet.Id))
             .ForMember(dest => dest.PetType, opt => opt.MapFrom(src => src.Owner.Pet.Animal.Name))
