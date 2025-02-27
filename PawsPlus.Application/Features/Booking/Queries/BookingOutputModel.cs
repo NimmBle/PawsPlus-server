@@ -21,7 +21,7 @@ public class BookingOutputModel : IMapFrom<Domain.Models.Booking>
     public DateOnly EndDay { get; init; }
     public TimeOnly EndTime { get; init; }
     
-    public MeetingPlaceType MeetingPlaceType { get; init; }
+    public int MeetingPlaceId { get; init; }
     
     public string? GooglePlaceId { get; init; }
     

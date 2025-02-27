@@ -88,7 +88,7 @@ public class Post : Entity<string>, IAggregateRoot
         return this;
     }
 
-    public void RemovePetType(Animal animal)
+    public void RemoveAnimalType(Animal animal)
     {
         if (this.Animals.Contains(animal))
         {

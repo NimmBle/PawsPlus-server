@@ -30,21 +30,8 @@ public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
             
             var allAvailableDates = await dateDomainRepository.FindAll(request.AvailableDates[0], request.AvailableDates[count-1]);
             
-            var availableDates = new List<Date>();
-            for (int i = 0; i < request.AvailableDates.Count; i++)
-            {
-                if (allAvailableDates.Any(d => d.Day == request.AvailableDates[i]))
-                {
-                    availableDates.Add(allAvailableDates.Where(d => d.Day == request.AvailableDates[i]).SingleOrDefault());
-                }
-                else
-                {
-                    availableDates.Add(new Date(request.AvailableDates[i]));
-                }
-            }
-            
             service.UpdatePrice(request.Price);
-            service.UpdateAvailableDates(availableDates);
+            service.UpdateAvailableDates(request.AvailableDates, allAvailableDates);
             service.UpdateMeetingPlaces(meetingPlaces);
 
             await serviceDomainRepository.Update(service);

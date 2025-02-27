@@ -26,18 +26,22 @@ public class CreateServiceCommand : CreateServiceInputModel, IRequest<Result>
 
             var meetingPlaces = await meetingPlaceDomainRepository.FindAll(request.MeetingPlaces);
 
-            var availableDates = new List<Date>();
-            foreach (var date in request.AvailableDates)
-            {
-                availableDates.Add(new Date(date));
-            }
+            // var availableDates = new List<Date>();
+            // foreach (var date in request.AvailableDates)
+            // {
+            //     availableDates.Add(new Date(date));
+            // }
+            
+            var count = request.AvailableDates.Count;
+            var allAvailableDates = await dateDomainRepository.FindAll(request.AvailableDates[0], request.AvailableDates[count-1]);
             
             var service = new Domain.Models.Service(
                 request.ServiceType,
                 request.Price,
-                availableDates,
+                request.AvailableDates,
                 meetingPlaces,
-                request.PostId); 
+                request.PostId,
+                allAvailableDates); 
             
             await serviceDomainRepository.Save(service);
 

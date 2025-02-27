@@ -35,7 +35,7 @@ public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Resul
                 return PostErrors.PostAnimalTypeNotFound;
             }
             
-            post.RemovePetType(animalType);
+            post.RemoveAnimalType(animalType);
             
             await postDomainRepository.Update(post);
             

@@ -52,7 +52,7 @@ public class EmailSender(UserManager<User> userManager,
         var sitter = await userManager.FindByIdAsync(userId);
         
         var client = new SendGridClient(apiKey);
-        var subject = "Лапички+ - Имате нова заявка";
+        var subject = "Лапички+ - Статус на профил";
         var to = new EmailAddress(sitter.Email, sitter.UserName);
         var htmlContent = $@"
         <html>
@@ -82,7 +82,7 @@ public class EmailSender(UserManager<User> userManager,
         var myProfilePostPage = "http://localhost:4200/profile/my-profile-details/notifications";
         
         var client = new SendGridClient(apiKey);
-        var subject = "Лапички+ - Имате нова заявка";
+        var subject = "Лапички+ - Статус на профил";
         var to = new EmailAddress(sitter.Email, sitter.UserName);
         var htmlContent = $@"
         <html>

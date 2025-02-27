@@ -34,7 +34,7 @@ public class SearchPostsParams
     {
         Expression<Func<Domain.Models.Post, bool>> predicate = x => true;
 
-        predicate = predicate.And(p => p.Status == PostState.Approved);
+        predicate = predicate.And(p => p.Status.Value == PostState.Approved.Value);
         
         // PetType
         if (PetType != 0)

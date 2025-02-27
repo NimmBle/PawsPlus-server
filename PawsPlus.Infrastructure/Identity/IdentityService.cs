@@ -246,7 +246,7 @@ internal class IdentityService(
         
         var client = new SendGridClient(apiKey);
         var from = new EmailAddress("no-reply@pawsplus.eu", "Екипът на Лапички+");
-        var subject = "Потвърждаване на имейл адрес";
+        var subject = "Лапички+ - Потвърждаване на имейл адрес";
         var to = new EmailAddress(user.Email, user.UserName);
         var htmlContent = $@"
         <html>

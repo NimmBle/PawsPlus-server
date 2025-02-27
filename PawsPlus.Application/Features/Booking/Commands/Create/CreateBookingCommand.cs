@@ -42,6 +42,11 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             {
                 return ServiceErrors.InvalidAvailableDates;
             }
+
+            if (!service.MeetingPlaces.Contains(request.MeetingPlaceType))
+            {
+                return ServiceErrors.NonExistingMeetingPlace;
+            }
             
             var meetingPlace = await meetingPlaceDomainRepository.Find(request.MeetingPlaceType);
 

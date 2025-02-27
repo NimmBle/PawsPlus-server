@@ -19,15 +19,19 @@ public class Service : Entity<string>, IAggregateRoot
 
     public Service(ServiceType serviceType,
         int price,
-        List<Date>? availableDates,
+        List<DateOnly>? availableDates,
         List<MeetingPlace> meetingPlaces,
-        string postId)
+        string postId,
+        List<Date> allAvailableDates)
         : this(serviceType)
     {
         this.Validate(price);
             
         this.Price = price;
-        this.AvailableDates = availableDates;
+        
+        var validatedAvailableDates = this.ValidateAvailableDates(availableDates, allAvailableDates);
+        this.AvailableDates = validatedAvailableDates;
+        
         this.MeetingPlaces = meetingPlaces;
         this.PostId = postId;
     }
@@ -52,13 +56,12 @@ public class Service : Entity<string>, IAggregateRoot
         this.Price = newPrice;
     }
 
-    public void UpdateAvailableDates(List<Date>? newAvailableDates)
+    public void UpdateAvailableDates(List<DateOnly>? newAvailableDates,
+        List<Date> allAvailableDates)
     {
-        var yesterday = DateOnly.FromDateTime(DateTime.Today.AddDays(-1));
+        var validatedAvailableDates = ValidateAvailableDates(newAvailableDates, allAvailableDates);
 
-        newAvailableDates.RemoveAll(date => date.Day <= yesterday);
-
-        this.AvailableDates = newAvailableDates;
+        this.AvailableDates = validatedAvailableDates;
     }
 
     public void UpdateMeetingPlaces(List<MeetingPlace> newMeetingPlaces)
@@ -75,4 +78,23 @@ public class Service : Entity<string>, IAggregateRoot
         => Guard.ForNegativeNumber<InvalidServiceException>(
             price,
             nameof(price));
+
+    public List<Date> ValidateAvailableDates(List<DateOnly>? newAvailableDates,
+        List<Date> allAvailableDates)
+    {
+        var availableDates = new List<Date>();
+        for (int i = 0; i < newAvailableDates.Count; i++)
+        {
+            if (allAvailableDates.Any(d => d.Day == newAvailableDates[i]))
+            {
+                availableDates.Add(allAvailableDates.Where(d => d.Day == newAvailableDates[i]).SingleOrDefault());
+            }
+            else
+            {
+                availableDates.Add(new Date(newAvailableDates[i]));
+            }
+        }
+
+        return availableDates;
+    }
 }
