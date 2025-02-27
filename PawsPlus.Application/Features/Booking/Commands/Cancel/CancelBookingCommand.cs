@@ -34,7 +34,10 @@ public class CancelBookingCommand : IRequest<Result>
             booking.ChangeState("Canceled");
             await bookingDomainRepository.Update(booking);
 
-            var result = await emailSender.SendBookingCancelEmail(request.SitterId);
+            var result = await emailSender.SendBookingCancelEmail(booking.Service.Name,
+                booking.StartDay, 
+                booking.StartTime,
+                request.SitterId);
 
             if (result == false)
             {

@@ -34,7 +34,10 @@ public class ApproveBookingCommand : IRequest<Result>
             booking.ChangeState("Approved");
             await bookingDomainRepository.Update(booking);
             
-            var result = await emailSender.SendBookingApproveEmail(request.OwnerId);
+            var result = await emailSender.SendBookingApproveEmail(booking.Service.Name,
+                booking.StartDay, 
+                booking.StartTime,
+                request.OwnerId);
             
             if (result == false)
             {
