@@ -90,15 +90,20 @@ public class Pet : Entity<string>, IAggregateRoot
         Personality? personality,
         HealthStatus? healthStatus)
     {
+        var newAge = Age.Create(age);
+        var newPersonality = Personality.Create(personality);
+        var newHealthStatus = HealthStatus.Create(healthStatus);
+        
         this.Name = name;
         this.PhotoUrl = photoUrl;
         this.Animal = animal;
-        this.Age = Age.Create(age);
+        this.Age = newAge;
         this.Gender = gender;
-        UpdateBreeds(breeds);
+        this.Breeds = breeds;
         this.Weight = weight;
-        this.Personality = Personality.Create(personality);
-        this.HealthStatus = HealthStatus.Create(healthStatus);
+        this.Personality = newPersonality;
+        this.HealthStatus = newHealthStatus;
+        var i = 1;
     }
 
     private void UpdateBreeds(ICollection<Breed> breeds)

@@ -55,7 +55,7 @@ public record HealthStatus
        return new (isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);
     }
 
-    public static HealthStatus Create(HealthStatus healthStatus)
+    public static HealthStatus? Create(HealthStatus? healthStatus)
         => Create(
             healthStatus.IsVaccinated,
             healthStatus.IsCastrated,

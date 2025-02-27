@@ -2,7 +2,7 @@
 
 namespace PawsPlus.Application.Features.Pet.Commands.Edit;
 
-public class EditPetInputModel : BasePetInputModel<EditPetCommand>
+public class EditPetInputModel : BasePetInputModel
 {
     
 }

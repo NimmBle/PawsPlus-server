@@ -4,17 +4,6 @@ namespace PawsPlus.Domain.ValueObjects;
 
 public record Personality
 {
-
-    public string? Temperament { get; init; }
-
-    public string? ActivityLevel { get; init; }
-    
-    public Training? IsTrained { get; init; }
-    
-    public Fear? HasFears { get; init; }
-    
-    public string? FearsDescription { get; init; }
-
     public Personality()
     {}
     
@@ -33,6 +22,16 @@ public record Personality
         this.FearsDescription = fearsDescription;
     }
 
+    public string? Temperament { get; init; }
+
+    public string? ActivityLevel { get; init; }
+    
+    public Training? IsTrained { get; init; }
+    
+    public Fear? HasFears { get; init; }
+    
+    public string? FearsDescription { get; init; }
+
     
     public static Personality Create(
         string? temperament,
@@ -42,7 +41,7 @@ public record Personality
         string? fearsDescription)
         => new (temperament, activityLevel, isTrained, hasFears, fearsDescription);
 
-    public static Personality Create(Personality personality)
+    public static Personality? Create(Personality? personality)
         => Create(
             personality.Temperament,
             personality.ActivityLevel,

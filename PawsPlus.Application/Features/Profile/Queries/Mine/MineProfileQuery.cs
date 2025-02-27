@@ -20,7 +20,8 @@ public class MineProfileQuery : IRequest<Result<MineProfileOutputModel>>
             var profileId = await profileQueryRepository.GetProfileIdByUser(currentUser.UserId);
             
             var profile = await profileQueryRepository.GetMine(profileId);
-            
+
+            profile.Email = await identity.GetEmail(currentUser.UserId);
             profile.Roles = await identity.GetRoles(currentUser.UserId);
 
             return profile;

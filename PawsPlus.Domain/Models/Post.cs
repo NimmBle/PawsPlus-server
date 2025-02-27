@@ -19,8 +19,6 @@ public class Post : Entity<string>, IAggregateRoot
         List<Weight>? weights,
         string profileId)
     {
-        this.Validate(animalTypes, weights);
-        
         this.Id = Guid.NewGuid().ToString();
         this.Animals = animalTypes.ToList();
         this.Weights = weights.ToList();
@@ -85,8 +83,6 @@ public class Post : Entity<string>, IAggregateRoot
 
     public Post UpdateWeights(List<Weight> weights)
     {
-        this.ValidateWeights(weights);
-        
         this.Weights = weights;
 
         return this;
@@ -104,30 +100,4 @@ public class Post : Entity<string>, IAggregateRoot
             this.Weights.Clear();
         }
     }
-
-    private void Validate(List<Animal> petTypes, List<Weight> weights)
-    {
-        // this.ValidatePetTypes(petTypes);
-        this.ValidateWeights(weights);
-    }
-    //
-    // private void ValidatePetTypes(List<AnimalType> petTypes)
-    // {
-    //     if (petTypes.All(at => Enum.IsDefined(typeof(AnimalType), w)))
-    //     {
-    //         return;
-    //     }
-    //     
-    //     throw new InvalidPostException();
-    // }
-
-    private void ValidateWeights(List<Weight> weights)
-    {
-        if (weights.All(w => Enum.IsDefined(typeof(Weight), w)))
-        {
-            return;
-        }
-        
-        throw new InvalidPostException();
-    } 
 }

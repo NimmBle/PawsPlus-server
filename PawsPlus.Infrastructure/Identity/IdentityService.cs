@@ -227,6 +227,15 @@ internal class IdentityService(
         return roles;
     }
 
+    public async Task<string> GetEmail(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        
+        var email = await userManager.GetEmailAsync(user);
+
+        return email;
+    }
+
 
     public async Task<Response> SendConfirmationEmail(User user, string firstName = "", string lastName = "")
     {

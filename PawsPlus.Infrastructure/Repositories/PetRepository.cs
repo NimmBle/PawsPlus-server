@@ -60,5 +60,6 @@ public class PetRepository
             .Include(p => p.HealthStatus)
             .Include(p => p.Breeds)
             .Include(p => p.Animal)
+            .Include(p => p.Weight)
             .FirstOrDefaultAsync(cancellationToken);
 }

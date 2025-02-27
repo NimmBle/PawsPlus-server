@@ -32,7 +32,9 @@ public class EditPetCommand
             
             var animalType = await animalTypeDomainRepository.Find(request.PetType);
             var weight = await weightDomainRepository.Find(request.Weight);
-            
+
+
+            var healthStatus = mapper.Map<HealthStatus>(request.HealthStatus);
             pet.Update(
                 request.Name,
                 request.PhotoUrl,
@@ -42,7 +44,8 @@ public class EditPetCommand
                 breeds,
                 weight,
                 mapper.Map<Personality>(request.Personality),
-                mapper.Map<HealthStatus>(request.HealthStatus));
+                healthStatus
+                );
 
             await petDomainRepository.Update(pet, cancellationToken);
             

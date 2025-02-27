@@ -3,7 +3,7 @@ using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Pet.Commands.Common;
 
-public abstract class BasePetInputModel<TCommand>
+public abstract class BasePetInputModel
 {
     public string Name { get; set; } = default!;
 

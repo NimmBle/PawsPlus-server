@@ -8,7 +8,7 @@ using Weight = PawsPlus.Domain.Models.Weight;
 
 namespace PawsPlus.Application.Features.Pet.Queries.Details;
 
-public class PetDetailsOutputModel : IMapFrom<ModelConstants.Pet>
+public class PetDetailsOutputModel : IMapFrom<Domain.Models.Pet>
 {
     public string Id { get; set; }
     
@@ -33,6 +33,7 @@ public class PetDetailsOutputModel : IMapFrom<ModelConstants.Pet>
     virtual public void Mapping(AutoMapper.Profile profile)
         => profile
             .CreateMap<Domain.Models.Pet, PetDetailsOutputModel>()
-            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.Animal.Id));
+            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.Animal.Id))
+            .ForMember(dest => dest.Weight, opt => opt.MapFrom(p => p.Weight));
 
 }
