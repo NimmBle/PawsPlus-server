@@ -8,10 +8,6 @@ public class CreatePostCommandValidation : AbstractValidator<CreatePostCommand>
 {
     public CreatePostCommandValidation()
     {
-        RuleFor(p => p.Weights)
-            .Must(weights => weights.All(w => Enum.IsDefined(typeof(Weight), w)))
-            .WithMessage("All weights must be valid members of the Weights enum.");
-        
         RuleFor(p => p.Services)
             .NotNull()
             .Must(serviceTypes => serviceTypes.All(p => Enum.IsDefined(typeof(ServiceType), p)))

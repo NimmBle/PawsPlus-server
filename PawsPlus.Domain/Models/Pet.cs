@@ -57,8 +57,7 @@ public class Pet : Entity<string>, IAggregateRoot
     public string Name { get; private set; } = default!;
 
     public string PhotoUrl { get; private set; } = default!;
-
-    // [JsonProperty(Required = Required.Always)]
+    
     public Animal Animal { get; private set; }
     
     public Age? Age { get; private set; }
@@ -69,7 +68,8 @@ public class Pet : Entity<string>, IAggregateRoot
     public ICollection<Breed> Breeds { get; private set; } = new HashSet<Breed>();
     
     public int? WeightId { get; private set; }
-    public Weight Weight { get; private set; }
+    
+    public Weight? Weight { get; private set; }
 
     public Personality? Personality { get; private set; }
 

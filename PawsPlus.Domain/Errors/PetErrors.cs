@@ -6,4 +6,6 @@ public class PetErrors
 {
     public static Error PetAccessNotAllowed => Error.Forbidden(
         "Pet.PetAccessNotAllowed", $"You are not allowed to access the pets of this profile");
+
+    public static Error PetTypeNotFound => Error.NullValue;
 }

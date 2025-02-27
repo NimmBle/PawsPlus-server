@@ -37,12 +37,23 @@ public class
         
         builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
 
+        SeedWeights(builder.Entity<Weight>());
         SeedMeetingPlaces(builder.Entity<MeetingPlace>());
         SeedAnimals(builder.Entity<Animal>());
         SeedBreeds(builder.Entity<Breed>());
         // SeedAdminAndRoles(builder);
         
         base.OnModelCreating(builder);
+    }
+
+    private void SeedWeights(EntityTypeBuilder<Weight> entity)
+    {
+        entity.HasData(
+            new Weight(1, "SmallToMedium"),
+            new Weight(2, "Medium"),
+            new Weight(3, "MediumToLarge"),
+            new Weight(4, "Large")
+        );
     }
 
     private void SeedMeetingPlaces(EntityTypeBuilder<MeetingPlace> entity)

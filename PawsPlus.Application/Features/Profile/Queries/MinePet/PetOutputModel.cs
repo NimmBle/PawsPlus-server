@@ -21,7 +21,7 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
 
     public ICollection<BreedOutputModel> Breeds { get; set; }
 
-    public Weight? Weight { get; set; }
+    public int? Weight { get; set; }
 
     public Personality? Personality { get; set; }
 
@@ -30,5 +30,7 @@ public class PetOutputModel : IMapFrom<Domain.Models.Pet>
     virtual public void Mapping(AutoMapper.Profile profile)
         => profile
             .CreateMap<Domain.Models.Pet, PetOutputModel>()
-            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.Animal.Id));
+            .ForMember(dest => dest.PetType, opt => opt.MapFrom(p => p.Animal.Id))
+            .ForMember(dest => dest.Weight, opt => opt.MapFrom(p => p.Weight));
+
 }

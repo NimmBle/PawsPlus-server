@@ -25,16 +25,22 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
         public async Task<Result> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
             var ownerProfile = await profileQueryRepository.GetPetLocation(currentUser.UserId);
-            var serviceId = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
+            var service = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
 
             if (!ownerProfile.HasPet)
             {
                 return BookingErrors.OwnerPetIsNull;
             }
             
-            if (serviceId == null)
+            if (service.Id == null)
             {
                 return ServiceErrors.ServiceNotFound;
+            }
+
+            if (!service.AvailableDates.Contains(request.StartDay) ||
+                !service.AvailableDates.Contains(request.EndDay))
+            {
+                return ServiceErrors.InvalidAvailableDates;
             }
             
             var meetingPlace = await meetingPlaceDomainRepository.Find(request.MeetingPlaceType);
@@ -46,7 +52,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                 .WithEndTime(request.EndTime)
                 .WithMeetingPlace(meetingPlace)
                 .WithAdditionalDescription(request.AdditionalDescription)
-                .WithServiceId(serviceId)
+                .WithServiceId(service.Id)
                 .WithSitterId(request.SitterId)
                 .WithOwnerId(ownerProfile.OwnerId);
 

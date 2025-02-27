@@ -45,12 +45,14 @@ public class ServiceRepository(
         => mapper
             .Map<ServiceOutputModel>(await this.Find(serviceId, cancellationToken));
 
-    public async Task<string> GetServiceId(string profileId,
+    public async Task<ServiceOutputModel> GetServiceId(string profileId,
         string serviceType,
         CancellationToken cancellationToken = default)
-        => await All()
-            .Where(s => s.Name == serviceType)
-            .Where(s => s.Post.ProfileId == profileId)
-            .Select(s => s.Id)
+        => await mapper
+            .ProjectTo<ServiceOutputModel>(this
+                .All()
+                .Where(s => s.Name == serviceType)
+                .Where(s => s.Post.ProfileId == profileId)
+            )
             .FirstOrDefaultAsync(cancellationToken);
 }

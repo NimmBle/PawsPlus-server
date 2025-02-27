@@ -34,6 +34,11 @@ public class CreatePetCommand
             var breeds = await breedDomainRepository.FindAll(breedsIds);
 
             var animalTypes = await animalTypeDomainRepository.Find(request.PetType);
+
+            if (animalTypes == null)
+            {
+                return PetErrors.PetTypeNotFound;
+            }
             
             var petBuilder = petFactory
                 .WithName(request.Name)
