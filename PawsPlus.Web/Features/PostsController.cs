@@ -53,7 +53,7 @@ public class PostsController : ApiController
         => await this.Send(query);
     
     [HttpPatch]
-    [Route(Id + PathSeparator + nameof(Activate))]
+    [Route("ProfileId" + PathSeparator + nameof(Activate))]
     public async Task<ActionResult> Activate(
         [FromRoute] ActivatePostCommand command)
         => await this.Send(command);

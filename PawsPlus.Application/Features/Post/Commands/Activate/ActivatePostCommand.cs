@@ -7,14 +7,14 @@ namespace PawsPlus.Application.Features.Post.Commands.Activate;
 
 public class ActivatePostCommand : IRequest<Result>
 {
-    public string Id { get; set; }
+    public string ProfileId { get; set; }
     
     public class ActivateProfileCommandHandler(IPostDomainRepository postDomainRepository)
         : IRequestHandler<ActivatePostCommand, Result>
     {
         public async Task<Result> Handle(ActivatePostCommand request, CancellationToken cancellationToken)
         {
-            var post = await postDomainRepository.FindByProfile(request.Id);
+            var post = await postDomainRepository.FindByProfile(request.ProfileId);
 
             if (post == null)
             {
