@@ -27,6 +27,7 @@ public class PostRepository(
             .Where(p => p.Id == id)
             .Include(p => p.Services)
             .Include(p => p.Animals)
+            .Include(p => p.Weights)
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<Post> FindByProfile(string profileId, CancellationToken cancellationToken = default)
