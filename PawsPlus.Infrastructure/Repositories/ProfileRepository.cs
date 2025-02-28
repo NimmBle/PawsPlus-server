@@ -64,6 +64,16 @@ public class ProfileRepository(
                 .Select(u => u.Profile))
             .FirstOrDefaultAsync(cancellationToken);
 
+    public async Task<ProfileEmailInformationDto> GetEmailInformation(string id, CancellationToken cancellationToken = default)
+        => await this
+            .Data
+            .Users
+            .Where(u => u.Profile.Id == id)
+            .Select(u => new ProfileEmailInformationDto(u.Email,
+                u.Profile.FirstName,
+                u.Profile.LastName))
+            .FirstOrDefaultAsync(cancellationToken);
+
     public async Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default)
         => await this
             .Data

@@ -11,6 +11,8 @@ public interface IProfileQueryRepository
     
     Task<ProfilePetLocationDto> GetPetLocation(string userId, CancellationToken cancellationToken = default);
     
+    Task<ProfileEmailInformationDto> GetEmailInformation(string id, CancellationToken cancellationToken = default);
+    
     Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default);
     
     Task<string> GetUserIdByProfileId(string profileId, CancellationToken cancellationToken = default);
