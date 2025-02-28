@@ -11,9 +11,9 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Repositories;
 
 public class PetRepository
-    (ZoolandiaDbContext db, 
+    (PawsPlusDbContext db, 
         IMapper mapper)
-        : DataRepository<ZoolandiaDbContext, Pet>(db),
+        : DataRepository<PawsPlusDbContext, Pet>(db),
             IPetDomainRepository,
             IPetQueryRepository
 {

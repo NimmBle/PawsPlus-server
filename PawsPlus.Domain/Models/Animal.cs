@@ -13,7 +13,7 @@ public class Animal : Entity<int>, IAggregateRoot
     
     public string Name { get; private set; }
     
-    public List<Breed> Breeds { get; private set; } = new List<Breed>();
+    public List<Breed> Breeds { get; private set; } = new();
     
-    public List<Post> Posts { get; private set; } = new List<Post>(); 
+    public List<Post> Posts { get; private set; } = new(); 
 }

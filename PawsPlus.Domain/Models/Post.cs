@@ -14,8 +14,7 @@ public class Post : Entity<string>, IAggregateRoot
     {
     }
 
-    public Post(
-        List<Animal> animalTypes,
+    public Post(List<Animal> animalTypes,
         List<Weight>? weights,
         string profileId)
     {
@@ -45,7 +44,9 @@ public class Post : Entity<string>, IAggregateRoot
     public void AddServices(List<ServiceType> services)
     {
         foreach (var service in services)
+        {
             this._services.Add(new Service(service));
+        }
     }
 
     public Post ChangeState(string type)

@@ -15,6 +15,10 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
             .HasMany(p => p.Services)
             .WithOne(s => s.Post)
             .HasForeignKey(s => s.PostId);
+
+        builder
+            .HasMany(p => p.Animals)
+            .WithMany(p => p.Posts);
         
         builder
             .OwnsOne(p => p.Status,
@@ -24,9 +28,5 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
 
                     s.Property(s => s.Value);
                 });
-
-        builder
-            .HasMany(p => p.Animals)
-            .WithMany(p => p.Posts);
     }
 }

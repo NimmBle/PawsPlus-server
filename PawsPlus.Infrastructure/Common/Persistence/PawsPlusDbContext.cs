@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PawsPlus.Infrastructure.Identity;
 using PawsPlus.Domain.Models;
+using PawsPlus.Infrastructure.Identity;
 
 namespace PawsPlus.Infrastructure.Common.Persistence;
 
 public class 
-    ZoolandiaDbContext(DbContextOptions<ZoolandiaDbContext> options)
+    PawsPlusDbContext(DbContextOptions<PawsPlusDbContext> options)
         : IdentityDbContext<User>(options)
 {
     
@@ -35,13 +35,13 @@ public class
     protected override void OnModelCreating(ModelBuilder builder)
     {
         
-        builder.ApplyConfigurationsFromAssembly(typeof(ZoolandiaDbContext).Assembly);
+        builder.ApplyConfigurationsFromAssembly(typeof(PawsPlusDbContext).Assembly);
 
         SeedWeights(builder.Entity<Weight>());
         SeedMeetingPlaces(builder.Entity<MeetingPlace>());
         SeedAnimals(builder.Entity<Animal>());
         SeedBreeds(builder.Entity<Breed>());
-        // SeedAdminAndRoles(builder);
+        SeedAdminAndRoles(builder);
         
         base.OnModelCreating(builder);
     }
@@ -298,7 +298,7 @@ public class
         }
         
         var adminId = Guid.NewGuid().ToString();
-        var adminEmail = "hristopanev20@gmail.com"; // Has to be changed when official email is created
+        var adminEmail = "pawsplus@pawsplus.eu";
         var admin = new User
         {
             Id = adminId,

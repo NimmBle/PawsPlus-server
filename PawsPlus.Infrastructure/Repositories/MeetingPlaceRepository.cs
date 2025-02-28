@@ -5,8 +5,8 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class MeetingPlaceRepository(ZoolandiaDbContext db)
-    : DataRepository<ZoolandiaDbContext, MeetingPlace>(db),
+public class MeetingPlaceRepository(PawsPlusDbContext db)
+    : DataRepository<PawsPlusDbContext, MeetingPlace>(db),
         IMeetingPlaceDomainRepository
 {
     public async Task<MeetingPlace> Find(int id, CancellationToken cancellationToken = default)

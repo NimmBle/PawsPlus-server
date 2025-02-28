@@ -13,9 +13,9 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Repositories;
 
 public class PostRepository(
-    ZoolandiaDbContext db,
+    PawsPlusDbContext db,
     IMapper mapper)
-    : DataRepository<ZoolandiaDbContext, Post>(db),
+    : DataRepository<PawsPlusDbContext, Post>(db),
         IPostDomainRepository,
         IPostQueryRepository
 {

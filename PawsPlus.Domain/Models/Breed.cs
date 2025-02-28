@@ -4,7 +4,9 @@ namespace PawsPlus.Domain.Models;
 
 public class Breed : Entity<string>, IAggregateRoot 
 {
-    private Breed(string id, string name, int animalTypeId)
+    private Breed(string id,
+        string name,
+        int animalTypeId)
     {
         this.Id = id;
         this.Name = name;

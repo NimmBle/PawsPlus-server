@@ -11,7 +11,7 @@ namespace PawsPlus.Web.Features;
 public class BookingsController : ApiController
 {
     [HttpGet]
-[Authorize(Roles = $"{Sitter}, {Owner}")]
+    [Authorize(Roles = $"{Sitter}, {Owner}")]
     [Route(nameof(Pending))]
     public async Task<ActionResult<ICollection<BookingOutputModel>>> Pending(
         [FromRoute] GetBookingsQuery query)

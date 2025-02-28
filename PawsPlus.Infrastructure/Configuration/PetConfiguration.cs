@@ -9,7 +9,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
     public void Configure(EntityTypeBuilder<Pet> builder)
     {
-        
         builder
             .HasKey(p => p.Id);
 

@@ -26,7 +26,6 @@ public class Service : Entity<string>, IAggregateRoot
         : this(serviceType)
     {
         this.Validate(price);
-            
         this.Price = price;
         
         var validatedAvailableDates = this.ValidateAvailableDates(availableDates, allAvailableDates);
@@ -40,11 +39,11 @@ public class Service : Entity<string>, IAggregateRoot
 
     public int Price { get; private set; } = 0;
 
-    public List<Date>? AvailableDates { get; private set; } = new List<Date>();
+    public List<Date>? AvailableDates { get; private set; } = new();
 
-    public List<Booking> Bookings { get; private set; } = new List<Booking>();
+    public List<Booking> Bookings { get; private set; } = new();
 
-    public List<MeetingPlace> MeetingPlaces { get; private set; } = new List<MeetingPlace>();
+    public List<MeetingPlace> MeetingPlaces { get; private set; } = new();
 
     public string PostId { get; private set; }
     public Post Post { get; private set; }

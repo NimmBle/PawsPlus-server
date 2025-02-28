@@ -14,8 +14,7 @@ public class Pet : Entity<string>, IAggregateRoot
     {
     }
     
-    internal Pet(
-        string name,
+    internal Pet(string name,
         string photoUrl,
         Animal animal,
         Age age,
@@ -34,8 +33,7 @@ public class Pet : Entity<string>, IAggregateRoot
         this.HealthStatus = HealthStatus.Create(healthStatus);
     }
 
-    internal Pet(
-        string name,
+    internal Pet(string name,
         string photoUrl,
         Animal animal,
         Gender gender,
@@ -79,8 +77,7 @@ public class Pet : Entity<string>, IAggregateRoot
     
     public Profile Profile { get; private set; } = null!;
 
-    public void Update(
-        string name,
+    public void Update(string name,
         string photoUrl,
         Animal animal,
         Age age,
@@ -115,7 +112,8 @@ public class Pet : Entity<string>, IAggregateRoot
     }
     
     
-    private void Validate(string name, string photoUrl)
+    private void Validate(string name,
+        string photoUrl)
     {
         this.ValidateName(name);
         this.ValidatePhotoUrl(photoUrl);

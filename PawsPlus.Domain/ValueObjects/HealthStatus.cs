@@ -24,8 +24,7 @@ public record HealthStatus
     public HealthStatus()
     {}
     
-    private HealthStatus(
-        bool? isVaccinated,
+    private HealthStatus(bool? isVaccinated,
         bool? isCastrated,
         bool? takesMedications,
         string? hasEatingSchedule,
@@ -42,22 +41,16 @@ public record HealthStatus
         this.HealthProblems = healthProblems;
     }
 
-    public static HealthStatus Create(
-
-        bool? isVaccinated,
+    public static HealthStatus Create(bool? isVaccinated,
         bool? isCastrated,
         bool? takesMedications,
         string? hasEatingSchedule,
         string? otherDietaryNeeds,
         string? healthProblems)
-    {
-        
-       return new (isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);
-    }
+        => new (isVaccinated, isCastrated, takesMedications, hasEatingSchedule, otherDietaryNeeds, healthProblems);
 
     public static HealthStatus? Create(HealthStatus? healthStatus)
-        => Create(
-            healthStatus.IsVaccinated,
+        => Create(healthStatus.IsVaccinated,
             healthStatus.IsCastrated,
             healthStatus.TakesMedications,
             healthStatus.HasEatingSchedule,

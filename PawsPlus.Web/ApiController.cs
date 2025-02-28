@@ -13,6 +13,7 @@ namespace PawsPlus.Web;
 public class ApiController : ControllerBase
 {
     public const string Id = "{Id}";
+    public const string ProfileId = "{ProfileId}";
     public const string PathSeparator = "/";
     
     public const string Administrator = "Administrator";

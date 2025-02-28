@@ -2,14 +2,13 @@ using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Enums;
 using PawsPlus.Domain.Exceptions;
-using static PawsPlus.Domain.Models.ModelConstants.Common;
 using static PawsPlus.Domain.Models.ModelConstants.Booking;
+using static PawsPlus.Domain.Models.ModelConstants.Common;
 
 namespace PawsPlus.Domain.Models;
 
 public class Booking : Entity<string>, IAggregateRoot
 {
-
     private Booking()
     {
     }

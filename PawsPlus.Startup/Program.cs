@@ -1,13 +1,11 @@
 using PawsPlus.Application;
+using PawsPlus.Domain;
 using PawsPlus.Infrastructure;
 using PawsPlus.Web;
 using PawsPlus.Web.Middleware;
-using PawsPlus.Domain;
-using PawsPlus.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services
     .AddDomain()
     .AddApplication()
@@ -16,12 +14,8 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddControllers();
 
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

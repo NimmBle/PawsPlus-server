@@ -16,7 +16,8 @@ public class BookingState : Enumeration
     }
 
 
-    public BookingState(int value, string name)
+    public BookingState(int value,
+        string name)
         : base(value, name)
     {
     }

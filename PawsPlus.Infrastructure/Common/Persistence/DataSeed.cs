@@ -9,7 +9,7 @@ public static class DataSeed
 {
     public static async Task SeedData(IServiceProvider serviceProvider)
     {
-        using (var context = serviceProvider.GetRequiredService<ZoolandiaDbContext>())
+        using (var context = serviceProvider.GetRequiredService<PawsPlusDbContext>())
         {
             // Seed roles if they don't exist
             var adminUser = await context.Users.Where(u => u.Email.ToLower() == "hristopanev20@gmail.com").AnyAsync();

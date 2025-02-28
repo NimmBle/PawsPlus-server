@@ -1,3 +1,4 @@
+using DotNetEnv;
 using PawsPlus.Application.Features.Profile;
 using PawsPlus.Domain.Services;
 using SendGrid;
@@ -8,10 +9,9 @@ namespace PawsPlus.Infrastructure.Services;
 public class EmailSender(IProfileQueryRepository profileQueryRepository)
     : IEmailSender
 {
+    private string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
     
-    private string apiKey =  Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-    
-    private EmailAddress from = new ("no-reply@pawsplus.eu", "Eкипът на Лапички+");
+    private EmailAddress from = new("no-reply@pawsplus.eu", "Eкипът на Лапички+");
     
     private const string orders = "http://localhost:4200/profile/my-profile-details/notifications";
     private const string post = "http://localhost:4200/profile/my-profile-details/my-post";

@@ -9,9 +9,9 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Repositories;
 
 public class ServiceRepository(
-    ZoolandiaDbContext db,
+    PawsPlusDbContext db,
     IMapper mapper)
-    : DataRepository<ZoolandiaDbContext, Service>(db),
+    : DataRepository<PawsPlusDbContext, Service>(db),
         IServiceDomainRepository,
         IServiceQueryRepository
 {

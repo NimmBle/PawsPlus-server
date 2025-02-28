@@ -5,7 +5,8 @@ namespace PawsPlus.Domain.Models;
 
 public class MeetingPlace : Entity<int>, IAggregateRoot
 {
-    public MeetingPlace(int id,string name)
+    public MeetingPlace(int id,
+        string name)
     {
         this.Id = id;
         this.Name = name;
@@ -13,8 +14,8 @@ public class MeetingPlace : Entity<int>, IAggregateRoot
 
     public string Name { get; private set; }
     
-    public List<Booking> Bookings { get; private set; } = new List<Booking>();
+    public List<Booking> Bookings { get; private set; } = new();
     
     [JsonIgnore]
-    public List<Service> Services { get; private set; } = new List<Service>();
+    public List<Service> Services { get; private set; } = new();
 }

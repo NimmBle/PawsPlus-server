@@ -5,8 +5,8 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class WeightRepository(ZoolandiaDbContext db)
-    : DataRepository<ZoolandiaDbContext, Weight>(db),
+public class WeightRepository(PawsPlusDbContext db)
+    : DataRepository<PawsPlusDbContext, Weight>(db),
         IWeightDomainRepository
 {
     public async Task<Weight> Find(int? id, CancellationToken cancellationToken = default)

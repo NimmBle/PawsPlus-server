@@ -9,9 +9,9 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class BreedRepository(ZoolandiaDbContext db,
+public class BreedRepository(PawsPlusDbContext db,
     IMapper mapper)
-    : DataRepository<ZoolandiaDbContext, Breed>(db),
+    : DataRepository<PawsPlusDbContext, Breed>(db),
         IBreedDomainRepository,
         IBreedQueryRepository
 {
@@ -29,7 +29,8 @@ public class BreedRepository(ZoolandiaDbContext db,
             .All()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
 
-    public async Task<List<Breed>> FindAll(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<List<Breed>> FindAll(IEnumerable<string> ids,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(at => ids.Contains(at.Id))

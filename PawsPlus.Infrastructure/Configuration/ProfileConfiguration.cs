@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PawsPlus.Domain.Models;
 using static PawsPlus.Domain.Models.ModelConstants.Common;
 using static PawsPlus.Domain.Models.ModelConstants.Profile;
-using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Infrastructure.Configuration;
 
@@ -59,9 +59,5 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
             .HasOne(p => p.Post)
             .WithOne(p => p.Profile)
             .OnDelete(DeleteBehavior.Cascade);
-
-        // builder
-        //     .HasOne(p => p.Meeting)
-        //     .WithOne(p => p.Profile);
     }
 }

@@ -7,8 +7,7 @@ public record Personality
     public Personality()
     {}
     
-    private Personality(
-        string? temperament,
+    private Personality(string? temperament,
         string? activityLevel,
         Training? isTrained,
         Fear? hasFears,
@@ -33,8 +32,7 @@ public record Personality
     public string? FearsDescription { get; init; }
 
     
-    public static Personality Create(
-        string? temperament,
+    public static Personality Create(string? temperament,
         string? activityLevel,
         Training? isTrained,
         Fear? hasFears,
@@ -42,8 +40,7 @@ public record Personality
         => new (temperament, activityLevel, isTrained, hasFears, fearsDescription);
 
     public static Personality? Create(Personality? personality)
-        => Create(
-            personality.Temperament,
+        => Create(personality.Temperament,
             personality.ActivityLevel,
             personality.IsTrained,
             personality.HasFears,

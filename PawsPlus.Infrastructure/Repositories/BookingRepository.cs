@@ -8,14 +8,14 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class BookingRepository(
-    ZoolandiaDbContext db,
+public class BookingRepository(PawsPlusDbContext db,
     IMapper mapper)
-    : DataRepository<ZoolandiaDbContext, Booking>(db),
+    : DataRepository<PawsPlusDbContext, Booking>(db),
         IBookingDomainRepository,
         IBookingQueryRepository
 {
-    public async Task<Booking> Find(string id, CancellationToken cancellationToken = default)
+    public async Task<Booking> Find(string id,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);

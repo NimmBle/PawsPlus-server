@@ -13,9 +13,9 @@ using Profile = PawsPlus.Domain.Models.Profile;
 namespace PawsPlus.Infrastructure.Repositories;
 
 public class ProfileRepository(
-    ZoolandiaDbContext db,
+    PawsPlusDbContext db,
     IMapper mapper)
-    : DataRepository<ZoolandiaDbContext, Profile>(db),
+    : DataRepository<PawsPlusDbContext, Profile>(db),
         IProfileDomainRepository,
         IProfileQueryRepository
 {

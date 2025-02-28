@@ -10,10 +10,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
     public void Configure(EntityTypeBuilder<Booking> builder)
     {
         builder
-            .Property(b => b.AdditionalDescription)
-            .HasMaxLength(MaxDescriptionLength);
-        
-        builder
             .HasKey(b => b.Id);
         
         builder
@@ -31,6 +27,10 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             );
         
         builder
+            .Property(b => b.AdditionalDescription)
+            .HasMaxLength(MaxDescriptionLength);
+        
+        builder
             .HasOne(b => b.Sitter)
             .WithMany(p => p.BookingsAsSitter)
             .HasForeignKey(b => b.SitterId)
@@ -46,7 +46,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .HasOne(b => b.Service)
             .WithMany(s => s.Bookings)
             .HasForeignKey(b => b.ServiceId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
         
         builder
             .HasOne(b => b.MeetingPlace)

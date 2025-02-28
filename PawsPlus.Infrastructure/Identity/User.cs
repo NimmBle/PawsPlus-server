@@ -10,19 +10,21 @@ public class User : IdentityUser, IUser
     {
     }
 
-    internal User(
-        string email,
+    internal User(string email,
         string userName)
         : base(userName)
     {
         this.Email = email;
     }
+    
     public Profile? Profile { get; private set; }
 
     public void CreateProfile(Profile profile)
     {
         if (Profile != null)
-            throw new Exception(); // Add DomainExceptions
+        {
+            throw new Exception();
+        }
         
         this.Profile = profile;
     }

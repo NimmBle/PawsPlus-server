@@ -9,7 +9,8 @@ public record Age
     {
     }
     
-    private Age(int years, int months)
+    private Age(int years,
+        int months)
     {
         Guard.ForNegativeNumber<InvalidPetException>(years, nameof(Years));
         Guard.ForNegativeNumber<InvalidPetException>(months, nameof(Months));
@@ -18,16 +19,12 @@ public record Age
         this.Months = months;
     }
     
-    private const int MinimumAge = 0;
-    
     public int Years { get; init; }
     
     public int Months { get; init; }
 
     public static Age? Create(int years, int months)
-    {
-        return new Age(years, months);
-    }
+        => new Age(years, months);
 
     public static Age? Create(Age age)
         => Create(age.Years, age.Months);

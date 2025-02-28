@@ -16,7 +16,8 @@ public class PostState : Enumeration
     }
 
 
-    public PostState(int value, string name)
+    public PostState(int value,
+        string name)
         : base(value, name)
     {
     }

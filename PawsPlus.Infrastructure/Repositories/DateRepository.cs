@@ -5,8 +5,8 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class DateRepository(ZoolandiaDbContext db)
-    : DataRepository<ZoolandiaDbContext, Date>(db),
+public class DateRepository(PawsPlusDbContext db)
+    : DataRepository<PawsPlusDbContext, Date>(db),
         IDateDomainRepository
 {
     public async Task<List<Date>> FindAll(DateOnly minDate,

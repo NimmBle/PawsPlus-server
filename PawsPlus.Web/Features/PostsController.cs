@@ -25,14 +25,7 @@ public class PostsController : ApiController
     [Authorize(Roles = Sitter)]
     public async Task<ActionResult> Create(CreatePostCommand command)
         => await this.Send(command);
-
-    [HttpGet]
-    [AllowAnonymous]
-    [Route(nameof(Search))]
-    public async Task<ActionResult<SearchPostsOutputModel>> Search(
-        [FromQuery] SearchPostsQuery query)
-        => await this.Send(query);
-
+    
     [HttpPut]
     [Authorize(Roles = Sitter)]
     [Route(Id)]
@@ -47,6 +40,13 @@ public class PostsController : ApiController
         => await this.Send(command);
 
     [HttpGet]
+    [AllowAnonymous]
+    [Route(nameof(Search))]
+    public async Task<ActionResult<SearchPostsOutputModel>> Search(
+        [FromQuery] SearchPostsQuery query)
+        => await this.Send(query);
+
+    [HttpGet]
     [Authorize(Roles = Administrator)]
     [Route(nameof(Pending))]
     public async Task<ActionResult<ICollection<PendingPostOutputModel>>> Pending(
@@ -54,7 +54,7 @@ public class PostsController : ApiController
         => await this.Send(query);
     
     [HttpPatch]
-    [Route("{ProfileId}" + PathSeparator + nameof(Activate))]
+    [Route(ProfileId + PathSeparator + nameof(Activate))]
     public async Task<ActionResult> Activate(ActivatePostCommand command)
         => await this.Send(command);
     

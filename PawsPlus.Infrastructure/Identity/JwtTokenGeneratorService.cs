@@ -12,7 +12,9 @@ public class JwtTokenGeneratorService(IOptions<ApplicationSettings> applicationS
 {
     private readonly ApplicationSettings _applicationSettings = applicationSettings.Value;
     
-    public string GenerateToken(string userId, string userName, IList<string> roles)
+    public string GenerateToken(string userId,
+        string userName,
+        IList<string> roles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_applicationSettings.Secret);

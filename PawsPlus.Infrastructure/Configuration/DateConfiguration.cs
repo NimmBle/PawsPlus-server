@@ -8,9 +8,7 @@ public class DateConfiguration : IEntityTypeConfiguration<Date>
 {
     public void Configure(EntityTypeBuilder<Date> builder)
     {
-
         builder
             .HasKey(p => p.Day);
-        
     }
 }

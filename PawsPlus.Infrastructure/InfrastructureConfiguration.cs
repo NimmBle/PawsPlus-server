@@ -13,6 +13,7 @@ using PawsPlus.Application.Files;
 using PawsPlus.Application.Identity;
 using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Services;
+using PawsPlus.Infrastructure.Common;
 using PawsPlus.Infrastructure.Common.Persistence;
 using PawsPlus.Infrastructure.Identity;
 using PawsPlus.Infrastructure.Serialization;
@@ -38,12 +39,12 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
         => services
-            .AddDbContext<ZoolandiaDbContext>(opt => opt
+            .AddDbContext<PawsPlusDbContext>(opt => opt
                 .UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
                     sqlServer => sqlServer
                         .UseNetTopologySuite()
-                        .MigrationsAssembly(typeof(ZoolandiaDbContext).Assembly.FullName)));
+                        .MigrationsAssembly(typeof(PawsPlusDbContext).Assembly.FullName)));
     public static IServiceCollection AddIdentity(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -57,7 +58,7 @@ public static class InfrastructureConfiguration
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;
             })
-            .AddEntityFrameworkStores<ZoolandiaDbContext>()
+            .AddEntityFrameworkStores<PawsPlusDbContext>()
             .AddDefaultTokenProviders()
             .AddRoles<IdentityRole>();
 

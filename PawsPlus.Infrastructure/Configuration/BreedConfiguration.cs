@@ -8,7 +8,6 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
 {
     public void Configure(EntityTypeBuilder<Breed> builder)
     {
-
         builder
             .HasKey(p => p.Id);
 
@@ -17,11 +16,5 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
             .WithMany(a => a.Breeds)
             .HasForeignKey(b => b.AnimalTypeId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-        // builder
-        //     .Property(b => b.PetType)
-        //     .HasConversion<string>();
-        
-        
     }
 }
