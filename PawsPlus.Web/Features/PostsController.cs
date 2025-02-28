@@ -20,7 +20,7 @@ public class PostsController : ApiController
     public async Task<ActionResult<PostDetailsOutputModel>> Get(
         [FromRoute] GetPostDetailsQuery query)
         => await this.Send(query);
-    
+
     [HttpPost]
     [Authorize(Roles = Sitter)]
     public async Task<ActionResult> Create(CreatePostCommand command)
@@ -32,17 +32,17 @@ public class PostsController : ApiController
     public async Task<ActionResult<SearchPostsOutputModel>> Search(
         [FromQuery] SearchPostsQuery query)
         => await this.Send(query);
-    
+
     [HttpPut]
     [Authorize(Roles = Sitter)]
     [Route(Id)]
     public async Task<ActionResult> EditPet(EditPostPetCommand command)
         => await this.Send(command);
-    
+
     [HttpDelete]
     [Authorize(Roles = Sitter)]
     [Route(Id)]
-    public async Task<ActionResult> DeletePet(DeletePostPetCommand command)
+    public async Task<ActionResult> DeletePet([FromRoute] DeletePostPetCommand command)
         => await this.Send(command);
 
     [HttpGet]
