@@ -11,12 +11,6 @@ public class IdentityErrors
     public static Error UserNotFound(string id) => Error.NotFound(
         "Identity.UserNotFound", $"No user found with the given id: '{id}'"); 
     
-    public static Error UserCreationFailed => Error.Failure(
-        "Identity.UserCreationFailed", $"We could not create you an account as of this moment. Please try again");
-    
-    public static Error UserRolesFailed => Error.Failure(
-        "Identity.UserRolesFailed", $"We could asign you the correct roles. Please try again");
-    
     public static Error InvalidCredentials => Error.Validation(
         "Identity.InvalidCredentials", $"The credentials are invalid. Please try again"); 
     
