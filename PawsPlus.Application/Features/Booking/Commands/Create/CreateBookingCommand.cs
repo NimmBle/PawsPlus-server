@@ -26,7 +26,8 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
         {
             var ownerProfile = await profileQueryRepository.GetPetLocation(currentUser.UserId);
             var service = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
-
+            var sitterProfile = await profileQueryRepository.GetDetails(request.SitterId);
+            
             if (!ownerProfile.HasPet)
             {
                 return BookingErrors.OwnerPetIsNull;
@@ -61,17 +62,14 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
                 .WithSitterId(request.SitterId)
                 .WithOwnerId(ownerProfile.OwnerId);
 
-            if (request.MeetingPlaceType == 1)
-            {
-                booking = booking
-                    .WithGooglePlaceId(ownerProfile.PlaceId);
-            }
-            else
-            {
-                booking = booking
-                    .WithGooglePlaceId(request.MeetingPlaceId);
-            }
 
+            booking = booking.WithGooglePlaceId(request.MeetingPlaceType switch
+            {
+                1 => ownerProfile.PlaceId,
+                2 => sitterProfile.Location.PlaceId,
+                _ => request.MeetingPlaceId,
+            });
+            
             var bookingBuild = booking.Build();
             await bookingDomainRepository.Save(bookingBuild);
             
