@@ -12,6 +12,7 @@ public class CancelBookingCommand : IRequest<Result>
     
     public string SitterId { get; set; }
     
+    public string ServiceName { get; set; }
     
     public class CancelBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
         IEmailSender emailSender) 
@@ -34,7 +35,7 @@ public class CancelBookingCommand : IRequest<Result>
             booking.ChangeState("Canceled");
             await bookingDomainRepository.Update(booking);
 
-            var result = await emailSender.SendBookingCancelEmail(booking.Service.Name,
+            var result = await emailSender.SendBookingCancelEmail(request.ServiceName,
                 booking.StartDay, 
                 booking.StartTime,
                 request.SitterId);

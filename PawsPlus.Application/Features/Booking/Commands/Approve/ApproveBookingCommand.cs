@@ -13,6 +13,9 @@ public class ApproveBookingCommand : IRequest<Result>
     public string OwnerId { get; set; }
     
     
+    public string ServiceName { get; set; }
+    
+    
     public class ApproveBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
         IEmailSender emailSender) 
         : IRequestHandler<ApproveBookingCommand, Result>
@@ -34,7 +37,7 @@ public class ApproveBookingCommand : IRequest<Result>
             booking.ChangeState("Approved");
             await bookingDomainRepository.Update(booking);
             
-            var result = await emailSender.SendBookingApproveEmail(booking.Service.Name,
+            var result = await emailSender.SendBookingApproveEmail(request.ServiceName,
                 booking.StartDay, 
                 booking.StartTime,
                 request.OwnerId);

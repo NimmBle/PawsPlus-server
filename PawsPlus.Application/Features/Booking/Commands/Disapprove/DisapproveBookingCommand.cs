@@ -13,6 +13,8 @@ public class DisapproveBookingCommand : IRequest<Result>
     
     public string OwnerId { get; set; }
     
+    public string ServiceName { get; set; }
+    
     
     public class DisapproveBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
         IEmailSender emailSender)
@@ -35,7 +37,7 @@ public class DisapproveBookingCommand : IRequest<Result>
             booking.ChangeState("Disapproved");
             await bookingDomainRepository.Update(booking);
 
-            var result = await emailSender.SendBookingDisapproveEmail(booking.Service.Name,
+            var result = await emailSender.SendBookingDisapproveEmail(request.ServiceName,
                 booking.StartDay, 
                 booking.StartTime,
                 request.OwnerId);

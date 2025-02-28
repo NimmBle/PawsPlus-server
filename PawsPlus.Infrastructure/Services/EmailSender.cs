@@ -24,7 +24,6 @@ public class EmailSender(UserManager<User> userManager,
         var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
         var owner = await profileQueryRepository.GetEmailInformation(ownerId);
         
-        var profileNotificationsLink = "http://localhost:4200/my-profile-details/notifications";
         var client = new SendGridClient(apiKey);
         var subject = "Лапички+ - Имате нова заявка";
         var to = new EmailAddress(sitter.Email, sitter.FirstName);
@@ -143,7 +142,7 @@ public class EmailSender(UserManager<User> userManager,
         <html>
         <body style='font-family: Oswald, sans-serif;'>
             <p>Здравей, {owner.FirstName} {owner.LastName}!</p>
-            <p>Твоята заявка за <b>{serviceName} </b> на <b>{startDay} </b> от <b>{startTime} </b> е <b>неодобрена</b>!</p>
+            <p>Твоята заявка за <b>{serviceName} </b> на <b>{startDay} </b> от <b>{startTime} </b> е <b>отхвърлена</b>!</p>
             <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
         </body>
         </html>";
