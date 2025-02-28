@@ -47,11 +47,9 @@ public class ProfileRepository(
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<MineProfileOutputModel>(this
-                .Data
-                .Users
-                .Where(u => u.Profile.Id == id)
-                .Include(p => p.Profile.Location)
-                .Select(u => u.Profile))
+                .All()
+                .Where(p => p.Id == id)
+                .Include(p => p.Location))
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<ProfilePetLocationDto> GetPetLocation(string userId,

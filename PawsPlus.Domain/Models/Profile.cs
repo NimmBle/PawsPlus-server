@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using PawsPlus.Domain.Common;
+﻿using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Exceptions;
 using PawsPlus.Domain.ValueObjects;

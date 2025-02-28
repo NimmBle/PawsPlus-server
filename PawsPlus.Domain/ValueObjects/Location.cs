@@ -16,8 +16,8 @@ public record Location
         this.Point = new Point(latitude, longitude) { SRID = 4326 };
     }
     
-    public string? PlaceId { get; }
+    public string? PlaceId { get; init; }
     
-    public Point? Point { get; }
+    public Point? Point { get; init; }
     
 }
