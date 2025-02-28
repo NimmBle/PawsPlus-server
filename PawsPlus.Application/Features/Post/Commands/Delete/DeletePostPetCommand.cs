@@ -10,7 +10,7 @@ namespace PawsPlus.Application.Features.Post.Commands.Delete;
 
 public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Result>
 {
-    public int PetTypeId { get; set; }
+    public int AnimalTypeId { get; set; }
     
     public sealed class DeletePostPetCommandHandler(IPostDomainRepository postDomainRepository,
         IAnimalTypeDomainRepository animalTypeDomainRepository)
@@ -18,7 +18,7 @@ public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Resul
     {
         public async Task<Result> Handle(DeletePostPetCommand request, CancellationToken cancellationToken)
         {
-            if (request.PetTypeId == null)
+            if (request.AnimalTypeId == null)
             {
                 return Error.NullValue;
             }
@@ -29,7 +29,7 @@ public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Resul
                 return PostErrors.PostNotFound(request.Id); 
             }
             
-            var animalType = await animalTypeDomainRepository.Find(request.PetTypeId);
+            var animalType = await animalTypeDomainRepository.Find(request.AnimalTypeId);
             if (animalType == null)
             {
                 return PostErrors.PostAnimalTypeNotFound;
