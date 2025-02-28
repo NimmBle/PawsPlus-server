@@ -42,7 +42,8 @@ public class PostsController : ApiController
     [HttpDelete]
     [Authorize(Roles = Sitter)]
     [Route(Id)]
-    public async Task<ActionResult> DeletePet([FromRoute] DeletePostPetCommand command)
+    public async Task<ActionResult> DeletePet(
+        [FromQuery] DeletePostPetCommand command)
         => await this.Send(command);
 
     [HttpGet]
