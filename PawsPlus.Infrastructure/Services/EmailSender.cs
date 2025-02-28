@@ -1,52 +1,23 @@
-using Microsoft.AspNetCore.Identity;
 using PawsPlus.Application.Features.Profile;
 using PawsPlus.Domain.Services;
-using PawsPlus.Infrastructure.Data.Migrations;
-using PawsPlus.Infrastructure.Identity;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
 namespace PawsPlus.Infrastructure.Services;
 
-public class EmailSender(UserManager<User> userManager,
-    IProfileQueryRepository profileQueryRepository)
+public class EmailSender(IProfileQueryRepository profileQueryRepository)
     : IEmailSender
 {
     
     private string apiKey =  Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-    private const string orders = "http://localhost:4200/profile/my-profile-details/notifications";
-    private const string post = "http://localhost:4200/profile/my-profile-details/my-post";
     
     private EmailAddress from = new ("no-reply@pawsplus.eu", "Eкипът на Лапички+");
     
-    public async Task<bool> SendRequestEmail(string sitterId, string ownerId, CancellationToken cancellationToken = default)
-    {
-        var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
-        var owner = await profileQueryRepository.GetEmailInformation(ownerId);
-        
-        var client = new SendGridClient(apiKey);
-        var subject = "Лапички+ - Имате нова заявка";
-        var to = new EmailAddress(sitter.Email, sitter.FirstName);
-        var htmlContent = $@"
-        <html>
-        <body style='font-family: Oswald, sans-serif;'>
-          <p>Здравейте!</p>
-          <p>Имате нова заявка от {owner.FirstName} {owner.LastName}</p>
-          <p>
-            За да видите повече детайли относно заявка, както и да я одобрите или откажете, вижте профила си в Лапички+ - <a href={orders}>Отвори профил</a>
-          </p>
-          <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
-        </body>
-        </html>";
-        
-        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+    private const string orders = "http://localhost:4200/profile/my-profile-details/notifications";
+    private const string post = "http://localhost:4200/profile/my-profile-details/my-post";
 
-        var result = await client.SendEmailAsync(message);
-
-        return result.IsSuccessStatusCode;
-    }
-
-    public async Task<bool> SendPostApproveEmail(string sitterId, CancellationToken cancellationToken = default)
+    public async Task<bool> SendPostApproveEmail(string sitterId,
+        CancellationToken cancellationToken = default)
     {
         var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
         
@@ -99,6 +70,35 @@ public class EmailSender(UserManager<User> userManager,
         return result.IsSuccessStatusCode;
     }
 
+    public async Task<bool> SendBookingRequestEmail(string sitterId,
+        string ownerId,
+        CancellationToken cancellationToken = default)
+    {
+        var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
+        var owner = await profileQueryRepository.GetEmailInformation(ownerId);
+        
+        var client = new SendGridClient(apiKey);
+        var subject = "Лапички+ - Имате нова заявка";
+        var to = new EmailAddress(sitter.Email, sitter.FirstName);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+          <p>Здравейте!</p>
+          <p>Имате нова заявка от {owner.FirstName} {owner.LastName}</p>
+          <p>
+            За да видите повече детайли относно заявка, както и да я одобрите или откажете, вижте профила си в Лапички+ - <a href={orders}>Отвори профил</a>
+          </p>
+          <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+
+        var result = await client.SendEmailAsync(message);
+
+        return result.IsSuccessStatusCode;
+    }
+    
     public async Task<bool> SendBookingApproveEmail(string serviceName,
         DateOnly startDay,
         TimeOnly startTime,
@@ -108,7 +108,7 @@ public class EmailSender(UserManager<User> userManager,
         var owner = await profileQueryRepository.GetEmailInformation(ownerId);
         
         var client = new SendGridClient(apiKey);
-        var subject = "Лапички+ - Имате нова заявка";
+        var subject = "Лапички+ - Актуализация на заявка";
         var to = new EmailAddress(owner.Email, owner.FirstName);
         var htmlContent = $@"
         <html>
@@ -136,7 +136,7 @@ public class EmailSender(UserManager<User> userManager,
         var owner = await profileQueryRepository.GetEmailInformation(ownerId);
         
         var client = new SendGridClient(apiKey);
-        var subject = "Лапички+ - Имате нова заявка";
+        var subject = "Лапички+ - Актуализация на заявка";
         var to = new EmailAddress(owner.Email, owner.FirstName);
         var htmlContent = $@"
         <html>
@@ -163,7 +163,7 @@ public class EmailSender(UserManager<User> userManager,
         var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
         
         var client = new SendGridClient(apiKey);
-        var subject = "Лапички+ - Имате нова заявка";
+        var subject = "Лапички+ - Актуализация на заявка";
         var to = new EmailAddress(sitter.Email, sitter.FirstName);
         var htmlContent = $@"
         <html>
