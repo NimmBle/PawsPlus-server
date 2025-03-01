@@ -34,7 +34,7 @@ public static class InfrastructureConfiguration
             .AddFiles()
             .AddConverters()
             .AddEmailSender();
-
+    
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -44,7 +44,8 @@ public static class InfrastructureConfiguration
                     configuration.GetConnectionString("DefaultConnection"),
                     sqlServer => sqlServer
                         .UseNetTopologySuite()
-                        .MigrationsAssembly(typeof(PawsPlusDbContext).Assembly.FullName)));
+                        .MigrationsAssembly(typeof(PawsPlusDbContext).Assembly.FullName)))
+            .AddTransient<IInitializer, DatabaseInitializer>();
     public static IServiceCollection AddIdentity(
         this IServiceCollection services,
         IConfiguration configuration)

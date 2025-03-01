@@ -5,8 +5,8 @@ namespace PawsPlus.Application.Features.Profile.Queries.Mine;
 public class MineProfileOutputModel : IMapFrom<Domain.Models.Profile>
 {
     public string Id { get; set; }
-    
-    public string Email { get; set; }
+
+    public string? Email { get; set; }
     
     public string FirstName { get; set; }
 

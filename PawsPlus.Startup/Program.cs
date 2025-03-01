@@ -1,6 +1,7 @@
 using PawsPlus.Application;
 using PawsPlus.Domain;
 using PawsPlus.Infrastructure;
+using PawsPlus.Server;
 using PawsPlus.Web;
 using PawsPlus.Web.Middleware;
 
@@ -40,6 +41,7 @@ app
     .UseAuthorization()
     .UseEndpoints(endpoints => endpoints
         .MapControllers()
-    );
+    )
+    .Initialize();
     
 app.Run();

@@ -456,7 +456,7 @@ namespace PawsPlus.Infrastructure.Migrations
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -521,15 +521,15 @@ namespace PawsPlus.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9b11b473-38ce-42d7-ace0-288784c1603b", "9b11b473-38ce-42d7-ace0-288784c1603b", "Sitter", "SITTER" },
-                    { "c7d0b113-319f-4ebe-99c1-ff6e4386797e", "c7d0b113-319f-4ebe-99c1-ff6e4386797e", "Owner", "OWNER" },
-                    { "feeb716a-f01d-4d4b-8fb7-2ac2babfab6d", "feeb716a-f01d-4d4b-8fb7-2ac2babfab6d", "Administrator", "ADMINISTRATOR" }
+                    { "2d8b796d-8c4c-4c86-9e3a-dee7fc984fac", "2d8b796d-8c4c-4c86-9e3a-dee7fc984fac", "Owner", "OWNER" },
+                    { "919e5175-dee6-444a-afdb-b0ed01ec7f8d", "919e5175-dee6-444a-afdb-b0ed01ec7f8d", "Sitter", "SITTER" },
+                    { "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4", "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4", "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfileId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "ce79e5b7-8dd5-4048-9145-b1c74c4b5bdb", 0, "95c95360-06f8-4f89-9ba9-c175e056f81d", "pawsplus@pawsplus.eu", true, false, null, "PAWSPLUS@PAWSPLUS.EU", "ADMIN", "AQAAAAIAAYagAAAAEPApUAylrqS72nGP3VpvCwFtQfJyWj4oFZzqlWRgMNOKSGAUzC2IFMcGcZe9cy0jkA==", null, false, null, "da408acb-167e-4ccf-b92e-c958126ddb2a", false, "admin" });
+                values: new object[] { "9571547a-0d72-49de-a6d4-8a9746ee4599", 0, "6a9d0b57-3ed5-4bed-9d7f-944f2b291a58", "pawsplus@pawsplus.eu", true, false, null, "PAWSPLUS@PAWSPLUS.EU", "ADMIN", "AQAAAAIAAYagAAAAEDvjKFU7jUBY8QWbf6DogtnlBhkXMQhmNbbDWy1fidXPHrcHON0OzjAQCs4Lv23PRw==", null, false, null, "d7b4143a-76b8-4889-abe3-26ead9e68c92", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "MeetingPlaces",
@@ -555,7 +555,7 @@ namespace PawsPlus.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "feeb716a-f01d-4d4b-8fb7-2ac2babfab6d", "ce79e5b7-8dd5-4048-9145-b1c74c4b5bdb" });
+                values: new object[] { "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4", "9571547a-0d72-49de-a6d4-8a9746ee4599" });
 
             migrationBuilder.InsertData(
                 table: "Breeds",

@@ -17,6 +17,7 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
     public async Task<Result<UploadImageOutputModel>> UploadImage(IFormFile image)
     {
         Cloudinary cloudinary = new(applicationSettings.Value.CloudinarySecret);
+        Random random = new();
 
         if (image.Length == 0)
             return FileErrors.FileLengthInvalid;
@@ -30,7 +31,7 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
         var uploadParams = new ImageUploadParams
         {
             File = new FileDescription(imageName, stream),
-            PublicId = imageName
+            PublicId = imageName + random.Next(1000) + random.Next(1000)
         };
 
         var uploadResult = await cloudinary.UploadAsync(uploadParams);

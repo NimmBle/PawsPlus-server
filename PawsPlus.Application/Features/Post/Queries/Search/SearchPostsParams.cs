@@ -81,13 +81,15 @@ public class SearchPostsParams
         else if (StartDate is not null && EndDate is null)
         {
             predicate = predicate.And(p => p.Services
-                .All(s => s.AvailableDates
+                .Where(s => ServiceType.ToString() == s.Name)
+                .Any(s => s.AvailableDates
                 .Any(d => d.Day.Equals(DateOnly.Parse(StartDate)))));
         }
         else if (StartDate is null && EndDate is not null)
         {
             predicate = predicate.And(p => p.Services
-                .All(s => s.AvailableDates
+                .Where(s => ServiceType.ToString() == s.Name)
+                .Any(s => s.AvailableDates
                 .Any(d => d.Day.Equals(DateOnly.Parse(EndDate)))));
         }
 

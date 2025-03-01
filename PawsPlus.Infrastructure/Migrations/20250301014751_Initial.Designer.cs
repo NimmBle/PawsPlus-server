@@ -13,7 +13,7 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Migrations
 {
     [DbContext(typeof(PawsPlusDbContext))]
-    [Migration("20250228205014_Initial")]
+    [Migration("20250301014751_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -115,22 +115,22 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c7d0b113-319f-4ebe-99c1-ff6e4386797e",
-                            ConcurrencyStamp = "c7d0b113-319f-4ebe-99c1-ff6e4386797e",
+                            Id = "2d8b796d-8c4c-4c86-9e3a-dee7fc984fac",
+                            ConcurrencyStamp = "2d8b796d-8c4c-4c86-9e3a-dee7fc984fac",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "9b11b473-38ce-42d7-ace0-288784c1603b",
-                            ConcurrencyStamp = "9b11b473-38ce-42d7-ace0-288784c1603b",
+                            Id = "919e5175-dee6-444a-afdb-b0ed01ec7f8d",
+                            ConcurrencyStamp = "919e5175-dee6-444a-afdb-b0ed01ec7f8d",
                             Name = "Sitter",
                             NormalizedName = "SITTER"
                         },
                         new
                         {
-                            Id = "feeb716a-f01d-4d4b-8fb7-2ac2babfab6d",
-                            ConcurrencyStamp = "feeb716a-f01d-4d4b-8fb7-2ac2babfab6d",
+                            Id = "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4",
+                            ConcurrencyStamp = "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -225,8 +225,8 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "ce79e5b7-8dd5-4048-9145-b1c74c4b5bdb",
-                            RoleId = "feeb716a-f01d-4d4b-8fb7-2ac2babfab6d"
+                            UserId = "9571547a-0d72-49de-a6d4-8a9746ee4599",
+                            RoleId = "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4"
                         });
                 });
 
@@ -1744,17 +1744,17 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ce79e5b7-8dd5-4048-9145-b1c74c4b5bdb",
+                            Id = "9571547a-0d72-49de-a6d4-8a9746ee4599",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "95c95360-06f8-4f89-9ba9-c175e056f81d",
+                            ConcurrencyStamp = "6a9d0b57-3ed5-4bed-9d7f-944f2b291a58",
                             Email = "pawsplus@pawsplus.eu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PAWSPLUS@PAWSPLUS.EU",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPApUAylrqS72nGP3VpvCwFtQfJyWj4oFZzqlWRgMNOKSGAUzC2IFMcGcZe9cy0jkA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDvjKFU7jUBY8QWbf6DogtnlBhkXMQhmNbbDWy1fidXPHrcHON0OzjAQCs4Lv23PRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "da408acb-167e-4ccf-b92e-c958126ddb2a",
+                            SecurityStamp = "d7b4143a-76b8-4889-abe3-26ead9e68c92",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -1903,7 +1903,7 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasOne("PawsPlus.Domain.Models.Service", "Service")
                         .WithMany("Bookings")
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PawsPlus.Domain.Models.Profile", "Sitter")

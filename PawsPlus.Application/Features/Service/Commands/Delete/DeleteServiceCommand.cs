@@ -9,7 +9,8 @@ public class DeleteServiceCommand : IRequest<Result>
 {
     public string Id { get; set; }
 
-    public class DeleteServiceCommandHandler(IServiceDomainRepository serviceDomainRepository)
+    public class DeleteServiceCommandHandler(IServiceDomainRepository serviceDomainRepository,
+        IBookingDomainRepository bookingDomainRepository)
         : IRequestHandler<DeleteServiceCommand, Result>
     {
         public async Task<Result> Handle(DeleteServiceCommand request,
@@ -20,6 +21,12 @@ public class DeleteServiceCommand : IRequest<Result>
             if (service == null)
             {
                 return ServiceErrors.ServiceNotFound;
+            }
+            
+            var booking = await bookingDomainRepository.FindByServiceId(request.Id);
+            if (booking != null)
+            {
+                
             }
             
             return await serviceDomainRepository.Delete(request.Id, cancellationToken);
