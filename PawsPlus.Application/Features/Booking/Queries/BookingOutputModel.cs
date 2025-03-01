@@ -1,5 +1,4 @@
 using PawsPlus.Application.Common.Mapping;
-using PawsPlus.Domain.Enums;
 
 namespace PawsPlus.Application.Features.Booking.Queries;
 

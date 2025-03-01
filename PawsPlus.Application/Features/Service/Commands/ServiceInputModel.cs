@@ -1,6 +1,4 @@
 ﻿
-using PawsPlus.Domain.Enums;
-
 namespace PawsPlus.Application.Features.Service.Commands;
 
 public abstract class ServiceInputModel

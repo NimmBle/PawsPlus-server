@@ -8,8 +8,7 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class ServiceRepository(
-    PawsPlusDbContext db,
+public class ServiceRepository(PawsPlusDbContext db,
     IMapper mapper)
     : DataRepository<PawsPlusDbContext, Service>(db),
         IServiceDomainRepository,

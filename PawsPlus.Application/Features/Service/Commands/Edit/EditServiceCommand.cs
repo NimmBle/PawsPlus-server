@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Errors;
-using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Service.Commands.Edit;
@@ -13,8 +12,7 @@ public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
         IDateDomainRepository dateDomainRepository)
         : IRequestHandler<EditServiceCommand, Result>
     {
-        public async Task<Result> Handle(
-            EditServiceCommand request,
+        public async Task<Result> Handle(EditServiceCommand request,
             CancellationToken cancellationToken)
         {
             if (request.MeetingPlaces.Count == 0)

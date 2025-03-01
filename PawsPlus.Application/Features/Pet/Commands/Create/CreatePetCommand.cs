@@ -11,8 +11,7 @@ public class CreatePetCommand
     : CreatePetInputModel,
         IRequest<Result<CreatePetOutputModel>>
 {
-    public class CreatePetCommandHandler(
-        ICurrentUser currentUser,
+    public class CreatePetCommandHandler(ICurrentUser currentUser,
         IProfileDomainRepository profileDomainRepository,
         IPetDomainRepository petDomainRepository,
         IBreedDomainRepository breedDomainRepository,
@@ -21,8 +20,7 @@ public class CreatePetCommand
         IPetFactory petFactory)
         : IRequestHandler<CreatePetCommand, Result<CreatePetOutputModel>>
     {
-        public async Task<Result<CreatePetOutputModel>> Handle(
-            CreatePetCommand request,
+        public async Task<Result<CreatePetOutputModel>> Handle(CreatePetCommand request,
             CancellationToken cancellationToken)
         {
             var profile = await profileDomainRepository.FindByUser(currentUser.UserId);

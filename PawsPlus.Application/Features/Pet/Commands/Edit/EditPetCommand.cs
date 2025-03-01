@@ -12,15 +12,15 @@ public class EditPetCommand
 {
     public string? Id { get; set; }
     
-    public class EditPetCommandHandler
-        (IPetDomainRepository petDomainRepository,
+    public class EditPetCommandHandler(IPetDomainRepository petDomainRepository,
             IBreedDomainRepository breedDomainRepository,
             IAnimalTypeDomainRepository animalTypeDomainRepository,
             IWeightDomainRepository weightDomainRepository,
             IMapper mapper)
         : IRequestHandler<EditPetCommand, Result>
     {
-        public async Task<Result> Handle(EditPetCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(EditPetCommand request,
+            CancellationToken cancellationToken)
         {
             var pet = await petDomainRepository.Find(request.Id);
 
@@ -32,7 +32,6 @@ public class EditPetCommand
             
             var animalType = await animalTypeDomainRepository.Find(request.PetType);
             var weight = await weightDomainRepository.Find(request.Weight);
-
 
             var healthStatus = mapper.Map<HealthStatus>(request.HealthStatus);
             pet.Update(

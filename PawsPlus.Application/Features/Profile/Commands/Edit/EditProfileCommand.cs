@@ -10,7 +10,6 @@ public class EditProfileCommand
     : EntityCommand<string>,
         IRequest<Result>
 {
-    
     public string FirstName { get; set; }
     
     public string LastName { get; set; }
@@ -24,13 +23,11 @@ public class EditProfileCommand
     public LocationInputModel Location { get; set; }
     
     
-    public class EditUserCommandHandler(
-        ICurrentUser currentUser,
+    public class EditUserCommandHandler(ICurrentUser currentUser,
         IProfileDomainRepository profileDomainRepository)
         : IRequestHandler<EditProfileCommand, Result>
     {
-        public async Task<Result> Handle(
-            EditProfileCommand request,
+        public async Task<Result> Handle(EditProfileCommand request,
             CancellationToken cancellationToken)
         {
             var currentUserId = currentUser.UserId;
@@ -56,7 +53,6 @@ public class EditProfileCommand
                 .UpdateLocation(request.Location.PlaceId,
                     request.Location.Latitude,
                     request.Location.Longitude);
-                
             
             await profileDomainRepository.Update(profile);
 

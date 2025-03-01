@@ -1,12 +1,9 @@
 ﻿using System.Transactions;
-using System.Web;
 using Microsoft.AspNetCore.Identity;
 using PawsPlus.Application.Common;
 using PawsPlus.Application.Identity;
 using PawsPlus.Application.Identity.Commands.LoginUser;
 using PawsPlus.Domain.Services;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace PawsPlus.Infrastructure.Identity;
 

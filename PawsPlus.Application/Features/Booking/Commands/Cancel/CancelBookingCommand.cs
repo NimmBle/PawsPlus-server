@@ -18,7 +18,8 @@ public class CancelBookingCommand : IRequest<Result>
         IEmailSender emailSender) 
         : IRequestHandler<CancelBookingCommand, Result>
     {
-        public async Task<Result> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CancelBookingCommand request,
+            CancellationToken cancellationToken)
         {
             var booking = await bookingDomainRepository.Find(request.Id);
 

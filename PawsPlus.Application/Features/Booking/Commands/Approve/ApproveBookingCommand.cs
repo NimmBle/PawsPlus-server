@@ -15,12 +15,12 @@ public class ApproveBookingCommand : IRequest<Result>
     
     public string ServiceName { get; set; }
     
-    
     public class ApproveBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
         IEmailSender emailSender) 
         : IRequestHandler<ApproveBookingCommand, Result>
     {
-        public async Task<Result> Handle(ApproveBookingCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(ApproveBookingCommand request,
+            CancellationToken cancellationToken)
         {
             var booking = await bookingDomainRepository.Find(request.Id);
 

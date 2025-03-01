@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PawsPlus.Application.Features.Breed;
 using PawsPlus.Application.Features.Breed.Queries;
-using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Infrastructure.Common.Persistence;

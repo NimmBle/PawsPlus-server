@@ -1,17 +1,16 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
-using PawsPlus.Domain.Errors;
 
 namespace PawsPlus.Application.Features.Post.Queries.Search;
 
-public class SearchPostsQuery : SearchPostsParams, IRequest<Result<SearchPostsOutputModel>> 
+public class SearchPostsQuery 
+    : SearchPostsParams,
+        IRequest<Result<SearchPostsOutputModel>> 
 {
-    public class SearchPostQueryHandler
-        (IPostQueryRepository postRepository) 
+    public class SearchPostQueryHandler(IPostQueryRepository postRepository) 
         : IRequestHandler<SearchPostsQuery, Result<SearchPostsOutputModel>>
     {
-        public async Task<Result<SearchPostsOutputModel>> Handle(
-            SearchPostsQuery request,
+        public async Task<Result<SearchPostsOutputModel>> Handle(SearchPostsQuery request,
             CancellationToken cancellationToken)
         {
             var predicate = request.ToPredicate();
@@ -33,8 +32,7 @@ public class SearchPostsQuery : SearchPostsParams, IRequest<Result<SearchPostsOu
             
             int totalPages = (int)Math.Ceiling(posts.Count() / request.PostsPerPage * 1.0);
             
-            return new SearchPostsOutputModel(
-                posts,
+            return new SearchPostsOutputModel(posts,
                 totalPages,
                 request.Page
                 );

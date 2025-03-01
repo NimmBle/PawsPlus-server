@@ -9,8 +9,7 @@ public class DeletePetCommand : EntityCommand<string>, IRequest<Result>
     class DeletePetCommandHandler(IPetDomainRepository petDomainRepository)
         : IRequestHandler<DeletePetCommand, Result>
     {
-        public async Task<Result> Handle(
-            DeletePetCommand request,
+        public async Task<Result> Handle(DeletePetCommand request,
             CancellationToken cancellationToken)
             => await petDomainRepository.Delete(request.Id);
     }

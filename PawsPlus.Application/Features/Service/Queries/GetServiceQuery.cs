@@ -12,8 +12,6 @@ public class GetServiceQuery : IRequest<Result<ServiceOutputModel>>
     {
         public async Task<Result<ServiceOutputModel>> Handle(GetServiceQuery request,
             CancellationToken cancellationToken)
-        {
-            return await serviceQueryRepository.Get(request.Id);
-        }
+            => await serviceQueryRepository.Get(request.Id);
     }
 }

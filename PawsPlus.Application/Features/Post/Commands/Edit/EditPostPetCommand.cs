@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
-using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Post.Commands.Edit;
 
-public class EditPostPetCommand : PostInputModel, IRequest<Result>
+public class EditPostPetCommand 
+    : PostInputModel, 
+        IRequest<Result>
 {
     public string Id { get; set; }
     public int AnimalTypeId { get; set; }
@@ -16,7 +17,8 @@ public class EditPostPetCommand : PostInputModel, IRequest<Result>
         IWeightDomainRepository weightDomainRepository)
         : IRequestHandler<EditPostPetCommand, Result>
     {
-        public async Task<Result> Handle(EditPostPetCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(EditPostPetCommand request,
+            CancellationToken cancellationToken)
         {
             var post = await postDomainRepository.Find(request.Id);
 

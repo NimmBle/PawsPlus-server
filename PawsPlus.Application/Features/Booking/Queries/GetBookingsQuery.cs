@@ -12,7 +12,8 @@ public class GetBookingsQuery : IRequest<Result<ICollection<BookingOutputModel>>
         ICurrentUser currentUser) 
         : IRequestHandler<GetBookingsQuery, Result<ICollection<BookingOutputModel>>>
     {
-        public async Task<Result<ICollection<BookingOutputModel>>> Handle(GetBookingsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ICollection<BookingOutputModel>>> Handle(GetBookingsQuery request,
+            CancellationToken cancellationToken)
         { 
             var id = currentUser.UserId;
             id = await profileQueryRepository.GetProfileIdByUser(id);

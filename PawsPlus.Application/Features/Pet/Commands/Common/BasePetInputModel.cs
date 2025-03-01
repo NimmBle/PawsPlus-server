@@ -1,5 +1,4 @@
 ﻿using PawsPlus.Domain.Enums.Pet;
-using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Pet.Commands.Common;
 

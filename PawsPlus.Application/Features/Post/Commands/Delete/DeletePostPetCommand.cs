@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Common;
-using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Errors;
-using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Post.Commands.Delete;
 
-public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Result>
+public sealed class DeletePostPetCommand 
+    : EntityCommand<string>,
+        IRequest<Result>
 {
     public int AnimalTypeId { get; set; }
     
@@ -16,7 +16,8 @@ public sealed class DeletePostPetCommand : EntityCommand<string>, IRequest<Resul
         IAnimalTypeDomainRepository animalTypeDomainRepository)
         : IRequestHandler<DeletePostPetCommand, Result>
     {
-        public async Task<Result> Handle(DeletePostPetCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeletePostPetCommand request,
+            CancellationToken cancellationToken)
         {
             if (request.AnimalTypeId == null)
             {

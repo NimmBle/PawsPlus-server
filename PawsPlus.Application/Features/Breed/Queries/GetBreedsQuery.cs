@@ -9,7 +9,8 @@ public class GetBreedsQuery : IRequest<IEnumerable<BreedOutputModel>>
     public class GetBreedsQueryHandler(IBreedQueryRepository breedQueryRepository)
         : IRequestHandler<GetBreedsQuery, IEnumerable<BreedOutputModel>>
     {
-        public async Task<IEnumerable<BreedOutputModel>> Handle(GetBreedsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<BreedOutputModel>> Handle(GetBreedsQuery request,
+            CancellationToken cancellationToken)
             => await breedQueryRepository.GetBreeds(request.AnimalTypeId, cancellationToken);
     }
 }

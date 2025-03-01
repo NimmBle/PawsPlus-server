@@ -1,19 +1,15 @@
-﻿using System.Linq.Expressions;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PawsPlus.Application.Features.Profile;
-using PawsPlus.Application.Features.Profile.Queries;
 using PawsPlus.Application.Features.Profile.Queries.Mine;
 using PawsPlus.Application.Features.Profile.Queries.Search;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Infrastructure.Common.Persistence;
-using PawsPlus.Infrastructure.Identity;
 using Profile = PawsPlus.Domain.Models.Profile;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class ProfileRepository(
-    PawsPlusDbContext db,
+public class ProfileRepository(PawsPlusDbContext db,
     IMapper mapper)
     : DataRepository<PawsPlusDbContext, Profile>(db),
         IProfileDomainRepository,
@@ -62,7 +58,8 @@ public class ProfileRepository(
                 .Select(u => u.Profile))
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<ProfileEmailInformationDto> GetEmailInformation(string id, CancellationToken cancellationToken = default)
+    public async Task<ProfileEmailInformationDto> GetEmailInformation(string id,
+        CancellationToken cancellationToken = default)
         => await this
             .Data
             .Users
@@ -72,7 +69,8 @@ public class ProfileRepository(
                 u.Profile.LastName))
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default)
+    public async Task<string> GetProfileIdByUser(string userId,
+        CancellationToken cancellationToken = default)
         => await this
             .Data
             .Users
@@ -80,7 +78,8 @@ public class ProfileRepository(
             .Select(u => u.Profile.Id)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<string> GetUserIdByProfileId(string profileId, CancellationToken cancellationToken = default)
+    public async Task<string> GetUserIdByProfileId(string profileId,
+        CancellationToken cancellationToken = default)
         => await this
             .Data
             .Users

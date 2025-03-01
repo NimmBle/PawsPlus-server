@@ -12,7 +12,8 @@ public class ActivatePostCommand : IRequest<Result>
     public class ActivateProfileCommandHandler(IPostDomainRepository postDomainRepository)
         : IRequestHandler<ActivatePostCommand, Result>
     {
-        public async Task<Result> Handle(ActivatePostCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(ActivatePostCommand request,
+            CancellationToken cancellationToken)
         {
             var post = await postDomainRepository.FindByProfile(request.ProfileId);
 

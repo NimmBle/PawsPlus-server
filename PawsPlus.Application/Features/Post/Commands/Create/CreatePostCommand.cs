@@ -1,26 +1,24 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Enums;
-using PawsPlus.Domain.Enums.Pet;
-using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Post.Commands.Create;
 
-public class CreatePostCommand : PostInputModel, IRequest<Result>
+public class CreatePostCommand 
+    : PostInputModel,
+        IRequest<Result>
 {
     public List<ServiceType> Services { get; set; }
     public List<int> Pets { get; set; }
     public string profileId { get; set; }
     
-    public class CreatePostCommandHandler(
-        IPostDomainRepository postRepository,
+    public class CreatePostCommandHandler(IPostDomainRepository postRepository,
         IAnimalTypeDomainRepository animalTypeDomainRepository,
         IWeightDomainRepository weightDomainRepository)
         : IRequestHandler<CreatePostCommand, Result>
     {
-        public async Task<Result> Handle(
-            CreatePostCommand request,
+        public async Task<Result> Handle(CreatePostCommand request,
             CancellationToken cancellationToken)
         {
             var animalTypes = await animalTypeDomainRepository.FindAll(request.Pets);

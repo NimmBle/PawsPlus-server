@@ -1,5 +1,4 @@
 ﻿using PawsPlus.Application.Features.Breed.Queries;
-using PawsPlus.Domain.Enums.Pet;
 
 namespace PawsPlus.Application.Features.Breed;
 

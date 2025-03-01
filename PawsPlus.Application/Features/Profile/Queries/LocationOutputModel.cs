@@ -10,5 +10,4 @@ public class LocationOutputModel : IMapFrom<Location>
     public void Mapping(AutoMapper.Profile mapper)
         => mapper
             .CreateMap<Location, LocationOutputModel>();
-    
 }

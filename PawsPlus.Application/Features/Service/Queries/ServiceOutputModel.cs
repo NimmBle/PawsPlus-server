@@ -1,6 +1,4 @@
 ﻿using PawsPlus.Application.Common.Mapping;
-using PawsPlus.Domain.Enums;
-using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Service.Queries;
 

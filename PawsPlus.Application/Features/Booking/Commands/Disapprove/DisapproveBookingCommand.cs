@@ -1,6 +1,5 @@
 using MediatR;
 using PawsPlus.Application.Common;
-using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Errors;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
@@ -15,12 +14,12 @@ public class DisapproveBookingCommand : IRequest<Result>
     
     public string ServiceName { get; set; }
     
-    
     public class DisapproveBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
         IEmailSender emailSender)
         : IRequestHandler<DisapproveBookingCommand, Result>
     {
-        public async Task<Result> Handle(DisapproveBookingCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DisapproveBookingCommand request,
+            CancellationToken cancellationToken)
         {
             var booking = await bookingDomainRepository.Find(request.Id);
 

@@ -12,8 +12,7 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class PostRepository(
-    PawsPlusDbContext db,
+public class PostRepository(PawsPlusDbContext db,
     IMapper mapper)
     : DataRepository<PawsPlusDbContext, Post>(db),
         IPostDomainRepository,
@@ -30,7 +29,8 @@ public class PostRepository(
             .Include(p => p.Weights)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<Post> FindByProfile(string profileId, CancellationToken cancellationToken = default)
+    public async Task<Post> FindByProfile(string profileId,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .FirstOrDefaultAsync(p => p.ProfileId == profileId, cancellationToken);

@@ -10,7 +10,8 @@ public class GetPetDetailsQuery : IRequest<Result<PetDetailsOutputModel>>
     public class PetDetailsQueryHandler(IPetQueryRepository petQueryRepository) 
         : IRequestHandler<GetPetDetailsQuery, Result<PetDetailsOutputModel>>
     {
-        public async Task<Result<PetDetailsOutputModel>> Handle(GetPetDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PetDetailsOutputModel>> Handle(GetPetDetailsQuery request,
+            CancellationToken cancellationToken)
             => await petQueryRepository.GetPetDetails(request.Id);
     }
 }

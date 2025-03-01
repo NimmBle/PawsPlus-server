@@ -6,7 +6,9 @@ public class SearchPostsOutputModel
     {
     }
     
-    internal SearchPostsOutputModel(IReadOnlyCollection<PostOutputModel> posts, int totalPages, int page = 1)
+    internal SearchPostsOutputModel(IReadOnlyCollection<PostOutputModel> posts,
+        int totalPages,
+        int page = 1)
     {
         Posts = posts;
         TotalPages = totalPages;

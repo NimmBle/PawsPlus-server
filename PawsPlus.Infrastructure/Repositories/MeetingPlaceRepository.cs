@@ -9,12 +9,14 @@ public class MeetingPlaceRepository(PawsPlusDbContext db)
     : DataRepository<PawsPlusDbContext, MeetingPlace>(db),
         IMeetingPlaceDomainRepository
 {
-    public async Task<MeetingPlace> Find(int id, CancellationToken cancellationToken = default)
+    public async Task<MeetingPlace> Find(int id,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
 
-    public async Task<List<MeetingPlace>> FindAll(IEnumerable<int> ids, CancellationToken cancellationToken = default)
+    public async Task<List<MeetingPlace>> FindAll(IEnumerable<int> ids,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(at => ids.Contains(at.Id))

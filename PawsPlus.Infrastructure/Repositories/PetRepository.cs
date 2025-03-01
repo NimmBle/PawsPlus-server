@@ -10,8 +10,7 @@ using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace PawsPlus.Infrastructure.Repositories;
 
-public class PetRepository
-    (PawsPlusDbContext db, 
+public class PetRepository(PawsPlusDbContext db, 
         IMapper mapper)
         : DataRepository<PawsPlusDbContext, Pet>(db),
             IPetDomainRepository,
@@ -43,10 +42,12 @@ public class PetRepository
         return true;
     }
 
-    public async Task<PetOutputModel> GetPetByProfile(string profileId, CancellationToken cancellationToken = default)
+    public async Task<PetOutputModel> GetPetByProfile(string profileId,
+        CancellationToken cancellationToken = default)
          => mapper.Map<PetOutputModel>(await GetPet(p => p.ProfileId == profileId));
 
-    public async Task<PetDetailsOutputModel> GetPetDetails(string petId, CancellationToken cancellationToken = default)
+    public async Task<PetDetailsOutputModel> GetPetDetails(string petId,
+        CancellationToken cancellationToken = default)
         => mapper.Map<PetDetailsOutputModel>(await GetPet(p => p.Id == petId));
 
 

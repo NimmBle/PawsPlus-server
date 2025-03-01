@@ -16,8 +16,6 @@ public class CreatePetCommandValidation : AbstractValidator<CreatePetCommand>
             .MaximumLength(MaxUrlLength)
             .NotEmpty();
         
-        // RuleFor(p => p.PetType).IsInEnum();
-        
         RuleFor(p => p.Gender).IsInEnum();
     }
 }

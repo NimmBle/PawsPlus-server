@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using PawsPlus.Domain.Enums;
 
 namespace PawsPlus.Application.Features.Booking.Commands.Create;

@@ -1,6 +1,4 @@
-using AutoMapper;
 using PawsPlus.Application.Common.Mapping;
-using PawsPlus.Domain.Enums.Pet;
 
 namespace PawsPlus.Application.Features.Post.Queries.Pending;
 

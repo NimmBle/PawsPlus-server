@@ -1,6 +1,5 @@
 ﻿using PawsPlus.Application.Common.Mapping;
 using PawsPlus.Application.Features.Service.Queries;
-using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Post.Queries;
 

@@ -1,8 +1,6 @@
 ﻿using PawsPlus.Domain.Common;
 using PawsPlus.Domain.Common.Models;
 using PawsPlus.Domain.Enums;
-using PawsPlus.Domain.Enums.Pet;
-using PawsPlus.Domain.Exceptions;
 
 namespace PawsPlus.Domain.Models;
 

@@ -11,7 +11,8 @@ public class GetPendingPostsQuery : IRequest<ICollection<PendingPostOutputModel>
     public class GetPendingPostsQueryHandler(IPostQueryRepository postQueryRepository) 
         : IRequestHandler<GetPendingPostsQuery, ICollection<PendingPostOutputModel>>
     {
-        public async Task<ICollection<PendingPostOutputModel>> Handle(GetPendingPostsQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<PendingPostOutputModel>> Handle(GetPendingPostsQuery request,
+            CancellationToken cancellationToken)
         {
             var skip = (request.Page - 1) * request.PostsPerPage;
             

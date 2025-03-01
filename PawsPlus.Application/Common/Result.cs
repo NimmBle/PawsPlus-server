@@ -4,7 +4,6 @@ namespace PawsPlus.Application.Common;
 
 public class Result
 {
-
     internal Result(bool succeeded, Error error)
     {
         this.Succeeded = succeeded;

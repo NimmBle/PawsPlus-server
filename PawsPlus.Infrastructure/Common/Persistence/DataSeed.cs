@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using PawsPlus.Infrastructure.Identity;
-
-namespace PawsPlus.Infrastructure.Common.Persistence;
+﻿namespace PawsPlus.Infrastructure.Common.Persistence;
 
 public static class DataSeed
 {

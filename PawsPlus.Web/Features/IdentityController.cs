@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PawsPlus.Application.Identity.Commands.ChangeEmail;
 using PawsPlus.Application.Identity.Commands.ChangePassword;
 using PawsPlus.Application.Identity.Commands.ConfirmEmail;
 using PawsPlus.Application.Identity.Commands.CreateUser;

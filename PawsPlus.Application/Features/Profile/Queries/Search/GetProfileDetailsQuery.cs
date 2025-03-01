@@ -13,8 +13,7 @@ public class GetProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>
         IPostQueryRepository postQueryRepository)
         : IRequestHandler<GetProfileDetailsQuery, Result<ProfileDetailsOutputModel>>
     {
-        public async Task<Result<ProfileDetailsOutputModel>> Handle(
-            GetProfileDetailsQuery request,
+        public async Task<Result<ProfileDetailsOutputModel>> Handle(GetProfileDetailsQuery request,
             CancellationToken cancellationToken)
         {
             var profile = await profileQueryRepository.GetDetails(request.Id);

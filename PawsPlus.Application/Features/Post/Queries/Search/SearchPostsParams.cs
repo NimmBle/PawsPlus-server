@@ -2,7 +2,6 @@
 using NetTopologySuite.Geometries;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Enums;
-using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Models;
 
 namespace PawsPlus.Application.Features.Post.Queries.Search;

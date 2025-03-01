@@ -1,8 +1,6 @@
 using PawsPlus.Application.Common.Mapping;
 using PawsPlus.Application.Features.Breed.Queries;
-using PawsPlus.Application.Features.Profile.Queries.MinePet;
 using PawsPlus.Domain.Enums.Pet;
-using PawsPlus.Domain.Models;
 using PawsPlus.Domain.ValueObjects;
 using Weight = PawsPlus.Domain.Models.Weight;
 

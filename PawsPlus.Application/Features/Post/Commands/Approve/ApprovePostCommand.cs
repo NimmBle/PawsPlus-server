@@ -1,7 +1,6 @@
 using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Errors;
-using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
 
@@ -15,7 +14,8 @@ public class ApprovePostCommand : IRequest<Result>
         IEmailSender emailSender) 
         : IRequestHandler<ApprovePostCommand, Result>
     {
-        public async Task<Result> Handle(ApprovePostCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(ApprovePostCommand request,
+            CancellationToken cancellationToken)
         {
             var post = await postDomainRepository.Find(request.Id);
 

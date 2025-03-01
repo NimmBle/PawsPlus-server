@@ -9,12 +9,14 @@ public class WeightRepository(PawsPlusDbContext db)
     : DataRepository<PawsPlusDbContext, Weight>(db),
         IWeightDomainRepository
 {
-    public async Task<Weight> Find(int? id, CancellationToken cancellationToken = default)
+    public async Task<Weight> Find(int? id,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
 
-    public async Task<ICollection<Weight>> FindAll(IEnumerable<int> ids, CancellationToken cancellationToken = default)
+    public async Task<ICollection<Weight>> FindAll(IEnumerable<int> ids,
+        CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(w => ids.Contains(w.Id))

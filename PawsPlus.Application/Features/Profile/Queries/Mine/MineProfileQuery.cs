@@ -7,14 +7,12 @@ namespace PawsPlus.Application.Features.Profile.Queries.Mine;
 
 public class MineProfileQuery : IRequest<Result<MineProfileOutputModel>>
 {
-    public class MineProfileQueryHandler(
-        ICurrentUser currentUser,
+    public class MineProfileQueryHandler(ICurrentUser currentUser,
         IIdentity identity,
         IProfileQueryRepository profileQueryRepository) 
         : IRequestHandler<MineProfileQuery, Result<MineProfileOutputModel>>
     {
-        public async Task<Result<MineProfileOutputModel>> Handle(
-            MineProfileQuery request,
+        public async Task<Result<MineProfileOutputModel>> Handle(MineProfileQuery request,
             CancellationToken cancellationToken)
         {
             var profileId = await profileQueryRepository.GetProfileIdByUser(currentUser.UserId);

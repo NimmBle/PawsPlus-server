@@ -22,7 +22,8 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
         IEmailSender emailSender) 
         : IRequestHandler<CreateBookingCommand, Result>
     {
-        public async Task<Result> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateBookingCommand request,
+            CancellationToken cancellationToken)
         {
             var ownerProfile = await profileQueryRepository.GetPetLocation(currentUser.UserId);
             var service = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
@@ -73,7 +74,8 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             var bookingBuild = booking.Build();
             await bookingDomainRepository.Save(bookingBuild);
             
-            await emailSender.SendBookingRequestEmail(request.SitterId, ownerProfile.OwnerId);
+            await emailSender.SendBookingRequestEmail(request.SitterId,
+                ownerProfile.OwnerId);
             
             return Result.Success;
         }

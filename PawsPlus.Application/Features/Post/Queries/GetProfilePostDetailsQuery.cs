@@ -7,12 +7,10 @@ public class GetProfilePostDetailsQuery : IRequest<Result<PostDetailsOutputModel
 {
     public string Id { get; set; }
     
-    public class GetProfilePostDetailsQueryHandler(
-        IPostQueryRepository postQueryRepository)
+    public class GetProfilePostDetailsQueryHandler(IPostQueryRepository postQueryRepository)
         : IRequestHandler<GetProfilePostDetailsQuery, Result<PostDetailsOutputModel>>
     {
-        public async Task<Result<PostDetailsOutputModel>> Handle(
-            GetProfilePostDetailsQuery request,
+        public async Task<Result<PostDetailsOutputModel>> Handle(GetProfilePostDetailsQuery request,
             CancellationToken cancellationToken)
         {
             return await postQueryRepository.GetDetailsByProfile(request.Id);
