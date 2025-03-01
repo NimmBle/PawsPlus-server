@@ -19,8 +19,11 @@ public class EmailSender(IOptions<ApplicationSettings> applicationSettings,
     
     private EmailAddress from = new("no-reply@pawsplus.eu", "Eкипът на Лапички+");
     
-    private const string orders = "http://localhost:4200/profile/my-profile-details/notifications";
-    private const string post = "http://localhost:4200/profile/my-profile-details/my-post";
+    // private const string orders = "http://localhost:4200/profile/my-profile-details/notifications";
+    private const string orders = "http://pawsplus.eu/profile/my-profile-details/notifications";
+    
+    // private const string post = "http://localhost:4200/profile/my-profile-details/my-post";
+    private const string post = "http://pawsplus.eu/profile/my-profile-details/my-post";
 
     
     public async Task<bool> SendConfirmationEmail(string userId,
@@ -31,8 +34,10 @@ public class EmailSender(IOptions<ApplicationSettings> applicationSettings,
         var user = await userManager.FindByIdAsync(userId);
         
         var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        // var confirmationLink =
+        //     $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
         var confirmationLink =
-            $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
+            $"http://pawsplus.eu/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
         
         var client = new SendGridClient(apiKey);
         var subject = "Лапички+ - Потвърждаване на имейл адрес";
