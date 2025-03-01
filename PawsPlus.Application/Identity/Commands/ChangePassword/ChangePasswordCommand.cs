@@ -11,9 +11,13 @@ public class ChangePasswordCommand : IRequest<Result>
     
     public string newPassword { get; init; }
     
-    public class ChangePasswordCommandHandler(IIdentity identity) : IRequestHandler<ChangePasswordCommand, Result>
+    public class ChangePasswordCommandHandler(IIdentity identity) 
+        : IRequestHandler<ChangePasswordCommand, Result>
     {
-        public async Task<Result> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
-            => await identity.ChangePassword(request.Email, request.currentPassword, request.newPassword);
+        public async Task<Result> Handle(ChangePasswordCommand request,
+            CancellationToken cancellationToken)
+            => await identity.ChangePassword(request.Email,
+                request.currentPassword,
+                request.newPassword);
     }
 }

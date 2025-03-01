@@ -11,7 +11,8 @@ using PawsPlus.Domain.Errors;
 
 namespace PawsPlus.Infrastructure.Services;
 
-public class FileService(IOptions<ApplicationSettings> applicationSettings) : IFile
+public class FileService(IOptions<ApplicationSettings> applicationSettings) 
+    : IFile
 {
     
     public async Task<Result<UploadImageOutputModel>> UploadImage(IFormFile image)
@@ -44,6 +45,7 @@ public class FileService(IOptions<ApplicationSettings> applicationSettings) : IF
     public async Task<Result<UploadImagesOutputModel>> UploadImages(IFormFileCollection images)
     {
         Cloudinary cloudinary = new(applicationSettings.Value.CloudinarySecret);
+        Random random = new();
 
         if (images.Count == 0)
             return FileErrors.FileLengthInvalid;

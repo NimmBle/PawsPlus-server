@@ -6,7 +6,9 @@ using Profile = PawsPlus.Domain.Models.Profile;
 
 namespace PawsPlus.Application.Identity.Commands.CreateUser;
 
-public class CreateUserCommand : UserInputModel, IRequest<Result>
+public class CreateUserCommand 
+    : UserInputModel,
+        IRequest<Result>
 {
     public string FirstName { get; set; } = default!;
 
@@ -16,8 +18,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
     public Role Role { get; set; } = default!;
     
-    public class CreateUserCommandHandler(
-            IIdentity identity,
+    public class CreateUserCommandHandler(IIdentity identity,
             IProfileDomainRepository profileRepository) 
         : IRequestHandler<CreateUserCommand, Result>
     {
@@ -39,8 +40,7 @@ public class CreateUserCommand : UserInputModel, IRequest<Result>
 
             var user = result.Data;
             
-            var profile = new Profile(
-                request.FirstName,
+            var profile = new Profile(request.FirstName,
                 request.LastName,
                 request.PhoneNumber
             );

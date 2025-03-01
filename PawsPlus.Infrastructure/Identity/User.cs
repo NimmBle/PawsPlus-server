@@ -17,6 +17,7 @@ public class User : IdentityUser, IUser
         this.Email = email;
     }
     
+    public string? ProfileId { get; set; }
     public Profile? Profile { get; private set; }
 
     public void CreateProfile(Profile profile)

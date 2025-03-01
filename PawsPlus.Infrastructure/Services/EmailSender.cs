@@ -1,21 +1,61 @@
-using DotNetEnv;
+using System.Web;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using PawsPlus.Application.Common;
 using PawsPlus.Application.Features.Profile;
 using PawsPlus.Domain.Services;
+using PawsPlus.Infrastructure.Identity;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
 namespace PawsPlus.Infrastructure.Services;
 
-public class EmailSender(IProfileQueryRepository profileQueryRepository)
+public class EmailSender(IOptions<ApplicationSettings> applicationSettings,
+    IProfileQueryRepository profileQueryRepository,
+    UserManager<User> userManager)
     : IEmailSender
 {
-    private string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+    private string apiKey = applicationSettings.Value.SendGridApiKey;
     
     private EmailAddress from = new("no-reply@pawsplus.eu", "Eкипът на Лапички+");
     
     private const string orders = "http://localhost:4200/profile/my-profile-details/notifications";
     private const string post = "http://localhost:4200/profile/my-profile-details/my-post";
 
+    
+    public async Task<bool> SendConfirmationEmail(string userId,
+        string firstName = "",
+        string lastName = "",
+        CancellationToken cancellationToken = default)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        
+        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var confirmationLink =
+            $"http://localhost:4200/auth/confirm-email?userId={user.Id}&token={HttpUtility.UrlEncode(token)}";
+        
+        var client = new SendGridClient(apiKey);
+        var subject = "Лапички+ - Потвърждаване на имейл адрес";
+        var to = new EmailAddress(user.Email, user.UserName);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+          <p>Хей, { firstName } { lastName }!</p>
+          <p>Нека направим този имейл адрес официален - само трябва да потвърдиш, че си ти.</p>
+          <p>
+            Не се колебай, последвай връзката: <br/> <a href='{confirmationLink}'>потвърди имейл</a>
+          </p>
+          <p>Благодарим предварително!</p>
+          <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+        
+        var response = await client.SendEmailAsync(message, cancellationToken);
+
+        return response.IsSuccessStatusCode;
+    }
     public async Task<bool> SendPostApproveEmail(string sitterId,
         CancellationToken cancellationToken = default)
     {

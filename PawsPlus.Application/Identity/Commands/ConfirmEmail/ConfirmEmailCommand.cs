@@ -9,9 +9,12 @@ public class ConfirmEmailCommand : IRequest<Result>
 
     public string Token { get; set; } = default!;
     
-    public class ConfirmEmailCommandHandler(IIdentity identity) : IRequestHandler<ConfirmEmailCommand, Result>
+    public class ConfirmEmailCommandHandler(IIdentity identity) 
+        : IRequestHandler<ConfirmEmailCommand, Result>
     {
-        public async Task<Result> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
-            => await identity.ConfirmEmail(request.UserId, request.Token);
+        public async Task<Result> Handle(ConfirmEmailCommand request,
+            CancellationToken cancellationToken)
+            => await identity.ConfirmEmail(request.UserId,
+                request.Token);
     }
 }

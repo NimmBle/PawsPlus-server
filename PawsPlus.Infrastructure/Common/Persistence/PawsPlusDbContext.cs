@@ -280,37 +280,148 @@ public class
     private static void SeedAdminAndRoles(ModelBuilder builder)
     {
         string[] roleNames = { "Owner", "Sitter", "Administrator" };
-        string roleId = default;
         
-        foreach (var role in roleNames)
-        {
-            roleId = Guid.NewGuid().ToString();
-    
-            builder
-                .Entity<IdentityRole>()
-                .HasData(new IdentityRole()
-                {
-                    Id = roleId,
-                    Name = role,
-                    NormalizedName = role.ToUpper().Normalize(),
-                    ConcurrencyStamp = roleId
-                });
-        }
+        SeedOwner(builder, roleNames[0]);
+        SeedSitter(builder, roleNames[1]);
+        SeedAdmin(builder, roleNames[2]);
+    }
+
+    private static void SeedOwner(ModelBuilder builder, 
+        string roleName)
+    {
+        var profile = new Profile("owner",
+            "owner",
+            "0878787878");
+
+        builder
+            .Entity<Profile>()
+            .HasData(profile);
         
-        var adminId = Guid.NewGuid().ToString();
-        var adminEmail = "pawsplus@pawsplus.eu";
-        var admin = new User
+        string roleId = Guid.NewGuid().ToString();
+        
+        builder
+            .Entity<IdentityRole>()
+            .HasData(new IdentityRole()
+            {
+                Id = roleId,
+                Name = roleName,
+                NormalizedName = roleName.ToUpper().Normalize(),
+                ConcurrencyStamp = roleId
+            });
+        
+        var owner = new User
         {
-            Id = adminId,
-            Email = adminEmail,
-            NormalizedEmail = adminEmail.ToUpper().Normalize(),
+            Id = Guid.NewGuid().ToString(),
+            Email = "owner@pawsplus.eu",
+            NormalizedEmail = "owner@pawsplus.eu".ToUpper().Normalize(),
             EmailConfirmed = true,
-            UserName = "admin",
-            NormalizedUserName = "ADMIN",
+            UserName = "owner",
+            NormalizedUserName = "owner".ToUpper().Normalize(),
+            ProfileId = profile.Id
         };
                 
         PasswordHasher<User> passwordHasher = new();
-        admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin_1234");
+        owner.PasswordHash = passwordHasher.HashPassword(owner, "Owner_123");
+    
+        builder
+            .Entity<User>()
+            .HasData(owner);
+        
+        builder
+            .Entity<IdentityUserRole<string>>()
+            .HasData(new IdentityUserRole<string>()
+            {
+                RoleId = roleId,
+                UserId = owner.Id
+            });
+    }
+    
+    private static void SeedSitter(ModelBuilder builder, 
+        string roleName)
+    {
+        var profile = new Profile("sitter",
+            "sitter",
+            "0878787878");
+
+        builder
+            .Entity<Profile>()
+            .HasData(profile);
+        
+        string roleId = Guid.NewGuid().ToString();
+        
+        builder
+            .Entity<IdentityRole>()
+            .HasData(new IdentityRole()
+            {
+                Id = roleId,
+                Name = roleName,
+                NormalizedName = roleName.ToUpper().Normalize(),
+                ConcurrencyStamp = roleId
+            });
+        
+        var sitter = new User
+        {
+            Id = Guid.NewGuid().ToString(),
+            Email = "sitter@pawsplus.eu",
+            NormalizedEmail = "sitter@pawsplus.eu".ToUpper().Normalize(),
+            EmailConfirmed = true,
+            UserName = "sitter",
+            NormalizedUserName = "sitter".ToUpper().Normalize(),
+            ProfileId = profile.Id
+        };
+                
+        PasswordHasher<User> passwordHasher = new();
+        sitter.PasswordHash = passwordHasher.HashPassword(sitter, "Sitter_123");
+    
+        builder
+            .Entity<User>()
+            .HasData(sitter);
+        
+        builder
+            .Entity<IdentityUserRole<string>>()
+            .HasData(new IdentityUserRole<string>()
+            {
+                RoleId = roleId,
+                UserId = sitter.Id
+            });
+    }
+    
+    private static void SeedAdmin(ModelBuilder builder, 
+        string roleName)
+    {
+        var profile = new Profile("admin",
+            "admin",
+            "0878787878");
+        
+        builder
+            .Entity<Profile>()
+            .HasData(profile);
+        
+        string roleId = Guid.NewGuid().ToString();
+        
+        builder
+            .Entity<IdentityRole>()
+            .HasData(new IdentityRole()
+            {
+                Id = roleId,
+                Name = roleName,
+                NormalizedName = roleName.ToUpper().Normalize(),
+                ConcurrencyStamp = roleId
+            });
+        
+        var admin = new User
+        {
+            Id = Guid.NewGuid().ToString(),
+            Email = "admin@pawsplus.eu",
+            NormalizedEmail = "admin@pawsplus.eu".ToUpper().Normalize(),
+            EmailConfirmed = true,
+            UserName = "admin",
+            NormalizedUserName = "admin".ToUpper().Normalize(),
+            ProfileId = profile.Id
+        };
+                
+        PasswordHasher<User> passwordHasher = new();
+        admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin_123");
     
         builder
             .Entity<User>()
@@ -321,8 +432,7 @@ public class
             .HasData(new IdentityUserRole<string>()
             {
                 RoleId = roleId,
-                UserId = adminId
+                UserId = admin.Id
             });
-        
     }
 }

@@ -2,6 +2,8 @@ namespace PawsPlus.Domain.Services;
 
 public interface IEmailSender
 {
+    Task<bool> SendConfirmationEmail(string userId, string firstName = "", string lastName = "", CancellationToken cancellationToken = default);
+    
     Task<bool> SendPostApproveEmail(string sitterId, CancellationToken cancellationToken = default);
     
     Task<bool> SendPostDisapproveEmail(string sitterId, string stateReason, CancellationToken cancellationToken = default);

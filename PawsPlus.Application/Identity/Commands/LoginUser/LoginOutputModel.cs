@@ -2,7 +2,10 @@
 
 public class LoginOutputModel
 {
-    public LoginOutputModel(string userId, string token, IList<string> roles, bool firstLogin = false)
+    public LoginOutputModel(string userId,
+        string token,
+        IList<string> roles,
+        bool firstLogin = false)
     {
         this.Id = userId;
         this.Token = token;

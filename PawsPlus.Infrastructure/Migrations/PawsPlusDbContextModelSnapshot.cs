@@ -112,22 +112,22 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2d8b796d-8c4c-4c86-9e3a-dee7fc984fac",
-                            ConcurrencyStamp = "2d8b796d-8c4c-4c86-9e3a-dee7fc984fac",
+                            Id = "790490b6-145a-45e3-b82a-8f95c3ba624d",
+                            ConcurrencyStamp = "790490b6-145a-45e3-b82a-8f95c3ba624d",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "919e5175-dee6-444a-afdb-b0ed01ec7f8d",
-                            ConcurrencyStamp = "919e5175-dee6-444a-afdb-b0ed01ec7f8d",
+                            Id = "675642af-2f65-47d3-835c-090a1d76742b",
+                            ConcurrencyStamp = "675642af-2f65-47d3-835c-090a1d76742b",
                             Name = "Sitter",
                             NormalizedName = "SITTER"
                         },
                         new
                         {
-                            Id = "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4",
-                            ConcurrencyStamp = "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4",
+                            Id = "0225cb4a-df52-4f25-978e-3da971b42c51",
+                            ConcurrencyStamp = "0225cb4a-df52-4f25-978e-3da971b42c51",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -222,8 +222,18 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "9571547a-0d72-49de-a6d4-8a9746ee4599",
-                            RoleId = "c51e9f7d-fdcd-4bf9-8024-c3112173cdf4"
+                            UserId = "b6e9660f-fd09-4fa1-bb90-cfd597591586",
+                            RoleId = "790490b6-145a-45e3-b82a-8f95c3ba624d"
+                        },
+                        new
+                        {
+                            UserId = "47286eab-5d62-46e0-a363-024b2be605b0",
+                            RoleId = "675642af-2f65-47d3-835c-090a1d76742b"
+                        },
+                        new
+                        {
+                            UserId = "cd301e21-a7f2-4eb9-8ee1-ecb84093e077",
+                            RoleId = "0225cb4a-df52-4f25-978e-3da971b42c51"
                         });
                 });
 
@@ -1603,6 +1613,35 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e1a25de1-e34d-4e02-9a4a-16b4ccc64171",
+                            FirstLogin = true,
+                            FirstName = "owner",
+                            LastName = "owner",
+                            PhoneNumber = "0878787878",
+                            PhotoUrl = "https://res.cloudinary.com/ds95qikmm/image/upload/v1736432338/vk3ewpd0s0xcaywgjd29.svg"
+                        },
+                        new
+                        {
+                            Id = "6be6ff1a-3281-4b2d-ad06-328b34552914",
+                            FirstLogin = true,
+                            FirstName = "sitter",
+                            LastName = "sitter",
+                            PhoneNumber = "0878787878",
+                            PhotoUrl = "https://res.cloudinary.com/ds95qikmm/image/upload/v1736432338/vk3ewpd0s0xcaywgjd29.svg"
+                        },
+                        new
+                        {
+                            Id = "c2db62c3-826a-4bf5-aa76-b4494f425afa",
+                            FirstLogin = true,
+                            FirstName = "admin",
+                            LastName = "admin",
+                            PhoneNumber = "0878787878",
+                            PhotoUrl = "https://res.cloudinary.com/ds95qikmm/image/upload/v1736432338/vk3ewpd0s0xcaywgjd29.svg"
+                        });
                 });
 
             modelBuilder.Entity("PawsPlus.Domain.Models.Service", b =>
@@ -1741,17 +1780,52 @@ namespace PawsPlus.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9571547a-0d72-49de-a6d4-8a9746ee4599",
+                            Id = "b6e9660f-fd09-4fa1-bb90-cfd597591586",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6a9d0b57-3ed5-4bed-9d7f-944f2b291a58",
-                            Email = "pawsplus@pawsplus.eu",
+                            ConcurrencyStamp = "b498ffbc-1664-4223-94eb-04abc127cf2f",
+                            Email = "owner@pawsplus.eu",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "PAWSPLUS@PAWSPLUS.EU",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDvjKFU7jUBY8QWbf6DogtnlBhkXMQhmNbbDWy1fidXPHrcHON0OzjAQCs4Lv23PRw==",
+                            NormalizedEmail = "OWNER@PAWSPLUS.EU",
+                            NormalizedUserName = "OWNER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG3uc39gm6wAmUO95rBflGrttDmq8txxWKr9rldcegIKNBVvFEr9qqJ+nfYNLNwxsg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d7b4143a-76b8-4889-abe3-26ead9e68c92",
+                            ProfileId = "e1a25de1-e34d-4e02-9a4a-16b4ccc64171",
+                            SecurityStamp = "21e64654-f802-4242-ab0a-a7e85c984393",
+                            TwoFactorEnabled = false,
+                            UserName = "owner"
+                        },
+                        new
+                        {
+                            Id = "47286eab-5d62-46e0-a363-024b2be605b0",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b1c44e22-0bc5-49da-a4ca-8b44fccf7f6d",
+                            Email = "sitter@pawsplus.eu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SITTER@PAWSPLUS.EU",
+                            NormalizedUserName = "SITTER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDQ2JIyPhy6GtJdiZTlElqyZqzLRAaE7SWdFiKRN/hUci6YrEKx72XwD58k5CgQFgA==",
+                            PhoneNumberConfirmed = false,
+                            ProfileId = "6be6ff1a-3281-4b2d-ad06-328b34552914",
+                            SecurityStamp = "b0480e65-0562-43b7-b5a5-a0be7d15e0c7",
+                            TwoFactorEnabled = false,
+                            UserName = "sitter"
+                        },
+                        new
+                        {
+                            Id = "cd301e21-a7f2-4eb9-8ee1-ecb84093e077",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e7f99980-d5d1-4545-93e1-227ff7de49fc",
+                            Email = "admin@pawsplus.eu",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@PAWSPLUS.EU",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA2th08/5ZaJ4fS3xVAcmce5qe8V/c1Itsm33X2BnFdCxlI/pxe2E1SXTAzq+VHfCg==",
+                            PhoneNumberConfirmed = false,
+                            ProfileId = "c2db62c3-826a-4bf5-aa76-b4494f425afa",
+                            SecurityStamp = "6165c3db-3fa6-4684-b814-d2c8ae845616",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
