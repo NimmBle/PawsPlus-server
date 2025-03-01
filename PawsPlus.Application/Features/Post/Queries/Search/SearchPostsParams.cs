@@ -67,15 +67,15 @@ public class SearchPostsParams
             var endDate = DateOnly.Parse(EndDate);
             
             var totalDays = endDate.DayNumber - startDate.DayNumber + 1;
-
-            var requiredDates = Enumerable.Range(0, totalDays)
-                .Select(offset => startDate.AddDays(offset))
-                .ToList();
+            
+            var dateRange = Enumerable.Range(0, totalDays)
+                .Select(offset => startDate.AddDays(offset));
 
             predicate = predicate.And(p => p.Services
-                .Any(s => requiredDates
+                .Where(s => ServiceType.ToString() == s.Name)
+                .Any(s => dateRange
                 .All(rd => s.AvailableDates
-                .All(d => d.Day.Equals(rd)))));
+                .Any(d => d.Day.Equals(rd)))));
         }
         else if (StartDate is not null && EndDate is null)
         {
