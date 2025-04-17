@@ -100,10 +100,7 @@ public class Profile : Entity<string>, IAggregateRoot
     }
     public Profile UpdateFirstLogin()
     {
-        if (this.Description != null || this.Location != null)
-        {
-            this.FirstLogin = false;   
-        }
+        this.FirstLogin = false;   
 
         return this;
     }

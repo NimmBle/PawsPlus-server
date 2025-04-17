@@ -29,7 +29,6 @@ public static class InfrastructureConfiguration
         => services
             .AddDatabase(configuration)
             .AddIdentity(configuration)
-            .AddSwagger()
             .AddRepositories()
             .AddFiles()
             .AddConverters()
@@ -104,7 +103,13 @@ public static class InfrastructureConfiguration
                 opt.ReportApiVersions = true;
             })
             .AddSwaggerGen(opt => opt
-                .SwaggerDoc("v1", new OpenApiInfo { Title = "PawsPlus API", Version = "v1" }));
+                .SwaggerDoc(
+                    "v1",
+                    new OpenApiInfo
+                    {
+                        Title = "PawsPlus API",
+                        Version = "v1"
+                    }));
 
     public static IServiceCollection AddRepositories(this IServiceCollection services) 
         => services

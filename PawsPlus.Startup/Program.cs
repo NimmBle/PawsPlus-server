@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using PawsPlus.Application;
 using PawsPlus.Domain;
 using PawsPlus.Infrastructure;
@@ -13,7 +14,7 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddWebComponents()
     .AddEndpointsApiExplorer()
-    .AddControllers();
+    .AddSwagger();
 
 var app = builder.Build();
 
@@ -35,8 +36,12 @@ app
         .AllowAnyMethod()
         .AllowAnyHeader())
     .UseSwagger()
-    .UseSwaggerUI(opt => opt
-        .SwaggerEndpoint("/swagger/v1/swagger.json", "v1"))
+    .UseSwaggerUI(opt =>
+        {
+            opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            opt.RoutePrefix = string.Empty;
+        }
+    )
     .UseAuthorization()
     .UseAuthorization()
     .UseEndpoints(endpoints => endpoints

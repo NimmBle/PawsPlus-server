@@ -44,12 +44,12 @@ public class EditProfileCommand
             }
 
             profile
-                .UpdateFirstLogin()
                 .UpdateFirstName(request.FirstName)
                 .UpdateLastName(request.LastName)
                 .UpdatePhotoUrl(request.PhotoUrl)
                 .UpdatePhoneNumber(request.PhoneNumber)
                 .UpdateDescription(request.Description)
+                .UpdateFirstLogin()
                 .UpdateLocation(request.Location.PlaceId,
                     request.Location.Latitude,
                     request.Location.Longitude);
