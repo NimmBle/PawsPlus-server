@@ -1,5 +1,4 @@
 using Bogus;
-using CloudinaryDotNet.Actions;
 using PawsPlus.Application.Identity.Commands.CreateUser;
 using Shouldly;
 

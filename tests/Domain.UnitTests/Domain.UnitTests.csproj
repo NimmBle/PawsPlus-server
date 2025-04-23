@@ -22,8 +22,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PawsPlus.Domain\PawsPlus.Domain.csproj" />
+      <ProjectReference Include="..\..\src\PawsPlus.Domain\PawsPlus.Domain.csproj" />
       <ProjectReference Include="..\Tests.Common\Tests.Common.csproj" />
     </ItemGroup>
+
+
 
 </Project>

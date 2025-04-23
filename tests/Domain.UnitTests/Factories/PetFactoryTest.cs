@@ -1,6 +1,4 @@
 using Bogus;
-using PawsPlus.Domain.Enums.Pet;
-using PawsPlus.Domain.Factories.Pet;
 using PawsPlus.Domain.Models;
 using Pawsplus.Testing.Pet;
 using Shouldly;

@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PawsPlus.Domain\PawsPlus.Domain.csproj" />
+      <ProjectReference Include="..\..\src\PawsPlus.Domain\PawsPlus.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
