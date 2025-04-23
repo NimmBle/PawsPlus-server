@@ -1,0 +1,20 @@
+﻿using PawsPlus.Application.Features.Profile.Queries.Details;
+using PawsPlus.Application.Features.Profile.Queries.Mine;
+
+namespace PawsPlus.Application.Features.Profile;
+
+public interface IProfileQueryRepository
+{
+    Task<ProfileDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default);
+    
+    Task<MineProfileOutputModel> GetMine(string id, CancellationToken cancellationToken = default);
+    
+    Task<ProfilePetLocationDto> GetPetLocation(string userId, CancellationToken cancellationToken = default);
+    
+    Task<ProfileEmailInformationDto> GetEmailInformation(string id, CancellationToken cancellationToken = default);
+    
+    Task<string> GetProfileIdByUser(string userId, CancellationToken cancellationToken = default);
+    
+    Task<string> GetUserIdByProfileId(string profileId, CancellationToken cancellationToken = default);
+    
+}
