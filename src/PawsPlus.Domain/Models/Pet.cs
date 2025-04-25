@@ -76,41 +76,63 @@ public class Pet : Entity<string>, IAggregateRoot
     public string ProfileId { get; private set; }
     
     public Profile Profile { get; private set; } = null!;
-
-    public void Update(string name,
-        string photoUrl,
-        Animal animal,
-        Age age,
-        Gender gender,
-        ICollection<Breed> breeds,
-        Weight? weight,
-        Personality? personality,
-        HealthStatus? healthStatus)
+    
+    public Pet UpdateName(string name)
     {
-        var newAge = Age.Create(age);
-        var newPersonality = Personality.Create(personality);
-        var newHealthStatus = HealthStatus.Create(healthStatus);
-        
+        this.ValidateName(name);
         this.Name = name;
-        this.PhotoUrl = photoUrl;
-        this.Animal = animal;
-        this.Age = newAge;
-        this.Gender = gender;
-        this.Breeds = breeds;
-        this.Weight = weight;
-        this.Personality = newPersonality;
-        this.HealthStatus = newHealthStatus;
-        var i = 1;
+        return this;
     }
 
-    private void UpdateBreeds(ICollection<Breed> breeds)
+    public Pet UpdatePhotoUrl(string photoUrl)
+    {
+        this.ValidatePhotoUrl(photoUrl);
+        this.PhotoUrl = photoUrl;
+        return this;
+    }
+
+    public Pet UpdateAnimal(Animal animal)
+    {
+        this.Animal = animal;
+        return this;
+    }
+
+    public Pet UpdateAge(Age? age)
+    {
+        this.Age = Age.Create(age);
+        return this;
+    }
+
+    public Pet UpdateGender(Gender gender)
+    {
+        this.Gender = gender;
+        return this;
+    }
+
+    public Pet UpdateBreeds(ICollection<Breed> breeds)
     {
         this.Breeds.Clear();
-
-        this.Breeds = breeds;
-
+        this.Breeds = breeds ?? new HashSet<Breed>();
+        return this;
     }
-    
+
+    public Pet UpdateWeight(Weight? weight)
+    {
+        this.Weight = weight;
+        return this;
+    }
+
+    public Pet UpdatePersonality(Personality? personality)
+    {
+        this.Personality = Personality.Create(personality);
+        return this;
+    }
+
+    public Pet UpdateHealthStatus(HealthStatus? healthStatus)
+    {
+        this.HealthStatus = HealthStatus.Create(healthStatus);
+        return this;
+    }
     
     private void Validate(string name,
         string photoUrl)

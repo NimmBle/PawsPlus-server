@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PawsPlus.Application.Common;
+using PawsPlus.Domain.Repositories;
 
 namespace PawsPlus.Application.Features.Service.Queries;
 

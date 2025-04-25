@@ -2,15 +2,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using PawsPlus.Infrastructure.Common.Persistence;
 
 namespace Application.IntegrationTests;
 
-public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>
+public class IntegrationTestWebAppFactory() : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -27,23 +25,22 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>
             services.AddDbContext<PawsPlusDbContext>(options =>
             {
                 options
-                    .UseSqlServer(
-                        "Server=.;Database=PawsPlus_Tests;Trusted_Connection=True;MultipleActiveResultSets=true;Trust Server Certificate=true",
+                    .UseSqlServer("Server=.;Database=PawsPlus_Tests;Trusted_Connection=True;MultipleActiveResultSets=true;Trust Server Certificate=true",
                         sqlServer => sqlServer
                             .UseNetTopologySuite()
                             .MigrationsAssembly(typeof(PawsPlusDbContext).Assembly.FullName));
             });
             
             services.AddAuthentication("TestScheme")
-                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Test", options => { });
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options => { });
             
             services.AddAuthorization();
         });
         
         builder.Configure(app =>
         {
-            app.UseAuthentication();  // Ensure this is added
-            app.UseAuthorization();   // Ensure this is added if you use authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseRouting();
         });
         

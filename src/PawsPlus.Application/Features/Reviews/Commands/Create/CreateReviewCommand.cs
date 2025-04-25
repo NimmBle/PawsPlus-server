@@ -17,7 +17,7 @@ public class CreateReviewCommand : IRequest<Result>
     
     public class CreateReviewCommandHandler(IReviewDomainRepository reviewDomainRepository) 
         : IRequestHandler<CreateReviewCommand, Result>
-    {
+    { 
         public async Task<Result> Handle(CreateReviewCommand request,
             CancellationToken cancellationToken)
         {

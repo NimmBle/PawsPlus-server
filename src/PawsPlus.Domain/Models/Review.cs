@@ -18,6 +18,7 @@ public class Review : IAggregateRoot
     {
         this.ValidateRating(rating);
         this.ValidateContent(content);
+        this.ValidateIds(reviewerId, reviewedId);
         
         this.Id = Guid.NewGuid().ToString();
         this.Rating = rating;
@@ -26,7 +27,7 @@ public class Review : IAggregateRoot
         this.ReviewedId = reviewedId;
         this.ReviewDate = DateOnly.FromDateTime(DateTime.Now);
     }
-    
+
     public string Id { get; set; }
     
     public double Rating { get; private set; }
@@ -57,4 +58,14 @@ public class Review : IAggregateRoot
             MinContentLength,
             MaxContentLength,
             nameof(Content));
+    
+    private void ValidateIds(string reviewerId, string reviewedId)
+    {
+        if (reviewerId != reviewedId)
+        {
+            return;
+        }
+        Guard.ThrowException<InvalidReviewException>("Can't review your own post");
+        
+    }
 }

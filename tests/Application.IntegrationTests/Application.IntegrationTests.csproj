@@ -5,6 +5,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,6 +28,13 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\PawsPlus.Application\PawsPlus.Application.csproj" />
       <ProjectReference Include="..\..\src\PawsPlus.Infrastructure\PawsPlus.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\src\PawsPlus.Startup\PawsPlus.Startup.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="xunit.runner.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

@@ -19,5 +19,5 @@ public class ServiceOutputModel : IMapFrom<Domain.Models.Service>
         => profile
             .CreateMap<Domain.Models.Service, ServiceOutputModel>()
             .ForMember(dest => dest.MeetingPlaces, opt => opt.MapFrom(src => src.MeetingPlaces.Select(meetingPlace => meetingPlace.Id)))
-            .ForMember(dest => dest.AvailableDates, opt => opt.MapFrom(src => src.AvailableDates.Where(ad => ad.Day <= DateOnly.FromDateTime(DateTime.Now)).Select(ad => ad.Day)));
+            .ForMember(dest => dest.AvailableDates, opt => opt.MapFrom(src => src.AvailableDates.Select(ad => ad.Day)));
 }

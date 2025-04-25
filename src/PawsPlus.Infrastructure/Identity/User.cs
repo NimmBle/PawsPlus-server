@@ -4,6 +4,7 @@ using PawsPlus.Application.Identity;
 using PawsPlus.Domain.Models;
 
 [assembly: InternalsVisibleTo("Infrastructure.UnitTests")]
+[assembly: InternalsVisibleTo("Application.IntegrationTests")]
 namespace PawsPlus.Infrastructure.Identity;
 
 public class User : IdentityUser, IUser

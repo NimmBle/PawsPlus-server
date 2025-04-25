@@ -1,9 +1,15 @@
+using System.Security.Claims;
 using Bogus;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NSubstitute;
 using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Pet.Commands.Common;
 using PawsPlus.Application.Features.Pet.Commands.Create;
 using PawsPlus.Domain.Enums.Pet;
+using PawsPlus.Web.Services;
 using Shouldly;
 
 namespace Application.IntegrationTests.Pet;
@@ -21,16 +27,17 @@ public class CreatePetCommandHandlerTest : BaseIntegrationTest
     public async Task CreatePet_Should_AddUserToDatabase_WhenCommandIsValid()
     {
         // Arrange
-        // var userId = await RunAsUserAsync("owner@test.com", "Owner123!", new[] { "PetOwner" });
+        var profileId = await CreateTestUserAsync();
+        var currentUserMock = Substitute.For<ICurrentUser>();
+        currentUserMock.UserId.Returns(profileId);
         
-        var currentUser = Substitute.For<ICurrentUser>();
         var command = new CreatePetCommand()
         {
-            ProfileId = _faker.Random.Guid().ToString(),
-            PetType = 1,
+            ProfileId = profileId,
+            PetType = _faker.Random.Int(1, 2),
             Breeds = new List<BreedInputModel>
             {
-                new BreedInputModel()
+                new()
                 {
                     Id = "56",
                     Name = "Test"
@@ -64,14 +71,17 @@ public class CreatePetCommandHandlerTest : BaseIntegrationTest
             },
             Weight = _faker.Random.Int(1, 4),
         };
-        
+        // var handler = new CreatePetCommand.CreatePetCommandHandler(currentUserMock,
+        //     new Subs)
         // Act
+        
         
         var result = await Sender.Send(command);
 
         // Assert
         result.ShouldNotBeNull();
         result.Data.Id.ShouldNotBeNull();
+        result.Succeeded.ShouldBeTrue();
     }
     
 }

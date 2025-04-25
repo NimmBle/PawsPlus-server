@@ -34,17 +34,16 @@ public class EditPetCommand
             var weight = await weightDomainRepository.Find(request.Weight);
 
             var healthStatus = mapper.Map<HealthStatus>(request.HealthStatus);
-            pet.Update(
-                request.Name,
-                request.PhotoUrl,
-                animalType,
-                mapper.Map<Age>(request.Age),
-                request.Gender,
-                breeds,
-                weight,
-                mapper.Map<Personality>(request.Personality),
-                healthStatus
-                );
+            
+            pet.UpdateName(request.Name)
+                .UpdatePhotoUrl(request.PhotoUrl)
+                .UpdateAnimal(animalType)
+                .UpdateAge(mapper.Map<Age>(request.Age))
+                .UpdateGender(request.Gender)
+                .UpdateBreeds(breeds)
+                .UpdateWeight(weight)
+                .UpdatePersonality(mapper.Map<Personality>(request.Personality))
+                .UpdateHealthStatus(healthStatus);
 
             await petDomainRepository.Update(pet, cancellationToken);
             
