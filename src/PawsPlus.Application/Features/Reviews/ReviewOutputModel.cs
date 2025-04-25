@@ -5,6 +5,7 @@ namespace PawsPlus.Application.Features.Reviews;
 
 public class ReviewOutputModel : IMapFrom<Review>
 {
+    public string ProfileId { get; set; }
     public string PhotoUrl { get; set; }
     
     public string FirstName { get; set; }
@@ -19,6 +20,7 @@ public class ReviewOutputModel : IMapFrom<Review>
 
     public void Mapping(AutoMapper.Profile mapper)
         => mapper.CreateMap<Review, ReviewOutputModel>()
+            .ForMember(dest => dest.ProfileId, src => src.MapFrom(src => src.Reviewer.Id))
             .ForMember(dest => dest.PhotoUrl, src => src.MapFrom(src => src.Reviewer.PhotoUrl))
             .ForMember(dest => dest.FirstName, src => src.MapFrom(src => src.Reviewer.FirstName))
             .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.Reviewer.LastName));
