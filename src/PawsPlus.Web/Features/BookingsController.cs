@@ -21,7 +21,7 @@ public class BookingsController : ApiController
     
     [HttpPost]
     [Authorize(Roles = Owner)]
-    public async Task<ActionResult> Create(CreateBookingCommand command)
+    public async Task<ActionResult<string>> Create(CreateBookingCommand command)
         => await this.Send(command);
 
     [HttpPatch]

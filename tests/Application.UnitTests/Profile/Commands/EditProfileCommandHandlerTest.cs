@@ -95,7 +95,6 @@ public class EditProfileCommandHandlerTest
         profileDomainRepository
             .FindByUser(profile.Id)
             .Returns(profile);
-        
         // Act
         var result = await handler.Handle(command, default);
         

@@ -1,3 +1,6 @@
+using Bogus;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Profile.Commands;
@@ -10,142 +13,81 @@ namespace Application.IntegrationTests.Profile;
 
 public class EditProfileCommandHandlerTest : BaseIntegrationTest
 {
-    private readonly IProfileDomainRepository _profileRepository;
+
+    private readonly Faker _faker = new();
     
-    public EditProfileCommandHandlerTest(IntegrationTestWebAppFactory factory,
-        IProfileDomainRepository profileDomainRepository) 
+    public EditProfileCommandHandlerTest(IntegrationTestWebAppFactory factory) 
         : base(factory)
     {
-        _profileRepository = profileDomainRepository;
     }
     
-    private static LocationInputModel location = new()
+    [Fact]
+    public async Task Edit_Should_ReturnError_WhenTryingToEditAnotherProfile()
     {
-        PlaceId = "none",
-        Latitude = 1,
-        Longitude = 1
-    };
-    
-    private static EditProfileCommand command = new()
-    {
-        Id = Guid.NewGuid().ToString(),
-        FirstName = "Test",
-        LastName = "Test",
-        PhoneNumber = "08787878",
-        PhotoUrl = "https://res.cloudinary.com/ds95qikmm/image/upload/v1740853041/20770253_Sandy_Bus-43_Single-04.svg403477.svg",
-        Location = location
-    };
+        // Arrange
+        var ids = await CreateTestUser();
+        var sender = await ConfigureCurrentUser(ids.UserId, ids.ProfileId);
+        var location = new LocationInputModel()
+        {
+            PlaceId = "none",
+            Latitude = _faker.Random.Double(-90, 90),
+            Longitude = _faker.Random.Double(-180, 180),
+        };
+        
+        var command = new EditProfileCommand()
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = _faker.Name.FirstName(),
+            LastName = _faker.Name.LastName(),
+            PhoneNumber = _faker.Phone.PhoneNumber("##########"),
+            PhotoUrl = _faker.Internet.Url(),
+            Location = location
+        };
+        
+        // Act
+        var result = await sender.Send(command, CancellationToken.None);
+        // Assert
 
+        result.Succeeded.ShouldBeFalse();
+        result.Error.ShouldBe(ProfileErrors.ProfileAccessNotAllowed(command.Id));
+    }
+    
     [Fact]
     public async Task Edit_Should_ReturnSuccessful_WhenRequestIsValid()
     {
         // Arrange
-        var currentUserMock = Substitute.For<ICurrentUser>();
-        var profileDomainRepository = Substitute.For<IProfileDomainRepository>();
-        currentUserMock.UserId.Returns(command.Id);
+        var ids = await CreateTestUser();
+        var sender = await ConfigureCurrentUser(ids.UserId, ids.ProfileId);
+        var location = new LocationInputModel()
+        {
+            PlaceId = "none",
+            Latitude = _faker.Random.Double(-90, 90),
+            Longitude = _faker.Random.Double(-180, 180),
+        };
         
-        var handler = new EditProfileCommand.EditUserCommandHandler(currentUserMock,
-            profileDomainRepository);
+        var command = new EditProfileCommand()
+        {
+            Id = ids.ProfileId,
+            FirstName = _faker.Name.FirstName(),
+            LastName = _faker.Name.LastName(),
+            PhoneNumber = _faker.Phone.PhoneNumber("##########"),
+            PhotoUrl = _faker.Internet.Url(),
+            Location = location
+        };
         
         // Act
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await sender.Send(command, CancellationToken.None);
         // Assert
-        
-        result.Error.ShouldBe(ProfileErrors.ProfileAccessNotAllowed(command.Id));
+
+        result.Succeeded.ShouldBeTrue();
+        var profile = DbContext.Profiles.SingleOrDefault(p => p.Id == ids.ProfileId);
+        profile.ShouldNotBeNull();
+        profile.FirstName.ShouldBe(command.FirstName);
+        profile.LastName.ShouldBe(command.LastName);
+        profile.PhoneNumber.ShouldBe(command.PhoneNumber);
+        profile.PhotoUrl.ShouldBe(command.PhotoUrl);
+        profile.Location.PlaceId.ShouldBe(command.Location.PlaceId);
+        profile.Location.Point.X.ShouldBe(command.Location.Latitude);
+        profile.Location.Point.Y.ShouldBe(command.Location.Longitude);
     }
 }
-
-
-
-
-// using AutoMapper;
-// using Microsoft.EntityFrameworkCore;
-// using NSubstitute;
-// using PawsPlus.Application.Common.Contracts;
-// using PawsPlus.Application.Features.Pet.Commands.Common;
-// using PawsPlus.Application.Features.Pet.Commands.Create;
-// using PawsPlus.Domain.Enums.Pet;
-// using PawsPlus.Domain.Repositories;
-//
-// namespace Application.IntegrationTests.Pet;
-//
-// public class CreatePetCommandHandlerTest : BaseIntegrationTest
-// {
-//     private readonly IPetDomainRepository _petDomainRepository;
-//     private readonly IMapper _mapper;
-//     private readonly ICurrentUser _currentUser = Substitute.For<ICurrentUser>();
-//     
-//     public CreatePetCommandHandlerTest(IntegrationTestWebAppFactory factory)
-//         : base(factory)
-//     {
-//     }
-//
-//     [Fact]
-//     public async Task CreatePet_Should_AddUserToDatabase_WhenCommandIsValid()
-//     {
-//         // Arrange: Set up the necessary data for the command
-//         var profileId = Guid.NewGuid().ToString();
-//         var petType = 1;
-//         var breeds = new List<BreedInputModel>
-//         {
-//             new BreedInputModel()
-//             {
-//                 Id = "56",
-//                 Name = "Test"
-//             }
-//         };
-//         var name = "Buddy";
-//         var photoUrl = "http://example.com/photo.jpg";
-//         var age = new AgeInputModel()
-//         {
-//             Years = 3,
-//             Months = 5
-//         };
-//         var gender = "Male";
-//         var personality = new PersonalityInputModel()
-//         {
-//             Temperament = "Friendly",
-//             ActivityLevel = "High",
-//             IsTrained = Training.No,
-//             HasFears = Fear.No,
-//             FearsDescription = ""
-//         };
-//         var healthStatus = new HealthStatusInputModel()
-//         {
-//             IsVaccinated = true,
-//             IsCastrated = false,
-//             TakesMedications = false,
-//             HasEatingSchedule = "yes",
-//             OtherDietaryNeeds = "",
-//             HealthProblems = ""
-//         };
-//         var weight = 2;
-//     
-//         var command = new CreatePetCommand
-//         {
-//             ProfileId = profileId,
-//             PetType = petType,
-//             Breeds = breeds,
-//             Name = name,
-//             PhotoUrl = photoUrl,
-//             Age = age,
-//             Gender = Gender.Female,
-//             Personality = personality,
-//             HealthStatus = healthStatus,
-//             Weight = weight
-//         };
-//
-//         _currentUser.UserId.Returns(profileId);
-//
-//         // Act
-//         var result = await Sender.Send(command);
-//
-//         // Assert: Check if the pet was created in the database
-//         var pet = await DbContext.Pets.FirstOrDefaultAsync(p => p.Id == result.Data.Id);
-//
-//         Assert.NotNull(pet);
-//         Assert.Equal(name, pet.Name);
-//         Assert.Equal(photoUrl, pet.PhotoUrl);
-//     }
-//     
-// }

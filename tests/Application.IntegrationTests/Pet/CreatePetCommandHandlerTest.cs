@@ -1,17 +1,11 @@
-using System.Security.Claims;
 using Bogus;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using NSubstitute;
 using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Pet.Commands.Common;
 using PawsPlus.Application.Features.Pet.Commands.Create;
 using PawsPlus.Domain.Enums.Pet;
-using PawsPlus.Domain.Factories.Pet;
-using PawsPlus.Domain.Repositories;
-using PawsPlus.Web.Services;
 using Shouldly;
 
 namespace Application.IntegrationTests.Pet;
@@ -29,12 +23,18 @@ public class CreatePetCommandHandlerTest : BaseIntegrationTest
     public async Task CreatePet_Should_AddUserToDatabase_WhenCommandIsValid()
     {
         // Arrange
-        var profileId = await CreateTestUserAsync();
+        var factory = new IntegrationTestWebAppFactory();
+        var ids = await CreateTestUser();
+        var currentUserMock = Substitute.For<ICurrentUser>();
+        currentUserMock.UserId.Returns(ids.UserId);
+        factory.CurrentUserMock = currentUserMock;
         
+        using var scope = factory.Services.CreateScope();
+        var sender = scope.ServiceProvider.GetRequiredService<IMediator>();
         
         var command = new CreatePetCommand()
         {
-            ProfileId = profileId,
+            ProfileId = ids.ProfileId,
             PetType = _faker.Random.Int(1, 2),
             Breeds = new List<BreedInputModel>
             {
@@ -48,49 +48,33 @@ public class CreatePetCommandHandlerTest : BaseIntegrationTest
             PhotoUrl = _faker.Internet.Url(),
             Age = new AgeInputModel()
             {
-                Years = 3,
-                Months = 5
+                Years = _faker.Random.Int(1, 20),
+                Months = _faker.Random.Int(1, 12),
             },
             Gender = Gender.Female,
             Personality = new PersonalityInputModel()
             {
-                Temperament = "Friendly",
-                ActivityLevel = "High",
+                Temperament = _faker.Lorem.Sentence(2),
+                ActivityLevel = _faker.Lorem.Sentence(1),
                 IsTrained = Training.No,
                 HasFears = Fear.No,
-                FearsDescription = ""
+                FearsDescription = _faker.Lorem.Sentence(10)
             },
 
             HealthStatus = new HealthStatusInputModel()
             {
-                IsVaccinated = true,
-                IsCastrated = false,
-                TakesMedications = false,
-                HasEatingSchedule = "yes",
-                OtherDietaryNeeds = "",
-                HealthProblems = ""
+                IsVaccinated = _faker.Random.Bool(),
+                IsCastrated = _faker.Random.Bool(),
+                TakesMedications = _faker.Random.Bool(),
+                HasEatingSchedule = _faker.Lorem.Sentence(20),
+                OtherDietaryNeeds = _faker.Lorem.Sentence(25),
+                HealthProblems = _faker.Lorem.Sentence(25)
             },
             Weight = _faker.Random.Int(1, 4),
         };
-        var currentUserMock = Substitute.For<ICurrentUser>();
-        var profileDomainRepoMock = Substitute.For<IProfileDomainRepository>();
-        var petDomainRepositoryMock = Substitute.For<IPetDomainRepository>();
-        var breedDomainRepository = Substitute.For<IBreedDomainRepository>();
-        var animalTypeDomainRepository = Substitute.For<IAnimalTypeDomainRepository>();
-        var weightDomainRepository = Substitute.For<IWeightDomainRepository>();
-        var petFactory = Substitute.For<IPetFactory>();
-        currentUserMock.UserId.Returns(profileId);
-        var handler = new CreatePetCommand.CreatePetCommandHandler(currentUserMock,
-            profileDomainRepoMock,
-            petDomainRepositoryMock,
-            breedDomainRepository,
-            animalTypeDomainRepository,
-            weightDomainRepository,
-            petFactory
-        );
         // Act
         
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await sender.Send(command, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();

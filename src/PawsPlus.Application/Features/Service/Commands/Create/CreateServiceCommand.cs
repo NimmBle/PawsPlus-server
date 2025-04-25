@@ -7,14 +7,14 @@ namespace PawsPlus.Application.Features.Service.Commands.Create;
 
 public class CreateServiceCommand 
     : CreateServiceInputModel,
-        IRequest<Result>
+        IRequest<Result<string>>
 {
     public class CreateServiceCommandHandler(IServiceDomainRepository serviceDomainRepository,
         IMeetingPlaceDomainRepository meetingPlaceDomainRepository,
         IDateDomainRepository dateDomainRepository) 
-        : IRequestHandler<CreateServiceCommand, Result>
+        : IRequestHandler<CreateServiceCommand, Result<string>>
     {
-        public async Task<Result> Handle(CreateServiceCommand request,
+        public async Task<Result<string>> Handle(CreateServiceCommand request,
             CancellationToken cancellationToken)
         {
             var alreadyExists = await serviceDomainRepository.AlreadyExists(request.ServiceType.ToString(),
@@ -40,7 +40,7 @@ public class CreateServiceCommand
             
             await serviceDomainRepository.Save(service);
 
-            return Result.Success;
+            return service.Id;
         }
     }
 }

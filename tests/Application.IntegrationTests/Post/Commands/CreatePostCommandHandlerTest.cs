@@ -21,13 +21,13 @@ public class CreatePostCommandHandlerTest : BaseIntegrationTest
     public async Task CreatePost_WithValidData_ShouldSucceed()
     {
         // Arrange
-        var profileId = await CreateTestUserAsync();
+        var ids = await CreateTestUser();
         List<int> pets = new List<int>() { _faker.Random.Int(1, 2) };
         List<int> weight  = new List<int>() { _faker.Random.Int(1, 4) };
         
         var command = new CreatePostCommand
         {
-            profileId = profileId,
+            profileId = ids.ProfileId,
             Services = new List<ServiceType> { _faker.Random.Enum<ServiceType>() },
             Pets = pets,
             Weights = weight
@@ -40,7 +40,7 @@ public class CreatePostCommandHandlerTest : BaseIntegrationTest
         result.Succeeded.ShouldBeTrue();
         
         var savedPost = await DbContext.Posts
-            .Where(p => p.ProfileId == profileId)
+            .Where(p => p.ProfileId == ids.ProfileId)
             .Include(p => p.Animals)
             .Include(p => p.Weights)
             .FirstOrDefaultAsync();

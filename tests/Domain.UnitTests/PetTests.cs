@@ -11,12 +11,10 @@ namespace Domain.UnitTests;
 public class PetTests
 {
     private readonly Pet _pet;
-    private readonly Faker _faker = new Faker();
-    private readonly ITestOutputHelper _testOutputHelper;
+    private readonly Faker _faker = new();
 
-    public PetTests(ITestOutputHelper testOutputHelper)
+    public PetTests()
     {
-        _testOutputHelper = testOutputHelper;
         _pet = new Pet(
             name: "Buddy",
             photoUrl: "https://res.cloudinary.com/ds95qikmm/image/upload/v1740853041/pet.jpg",
