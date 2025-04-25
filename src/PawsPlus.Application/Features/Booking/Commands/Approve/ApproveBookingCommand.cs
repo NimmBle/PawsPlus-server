@@ -12,7 +12,6 @@ public class ApproveBookingCommand : IRequest<Result>
     
     public string OwnerId { get; set; }
     
-    
     public string ServiceName { get; set; }
     
     public class ApproveBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,

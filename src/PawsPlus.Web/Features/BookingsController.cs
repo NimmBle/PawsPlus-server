@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Features.Booking.Commands.Approve;
 using PawsPlus.Application.Features.Booking.Commands.Cancel;
+using PawsPlus.Application.Features.Booking.Commands.Complete;
 using PawsPlus.Application.Features.Booking.Commands.Create;
 using PawsPlus.Application.Features.Booking.Commands.Disapprove;
+using PawsPlus.Application.Features.Booking.Commands.Start;
 using PawsPlus.Application.Features.Booking.Queries;
 
 namespace PawsPlus.Web.Features;
@@ -32,6 +34,18 @@ public class BookingsController : ApiController
     [Authorize(Roles = Sitter)]
     [Route(Id + PathSeparator + nameof(Disapprove))]
     public async Task<ActionResult> Disapprove(DisapproveBookingCommand command)
+        => await this.Send(command);
+    
+    [HttpPatch]
+    [Authorize(Roles = Sitter)]
+    [Route(Id + PathSeparator + nameof(Start))]
+    public async Task<ActionResult> Start(StartBookingCommand command)
+        => await this.Send(command);
+    
+    [HttpPatch]
+    [Authorize(Roles = Sitter)]
+    [Route(Id + PathSeparator + nameof(Complete))]
+    public async Task<ActionResult> Complete(CompleteBookingCommand command)
         => await this.Send(command);
     
     [HttpPatch]

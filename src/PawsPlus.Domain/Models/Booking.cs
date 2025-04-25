@@ -89,6 +89,12 @@ public class Booking : Entity<string>, IAggregateRoot
             case "Approved":
                 this.Status = Enumeration.FromValue<BookingState>(4);
                 break;
+            case "Started":
+                this.Status = Enumeration.FromValue<BookingState>(5);
+                break;
+            case "Completed":
+                this.Status = Enumeration.FromValue<BookingState>(6);
+                break;
         }
 
         return this;

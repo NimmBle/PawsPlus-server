@@ -198,7 +198,7 @@ public class EmailSender(IOptions<ApplicationSettings> applicationSettings,
 
         return result.IsSuccessStatusCode;
     }
-
+    
     public async Task<bool> SendBookingCancelEmail(string serviceName,
         DateOnly startDay,
         TimeOnly startTime,

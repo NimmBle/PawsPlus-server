@@ -9,6 +9,8 @@ using PawsPlus.Application.Common.Contracts;
 using PawsPlus.Application.Features.Pet.Commands.Common;
 using PawsPlus.Application.Features.Pet.Commands.Create;
 using PawsPlus.Domain.Enums.Pet;
+using PawsPlus.Domain.Factories.Pet;
+using PawsPlus.Domain.Repositories;
 using PawsPlus.Web.Services;
 using Shouldly;
 
@@ -28,8 +30,7 @@ public class CreatePetCommandHandlerTest : BaseIntegrationTest
     {
         // Arrange
         var profileId = await CreateTestUserAsync();
-        var currentUserMock = Substitute.For<ICurrentUser>();
-        currentUserMock.UserId.Returns(profileId);
+        
         
         var command = new CreatePetCommand()
         {
@@ -71,12 +72,25 @@ public class CreatePetCommandHandlerTest : BaseIntegrationTest
             },
             Weight = _faker.Random.Int(1, 4),
         };
-        // var handler = new CreatePetCommand.CreatePetCommandHandler(currentUserMock,
-        //     new Subs)
+        var currentUserMock = Substitute.For<ICurrentUser>();
+        var profileDomainRepoMock = Substitute.For<IProfileDomainRepository>();
+        var petDomainRepositoryMock = Substitute.For<IPetDomainRepository>();
+        var breedDomainRepository = Substitute.For<IBreedDomainRepository>();
+        var animalTypeDomainRepository = Substitute.For<IAnimalTypeDomainRepository>();
+        var weightDomainRepository = Substitute.For<IWeightDomainRepository>();
+        var petFactory = Substitute.For<IPetFactory>();
+        currentUserMock.UserId.Returns(profileId);
+        var handler = new CreatePetCommand.CreatePetCommandHandler(currentUserMock,
+            profileDomainRepoMock,
+            petDomainRepositoryMock,
+            breedDomainRepository,
+            animalTypeDomainRepository,
+            weightDomainRepository,
+            petFactory
+        );
         // Act
         
-        
-        var result = await Sender.Send(command);
+        var result = await handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.ShouldNotBeNull();
