@@ -25,9 +25,9 @@ public class ApiController : ControllerBase
         => mediator ??= HttpContext
             .RequestServices
             .GetService<IMediator>();
-
-    protected Task<ActionResult<TResult>> Send<TResult>(IRequest<TResult> request)
-        => Mediator.Send(request).ToActionResult();
+    
+    // protected Task<ActionResult<TResult>> Send<TResult>(IRequest<TResult> request)
+    //     => Mediator.Send(request).ToActionResult();
     
     protected Task<ActionResult> Send(IRequest<Result> request)
         => Mediator.Send(request).ToActionResult();

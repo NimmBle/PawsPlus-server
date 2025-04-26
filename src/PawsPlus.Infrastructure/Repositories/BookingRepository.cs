@@ -20,7 +20,7 @@ public class BookingRepository(PawsPlusDbContext db,
             .All()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
 
-    public async Task<Booking> FindByServiceId(string serviceId,
+    public async Task<Booking?> FindByServiceId(string serviceId,
         CancellationToken cancellationToken = default)
         => await this
             .All()

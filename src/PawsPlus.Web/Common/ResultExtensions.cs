@@ -11,38 +11,52 @@ public static class ResultExtensions
     public static async Task<ActionResult> ToActionResult(this Task<Result> resultTask)
     {
         var result = await resultTask;
-
+        
         if (!result.Succeeded)
         {
-            return new BadRequestObjectResult(result.ToProblemDetails());
+            return result.ToObjectResult();
         }
             
         return new OkResult();
     }
     
-    public static async Task<ActionResult<TData>> ToActionResult<TData>(this Task<TData> resultTask)
-    {
-        var result = await resultTask;
-
-        if (result == null)
-        {
-            return new NotFoundResult();
-        }
-            
-        return result;
-    }
-
     public static async Task<ActionResult<TData>> ToActionResult<TData>(this Task<Result<TData>> resultTask)
     {
         var result = await resultTask;
 
         if (!result.Succeeded)
         {
-            return new BadRequestObjectResult(result.ToProblemDetails());
+            return result.ToObjectResult();
         }
         
         return result.Data;
     }
+
+    private static ObjectResult ToObjectResult(this Result result)
+    {
+        if (result.Error.Type == ErrorType.Validation)
+            return new BadRequestObjectResult(result.ToProblemDetails());
+        if (result.Error.Type == ErrorType.NotFound)
+            return new NotFoundObjectResult(result.ToProblemDetails());
+        if (result.Error.Type == ErrorType.Conflict)
+            return new ConflictObjectResult(result.ToProblemDetails());
+        if (result.Error.Type == ErrorType.Forbidden)
+            return new ForbidenObjectResult(result.ToProblemDetails());
+        
+        return new FailureObjectResult(result.Error);
+    }
+    
+    // public static async Task<ActionResult<TData>> ToActionResult<TData>(this Task<TData> resultTask)
+    // {
+    //     var result = await resultTask;
+    //
+    //     if (result == null)
+    //     {
+    //         return new NotFoundResult();
+    //     }
+    //         
+    //     return result;
+    // }
 
     public static IResult ToProblemDetails(this Result result)
     {
@@ -50,7 +64,7 @@ public static class ResultExtensions
         {
             throw new InvalidOperationException();
         }
-
+        
         return Results.Problem(
             statusCode: GetStatusCode(result.Error.Type),
             title: GetTitle(result.Error.Type),
