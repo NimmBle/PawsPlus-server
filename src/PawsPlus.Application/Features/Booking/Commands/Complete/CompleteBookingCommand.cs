@@ -1,6 +1,7 @@
 using MediatR;
 using PawsPlus.Application.Common;
 using PawsPlus.Domain.Errors;
+using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
 using PawsPlus.Domain.Services;
 
@@ -24,7 +25,7 @@ public class CompleteBookingCommand : IRequest<Result>
                 return BookingErrors.BookingNotFound(request.Id);
             }
 
-            if (booking.IsAlreadyResolved())
+            if (booking.Status.Value != BookingState.Started.Value)
             {
                 return BookingErrors.BookingAlreadyResolved;
             }
