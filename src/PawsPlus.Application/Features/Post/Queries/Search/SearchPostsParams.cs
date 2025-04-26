@@ -72,7 +72,6 @@ public class SearchPostsParams
                 .Select(offset => startDate.AddDays(offset));
 
             predicate = predicate.And(p => p.Services
-                .Where(s => ServiceType.ToString() == s.Name)
                 .Any(s => dateRange
                 .All(rd => s.AvailableDates
                 .Any(d => d.Day.Equals(rd)))));
@@ -80,16 +79,20 @@ public class SearchPostsParams
         else if (StartDate is not null && EndDate is null)
         {
             predicate = predicate.And(p => p.Services
-                .Where(s => ServiceType.ToString() == s.Name)
                 .Any(s => s.AvailableDates
                 .Any(d => d.Day.Equals(DateOnly.Parse(StartDate)))));
         }
         else if (StartDate is null && EndDate is not null)
         {
             predicate = predicate.And(p => p.Services
-                .Where(s => ServiceType.ToString() == s.Name)
                 .Any(s => s.AvailableDates
                 .Any(d => d.Day.Equals(DateOnly.Parse(EndDate)))));
+        }
+        else if (StartDate is null && EndDate is null)
+        {
+            predicate = predicate.And(p => p.Services
+                .Any(s => s.AvailableDates
+                .Any(d => d.Day.Equals(DateOnly.FromDateTime(DateTime.Today)))));
         }
 
         // MIN AND MAX PRICE
