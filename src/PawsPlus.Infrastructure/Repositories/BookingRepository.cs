@@ -36,11 +36,11 @@ public class BookingRepository(PawsPlusDbContext db,
                 .OrderBy(b => b.Status.Value))
             .ToListAsync(cancellationToken);
 
-    public async Task<int> GetCompletedBookingsByProfileIds(string ownerId, string sitterId, CancellationToken cancellationToken = default)
+    public async Task<bool> HasCompletedBookings(string ownerId, string sitterId, CancellationToken cancellationToken = default)
         => await this
             .All()
             .Where(b => b.OwnerId == ownerId &&
                         b.SitterId == sitterId && 
                         b.Status.Value == BookingState.Completed.Value)
-            .CountAsync();
+            .AnyAsync();
 }

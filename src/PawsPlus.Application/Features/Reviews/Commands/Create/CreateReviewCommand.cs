@@ -25,8 +25,8 @@ public class CreateReviewCommand : IRequest<Result>
         public async Task<Result> Handle(CreateReviewCommand request,
             CancellationToken cancellationToken)
         {
-            // var completedBookings = await bookingQueryRepository.GetCompletedBookingsByProfileIds(request.ReviewerId, request.ReviewedId);
-            // if (completedBookings == 0)
+            // var completedBookings = await bookingQueryRepository.HasCompletedBookings(request.ReviewerId, request.ReviewedId);
+            // if (!completedBookings)
             // {
             //     return ReviewErrors.ReviewCreationNotAllowed();
             // }

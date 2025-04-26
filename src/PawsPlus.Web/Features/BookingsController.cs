@@ -7,6 +7,7 @@ using PawsPlus.Application.Features.Booking.Commands.Create;
 using PawsPlus.Application.Features.Booking.Commands.Disapprove;
 using PawsPlus.Application.Features.Booking.Commands.Start;
 using PawsPlus.Application.Features.Booking.Queries;
+using PawsPlus.Application.Features.Booking.Queries.Completed;
 
 namespace PawsPlus.Web.Features;
 
@@ -17,6 +18,13 @@ public class BookingsController : ApiController
     [Route(nameof(Pending))]
     public async Task<ActionResult<ICollection<BookingOutputModel>>> Pending(
         [FromRoute] GetBookingsQuery query)
+        => await this.Send(query);
+    
+    [HttpGet]
+    [Authorize(Roles = $"{Sitter}, {Owner}")]
+    [Route(nameof(HaveCompletedBookings))]
+    public async Task<ActionResult<bool>> HaveCompletedBookings(
+        [FromQuery] GetCompletedBookingsQuery query)
         => await this.Send(query);
     
     [HttpPost]
