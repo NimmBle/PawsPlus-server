@@ -5,6 +5,7 @@ namespace PawsPlus.Application.Features.Reviews;
 
 public class ReviewOutputModel : IMapFrom<Review>
 {
+    public string Id { get; set; }
     public string ProfileId { get; set; }
     public string PhotoUrl { get; set; }
     

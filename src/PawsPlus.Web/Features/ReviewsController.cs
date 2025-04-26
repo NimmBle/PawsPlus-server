@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using PawsPlus.Application.Features.Reviews.Commands.Create;
 using PawsPlus.Application.Features.Reviews.Commands.Delete;
 
@@ -14,6 +15,7 @@ public class ReviewsController : ApiController
 
     [HttpDelete]
     [Authorize(Roles = "Owner")]
+    [Route(Id)]
     public async Task<ActionResult> Delete(DeleteReviewCommand command)
         => await this.Send(command);
 }
