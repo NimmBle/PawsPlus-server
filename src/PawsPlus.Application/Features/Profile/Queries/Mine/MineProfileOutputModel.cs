@@ -1,4 +1,5 @@
 ﻿using PawsPlus.Application.Common.Mapping;
+using PawsPlus.Application.Features.Reviews;
 
 namespace PawsPlus.Application.Features.Profile.Queries.Mine;
 
@@ -21,6 +22,8 @@ public class MineProfileOutputModel : IMapFrom<Domain.Models.Profile>
     public LocationOutputModel? Location { get; set; }
     
     public IList<string>? Roles { get; set; } = new List<string>();
+    
+    public ICollection<ReviewOutputModel>? Reviews { get; set; } = new List<ReviewOutputModel>();
     
     public int? PostStatus { get; set; }
 
