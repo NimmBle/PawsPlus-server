@@ -32,4 +32,12 @@ public class ReviewRepository(PawsPlusDbContext db, IMapper mapper)
                 .Where(r => r.Reviewed.Id == id)
                 .Include(r => r.Reviewer))
             .ToListAsync();
+
+    public async Task<bool> ReviewExistsByReviewerAndReviewedId(string reviewerId, string reviewedId,
+        CancellationToken cancellationToken = default)
+        => await this
+            .All()
+            .Where(r => r.Reviewer.Id == reviewerId &&
+                        r.Reviewed.Id == reviewedId)
+            .AnyAsync(cancellationToken);
 }
