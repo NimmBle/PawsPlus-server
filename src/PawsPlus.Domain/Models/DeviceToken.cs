@@ -5,7 +5,7 @@ namespace PawsPlus.Domain.Models;
 public class DeviceToken : IAggregateRoot
 {
     public DeviceToken(string profileId,
-        string bookingId,
+        string? bookingId,
         string token)
     {
         Id = Guid.NewGuid().ToString();
