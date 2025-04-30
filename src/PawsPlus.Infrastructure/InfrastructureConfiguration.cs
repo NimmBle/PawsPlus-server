@@ -133,7 +133,4 @@ public static class InfrastructureConfiguration
 
     public static IServiceCollection AddEmailSender(this IServiceCollection services)
         => services.AddTransient<IEmailSender, EmailSender>();
-    
-    // public static IServiceCollection SeedUsersAndRoles(this IServiceCollection services)
-    //     => services;
 }

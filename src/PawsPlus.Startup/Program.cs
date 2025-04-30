@@ -1,8 +1,8 @@
-using Microsoft.Extensions.Options;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using PawsPlus.Application;
 using PawsPlus.Domain;
 using PawsPlus.Infrastructure;
-using PawsPlus.Infrastructure.Common.Persistence;
 using PawsPlus.Server;
 using PawsPlus.Web;
 using PawsPlus.Web.Middleware;
@@ -16,6 +16,11 @@ builder.Services
     .AddWebComponents()
     .AddEndpointsApiExplorer()
     .AddSwagger();
+
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("../.././firebase-adminsdk.json")
+});
 
 var app = builder.Build();
 
