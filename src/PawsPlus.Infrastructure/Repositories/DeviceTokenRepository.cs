@@ -15,4 +15,12 @@ public class DeviceTokenRepository(PawsPlusDbContext db)
             .Where(dt => dt.BookingId == bookingId)
             .Select(dt => dt.Token)
             .ToListAsync();
+
+    public async Task<IReadOnlyList<string>> FindDeviceTokenByProfileId(string profileId)
+        => await this 
+            .All()
+            .Distinct()
+            .Where(dt => dt.ProfileId == profileId)
+            .Select(dt => dt.Token)
+            .ToListAsync();
 }

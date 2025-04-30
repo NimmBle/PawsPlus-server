@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet ef "$@" -p PawsPlus.Infrastructure -s PawsPlus.Startup
+dotnet ef "$@" -p ./src/PawsPlus.Infrastructure -s ./src/PawsPlus.Startup

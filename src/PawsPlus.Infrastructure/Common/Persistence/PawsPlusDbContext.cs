@@ -33,6 +33,8 @@ public class
     public DbSet<Weight> Weights { get; set; } = default!;
     
     public DbSet<Review> Reviews { get; set; } = default!;
+    
+    public DbSet<DeviceToken> DeviceTokens { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

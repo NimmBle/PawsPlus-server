@@ -1,4 +1,3 @@
-using System.Reflection;
 using FirebaseAdmin.Messaging;
 using MediatR;
 using PawsPlus.Application.Common;
@@ -16,11 +15,11 @@ public class CreateNotificationCommand : CreateNotificationInputModel, IRequest<
         public async Task<Result> Handle(CreateNotificationCommand request,
             CancellationToken cancellationToken)
         {
-            var tokens = await deviceTokenRepository.FindDeviceTokensByBookingId(request.BookingId);
+            var tokens = await deviceTokenRepository.FindDeviceTokenByProfileId(request.ProfileId);
             
             if (!tokens.Any())
             {
-                return NotificationErrors.TokensNotFound(request.BookingId);
+                return NotificationErrors.TokensNotFound(request.ProfileId);
             }
 
             var message = new MulticastMessage
@@ -33,20 +32,25 @@ public class CreateNotificationCommand : CreateNotificationInputModel, IRequest<
                 },
                 Data = new Dictionary<string, string>
                 {
-                    { "bookingId", request.BookingId }
+                    { "profileId", request.ProfileId }
                 }
             };
             
             try
             {
                 var response = await FirebaseMessaging.DefaultInstance.SendMulticastAsync(message);
-                return Result.Success;
+                
+                if (response.FailureCount == 0)
+                {
+                    return Result.Success;
+                }
+                
+                return NotificationErrors.NotificationsNotSend("More than one failure Count");
             }
             catch (Exception ex)
             {
-                return NotificationErrors.NotificationsNotSend();
+                return NotificationErrors.NotificationsNotSend("Ax exception occured while trying to send the notification!");
             }
-            
         }
     }
 }

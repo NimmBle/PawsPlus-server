@@ -19,7 +19,7 @@ public class DeviceToken : IAggregateRoot
 
     public string ProfileId { get; private set; }
 
-    public string BookingId { get; private set; }
+    public string? BookingId { get; private set; }
     
     public string Token { get; private set; } 
 }
