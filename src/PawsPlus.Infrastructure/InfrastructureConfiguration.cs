@@ -33,7 +33,7 @@ public static class InfrastructureConfiguration
             .AddFiles()
             .AddConverters()
             .AddEmailSender();
-    
+
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -44,7 +44,8 @@ public static class InfrastructureConfiguration
                     sqlServer => sqlServer
                         .UseNetTopologySuite()
                         .MigrationsAssembly(typeof(PawsPlusDbContext).Assembly.FullName)))
-            .AddTransient<IInitializer, DatabaseInitializer>();
+            .AddTransient<IInitializer, DatabaseInitializer>()
+            .AddTransient<IInitializer, DataSeed>();
     public static IServiceCollection AddIdentity(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -132,4 +133,7 @@ public static class InfrastructureConfiguration
 
     public static IServiceCollection AddEmailSender(this IServiceCollection services)
         => services.AddTransient<IEmailSender, EmailSender>();
+    
+    // public static IServiceCollection SeedUsersAndRoles(this IServiceCollection services)
+    //     => services;
 }

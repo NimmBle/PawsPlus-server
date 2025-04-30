@@ -49,11 +49,6 @@ app
         .MapControllers()
     )
     .Initialize();
-
-using (var scope = app.Services.CreateScope())
-{
-    await DataSeed.SeedData(scope.ServiceProvider);
-}
     
 app.Run();
 

@@ -1,143 +1,120 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using PawsPlus.Domain.Models;
 using PawsPlus.Infrastructure.Identity;
 
 namespace PawsPlus.Infrastructure.Common.Persistence;
 
-public static class DataSeed
+public class DataSeed(PawsPlusDbContext context) : IInitializer
 {
-    public static async Task SeedData(IServiceProvider serviceProvider)
+
+    public void Initialize()
     {
-        using (var context = serviceProvider.GetRequiredService<PawsPlusDbContext>())
+        // Seed Owner
+        var ownerEmail = "owner@pawsplus.eu";
+        if (!context.Users.Any(u => u.Email == ownerEmail))
         {
-            // Seed roles if they don't exist
-            var roleNames = new[] { "Owner", "Sitter", "Administrator" };
-            foreach (var roleName in roleNames)
+            var ownerProfile = new Profile("owner", "owner", "0878787878");
+            context.Profiles.Add(ownerProfile);
+            context.SaveChanges();
+
+            var ownerId = Guid.NewGuid().ToString();
+            var owner = new User
             {
-                var roleExists = await context.Roles.AnyAsync(r => r.Name == roleName);
-                if (!roleExists)
-                {
-                    var roleId = Guid.NewGuid().ToString();
-                    await context.Roles.AddAsync(new IdentityRole
-                    {
-                        Id = roleId,
-                        Name = roleName,
-                        NormalizedName = roleName.ToUpper().Normalize(),
-                        ConcurrencyStamp = roleId
-                    });
-                }
-            }
-            await context.SaveChangesAsync();
+                Id = ownerId,
+                Email = ownerEmail,
+                NormalizedEmail = ownerEmail.ToUpper().Normalize(),
+                EmailConfirmed = true,
+                UserName = "owner",
+                NormalizedUserName = "OWNER",
+                ProfileId = ownerProfile.Id
+            };
 
-            // Seed Owner
-            var ownerEmail = "owner@pawsplus.eu";
-            if (!await context.Users.AnyAsync(u => u.Email == ownerEmail))
+            var ownerHasher = new PasswordHasher<User>();
+            owner.PasswordHash = ownerHasher.HashPassword(owner, "Owner_123");
+            context.Users.Add(owner);
+
+            var ownerRole = context.Roles.FirstOrDefault(r => r.Name == "Owner");
+            if (ownerRole != null)
             {
-                var ownerProfile = new Profile("owner", "owner", "0878787878");
-                context.Profiles.Add(ownerProfile);
-                await context.SaveChangesAsync();
-
-                var ownerId = Guid.NewGuid().ToString();
-                var owner = new User
+                context.UserRoles.Add(new IdentityUserRole<string>
                 {
-                    Id = ownerId,
-                    Email = ownerEmail,
-                    NormalizedEmail = ownerEmail.ToUpper().Normalize(),
-                    EmailConfirmed = true,
-                    UserName = "owner",
-                    NormalizedUserName = "OWNER",
-                    ProfileId = ownerProfile.Id
-                };
-
-                var ownerHasher = new PasswordHasher<User>();
-                owner.PasswordHash = ownerHasher.HashPassword(owner, "Owner_123");
-                context.Users.Add(owner);
-
-                var ownerRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "Owner");
-                if (ownerRole != null)
-                {
-                    context.UserRoles.Add(new IdentityUserRole<string>
-                    {
-                        UserId = ownerId,
-                        RoleId = ownerRole.Id
-                    });
-                }
-                await context.SaveChangesAsync();
+                    UserId = ownerId,
+                    RoleId = ownerRole.Id
+                });
             }
+            context.SaveChanges();
+        }
 
-            // Seed Sitter
-            var sitterEmail = "sitter@pawsplus.eu";
-            if (!await context.Users.AnyAsync(u => u.Email == sitterEmail))
+        // Seed Sitter
+        var sitterEmail = "sitter@pawsplus.eu";
+        if (!context.Users.Any(u => u.Email == sitterEmail))
+        {
+            var sitterProfile = new Profile("sitter", "sitter", "0878787878");
+            context.Profiles.Add(sitterProfile);
+            context.SaveChanges();
+
+            var sitterId = Guid.NewGuid().ToString();
+            var sitter = new User
             {
-                var sitterProfile = new Profile("sitter", "sitter", "0878787878");
-                context.Profiles.Add(sitterProfile);
-                await context.SaveChangesAsync();
+                Id = sitterId,
+                Email = sitterEmail,
+                NormalizedEmail = sitterEmail.ToUpper().Normalize(),
+                EmailConfirmed = true,
+                UserName = "sitter",
+                NormalizedUserName = "SITTER",
+                ProfileId = sitterProfile.Id
+            };
 
-                var sitterId = Guid.NewGuid().ToString();
-                var sitter = new User
-                {
-                    Id = sitterId,
-                    Email = sitterEmail,
-                    NormalizedEmail = sitterEmail.ToUpper().Normalize(),
-                    EmailConfirmed = true,
-                    UserName = "sitter",
-                    NormalizedUserName = "SITTER",
-                    ProfileId = sitterProfile.Id
-                };
+            var sitterHasher = new PasswordHasher<User>();
+            sitter.PasswordHash = sitterHasher.HashPassword(sitter, "Sitter_123");
+            context.Users.Add(sitter);
 
-                var sitterHasher = new PasswordHasher<User>();
-                sitter.PasswordHash = sitterHasher.HashPassword(sitter, "Sitter_123");
-                context.Users.Add(sitter);
-
-                var sitterRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "Sitter");
-                if (sitterRole != null)
-                {
-                    context.UserRoles.Add(new IdentityUserRole<string>
-                    {
-                        UserId = sitterId,
-                        RoleId = sitterRole.Id
-                    });
-                }
-                await context.SaveChangesAsync();
-            }
-
-            // Seed Admin
-            var adminEmail = "admin@pawsplus.eu";
-            if (!await context.Users.AnyAsync(u => u.Email == adminEmail))
+            var sitterRole = context.Roles.FirstOrDefault(r => r.Name == "Sitter");
+            if (sitterRole != null)
             {
-                var adminProfile = new Profile("admin", "admin", "0878787878");
-                context.Profiles.Add(adminProfile);
-                await context.SaveChangesAsync();
-
-                var adminId = Guid.NewGuid().ToString();
-                var admin = new User
+                context.UserRoles.Add(new IdentityUserRole<string>
                 {
-                    Id = adminId,
-                    Email = adminEmail,
-                    NormalizedEmail = adminEmail.ToUpper().Normalize(),
-                    EmailConfirmed = true,
-                    UserName = "admin",
-                    NormalizedUserName = "ADMIN",
-                    ProfileId = adminProfile.Id
-                };
-
-                var adminHasher = new PasswordHasher<User>();
-                admin.PasswordHash = adminHasher.HashPassword(admin, "Admin_123");
-                context.Users.Add(admin);
-
-                var adminRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "Administrator");
-                if (adminRole != null)
-                {
-                    context.UserRoles.Add(new IdentityUserRole<string>
-                    {
-                        UserId = adminId,
-                        RoleId = adminRole.Id
-                    });
-                }
-                await context.SaveChangesAsync();
+                    UserId = sitterId,
+                    RoleId = sitterRole.Id
+                });
             }
+            context.SaveChanges();
+        }
+
+        // Seed Admin
+        var adminEmail = "admin@pawsplus.eu";
+        if (!context.Users.Any(u => u.Email == adminEmail))
+        {
+            var adminProfile = new Profile("admin", "admin", "0878787878");
+            context.Profiles.Add(adminProfile);
+            context.SaveChanges();
+
+            var adminId = Guid.NewGuid().ToString();
+            var admin = new User
+            {
+                Id = adminId,
+                Email = adminEmail,
+                NormalizedEmail = adminEmail.ToUpper().Normalize(),
+                EmailConfirmed = true,
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                ProfileId = adminProfile.Id
+            };
+
+            var adminHasher = new PasswordHasher<User>();
+            admin.PasswordHash = adminHasher.HashPassword(admin, "Admin_123");
+            context.Users.Add(admin);
+
+            var adminRole = context.Roles.FirstOrDefault(r => r.Name == "Administrator");
+            if (adminRole != null)
+            {
+                context.UserRoles.Add(new IdentityUserRole<string>
+                {
+                    UserId = adminId,
+                    RoleId = adminRole.Id
+                });
+            }
+            context.SaveChanges();
         }
     }
 }
