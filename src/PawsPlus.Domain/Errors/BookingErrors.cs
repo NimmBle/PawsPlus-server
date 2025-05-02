@@ -5,14 +5,15 @@ namespace PawsPlus.Domain.Errors;
 public class BookingErrors
 {
     public static Error BookingNotFound(string id) => Error.NotFound(
-        "Booking.BookingNotFound", $"No booking was found with this id: '{id}'");
-    
+        "Booking.BookingNotFound", $"Не е намерена резервация с този идентификатор: '{id}'");
+
     public static Error BookingAlreadyResolved => Error.Conflict(
-        "Booking.BookingAlreadyResolved", $"This booking has already been resolved");
-    
+        "Booking.BookingAlreadyResolved", $"Тази резервация вече е обработена");
+
     public static Error UnableToSendEmail => Error.Conflict(
-        "Booking.UnableToSendEmail", $"The booking has been updated, but could not send email"); 
-    
+        "Booking.UnableToSendEmail", $"Резервацията е актуализирана, но не можа да се изпрати имейл");
+
     public static Error OwnerPetIsNull => Error.Validation(
-        "Booking.OwnerPetIsNull", $"The owner does not have a pet. Please create one before trying to book a sitter");
+        "Booking.OwnerPetIsNull", $"Собственикът няма домашен любимец. Моля, създайте един, преди да резервирате гледач");
+    
 }

@@ -5,17 +5,18 @@ namespace PawsPlus.Domain.Errors;
 public class ServiceErrors
 {
     public static Error ServiceAlreadyExists => Error.Conflict(
-        "Services.ServiceAlreadyExists", "The service you want to create already exists"); 
-    
+        "Services.ServiceAlreadyExists", "Услугата, която се опитвате да създадете, вече съществува"); 
+
     public static Error ServiceNotFound => Error.NotFound(
-        "Services.ServiceNotFound", $"The service you want to edit or delete was not found. Make sure it exists.");
+        "Services.ServiceNotFound", "Услугата, която се опитвате да редактирате или изтриете, не беше открита. Уверете се, че съществува.");
 
     public static Error InvalidMeetingPlace => Error.Validation(
-        "Services.InvalidMeetingPlace", "Invalid place cannot be null or empty");
-    
+        "Services.InvalidMeetingPlace", "Невалидно място – не може да бъде null или празно");
+
     public static Error NonExistingMeetingPlace => Error.Validation(
-        "Services.InvalidMeetingPlace", "Invalid place is not available for this service.");
-    
+        "Services.InvalidMeetingPlace", "Невалидно място – не е налично за тази услуга.");
+
     public static Error InvalidAvailableDates => Error.Validation(
-        "Services.InvalidAvailableDates", "Sitter is not available on these dates");
+        "Services.InvalidAvailableDates", "Гледачът не е наличен на тези дати");
+
 }

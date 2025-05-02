@@ -10,5 +10,4 @@ public class NotificationErrors
     public static Error NotificationsNotSend(string message) => Error.Failure(
         "Notification.NotificationsNotSend", $"Нотификациите не бяха изпратени!");
     
-
 }
