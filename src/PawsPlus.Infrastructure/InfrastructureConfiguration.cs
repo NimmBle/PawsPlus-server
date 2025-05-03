@@ -29,6 +29,7 @@ public static class InfrastructureConfiguration
         => services
             .AddDatabase(configuration)
             .AddIdentity(configuration)
+            .AddSwagger()
             .AddRepositories()
             .AddFiles()
             .AddConverters()

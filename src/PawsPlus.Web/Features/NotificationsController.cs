@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PawsPlus.Application.Features.Notification.Commands.Create;
 using PawsPlus.Application.Features.Notification.Commands.RegisterDevice;
 
 namespace PawsPlus.Web.Features;
 
+[AllowAnonymous]
 public class NotificationsController : ApiController
 {
 

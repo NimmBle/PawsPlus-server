@@ -6,30 +6,29 @@ public class IdentityErrors
 {
     // General errors
     public static Error IdentityError(string description) => Error.Validation(
-        "Identity.IdentityError", description);
-    
+        "Identity.IdentityError", description); // Описание се предоставя динамично, няма фиксиран превод
+
     public static Error UserNotFound(string id) => Error.NotFound(
-        "Identity.UserNotFound", $"No user found with the given id: '{id}'"); 
-    
+        "Identity.UserNotFound", $"Не е намерен потребител с даденото ID: '{id}'");
+
     public static Error InvalidCredentials => Error.Validation(
-        "Identity.InvalidCredentials", $"The credentials are invalid. Please try again"); 
-    
-    
-    // Email errors
+        "Identity.InvalidCredentials", $"Невалидни идентификационни данни. Моля, опитайте отново");
+
+// Email errors
     public static Error EmailNotUnique => Error.Conflict(
-        "Identity.EmailNotUnique", $"The email address is already used"); 
-    
+        "Identity.EmailNotUnique", $"Имейл адресът вече е използван");
+
     public static Error EmailNotConfirmed => Error.Validation(
-        "Identity.EmailNotConfirmed", $"The email address is not confirmed");
-    
+        "Identity.EmailNotConfirmed", $"Имейл адресът не е потвърден");
+
     public static Error EmailAlreadyConfirmed(string email) => Error.Conflict(
-        "Identity.EmailAlreadyConfirmed", $"This email address has already been confirmed: '{email}'"); 
-    
+        "Identity.EmailAlreadyConfirmed", $"Този имейл адрес вече е потвърден: '{email}'");
+
     public static Error EmailConfirmationFailed(string email) => Error.Failure(
-        "Identity.EmailConfirmationFailed", $"This email could not be confirmed: '{email}'. Please try again");
-    
+        "Identity.EmailConfirmationFailed", $"Този имейл не можа да бъде потвърден: '{email}'. Моля, опитайте отново");
+
     public static Error EmailChangeFailed => Error.Failure(
-        "Identity.EmailChangeFailed", $"You cannot change your email at this moment. Please try again");
+        "Identity.EmailChangeFailed", $"В момента не можете да промените имейла си. Моля, опитайте отново");
     
     
     public static Error PasswordChangeFailed => Error.Failure(

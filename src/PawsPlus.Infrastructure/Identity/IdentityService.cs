@@ -48,7 +48,7 @@ public class IdentityService(IEmailSender emailSender,
             var sendGridResponse = await emailSender.SendConfirmationEmail(user.Id, firstName, lastName);
             if (!sendGridResponse)
             {
-                return IdentityErrors.IdentityError("Unable to send a confirmation email. Please try registering again.");
+                return IdentityErrors.IdentityError("Не успяхме да изпраим имейл. Моля, опитайте след малко");
             }
                 
             scope.Complete();
@@ -89,37 +89,65 @@ public class IdentityService(IEmailSender emailSender,
         return new LoginOutputModel(user.Id, token, roles);
     }
 
-    // public async Task<Result> ChangeEmail(string userId, string newEmail)
-    // {
-    //     if (await EmailAlreadyExists(newEmail))
-    //     {
-    //         return IdentityErrors.EmailNotUnique;
-    //     }
-    //     
-    //     var user = await userManager.FindByIdAsync(userId);
-    //     if (user == null)
-    //     {
-    //         return IdentityErrors.UserNotFound(userId);
-    //     }
-    //
-    //     user.Email = newEmail;
-    //     user.NormalizedEmail = newEmail.ToUpper().Normalize();
-    //     user.EmailConfirmed = false;
-    //     
-    //     user.UserName = newEmail; 
-    //     user.NormalizedUserName = newEmail.ToUpper().Normalize();
-    //
-    //     var identityResult = await userManager.UpdateAsync(user);
-    //     if (!identityResult.Succeeded)
-    //     {
-    //         return IdentityErrors.EmailChangeFailed;
-    //     }
-    //     
-    //     // await SendConfirmationEmail(user);
-    //     
-    //     return Result.Success;
-    // }
+    public async Task<Result> ChangeEmail(string userId, string newEmail)
+    {
+        if (await EmailAlreadyExists(newEmail))
+        {
+            return IdentityErrors.EmailNotUnique;
+        }
+        
+        var user = await userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return IdentityErrors.UserNotFound(userId);
+        }
     
+        user.Email = newEmail;
+        user.NormalizedEmail = newEmail.ToUpper().Normalize();
+        user.EmailConfirmed = false;
+        
+        user.UserName = newEmail; 
+        user.NormalizedUserName = newEmail.ToUpper().Normalize();
+    
+        var identityResult = await userManager.UpdateAsync(user);
+        if (!identityResult.Succeeded)
+        {
+            return IdentityErrors.EmailChangeFailed;
+        }
+        
+        // await SendConfirmationEmail(user);
+        
+        return Result.Success;
+    }
+
+    public async Task<Result> SendPasswordResetEmail(string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+        var sendGridResponse = await emailSender.SendPasswordResetEmail(user.Id, user.Email, token);
+        
+        if (!sendGridResponse)
+        {
+            return IdentityErrors.IdentityError("Не успяхме да изпратим имейл. Моля, опитайте след малко");
+        }
+        
+        return Result.Success;
+
+    }
+
+    public async Task<Result> ResetPassword(string userId, string token, string newPassword)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        var result = await userManager.ResetPasswordAsync(user, token, newPassword);
+
+        if (!result.Succeeded)
+        {
+            return IdentityErrors.IdentityError("Новата парола не беше запазена. Моля, опитайте след малко.");
+        }
+        return result.Succeeded;
+    }
+
     public async Task<Result> ChangePassword(string email,
         string currentPassword,
         string newPassword)
@@ -176,5 +204,11 @@ public class IdentityService(IEmailSender emailSender,
         var email = await userManager.GetEmailAsync(user);
 
         return email;
+    }
+
+    private async Task<bool> EmailAlreadyExists(string email)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        return user != null;
     }
 }

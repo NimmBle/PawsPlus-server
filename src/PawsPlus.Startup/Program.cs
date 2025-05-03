@@ -14,13 +14,16 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddWebComponents()
-    .AddEndpointsApiExplorer()
-    .AddSwagger();
+    .AddEndpointsApiExplorer();
+    // .AddSwagger();
 
-FirebaseApp.Create(new AppOptions
+if (FirebaseApp.GetInstance("[DEFAULT]") is null)
 {
-    Credential = GoogleCredential.FromFile("../.././firebase-adminsdk.json")
-});
+    FirebaseApp.Create(new AppOptions
+    {
+        Credential = GoogleCredential.FromFile("./firebase-adminsdk.json")
+    });
+}
 
 var app = builder.Build();
 

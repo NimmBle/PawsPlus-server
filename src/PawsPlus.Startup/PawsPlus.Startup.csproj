@@ -95,4 +95,10 @@
       <ProjectReference Include="..\PawsPlus.Web\PawsPlus.Web.csproj" />
     </ItemGroup>
 
+	<ItemGroup>
+		<None Update="./firebase-adminsdk.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>

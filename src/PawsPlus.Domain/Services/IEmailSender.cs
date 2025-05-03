@@ -17,4 +17,6 @@ public interface IEmailSender
     // Task<bool> SendBookingStartEmail(string serviceName, DateOnly startDay, TimeOnly startTime, string ownerId, CancellationToken cancellationToken = default);
     
     Task<bool> SendBookingCancelEmail(string serviceName, DateOnly startDay, TimeOnly startTime, string sitterId, CancellationToken cancellationToken = default);
+
+    Task<bool> SendPasswordResetEmail(string userId, string email, string token, CancellationToken cancellationToken = default);
 }

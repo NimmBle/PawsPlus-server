@@ -17,6 +17,9 @@ public interface IIdentity
     
     Task<string> GetEmail(string userId);
     
-    // Task<Result> ChangeEmail(string userId, string newEmail);
-    // Task SendPasswordResetEmail(string email);
+    Task<Result> ChangeEmail(string userId, string newEmail);
+    
+    Task<Result> SendPasswordResetEmail(string email);
+    
+    Task<Result> ResetPassword(string userId, string token, string newPassword);
 }

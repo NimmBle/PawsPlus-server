@@ -225,4 +225,34 @@ public class EmailSender(IOptions<ApplicationSettings> applicationSettings,
 
         return result.IsSuccessStatusCode;
     }
+
+    public async Task<bool> SendPasswordResetEmail(string userId, string email, string token, CancellationToken cancellationToken = default)
+    {
+        // var confirmationLink =
+        //     $"http://localhost:4200/auth/reset-password?userId={userId}&token={HttpUtility.UrlEncode(token)}";
+        var confirmationLink =
+            $"http://pawsplus.eu/auth/reset-password?userId={userId}&token={HttpUtility.UrlEncode(token)}";
+
+        
+        var client = new SendGridClient(apiKey);
+        var subject = "Лапички+ - забравена парола";
+        var to = new EmailAddress(email);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+            <p>Здравей!</p>
+            <p>За да създаден нова парола за своят профил, може да последваш връзката към формата в нашият сайт:</p>
+            <p>
+            Не се колебай, последвай връзката: <br/> <a href='{confirmationLink}'>Създай нова парола</a>
+          </p>
+            <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+
+        var result = await client.SendEmailAsync(message, cancellationToken);
+
+        return result.IsSuccessStatusCode;
+    }
 }

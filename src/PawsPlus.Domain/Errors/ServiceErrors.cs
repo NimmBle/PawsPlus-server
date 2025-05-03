@@ -17,6 +17,6 @@ public class ServiceErrors
         "Services.InvalidMeetingPlace", "Невалидно място – не е налично за тази услуга.");
 
     public static Error InvalidAvailableDates => Error.Validation(
-        "Services.InvalidAvailableDates", "Гледачът не е наличен на тези дати");
+        "Services.InvalidAvailableDates", "Гледачът не е свободен на тези дати");
 
 }
