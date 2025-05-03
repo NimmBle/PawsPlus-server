@@ -17,7 +17,7 @@ public class ProfilesController : ApiController
         => await this.Send(query);
 
     [HttpGet]
-    [Authorize(Roles = Owner)]
+    [Authorize(Roles = $"{Owner}, {Sitter}")]
     [Route(Id + PathSeparator + nameof(MyPet))]
     public async Task<ActionResult<PetOutputModel>> MyPet(
         [FromRoute] GetProfilePetQuery query)
