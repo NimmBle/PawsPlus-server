@@ -32,8 +32,7 @@ public class GetBookingsQuery : IRequest<Result<ICollection<BookingOutputModel>>
                 var isReviewed = await reviewQueryRepository.ReviewExistsByReviewerAndReviewedId(booking.OwnerId, booking.SitterId, cancellationToken);
                 booking.IsReviewed = isReviewed;
             }
-           
-
+            
             return Result<ICollection<BookingOutputModel>>.SuccessWith(bookings);
         }
     }

@@ -15,4 +15,6 @@ public class PostOutputModel
     public string PlaceId { get; set; }
     
     public int ServicePrice { get; set; }
+    
+    public double Rating { get; set; }
 }

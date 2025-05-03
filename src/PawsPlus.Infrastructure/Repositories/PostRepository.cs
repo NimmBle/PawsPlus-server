@@ -97,7 +97,8 @@ public class PostRepository(PawsPlusDbContext db,
                 ServicePrice = p.Services
                     .Where(s => s.Name == serviceType.ToString())
                     .Select(s => s.Price)
-                    .FirstOrDefault()
+                    .FirstOrDefault(),
+                Rating = p.Profile.ReceivedReviews.Average(r => r.Rating)
             })
             .Skip(skip)
             .Take(take)
