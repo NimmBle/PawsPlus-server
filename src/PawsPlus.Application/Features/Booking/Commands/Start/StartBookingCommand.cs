@@ -19,9 +19,16 @@ public class StartBookingCommand : IRequest<Result>
             CancellationToken cancellationToken)
         {
             var booking = await bookingDomainRepository.Find(request.Id);
+            
             if (booking == null)
             {
                 return BookingErrors.BookingNotFound(request.Id);
+            }
+            
+            if (booking.StartDay != DateOnly.FromDateTime(DateTime.Now) &&
+                booking.StartTime <= TimeOnly.FromDateTime(DateTime.Now))
+            {
+                return BookingErrors.CannotStartBooking();
             }
 
             if (booking.Status.Value != BookingState.Approved.Value)

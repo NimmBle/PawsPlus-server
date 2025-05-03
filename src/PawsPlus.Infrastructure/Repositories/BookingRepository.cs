@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PawsPlus.Application.Common;
 using PawsPlus.Application.Features.Booking;
 using PawsPlus.Application.Features.Booking.Queries;
 using PawsPlus.Domain.Models;
@@ -14,7 +15,7 @@ public class BookingRepository(PawsPlusDbContext db,
         IBookingDomainRepository,
         IBookingQueryRepository
 {
-    public async Task<Booking> Find(string id,
+    public async Task<Booking?> Find(string id,
         CancellationToken cancellationToken = default)
         => await this
             .All()
@@ -43,4 +44,21 @@ public class BookingRepository(PawsPlusDbContext db,
                         b.SitterId == sitterId && 
                         b.Status.Value == BookingState.Completed.Value)
             .AnyAsync();
+
+    public async Task<bool> AlreadyCreated(string ownerId,
+        string sitterId,
+        DateOnly startDate,
+        TimeOnly startTime,
+        DateOnly endDate,
+        TimeOnly endTime,
+        CancellationToken cancellationToken = default)
+        => await this
+            .All()
+            .Where(b => b.OwnerId == ownerId &&
+                        b.SitterId == sitterId &&
+                        b.StartDay.Day == startDate.Day &&
+                        b.EndDay.Day == endDate.Day &&
+                        (startTime.IsBetween(b.StartTime, b.EndTime) ||
+                        endTime.IsBetween(b.StartTime, b.EndTime)))
+            .AnyAsync(cancellationToken);
 }

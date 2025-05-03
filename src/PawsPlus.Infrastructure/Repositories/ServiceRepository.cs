@@ -44,7 +44,7 @@ public class ServiceRepository(PawsPlusDbContext db,
         => mapper
             .Map<ServiceOutputModel>(await this.Find(serviceId, cancellationToken));
 
-    public async Task<ServiceOutputModel> GetServiceId(string profileId,
+    public async Task<ServiceOutputModel?> GetServiceId(string profileId,
         string serviceType,
         CancellationToken cancellationToken = default)
         => await mapper

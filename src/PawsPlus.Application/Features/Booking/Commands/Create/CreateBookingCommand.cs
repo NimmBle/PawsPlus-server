@@ -14,6 +14,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result<str
 {
     
     public class CreateBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
+        IBookingQueryRepository bookingQueryRepository,
         IBookingFactory bookingFactory,
         IServiceQueryRepository serviceQueryRepository,
         IProfileQueryRepository profileQueryRepository,
@@ -26,30 +27,36 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result<str
             CancellationToken cancellationToken)
         {
             var ownerProfile = await profileQueryRepository.GetPetLocation(currentUser.UserId);
-            var service = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
-            var sitterProfile = await profileQueryRepository.GetDetails(request.SitterId);
-            
             if (!ownerProfile.HasPet)
             {
                 return BookingErrors.OwnerPetIsNull;
             }
             
+            var bookingExists = await bookingQueryRepository.AlreadyCreated(ownerProfile.OwnerId, request.SitterId, request.StartDay, request.StartTime, request.EndDay, request.EndTime, cancellationToken);
+            if (bookingExists)
+            {
+                return BookingErrors.BookingAlreadyCreated();
+            }
+            
+            var service = await serviceQueryRepository.GetServiceId(request.SitterId, request.ServiceType.ToString());
             if (service == null)
             {
                 return ServiceErrors.ServiceNotFound;
             }
-
+            
             if (!service.AvailableDates.Contains(request.StartDay) ||
                 !service.AvailableDates.Contains(request.EndDay))
             {
                 return ServiceErrors.InvalidAvailableDates;
             }
-
+            
             if (!service.MeetingPlaces.Contains(request.MeetingPlaceType))
             {
                 return ServiceErrors.NonExistingMeetingPlace;
             }
             
+            var sitterProfile = await profileQueryRepository.GetDetails(request.SitterId);
+        
             var meetingPlace = await meetingPlaceDomainRepository.Find(request.MeetingPlaceType);
 
             var booking = bookingFactory
