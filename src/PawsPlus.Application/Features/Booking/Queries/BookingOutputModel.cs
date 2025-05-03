@@ -43,6 +43,8 @@ public class BookingOutputModel : IMapFrom<Domain.Models.Booking>
 
     public string OwnerId { get; init; }
 
+    public bool IsReviewed { get; set; }
+
     public void Mapping(AutoMapper.Profile mapper)
         => mapper
             .CreateMap<Domain.Models.Booking, BookingOutputModel>()
