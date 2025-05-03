@@ -1,6 +1,6 @@
 using PawsPlus.Domain.Common;
 
-namespace PawsPlus.Domain.Errors;
+namespace PawsPlus.Application.Files;
 
 public class FileErrors
 {

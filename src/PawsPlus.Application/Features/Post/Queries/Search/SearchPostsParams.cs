@@ -23,76 +23,81 @@ public class SearchPostsParams
     public int? MinPrice { get; set; }
     
     public int? MaxPrice { get; set; }
-
+    
+    public int? MinRating { get; set; }
+    
+    public string? OrderByParameter { get; set; }
+    
     public int PostsPerPage { get; set; } = 10;
     
     public int Page { get; set; } = 1;
     
-    
+
+
     public Expression<Func<Domain.Models.Post, bool>> ToPredicate()
     {
         Expression<Func<Domain.Models.Post, bool>> predicate = x => true;
 
         predicate = predicate.And(p => p.Status.Value == PostState.Approved.Value);
-        
+
         // PetType
         if (PetType != 0)
         {
             predicate = predicate.And(p => p.Animals
                 .Any(at => at.Id == PetType));
         }
-        
+
         // ServiceType
         if (!string.IsNullOrWhiteSpace(ServiceType.ToString()))
         {
             predicate = predicate.And(p => p.Services
                 .Any(s => s.Name == ServiceType.ToString()));
         }
-        
+
         // Location
         if (Latitude != 0 && Latitude != null &&
             Longitude != 0 && Longitude != null)
         {
             double radiusInKilometers = 25.0;
-            
+
             var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
-        
+
             predicate = predicate.And(p => p.Profile.Location.Point.Distance(centerPoint) * 100 < radiusInKilometers);
         }
-        
+
         // StartDate and EndDate
         if (StartDate is not null && EndDate is not null)
         {
             var startDate = DateOnly.Parse(StartDate);
             var endDate = DateOnly.Parse(EndDate);
-            
+
             var totalDays = endDate.DayNumber - startDate.DayNumber + 1;
-            
+
             var dateRange = Enumerable.Range(0, totalDays)
                 .Select(offset => startDate.AddDays(offset));
 
             predicate = predicate.And(p => p.Services
                 .Any(s => dateRange
-                .All(rd => s.AvailableDates
-                .Any(d => d.Day.Equals(rd)))));
+                    .All(rd => s.AvailableDates
+                        .Any(d => d.Day.Equals(rd)))));
         }
         else if (StartDate is not null && EndDate is null)
         {
             predicate = predicate.And(p => p.Services
                 .Any(s => s.AvailableDates
-                .Any(d => d.Day.Equals(DateOnly.Parse(StartDate)))));
+                    .Any(d => d.Day.Equals(DateOnly.Parse(StartDate)))));
         }
         else if (StartDate is null && EndDate is not null)
         {
             predicate = predicate.And(p => p.Services
                 .Any(s => s.AvailableDates
-                .Any(d => d.Day.Equals(DateOnly.Parse(EndDate)))));
+                    .Any(d => d.Day.Equals(DateOnly.Parse(EndDate)))));
         }
         else if (StartDate is null && EndDate is null)
         {
             predicate = predicate.And(p => p.Services
                 .Any(s => s.AvailableDates
-                .Any(d => d.Day.Equals(DateOnly.FromDateTime(DateTime.Today)))));
+                    .Any(d => d.Day.Equals(DateOnly.FromDateTime(DateTime.Today)))));
         }
 
         // MIN AND MAX PRICE
@@ -110,25 +115,46 @@ public class SearchPostsParams
                 .Any());
         }
 
+        // Rating 
+        if (MinRating is not null)
+        {
+            predicate = predicate.And(p => p.Profile.ReceivedReviews
+                .Average(r => r.Rating) >= MinRating.Value);
+        }
+
         return predicate;
     }
 
     public Expression<Func<Domain.Models.Post, object>> OrderBy()
     {
-        Expression<Func<Domain.Models.Post, object>> orderBy;
-
-        if (Latitude != 0 && Latitude != null &&
-            Longitude != 0 && Longitude != null)
+        if (OrderByParameter == "distance" && OrderByParameter is not null)
         {
-            var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
-            orderBy = p =>
-                p.Profile.Location.Point.Distance(centerPoint);
+            Expression<Func<Domain.Models.Post, object>> orderBy;
+
+            if (Latitude != 0 && Latitude != null &&
+                Longitude != 0 && Longitude != null)
+            {
+                var centerPoint = new Point(Latitude.Value, Longitude.Value) { SRID = 4326 };
+                orderBy = p =>
+                    p.Profile.Location.Point.Distance(centerPoint);
+            }
+            else
+            {
+                orderBy = p => p.Id;
+            }
+
+            return orderBy;
         }
         else
         {
-            orderBy = p => p.Id;
+            Expression<Func<Domain.Models.Post, object>> orderBy;
+        
+            orderBy = p => p.Profile.ReceivedReviews.Any()
+                ? p.Profile.ReceivedReviews.Select(r => (double?)r.Rating).Average() ?? 0
+                : 0;
+        
+            return orderBy;
         }
-
-        return orderBy;
+        
     }
 }

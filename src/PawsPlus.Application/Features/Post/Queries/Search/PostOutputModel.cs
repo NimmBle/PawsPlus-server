@@ -16,5 +16,5 @@ public class PostOutputModel
     
     public int ServicePrice { get; set; }
     
-    public double Rating { get; set; }
+    public double? Rating { get; set; }
 }
