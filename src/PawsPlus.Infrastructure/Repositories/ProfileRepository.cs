@@ -31,7 +31,7 @@ public class ProfileRepository(PawsPlusDbContext db,
             .Select(u => u.Profile)
             .FirstOrDefaultAsync(cancellationToken);
     
-    public async Task<ProfileDetailsOutputModel> GetDetails(string profileId,
+    public async Task<ProfileDetailsOutputModel?> GetDetails(string profileId,
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<ProfileDetailsOutputModel>(this

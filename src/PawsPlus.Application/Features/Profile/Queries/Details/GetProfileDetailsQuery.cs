@@ -18,21 +18,16 @@ public class GetProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>
         public async Task<Result<ProfileDetailsOutputModel>> Handle(GetProfileDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            var profile = await profileQueryRepository.GetDetails(request.Id);
+            var profile = await profileQueryRepository.GetDetails(request.Id, cancellationToken);
 
             if (profile == null)
             {
                 return ProfileErrors.ProfileNotFound(request.Id);
             }
             
-            profile.Post = await postQueryRepository.GetDetailsByProfile(request.Id);
-
-            if (profile.Post == null)
-            {
-                return ProfileErrors.ProfilePostNotFound(request.Id);
-            }
+            profile.Post = await postQueryRepository.GetDetailsByProfile(request.Id, cancellationToken);
              
-            profile.Reviews = await reviewQueryRepository.GetByReviewedId(request.Id);
+            profile.Reviews = await reviewQueryRepository.GetByReviewedId(request.Id, cancellationToken);
             
             return profile; 
         }

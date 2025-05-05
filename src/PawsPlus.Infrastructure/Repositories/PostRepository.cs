@@ -55,7 +55,7 @@ public class PostRepository(PawsPlusDbContext db,
         => mapper
             .Map<PostDetailsOutputModel>(await Find(Id, cancellationToken));
 
-    public async Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId,
+    public async Task<PostDetailsOutputModel?> GetDetailsByProfile(string profileId,
         CancellationToken cancellationToken = default)
         => await mapper
             .ProjectTo<PostDetailsOutputModel>(this

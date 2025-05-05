@@ -5,7 +5,7 @@ namespace PawsPlus.Application.Features.Profile;
 
 public interface IProfileQueryRepository
 {
-    Task<ProfileDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default);
+    Task<ProfileDetailsOutputModel?> GetDetails(string profileId, CancellationToken cancellationToken = default);
     
     Task<MineProfileOutputModel> GetMine(string id, CancellationToken cancellationToken = default);
     

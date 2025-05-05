@@ -58,6 +58,7 @@ public class BookingRepository(PawsPlusDbContext db,
                         b.SitterId == sitterId &&
                         b.StartDay.Day == startDate.Day &&
                         b.EndDay.Day == endDate.Day &&
+                        b.Status.Value == BookingState.Approved.Value &&
                         (startTime.IsBetween(b.StartTime, b.EndTime) ||
                         endTime.IsBetween(b.StartTime, b.EndTime)))
             .AnyAsync(cancellationToken);
