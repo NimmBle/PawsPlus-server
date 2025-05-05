@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PawsPlus.Application.Features.Profile;
+using PawsPlus.Application.Features.Profile.Queries;
 using PawsPlus.Application.Features.Profile.Queries.Mine;
 using PawsPlus.Application.Features.Profile.Queries.Details;
 using PawsPlus.Domain.Repositories;
@@ -33,11 +34,25 @@ public class ProfileRepository(PawsPlusDbContext db,
     
     public async Task<ProfileDetailsOutputModel?> GetDetails(string profileId,
         CancellationToken cancellationToken = default)
-        => await mapper
-            .ProjectTo<ProfileDetailsOutputModel>(this
+        => await this
                 .All()
-                .Where(p => p.Id == profileId))
-            .FirstOrDefaultAsync(cancellationToken);
+                .Where(p => p.Id == profileId)
+                .Select(p => new ProfileDetailsOutputModel
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    PhoneNumber = p.PhoneNumber,
+                    Description = p.Description,
+                    PhotoUrl = p.PhotoUrl ?? "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg",
+                    Location = new LocationOutputModel
+                    {
+                        PlaceId = p.Location.PlaceId,
+                    }
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+        
 
     public async Task<MineProfileOutputModel> GetMine(string id,
         CancellationToken cancellationToken = default)

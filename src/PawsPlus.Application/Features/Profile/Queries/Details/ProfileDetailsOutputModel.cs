@@ -8,7 +8,7 @@ public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
 {
     public string Id { get; set; }
     
-    public string Email { get; set; }
+    public string? Email { get; set; }
     
     public string FirstName { get; set; }
 
@@ -22,7 +22,7 @@ public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
     
     public LocationOutputModel Location { get; set; }
     
-    public IList<string>? Roles { get; set; } = new List<string>();
+    // public IList<string>? Roles { get; set; } = new List<string>();
 
     public ICollection<ReviewOutputModel>? Reviews { get; set; } = new List<ReviewOutputModel>();
     
@@ -30,6 +30,6 @@ public class ProfileDetailsOutputModel : IMapFrom<Domain.Models.Profile>
 
     public void Mapping(AutoMapper.Profile mapper)
         => mapper
-            .CreateMap<Domain.Models.Profile, ProfileDetailsOutputModel>()
-            .ForMember(dest => dest.Post, opt => opt.MapFrom(src => src.Post));
+            .CreateMap<Domain.Models.Profile, ProfileDetailsOutputModel>();
+    // .ForMember(dest => dest.Post, opt => opt.MapFrom(src => src.Post));
 }

@@ -127,7 +127,7 @@ public class SearchPostsParams
 
     public Expression<Func<Domain.Models.Post, object>> OrderBy()
     {
-        if (OrderByParameter == "distance" && OrderByParameter is not null)
+        if (OrderByParameter == "distance")
         {
             Expression<Func<Domain.Models.Post, object>> orderBy;
 
@@ -145,6 +145,15 @@ public class SearchPostsParams
 
             return orderBy;
         }
+
+        // if (OrderByParameter == "price")
+        // {
+        //     Expression<Func<Domain.Models.Post, object>> orderBy;
+        //
+        //     orderBy = p => p.Services.;
+        //
+        //     return orderBy;
+        // }
         else
         {
             Expression<Func<Domain.Models.Post, object>> orderBy;
