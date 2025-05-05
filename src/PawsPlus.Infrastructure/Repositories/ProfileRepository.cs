@@ -35,19 +35,21 @@ public class ProfileRepository(PawsPlusDbContext db,
     public async Task<ProfileDetailsOutputModel?> GetDetails(string profileId,
         CancellationToken cancellationToken = default)
         => await this
-                .All()
-                .Where(p => p.Id == profileId)
-                .Select(p => new ProfileDetailsOutputModel
+                .Data
+                .Users
+                .Where(u => u.ProfileId == profileId)
+                .Select(u => new ProfileDetailsOutputModel
                 {
-                    Id = p.Id,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    PhoneNumber = p.PhoneNumber,
-                    Description = p.Description,
-                    PhotoUrl = p.PhotoUrl ?? "https://res.cloudinary.com/ds95qikmm/image/upload/v1732147641/happy-man-sitting-with-three-cats-armchair-cartoon 1.svg.svg",
+                    Id = u.Profile.Id,
+                    Email = u.Email,
+                    FirstName = u.Profile.FirstName,
+                    LastName = u.Profile.LastName,
+                    PhoneNumber = u.Profile.PhoneNumber,
+                    Description = u.Profile.Description,
+                    PhotoUrl = u.Profile.PhotoUrl,
                     Location = new LocationOutputModel
                     {
-                        PlaceId = p.Location.PlaceId,
+                        PlaceId = u.Profile.Location.PlaceId,
                     }
                 })
                 .FirstOrDefaultAsync(cancellationToken);

@@ -24,16 +24,14 @@ public class GetProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>
         {
             var profile = await profileQueryRepository.GetDetails(request.Id);
 
-            if (profile == null)
+             if (profile == null)
             {
                 return ProfileErrors.ProfileNotFound(request.Id);
             }
-
-            profile.Email = await identity.GetEmail(currentUser.UserId);
             
-            profile.Post = await postQueryRepository.GetDetailsByProfile(request.Id, cancellationToken);
+            profile.Post = await postQueryRepository.GetDetailsByProfile(request.Id);
              
-            profile.Reviews = await reviewQueryRepository.GetByReviewedId(request.Id, cancellationToken);
+            profile.Reviews = await reviewQueryRepository.GetByReviewedId(request.Id);
             
             return profile; 
         }

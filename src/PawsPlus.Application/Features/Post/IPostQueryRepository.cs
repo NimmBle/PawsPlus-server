@@ -10,7 +10,7 @@ public interface IPostQueryRepository
 { 
     Task<PostDetailsOutputModel> GetDetails(string profileId, CancellationToken cancellationToken = default);
 
-    Task<PostDetailsOutputModel?> GetDetailsByProfile(string profileId, CancellationToken cancellationToken = default);
+    Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId, CancellationToken cancellationToken = default);
 
     Task<ICollection<PendingPostOutputModel>> GetPending(int skip, int take, CancellationToken cancellationToken = default);
     
