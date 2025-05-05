@@ -33,7 +33,7 @@ public class ApprovePostCommand : IRequest<Result>
             
             await postDomainRepository.Update(post);
 
-            await emailSender.SendPostApproveEmail(post.ProfileId);
+            // await emailSender.SendPostApproveEmail(post.ProfileId);
             
             return Result.Success;
         }

@@ -37,6 +37,8 @@ public class Booking : Entity<string>, IAggregateRoot
         this.ServiceId = serviceId;
         this.SitterId = sitterId;
         this.OwnerId = ownerId;
+        
+        this.CreatedAt = DateTime.UtcNow;
     }
 
     public DateOnly StartDay { get; private set; }
@@ -65,6 +67,8 @@ public class Booking : Entity<string>, IAggregateRoot
     public string OwnerId { get; private set; }
     
     public virtual Profile Owner { get; set; }
+    
+    public DateTime CreatedAt { get; set; }
     
     public bool IsAlreadyResolved()
     {

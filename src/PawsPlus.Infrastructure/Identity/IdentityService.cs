@@ -115,7 +115,7 @@ public class IdentityService(IEmailSender emailSender,
             return IdentityErrors.EmailChangeFailed;
         }
         
-        // await SendConfirmationEmail(user);
+        await emailSender.SendConfirmationEmail(user.Id);
         
         return Result.Success;
     }
@@ -125,12 +125,11 @@ public class IdentityService(IEmailSender emailSender,
         var user = await userManager.FindByIdAsync(userId);
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-        var sendGridResponse = await emailSender.SendPasswordResetEmail(user.Id, user.Email, token);
-        
-        if (!sendGridResponse)
-        {
-            return IdentityErrors.IdentityError("Не успяхме да изпратим имейл. Моля, опитайте след малко");
-        }
+        // var sendGridResponse = await emailSender.SendPasswordResetEmail(user.Id, user.Email, token);
+        // if (!sendGridResponse)
+        // {
+        //     return IdentityErrors.IdentityError("Не успяхме да изпратим имейл. Моля, опитайте след малко");
+        // }
         
         return Result.Success;
 

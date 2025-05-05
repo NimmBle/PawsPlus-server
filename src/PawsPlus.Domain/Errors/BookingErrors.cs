@@ -7,10 +7,10 @@ public class BookingErrors
     public static Error BookingNotFound(string id) => Error.NotFound(
         "Booking.BookingNotFound", $"Не е намерена резервация с този идентификатор: '{id}'");
     
-    public static Error BookingAlreadyCreated() => Error.NotFound(
-        "Booking.BookingAlreadyCreated", $"Вече има създадена поръчка за този ден и час!");
+    public static Error BookingAlreadyCreated() => Error.Conflict(
+        "Booking.BookingAlreadyCreated", $"Вече има създадена поръчка за тези дати и часове!");
     
-    public static Error CannotStartBooking() => Error.NotFound(
+    public static Error CannotStartBooking() => Error.Validation(
         "Booking.CannotStartBooking", $"Все още не може да започнете тази поръчка");
 
     public static Error BookingAlreadyResolved => Error.Conflict(
