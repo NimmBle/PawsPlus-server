@@ -19,5 +19,6 @@ public interface IPostQueryRepository
         ServiceType serviceType,
         int skip,
         int take,
+        string orderType,
         CancellationToken cancellationToken = default);
 }

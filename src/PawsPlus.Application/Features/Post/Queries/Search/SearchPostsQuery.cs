@@ -23,6 +23,7 @@ public class SearchPostsQuery
                 request.ServiceType,
                 skip,
                 take,
+                request.OrderType,
                 cancellationToken);
 
             if (posts == null)

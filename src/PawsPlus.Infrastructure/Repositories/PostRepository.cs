@@ -80,12 +80,23 @@ public class PostRepository(PawsPlusDbContext db,
         ServiceType serviceType,
         int skip,
         int take,
+        string orderType,
         CancellationToken cancellationToken = default)
-        => await this
+    {
+        var query = this
             .All()
-            .Where(predicate)
-            .OrderByDescending(orderBy)
-            .Include(p => p.Animals)
+            .Where(predicate);
+
+        if (orderType == "asc")
+        {
+            query = query.OrderBy(orderBy);
+        }
+        else
+        {
+            query = query.OrderByDescending(orderBy);
+        }
+        
+        return await query.Include(p => p.Animals)
             .Select(p => new PostOutputModel
             {
                 Id = p.ProfileId,
@@ -104,4 +115,5 @@ public class PostRepository(PawsPlusDbContext db,
             .Take(take)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
+    }
 }

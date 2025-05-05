@@ -14,9 +14,7 @@ public class GetProfileDetailsQuery : IRequest<Result<ProfileDetailsOutputModel>
     
     public class GetProfileDetailsQueryHandler(IProfileQueryRepository profileQueryRepository,
         IPostQueryRepository postQueryRepository,
-        IReviewQueryRepository reviewQueryRepository,
-        ICurrentUser currentUser,
-        IIdentity identity)
+        IReviewQueryRepository reviewQueryRepository)
         : IRequestHandler<GetProfileDetailsQuery, Result<ProfileDetailsOutputModel>>
     {
         public async Task<Result<ProfileDetailsOutputModel>> Handle(GetProfileDetailsQuery request,

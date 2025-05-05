@@ -27,6 +27,8 @@ public class SearchPostsParams
     public int? MinRating { get; set; }
     
     public string? OrderByParameter { get; set; }
+
+    public string OrderType { get; set; } = "desc";
     
     public int PostsPerPage { get; set; } = 10;
     
@@ -143,17 +145,22 @@ public class SearchPostsParams
                 orderBy = p => p.Id;
             }
 
+            this.OrderType = "asc";
             return orderBy;
         }
 
-        // if (OrderByParameter == "price")
-        // {
-        //     Expression<Func<Domain.Models.Post, object>> orderBy;
-        //
-        //     orderBy = p => p.Services.;
-        //
-        //     return orderBy;
-        // }
+        if (OrderByParameter == "price")
+        {
+            Expression<Func<Domain.Models.Post, object>> orderBy;
+        
+            orderBy = p => p.Services
+                                    .Where(s => s.Name == ServiceType.ToString())
+                                    .Select(s => s.Price)
+                                    .FirstOrDefault();
+            
+            this.OrderType = "asc";
+            return orderBy;
+        }
         else
         {
             Expression<Func<Domain.Models.Post, object>> orderBy;
