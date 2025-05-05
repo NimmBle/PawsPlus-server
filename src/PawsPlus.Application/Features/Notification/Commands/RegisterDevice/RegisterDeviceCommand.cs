@@ -10,18 +10,19 @@ namespace PawsPlus.Application.Features.Notification.Commands.RegisterDevice;
 public class RegisterDeviceCommand : RegisterDeviceInputModel, IRequest<Result>
 {
     
-    public class RegisterDeviceCommandHandler(IDeviceTokenDomainRepository deviceTokenRepository, 
-        ICurrentUser currentUser,
-        IProfileQueryRepository profileQueryRepository)
+    public class RegisterDeviceCommandHandler(IDeviceTokenDomainRepository deviceTokenRepository)
         : IRequestHandler<RegisterDeviceCommand, Result>
     {
         public async Task<Result> Handle(RegisterDeviceCommand request,
             CancellationToken cancellationToken)
         {
-            var userId = currentUser.UserId;
-            var profileId = await profileQueryRepository.GetProfileIdByUser(userId, cancellationToken);
+            var existingToken = await deviceTokenRepository.FindDeviceTokenByProfileId(request.ProfileId);
+            if (existingToken is not null)
+            {
+                await deviceTokenRepository.Delete(existingToken);
+            }
             
-            var deviceToken = new DeviceToken(profileId,
+            var deviceToken = new DeviceToken(request.ProfileId,
                 request.BookingId,
                 request.DeviceToken);
 

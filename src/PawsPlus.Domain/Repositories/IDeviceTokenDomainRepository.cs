@@ -6,8 +6,11 @@ namespace PawsPlus.Domain.Repositories;
 public interface IDeviceTokenDomainRepository 
     : IDomainRepository<DeviceToken>
 {
-    public Task<IReadOnlyList<string>> FindDeviceTokensByBookingId(string bookingId);
+    public Task<DeviceToken> Find(string id, CancellationToken cancellationToken = default);
+    public Task<IReadOnlyList<string>> FindDeviceTokensByBookingId(string bookingId, CancellationToken cancellationToken = default);
     
-    public Task<IReadOnlyList<string>> FindDeviceTokenByProfileId(string profileId);
+    public Task<DeviceToken?> FindDeviceTokenByProfileId(string profileId, CancellationToken cancellationToken = default);
+    
+    public Task<bool> Delete(DeviceToken token, CancellationToken cancellationToken = default);
 
 }

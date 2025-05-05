@@ -15,15 +15,8 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddWebComponents()
     .AddEndpointsApiExplorer();
-    // .AddSwagger();
 
-if (FirebaseApp.GetInstance("[DEFAULT]") is null)
-{
-    FirebaseApp.Create(new AppOptions
-    {
-        Credential = GoogleCredential.FromFile("./firebase-adminsdk.json")
-    });
-}
+FirebaseInitializer.EnsureInitialized();
 
 var app = builder.Build();
 

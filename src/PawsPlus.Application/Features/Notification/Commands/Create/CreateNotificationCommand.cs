@@ -15,32 +15,28 @@ public class CreateNotificationCommand : CreateNotificationInputModel, IRequest<
         public async Task<Result> Handle(CreateNotificationCommand request,
             CancellationToken cancellationToken)
         {
-            var tokens = await deviceTokenRepository.FindDeviceTokenByProfileId(request.ProfileId);
+            var deviceToken = await deviceTokenRepository.FindDeviceTokenByProfileId(request.ProfileId, cancellationToken);
             
-            if (!tokens.Any())
+            if (deviceToken is null)
             {
                 return NotificationErrors.TokensNotFound(request.ProfileId);
             }
 
-            var message = new MulticastMessage
+            var message = new Message()
             {
-                Tokens = tokens,
+                Token = deviceToken.Token,
                 Notification = new FirebaseAdmin.Messaging.Notification
                 {
                     Title = request.Title,
                     Body = request.Body
-                },
-                Data = new Dictionary<string, string>
-                {
-                    { "profileId", request.ProfileId }
                 }
             };
             
             try
             {
-                var response = await FirebaseMessaging.DefaultInstance.SendMulticastAsync(message);
+                var response = await FirebaseMessaging.DefaultInstance.SendAsync(message, cancellationToken);
                 
-                if (response.FailureCount == 0)
+                if (!string.IsNullOrEmpty(response))
                 {
                     return Result.Success;
                 }

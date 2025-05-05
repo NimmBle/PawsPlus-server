@@ -11,6 +11,7 @@ using PawsPlus.Domain.Factories.Pet;
 using PawsPlus.Domain.Models;
 using PawsPlus.Infrastructure.Common.Persistence;
 using PawsPlus.Infrastructure.Identity;
+using PawsPlus.Server;
 
 namespace Application.IntegrationTests;
 
@@ -25,6 +26,8 @@ public class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>
     
     protected BaseIntegrationTest(IntegrationTestWebAppFactory factory)
     {
+        FirebaseInitializer.EnsureInitialized();
+        
         _factory = factory;
         _scope = factory.Services.CreateScope();
         _petFactory = _scope.ServiceProvider.GetService<IPetFactory>();
