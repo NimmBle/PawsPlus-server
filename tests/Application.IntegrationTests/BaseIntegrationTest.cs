@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using PawsPlus.Application.Common.Contracts;
-using PawsPlus.Application.Features.Post.Commands.Create;
 using PawsPlus.Domain.Enums;
 using PawsPlus.Domain.Enums.Pet;
 using PawsPlus.Domain.Factories.Pet;
