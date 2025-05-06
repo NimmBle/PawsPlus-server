@@ -14,7 +14,7 @@ public interface IEmailSender
     //
     // Task<bool> SendBookingDisapproveEmail(string serviceName, DateOnly startDay, TimeOnly startTime, string ownerId, CancellationToken cancellationToken = default);
     //
-    // // Task<bool> SendBookingStartEmail(string serviceName, DateOnly startDay, TimeOnly startTime, string ownerId, CancellationToken cancellationToken = default);
+    // Task<bool> SendBookingStartEmail(string serviceName, DateOnly startDay, TimeOnly startTime, string ownerId, CancellationToken cancellationToken = default);
     //
     // Task<bool> SendBookingCancelEmail(string serviceName, DateOnly startDay, TimeOnly startTime, string sitterId, CancellationToken cancellationToken = default);
     //

@@ -18,7 +18,7 @@ public class ServicesController : ApiController
         => await this.Send(query);
     
     [HttpPost]
-    public async Task<ActionResult<string>> Create(CreateServiceCommand command)
+    public async Task<ActionResult> Create(CreateServiceCommand command)
         => await this.Send(command);
     
     [HttpPut]

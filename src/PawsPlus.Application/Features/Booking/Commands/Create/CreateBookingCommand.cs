@@ -12,7 +12,7 @@ using PawsPlus.Domain.Services;
 
 namespace PawsPlus.Application.Features.Booking.Commands.Create;
 
-public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result<string>>
+public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
 {
     
     public class CreateBookingCommandHandler(IBookingDomainRepository bookingDomainRepository,
@@ -23,9 +23,9 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result<str
         IMeetingPlaceDomainRepository meetingPlaceDomainRepository,
         ICurrentUser currentUser,
         IEmailSender emailSender) 
-        : IRequestHandler<CreateBookingCommand, Result<string>>
+        : IRequestHandler<CreateBookingCommand, Result>
     {
-        public async Task<Result<string>> Handle(CreateBookingCommand request,
+        public async Task<Result> Handle(CreateBookingCommand request,
             CancellationToken cancellationToken)
         {
             var ownerProfile = await profileQueryRepository.GetPetLocation(currentUser.UserId);
@@ -86,7 +86,7 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result<str
             // await emailSender.SendBookingRequestEmail(request.SitterId,
             //     ownerProfile.OwnerId);
             
-            return bookingBuild.Id;
+            return true;
         }
     }
 }

@@ -28,10 +28,10 @@ public class CancelBookingCommand : IRequest<Result>
                 return BookingErrors.BookingNotFound(request.Id);
             }
 
-            if (booking.IsAlreadyResolved())
-            {
-                return BookingErrors.BookingAlreadyResolved;
-            }
+            // if (booking.IsAlreadyResolved())
+            // {
+            //     return BookingErrors.BookingAlreadyResolved;
+            // }
             
             booking.ChangeState("Canceled");
             await bookingDomainRepository.Update(booking);

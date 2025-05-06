@@ -12,6 +12,9 @@ public class BookingErrors
     
     public static Error CannotStartBooking() => Error.Validation(
         "Booking.CannotStartBooking", $"Все още не може да започнете тази поръчка");
+    
+    public static Error CannotCompleteBooking() => Error.Validation(
+        "Booking.CannotCompleteBooking", $"Все още не може да завършите тази поръчка");
 
     public static Error BookingAlreadyResolved => Error.Conflict(
         "Booking.BookingAlreadyResolved", $"Тази резервация вече е обработена");

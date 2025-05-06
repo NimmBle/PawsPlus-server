@@ -5,6 +5,7 @@ using PawsPlus.Application.Features.Post;
 using PawsPlus.Application.Features.Post.Queries;
 using PawsPlus.Application.Features.Post.Queries.Pending;
 using PawsPlus.Application.Features.Post.Queries.Search;
+using PawsPlus.Application.Features.Service.Queries;
 using PawsPlus.Domain.Enums;
 using PawsPlus.Domain.Models;
 using PawsPlus.Domain.Repositories;
@@ -57,11 +58,34 @@ public class PostRepository(PawsPlusDbContext db,
 
     public async Task<PostDetailsOutputModel> GetDetailsByProfile(string profileId,
         CancellationToken cancellationToken = default)
-        => await mapper
-            .ProjectTo<PostDetailsOutputModel>(this
-                .All()
-                .Where(p => p.ProfileId == profileId)
-                .Include(p => p.Animals))
+        => await this
+            .All()
+            .Where(p => p.ProfileId == profileId)
+            // .Include(p => p.Animals)
+            // .Include(p => p.Weights)
+            // .Include(p => p.Services)
+            // .ThenInclude(s => s.MeetingPlaces)
+            // .Include(p => p.Services)
+            // .ThenInclude(s => s.AvailableDates)
+            .Select(p => new PostDetailsOutputModel
+            {
+                Id = p.Id,
+                Status = p.Status.Value,
+                Weights = p.Weights.Select(w => w.Id).ToList(),
+                Pets = p.Animals.Select(a => a.Id).ToList(),
+                Services = p.Services.Select(s => new ServiceOutputModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Price = s.Price,
+                    AvailableDates = s.AvailableDates
+                        .Select(ad => ad.Day)
+                        .ToHashSet(),
+                    MeetingPlaces = s.MeetingPlaces
+                        .Select(mp => mp.Id)
+                        .ToList()
+                }).ToList()
+            })
             .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<ICollection<PendingPostOutputModel>> GetPending(int skip,

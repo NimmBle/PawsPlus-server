@@ -125,7 +125,11 @@ public class CreateBookingCommandHandlerTest : BaseIntegrationTest
         // assert
         result.Succeeded.ShouldBeTrue();
 
-        var booking = await DbContext.Bookings.FirstOrDefaultAsync(b => b.Id == result.Data);
+        var booking = await DbContext.Bookings
+            .Where(b => b.StartDay == command.StartDay &&
+                        b.EndDay == command.EndDay &&
+                        b.StartTime == command.StartTime)
+            .FirstOrDefaultAsync();
         booking.ShouldNotBeNull();
         booking.StartDay.ShouldBe(command.StartDay);
         booking.StartTime.ShouldBe(command.StartTime);

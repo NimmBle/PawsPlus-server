@@ -47,6 +47,8 @@ public class CreateServiceCommandHandlerTest : BaseIntegrationTest
     {
         // arrange
         var post = await CreateTestPost();
+        var price = _faker.Random.Int(1, 100);
+        var serviceType = _faker.Random.Enum<ServiceType>();
         var command = new CreateServiceCommand
         {
             AvailableDates = new List<DateOnly>
@@ -58,8 +60,8 @@ public class CreateServiceCommandHandlerTest : BaseIntegrationTest
             },
             MeetingPlaces = _faker.Random.Digits(3, 1, 3).ToHashSet(),
             PostId = post.Id,
-            Price = _faker.Random.Int(1, 100),
-            ServiceType = _faker.Random.Enum<ServiceType>()
+            Price = price,
+            ServiceType = serviceType
         };
         // act
         var result = await Sender.Send(command);
@@ -68,7 +70,13 @@ public class CreateServiceCommandHandlerTest : BaseIntegrationTest
         result.ShouldNotBeNull();
         result.Succeeded.ShouldBeTrue();
         
-        var service = await DbContext.Services.FirstOrDefaultAsync(x => x.Id == result.Data);
+        var service = await DbContext
+            .Services
+            .Where(s => s.Name == serviceType.ToString() && 
+                s.PostId == post.Id && 
+                s.Price == price)
+            .FirstOrDefaultAsync();
+        
         service.ShouldNotBeNull();
         service.Price.ShouldBe(command.Price);
         service.MeetingPlaces.Count.ShouldBe(command.MeetingPlaces.Count);

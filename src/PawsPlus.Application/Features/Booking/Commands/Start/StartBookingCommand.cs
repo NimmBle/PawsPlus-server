@@ -25,8 +25,8 @@ public class StartBookingCommand : IRequest<Result>
                 return BookingErrors.BookingNotFound(request.Id);
             }
             
-            if (booking.StartDay != DateOnly.FromDateTime(DateTime.Now) &&
-                booking.StartTime <= TimeOnly.FromDateTime(DateTime.Now))
+            if (booking.StartDay != DateOnly.FromDateTime(DateTime.Now) ||
+                (booking.StartDay == DateOnly.FromDateTime(DateTime.Now) && booking.StartTime > TimeOnly.FromDateTime(DateTime.Now)))
             {
                 return BookingErrors.CannotStartBooking();
             }

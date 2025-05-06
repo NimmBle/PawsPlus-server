@@ -23,13 +23,15 @@ public class EditServiceCommand : EditServiceInputModel, IRequest<Result>
             var service = await serviceDomainRepository.Find(request.Id);
             var meetingPlaces = await meetingPlaceDomainRepository.FindAll(request.MeetingPlaces);
 
-            request.AvailableDates.Sort();
-            var count = request.AvailableDates.Count;
-            
-            var allAvailableDates = await dateDomainRepository.FindAll(request.AvailableDates[0], request.AvailableDates[count-1]);
+            if (request.AvailableDates.Count > 0 && request.AvailableDates is not null)
+            {
+                request.AvailableDates.Sort();
+                var count = request.AvailableDates.Count;
+                var allAvailableDates = await dateDomainRepository.FindAll(request.AvailableDates[0], request.AvailableDates[count-1]);
+                service.UpdateAvailableDates(request.AvailableDates, allAvailableDates);
+            }
             
             service.UpdatePrice(request.Price);
-            service.UpdateAvailableDates(request.AvailableDates, allAvailableDates);
             service.UpdateMeetingPlaces(meetingPlaces);
 
             await serviceDomainRepository.Update(service);
