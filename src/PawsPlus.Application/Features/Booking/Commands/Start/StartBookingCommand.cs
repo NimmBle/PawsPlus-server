@@ -39,15 +39,10 @@ public class StartBookingCommand : IRequest<Result>
             booking.ChangeState("Started");
             await bookingDomainRepository.Update(booking);
     
-            // var result = await emailSender.SendBookingStartEmail(request.ServiceName,
-            //     booking.StartDay, 
-            //     booking.StartTime,
-            //     request.OwnerId);
-
-            // if (result == false)
-            // {
-            //     return BookingErrors.UnableToSendEmail;
-            // }
+            await emailSender.SendBookingStartEmail(booking.StartDay,
+                booking.StartTime,
+                booking.OwnerId,
+                booking.SitterId);
             
             return Result.Success;
         }

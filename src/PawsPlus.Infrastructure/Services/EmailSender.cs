@@ -61,6 +61,65 @@ public class EmailSender(IOptions<ApplicationSettings> applicationSettings,
 
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> SendBookingStartEmail(DateOnly startDay,
+        TimeOnly startTime,
+        string ownerId,
+        string sitterId,
+        CancellationToken cancellationToken = default)
+    {
+        var owner = await profileQueryRepository.GetEmailInformation(ownerId);
+        var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
+        
+        var client = new SendGridClient(apiKey);
+        var subject = "Лапички+ - Актуализация на заявка";
+        var to = new EmailAddress(owner.Email, owner.FirstName);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+            <p>Здравей, {owner.FirstName} {owner.LastName}!</p>
+            <p>{sitter.FirstName} {sitter.LastName} започна своята услуга от {startTime} на {startDay}</p>
+            <p>За да прегледаш заявката си, можеш да последваш връзката към нашата платформа: <a href={orders}>Отвори заявки</a>!</p>
+            <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+
+        var result = await client.SendEmailAsync(message, cancellationToken);
+
+        return result.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> SendBookingCompleteEmail(DateOnly startDay,
+        TimeOnly startTime,
+        string ownerId,
+        string sitterId,
+        CancellationToken cancellationToken = default)
+    {
+        var owner = await profileQueryRepository.GetEmailInformation(ownerId);
+        var sitter = await profileQueryRepository.GetEmailInformation(sitterId);
+        
+        var client = new SendGridClient(apiKey);
+        var subject = "Лапички+ - Актуализация на заявка";
+        var to = new EmailAddress(owner.Email, owner.FirstName);
+        var htmlContent = $@"
+        <html>
+        <body style='font-family: Oswald, sans-serif;'>
+            <p>Здравей, {owner.FirstName} {owner.LastName}!</p>
+            <p>{sitter.FirstName} {sitter.LastName} завърши своята услуга от {startTime} на {startDay}</p>
+            <p>За нас ще бъде изключително ценно, ако оставиш едно ревю за гледача: <a href={orders}>Остави ревю</a>!</p>
+            <p>Поздрави, <br/> Екипът на 'Лапички+'</p>
+        </body>
+        </html>";
+        
+        var message = MailHelper.CreateSingleEmail(from, to, subject, null, htmlContent);
+
+        var result = await client.SendEmailAsync(message, cancellationToken);
+
+        return result.IsSuccessStatusCode;
+    }
+
     public async Task<bool> SendPostApproveEmail(string sitterId,
         CancellationToken cancellationToken = default)
     {

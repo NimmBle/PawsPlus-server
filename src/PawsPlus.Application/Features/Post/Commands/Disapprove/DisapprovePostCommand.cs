@@ -35,7 +35,7 @@ public class DisapprovePostCommand : IRequest<Result>
 
             await postDomainRepository.Update(post);
 
-            // await emailSender.SendPostDisapproveEmail(post.ProfileId, request.StateReason);
+            await emailSender.SendPostDisapproveEmail(post.ProfileId, request.StateReason);
             
             return Result.Success;
         }

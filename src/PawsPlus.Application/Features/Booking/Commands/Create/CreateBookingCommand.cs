@@ -83,8 +83,8 @@ public class CreateBookingCommand : CreateBookingInputModel, IRequest<Result>
             var bookingBuild = booking.Build();
             await bookingDomainRepository.Save(bookingBuild);
             
-            // await emailSender.SendBookingRequestEmail(request.SitterId,
-            //     ownerProfile.OwnerId);
+            await emailSender.SendBookingRequestEmail(request.SitterId,
+                ownerProfile.OwnerId);
             
             return true;
         }

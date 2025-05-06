@@ -36,15 +36,10 @@ public class DisapproveBookingCommand : IRequest<Result>
             booking.ChangeState("Disapproved");
             await bookingDomainRepository.Update(booking);
 
-            // var result = await emailSender.SendBookingDisapproveEmail(request.ServiceName,
-            //     booking.StartDay, 
-            //     booking.StartTime,
-            //     request.OwnerId);
-            //
-            // if (result == false)
-            // {
-            //     return BookingErrors.UnableToSendEmail;
-            // }
+            await emailSender.SendBookingDisapproveEmail(request.ServiceName,
+                booking.StartDay, 
+                booking.StartTime,
+                request.OwnerId);
             
             return Result.Success;
         }
