@@ -25,17 +25,17 @@ public class CreateReviewCommand : IRequest<Result>
         public async Task<Result> Handle(CreateReviewCommand request,
             CancellationToken cancellationToken)
         {
-            // var completedBookings = await bookingQueryRepository.HasCompletedBookings(request.ReviewerId, request.ReviewedId);
-            // if (!completedBookings)
-            // {
-            //     return ReviewErrors.ReviewCreationNotAllowed();
-            // }
-            //
-            // var existingReview = await reviewQueryRepository.ReviewExistsByReviewerAndReviewedId(request.ReviewerId, request.ReviewedId);
-            // if (existingReview)
-            // {
-            //     return ReviewErrors.ReviewAlreadyExists();
-            // }
+            var completedBookings = await bookingQueryRepository.HasCompletedBookings(request.ReviewerId, request.ReviewedId);
+            if (!completedBookings)
+            {
+                return ReviewErrors.ReviewCreationNotAllowed();
+            }
+            
+            var existingReview = await reviewQueryRepository.ReviewExistsByReviewerAndReviewedId(request.ReviewerId, request.ReviewedId);
+            if (existingReview)
+            {
+                return ReviewErrors.ReviewAlreadyExists();
+            }
             
             var review = new Review(request.Rating,
                 request.Content,

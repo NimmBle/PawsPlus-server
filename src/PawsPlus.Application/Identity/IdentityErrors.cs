@@ -6,7 +6,7 @@ public class IdentityErrors
 {
     // General errors
     public static Error IdentityError(string description) => Error.Validation(
-        "Identity.IdentityError", description); // Описание се предоставя динамично, няма фиксиран превод
+        "Identity.IdentityError", description);
 
     public static Error UserNotFound(string id) => Error.NotFound(
         "Identity.UserNotFound", $"Не е намерен потребител с даденото ID: '{id}'");

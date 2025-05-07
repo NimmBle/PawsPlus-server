@@ -9,7 +9,6 @@ public class FirebaseInitializer
 
     public static void EnsureInitialized()
     {
-        // Double-checked locking to minimize lock contention
         if (FirebaseApp.GetInstance("[DEFAULT]") == null)
         {
             lock (_lock)

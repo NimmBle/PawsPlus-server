@@ -61,12 +61,6 @@ public class PostRepository(PawsPlusDbContext db,
         => await this
             .All()
             .Where(p => p.ProfileId == profileId)
-            // .Include(p => p.Animals)
-            // .Include(p => p.Weights)
-            // .Include(p => p.Services)
-            // .ThenInclude(s => s.MeetingPlaces)
-            // .Include(p => p.Services)
-            // .ThenInclude(s => s.AvailableDates)
             .Select(p => new PostDetailsOutputModel
             {
                 Id = p.Id,

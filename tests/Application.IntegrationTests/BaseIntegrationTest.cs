@@ -125,27 +125,27 @@ public class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>
         Weight weight = await DbContext.Weights.FirstAsync();
         List<Breed> breeds = await DbContext.Breeds.Take(2).ToListAsync();
         var pet = _petFactory
-            .WithName(_faker.Name.FirstName()) // Matches command.Name
-            .WithPhotoUrl(_faker.Internet.Url()) // Matches command.PhotoUrl
-            .WithType(animal) // Matches command.PetType
+            .WithName(_faker.Name.FirstName())
+            .WithPhotoUrl(_faker.Internet.Url())
+            .WithType(animal)
             .WithAge(_faker.Random.Int(1, 20),
-                _faker.Random.Int(1, 12)) // Matches command.Age.Years, command.Age.Months
-            .WithGender(_faker.Random.Enum<Gender>()) // Direct use of command.Gender
-            .WithBreed(breeds) // Matches command.Breeds
+                _faker.Random.Int(1, 12))
+            .WithGender(_faker.Random.Enum<Gender>())
+            .WithBreed(breeds)
             .WithPersonality(
-                _faker.Lorem.Sentence(2), // Matches command.Personality.Temperament
-                _faker.Lorem.Sentence(1), // Matches command.Personality.ActivityLevel
+                _faker.Lorem.Sentence(2),
+                _faker.Lorem.Sentence(1),
                 _faker.Random.Enum<Training>(),
                 _faker.Random.Enum<Fear>(),
-                _faker.Lorem.Sentence(10)) // Matches command.Personality.FearsDescription
+                _faker.Lorem.Sentence(10))
             .WithHealthStatus(
-                _faker.Random.Bool(), // Matches command.HealthStatus.IsVaccinated
-                _faker.Random.Bool(), // Matches command.HealthStatus.IsCastrated
-                _faker.Random.Bool(), // Matches command.HealthStatus.TakesMedications
-                _faker.Lorem.Sentence(20), // Matches command.HealthStatus.HasEatingSchedule
-                _faker.Lorem.Sentence(25), // Matches command.HealthStatus.OtherDietaryNeeds
-                _faker.Lorem.Sentence(25)) // Matches command.HealthStatus.HealthProblems
-            .WithProfileId(profileId) // Direct use of command.ProfileId
+                _faker.Random.Bool(),
+                _faker.Random.Bool(),
+                _faker.Random.Bool(),
+                _faker.Lorem.Sentence(20),
+                _faker.Lorem.Sentence(25),
+                _faker.Lorem.Sentence(25))
+            .WithProfileId(profileId)
             .WithWeight(weight)
             .Build();
         

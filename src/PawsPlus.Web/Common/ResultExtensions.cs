@@ -45,18 +45,6 @@ public static class ResultExtensions
         
         return new FailureObjectResult(result.Error);
     }
-    
-    // public static async Task<ActionResult<TData>> ToActionResult<TData>(this Task<TData> resultTask)
-    // {
-    //     var result = await resultTask;
-    //
-    //     if (result == null)
-    //     {
-    //         return new NotFoundResult();
-    //     }
-    //         
-    //     return result;
-    // }
 
     public static IResult ToProblemDetails(this Result result)
     {
