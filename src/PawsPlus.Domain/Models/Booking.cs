@@ -76,7 +76,20 @@ public class Booking : Entity<string>, IAggregateRoot
                Status.Equals(BookingState.Disapproved) ||
                Status.Equals(BookingState.Approved);
     }
-    
+
+    public bool CannotStart()
+    {
+        return this.StartDay != DateOnly.FromDateTime(DateTime.Now.AddHours(3)) ||
+               (this.StartDay == DateOnly.FromDateTime(DateTime.Now.AddHours(3)) &&
+                this.StartTime > TimeOnly.FromDateTime(DateTime.Now.AddHours(3)));
+    }
+    public bool CannotComplete()
+    {
+        return this.EndDay != DateOnly.FromDateTime(DateTime.Now.AddHours(3)) ||
+               (this.EndDay == DateOnly.FromDateTime(DateTime.Now.AddHours(3)) &&
+                this.EndTime > TimeOnly.FromDateTime(DateTime.Now.AddHours(3)));
+    }
+
     public Booking ChangeState(string type)
     {
         switch (type)

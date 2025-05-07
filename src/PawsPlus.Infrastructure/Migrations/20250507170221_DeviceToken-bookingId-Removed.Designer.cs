@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using PawsPlus.Infrastructure.Common.Persistence;
@@ -12,9 +13,11 @@ using PawsPlus.Infrastructure.Common.Persistence;
 namespace PawsPlus.Infrastructure.Migrations
 {
     [DbContext(typeof(PawsPlusDbContext))]
-    partial class PawsPlusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250507170221_DeviceToken-bookingId-Removed")]
+    partial class DeviceTokenbookingIdRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

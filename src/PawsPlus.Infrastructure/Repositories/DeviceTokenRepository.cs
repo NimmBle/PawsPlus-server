@@ -9,17 +9,14 @@ public class DeviceTokenRepository(PawsPlusDbContext db)
     : DataRepository<PawsPlusDbContext, DeviceToken>(db),
         IDeviceTokenDomainRepository
 {
-    public async Task<IReadOnlyList<string>> FindDeviceTokensByBookingId(string bookingId, CancellationToken cancellationToken = default)
+    public async Task<DeviceToken> Find(string id, CancellationToken cancellationToken = default)
         => await this
             .All()
-            .Where(dt => dt.BookingId == bookingId)
-            .Select(dt => dt.Token)
-            .ToListAsync();
-
+            .FirstOrDefaultAsync(dt => dt.Id == id, cancellationToken);
+    
     public async Task<DeviceToken?> FindDeviceTokenByProfileId(string profileId, CancellationToken cancellationToken = default)
         => await this 
             .All()
-            .Distinct()
             .Where(dt => dt.ProfileId == profileId)
             .FirstOrDefaultAsync(cancellationToken);
 
@@ -31,9 +28,4 @@ public class DeviceTokenRepository(PawsPlusDbContext db)
 
         return true;
     }
-
-    public async Task<DeviceToken> Find(string id, CancellationToken cancellationToken = default)
-        => await this
-            .All()
-            .FirstOrDefaultAsync(dt => dt.Id == id, cancellationToken);
 }

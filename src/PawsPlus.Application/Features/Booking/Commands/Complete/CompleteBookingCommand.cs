@@ -25,8 +25,7 @@ public class CompleteBookingCommand : IRequest<Result>
                 return BookingErrors.BookingNotFound(request.Id);
             }
 
-            if (booking.EndDay != DateOnly.FromDateTime(DateTime.Now) ||
-                (booking.EndDay == DateOnly.FromDateTime(DateTime.Now) && booking.EndTime > TimeOnly.FromDateTime(DateTime.Now)))
+            if (booking.CannotComplete())
             {
                 return BookingErrors.CannotCompleteBooking();
             }
