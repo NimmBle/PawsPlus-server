@@ -31,6 +31,7 @@ public class ProfilesController : ApiController
         => await this.Send(query);
 
     [HttpGet]
+    [AllowAnonymous]
     [Route(Id)]
     public async Task<ActionResult<ProfileDetailsOutputModel>> Details(
         [FromRoute] GetProfileDetailsQuery query)
