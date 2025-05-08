@@ -25,7 +25,7 @@ namespace BookingComplete
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    var expiryTime = DateTime.UtcNow.AddHours(3).AddMinutes(30);
+                    var expiryTime = DateTime.UtcNow.AddMinutes(30);
 
                     cmd.Parameters.AddWithValue("@ExpiryTime", expiryTime);
                     int rowsAffected = cmd.ExecuteNonQuery();

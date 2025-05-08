@@ -79,15 +79,15 @@ public class Booking : Entity<string>, IAggregateRoot
 
     public bool CannotStart()
     {
-        return this.StartDay != DateOnly.FromDateTime(DateTime.Now.AddHours(3)) ||
-               (this.StartDay == DateOnly.FromDateTime(DateTime.Now.AddHours(3)) &&
-                this.StartTime > TimeOnly.FromDateTime(DateTime.Now.AddHours(3)));
+        return this.StartDay != DateOnly.FromDateTime(DateTime.Now) ||
+               (this.StartDay == DateOnly.FromDateTime(DateTime.Now) &&
+                this.StartTime > TimeOnly.FromDateTime(DateTime.Now));
     }
     public bool CannotComplete()
     {
-        return this.EndDay != DateOnly.FromDateTime(DateTime.Now.AddHours(3)) ||
-               (this.EndDay == DateOnly.FromDateTime(DateTime.Now.AddHours(3)) &&
-                this.EndTime > TimeOnly.FromDateTime(DateTime.Now.AddHours(3)));
+        return this.EndDay != DateOnly.FromDateTime(DateTime.Now) ||
+               (this.EndDay == DateOnly.FromDateTime(DateTime.Now) &&
+                this.EndTime > TimeOnly.FromDateTime(DateTime.Now));
     }
 
     public Booking ChangeState(string type)
