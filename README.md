@@ -2,6 +2,8 @@
 
 Production backend for [PawsPlus](https://pawsplus.eu/), a platform that connects pet owners with sitters and manages the full lifecycle around listings, pets, bookings, reviews, media, and notifications.
 
+> Portfolio repository only. Source is visible for review and evaluation. All rights reserved. See `LICENSE`.
+
 ## Overview
 
 Production-grade backend focused on clear architectural boundaries, explicit use-case modelling, and domain-first decomposition across a growing feature set.
